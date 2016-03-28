@@ -54,4 +54,13 @@ group :production do
   gem 'rails_12factor'
 end
 
-
+group :development, :test do
+  gem 'sqlite3'
+  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails-training-wheels'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'rspec-rails'
+  gem 'simplecov'
+end
