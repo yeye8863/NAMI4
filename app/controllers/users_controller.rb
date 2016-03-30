@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
-  def new
-  	@new_user = User.new
-  end
+  	def new
+  		@new_user = User.new()
+  	end
 
 	def create
 		@new_user = User.new(params[:user])
@@ -20,6 +20,10 @@ class UsersController < ApplicationController
 			flash[:notice] = "Unauthrized email address."
 			render 'users/new'
 		end
+	end
+	
+	def index
+		
 	end
 
 end
