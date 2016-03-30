@@ -252,3 +252,16 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+Given /the following users exist/ do |users_table|
+  users_table.hashes.each do |user|
+    user[:password_confirmation] = user[:password]
+    User.create user
+  end
+end
+
+Given /the email/ do |access_table|
+    access_table.hashes.each do |access|
+        Access.create access
+    end
+end
