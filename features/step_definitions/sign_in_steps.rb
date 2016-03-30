@@ -12,8 +12,8 @@ Given /the access code and email/ do |accesses|
 end
 
 When /^(?:|I )login with "([^"]*)" and "([^"]*)"$/ do |name, psw|
-  fill_in("username", :with => name)
-  fill_in("passwd", :with => psw)
+  fill_in("Username", :with => name)
+  fill_in("Password", :with => psw)
 end
 
     
