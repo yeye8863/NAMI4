@@ -6,3 +6,14 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+#users = [{:username => 'tony', :password_digest => 'tony'},
+#        {:username => 'lihao', :password_digest => 'lihao'},
+#        {:username => 'jiajia', :password_digest => 'jiajia'},
+#        {:username => 'nyp', :password_digest => 'nyp'},
+#        {:username => 'zhengye', :password_digest => 'zhengye'},
+#        {:username => 'yuanfei', :password_digest => 'yuanfei'}
+#  	 ]
+
+#users.each do |user|
+#  User.create!(user)
+#end

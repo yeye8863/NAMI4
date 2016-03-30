@@ -1,0 +1,12 @@
+%h1 Login
+
+= form_tag '/login' do
+
+  = label :session, :username, 'Username'
+  = text_field :session, 'username'
+
+  = label :session, :password, 'Password'
+  = password_field :session, 'password'
+  
+  = submit_tag 'Sign in'
+  = link_to 'Signup', signup_path

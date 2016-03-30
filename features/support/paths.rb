@@ -16,7 +16,7 @@ module NavigationHelpers
     when /^(the )?home\s?page$/
       '/'
     when /^(the )?index\s?page$/
-      '/index'
+      '/login'
     when /^(the )?Homepage$/
       '/'
     when /^(the )?signup\s?page$/
