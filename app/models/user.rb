@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-    attr_accessible :id, :username, :first_name, :last_name, :email
+    attr_accessible :id, :username, :first_name, :last_name, :email, :password_digest
     has_secure_password
     
     ######## Log in with encrypted password ###########

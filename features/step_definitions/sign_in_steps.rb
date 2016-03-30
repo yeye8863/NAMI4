@@ -13,7 +13,7 @@ end
 
 When /^(?:|I )login with "([^"]*)" and "([^"]*)"$/ do |name, psw|
   fill_in("username", :with => name)
-  fill_in("password", :with => psw)
+  fill_in("passwd", :with => psw)
 end
 
     

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :users
   
+  get 'index' => 'sessions#index'
   post 'sessions/login' => 'sessions#login'
   
   # Example resource route with options:
