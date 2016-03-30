@@ -18,6 +18,8 @@ Scenario: signup with new identity(happy path)
 
 	When I fill in "Username" with "frank"
 	And I fill in "Password" with "abcdefgh"
+	And I fill in "First Name" with "Frank"
+	And I fill in "Last Name" with "Zhang"
 	And I fill in "Confirm Password" with "abcdefgh"
 	And I fill in "Email" with "frank@gmail.com"
 	And I press "Create"
@@ -29,6 +31,8 @@ Scenario: try to signup with invalid information(sad path)
 
 	When I fill in "Username" with "frank"
 	And I fill in "Password" with "abcdefgh"
+	And I fill in "First Name" with "Frank"
+	And I fill in "Last Name" with "Zhang"
 	And I fill in "Confirm Password" with "abcdefgh"
 	And I fill in "Email" with "frank1@gmail.com"
 	And I press "Create"
