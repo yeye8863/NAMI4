@@ -1,7 +1,7 @@
 Feature: Signup
 Background: user in database and given access code
 Given the following users exist:
-| username  | password        | 
+| username  | password_digest | 
 | Tony  	| testpassword23  |
 | Jojo  	| notthistime     |
 | Ste   	| welcomeback     |

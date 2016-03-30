@@ -4,3 +4,6 @@ Given /the following users exist/ do |users_table|
     User.create user
   end
 end
+
+Given /the access code and email/ do |access|
+    
