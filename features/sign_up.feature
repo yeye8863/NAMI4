@@ -1,13 +1,13 @@
 Feature: Signup
 Background: user in database and given access code
 Given the following users exist:
-| username      | password        | 
+| username  | password        | 
 | Tony  	| testpassword23  |
 | Jojo  	| notthistime     |
 | Ste   	| welcomeback     |
 
-And Given the access and email:
-|access_code   	|  email  	    |
+And Given the access code and email:
+|access_code   	|  email  	        |
 |1234           |  frank@gmail.com  |
 
 Scenario: signup with new identity(happy path)
