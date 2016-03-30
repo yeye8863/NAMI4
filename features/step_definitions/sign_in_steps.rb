@@ -10,4 +10,10 @@ Given /the access code and email/ do |accesses|
         User.create access
     end
 end
+
+When /^(?:|I )login with "([^"]*)" and "([^"]*)"$/ do |name, psw|
+  fill_in("username", :with => name)
+  fill_in("password", :with => psw)
+end
+
     

@@ -10,26 +10,30 @@ And Given the access code and email:
 |access_code   	|  email  	        |
 |1234           |  frank@gmail.com  |
 
+Given I am on the index page 
+When I follow "sign up"
+Then I am on the signup page
+
 Scenario: signup with new identity(happy path)
-	Given I am on the “Sign Up” page
+
 	When I fill in “username” with “frank”
 	And I fill in “password” with “abcdefgh”
 	And I fill in “confirm password” with “abcdefgh”
 	And I fill in “email” with “frank@gmail.com”
 	And I fill in “access code” with “1234”
-	And I click “Create”
+	And I press “Create”
 	Then I should be on the index page
-	And I should  see “Sign up successfully”
+	And I should see “Sign up successfully”
 
 
 Scenario: try to signup with invalid information(sad path)
-	Given I am on the “Sign Up” page
+
 	When I fill in “username” with “frank”
 	And I fill in “password” with “abcdefgh”
 	And I fill in “confirm password” with “abcdfgp”
 	And I fill in “email” with “frank@gmail.com”
 	And I fill in “access code” with “2222”
-	And I click “Create” button
-	Then I should be on “Sign Up” page
+	And I press “Create” button
+	Then I should be on signup page
 	Then I should see “Signup unsuccessful”
 
