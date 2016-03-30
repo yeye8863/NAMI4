@@ -6,4 +6,4 @@ Given /the following users exist/ do |users_table|
 end
 
 Given /the access code and email/ do |access|
-    
+end
