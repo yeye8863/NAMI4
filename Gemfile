@@ -23,6 +23,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'bcrypt', '~> 3.1.7'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -42,22 +43,11 @@ group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
 
-  
-
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
-  gem 'rspec-rails'
   gem 'autotest'
-end
-
-group :production do
-  gem 'pg' # for Heroku deployment
-  gem 'rails_12factor'
-end
-
-group :development, :test do
-  gem 'sqlite3'
+  
   gem 'cucumber-rails', :require => false
   gem 'cucumber-rails-training-wheels'
   gem 'database_cleaner'
@@ -65,4 +55,9 @@ group :development, :test do
   gem 'launchy'
   gem 'rspec-rails'
   gem 'simplecov'
+end
+
+group :production do
+  gem 'pg' # for Heroku deployment
+  gem 'rails_12factor'
 end
