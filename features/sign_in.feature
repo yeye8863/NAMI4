@@ -1,7 +1,7 @@
 Feature: Signin to the system
 Background: users in database
     Given the following users exist:
-    | username   | password        |
+    | username   | password_digest |
     | Tony       | testpassword23  |
     | Jojo       | notthistime     |
     | Ste        | welcomeback     |
