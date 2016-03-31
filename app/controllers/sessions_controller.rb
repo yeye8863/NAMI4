@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       # logged in when they navigate around our website.
       session[:user_id] = user.id
       flash[:notice] = "Welcome back #{user.username}"
-      redirect_to '/'
+      redirect_to '/index'
     else
     # If user's login doesn't work, send them back to the login form.
       flash[:notice] = "Username and password do not match our record!"
@@ -24,7 +24,5 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to '/login'
   end
-    
-    
-    
+
 end

@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
 
-  def new
-  end
+  	def new
+  	end
 
 	def create
-		
 		if Access.exists?(:email => params[:user][:email])
 			#debugger
 			user = User.new(params[:user])
