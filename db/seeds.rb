@@ -21,3 +21,13 @@ accesses = [{:email => 'tonywang@tamu.edu'},
 accesses.each do |access|
   Access.create!(access)
 end
+
+#users.each do |user|
+#  User.create!(user)
+#end
+
+users = [{:email => '1234@qq.com'}] 
+
+users.each do |user|
+  Access.create!(user)
+end
