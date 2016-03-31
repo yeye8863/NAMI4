@@ -5,24 +5,20 @@ RSpec.describe UsersController, type: :controller do
     
     
     describe '#new' do
-        it 'creates a new user' do
+        it 'route to new page' do
             get :new 
             response.status.should be(200)
         end
     
-    
+    describe '#create' do
     before :each do
-        @fake_user = double('user')
-        @fake_email = double('email')
-        allow(User).to receive(:save).and_return(true)
-        allow(Access).to receive(:exists?).with('email') {true} 
+        @fake_user = double('user',:email => 'aaa@gmail.com')
+        allow(Access).to receive(:exists?).with(@fake_user.email) {@fake_user} 
     end
     
-    describe '#create' do
-        
-        
+    
         it 'checks the access of the new user' do
-            skip
+            expect(Access.exists?(@fake_user.email)).to eq(@fake_user)  
         end
         #happy path: this new user has access to signup
         it 'saves user data' do
