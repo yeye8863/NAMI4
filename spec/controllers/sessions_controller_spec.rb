@@ -24,7 +24,7 @@ RSpec.describe SessionsController, type: :controller do
                             expect(session[:user_id]).to eq(@user1.id)
                         end
                         it "and should be redirected to homepage of this user" do
-                            expect(response).to redirect_to('/index')
+                            expect(response).to redirect_to('/homepage')
                         end
                     end
                     describe "on failed log in" do
