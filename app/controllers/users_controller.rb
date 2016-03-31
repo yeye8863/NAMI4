@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 		else # invalid access email
 			#debugger
 			flash[:notice] = "Unauthrized email address."
-			render 'users/new'
+			redirect_to '/signup'
 		end
 	end
 	

@@ -37,5 +37,5 @@ Scenario: try to signup with invalid information(sad path)
 	And I fill in "Email" with "frank1@gmail.com"
 	And I press "Create"
 	Then I should be on signup page
-	Then I should see "Incorrect access code"
+	Then I should see "Unauthrized email address."
 

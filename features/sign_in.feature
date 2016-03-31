@@ -1,16 +1,16 @@
 Feature: Signin to the system
 Background: users in database
     Given the following users exist:
-    | username   | password |
-    | Tony       | testpassword23  |
-    | Jojo       | notthistime     |
-    | Ste        | welcomeback     |
+    | username   | password 	   | email			| first_name	| last_name	|
+    | Tony       | testpassword23  | 111@gmail.com	| A				| D			|
+    | Jojo       | notthistime     | 222@gmail.com	| B				| E			|
+    | Ste        | welcomeback     | 333@gmail.com	| C				| F			|
 
 Scenario: try to login with true identity (happy path)
 	Given I am on the index page
 	When I login with "Jojo" and "notthistime"
 	And I press "Login"
-	Then I should be on homepage 
+	Then I should be home
 
 Scenario: try to login with false identity (sad path)
 	Given I am on the index page
