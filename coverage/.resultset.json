@@ -1,51 +1,32 @@
 {
   "Cucumber Features": {
     "coverage": {
-      "/home/ubuntu/workspace/app/models/user.rb": [
-        1,
-        1,
-        1,
-        null,
-        null,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "/home/ubuntu/workspace/app/controllers/sessions_controller.rb": [
+      "/home/ubuntu/workspace/app/controllers/users_controller.rb": [
         1,
         null,
         1,
+        5,
         null,
         null,
         1,
         2,
-        null,
         2,
         null,
-        null,
         1,
         1,
         1,
-        null,
-        null,
-        1,
         1,
         null,
-        null,
-        null,
-        1,
         0,
-        0,
-        0,
+        null,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        null,
+        1,
         null,
         null,
         null
@@ -75,24 +56,39 @@
         1,
         null
       ],
-      "/home/ubuntu/workspace/app/controllers/users_controller.rb": [
+      "/home/ubuntu/workspace/app/controllers/donors_controller.rb": [
+        1,
+        1,
+        null,
+        null
+      ],
+      "/home/ubuntu/workspace/app/controllers/dashboards_controller.rb": [
+        1,
+        1,
+        null,
+        null
+      ],
+      "/home/ubuntu/workspace/app/controllers/reports_controller.rb": [
+        1,
+        1,
+        null,
+        null
+      ],
+      "/home/ubuntu/workspace/app/controllers/sessions_controller.rb": [
         1,
         null,
         1,
-        5,
         null,
         null,
         1,
         2,
+        null,
         2,
         null,
-        1,
-        1,
-        1,
-        1,
         null,
-        0,
-        null,
+        1,
+        1,
+        1,
         null,
         null,
         1,
@@ -101,6 +97,28 @@
         null,
         null,
         1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/home/ubuntu/workspace/app/models/user.rb": [
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
         null,
         null,
         null
@@ -158,6 +176,6 @@
         0
       ]
     },
-    "timestamp": 1459710370
+    "timestamp": 1459714074
   }
 }

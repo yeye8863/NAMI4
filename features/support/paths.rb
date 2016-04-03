@@ -18,8 +18,13 @@ module NavigationHelpers
     when /^(the )?home\s?page$/
       homepage_path
     when /^(the )?signup\s?page$/
-      new_users_path
-
+      new_user_path
+    when /^(the )?donor\s?page$/
+      donors_path
+    when /^(the )?dashboard\s?page$/
+      dashboard_path      
+    when /^(the )?report\s?page$/
+      reports_path
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

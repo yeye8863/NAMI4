@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+	before_filter :authorize, :only => :index
   	def new
   		@new_user = User.new()
   	end
@@ -13,12 +13,12 @@ class UsersController < ApplicationController
 		    	flash[:notice] = "You have signed up successfully.\n Please login with your account information."
 	      		redirect_to root_path
 		  	else
-		    	redirect_to new_users_path
+		    	redirect_to new_user_path
 		  	end
 		else # invalid access email
 			#debugger
 			flash[:notice] = "Unauthrized email address."
-			redirect_to new_users_path
+			redirect_to new_user_path
 		end
 	end
 	
