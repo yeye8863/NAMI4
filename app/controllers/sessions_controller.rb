@@ -11,18 +11,18 @@ class SessionsController < ApplicationController
       # logged in when they navigate around our website.
       session[:user_id] = user.id
       flash[:notice] = "Welcome back #{user.username}"
-      redirect_to '/homepage'
+      redirect_to homepage_path
     else
     # If user's login doesn't work, send them back to the login form.
       flash[:notice] = "Username and password do not match our record!"
-      redirect_to '/login'
+      redirect_to root_path
     end
   end
 
   def destroy
     flash[:notice] = "You have successfully logged out!"
     session[:user_id] = nil
-    redirect_to '/login'
+    redirect_to root_path
   end
 
 end

@@ -11,19 +11,18 @@ class UsersController < ApplicationController
 			if @new_user.save # password match
 		  		session[:user_id] = @new_user.id
 		    	flash[:notice] = "You have signed up successfully.\n Please login with your account information."
-	      		redirect_to '/login'
+	      		redirect_to root_path
 		  	else
-		    	render 'users/new'
+		    	redirect_to new_users_path
 		  	end
 		else # invalid access email
 			#debugger
 			flash[:notice] = "Unauthrized email address."
-			redirect_to '/signup'
+			redirect_to new_users_path
 		end
 	end
 	
 	def index
 		
 	end
-
 end

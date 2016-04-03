@@ -36,6 +36,6 @@ Scenario: try to signup with invalid information(sad path)
 	And I fill in "Confirm Password" with "abcdefgh"
 	And I fill in "Email" with "frank1@gmail.com"
 	And I press "Create"
-	Then I should be on signup page
+	Then I should be on the signup page
 	Then I should see "Unauthrized email address."
 
