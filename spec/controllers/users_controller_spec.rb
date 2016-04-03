@@ -5,7 +5,7 @@ RSpec.describe UsersController, type: :controller do
     
     describe '#new' do
         it 'should route to users#new' do
-            expect(:get => new_users_path).to route_to(
+            expect(:get => new_user_path).to route_to(
                 :controller => 'users',
                 :action => 'new'
             )
@@ -60,7 +60,7 @@ RSpec.describe UsersController, type: :controller do
                         post :create, {:user => @user}
                     end
                     it 'should redirect to the sign up page' do
-                        expect(response).to redirect_to(new_users_path)
+                        expect(response).to redirect_to(new_user_path)
                     end
                 end
             end
@@ -74,7 +74,7 @@ RSpec.describe UsersController, type: :controller do
                     expect(flash[:notice]).to eq("Unauthrized email address.")
                 end
                 it 'should redirect to the sign up page' do
-                    expect(response).to redirect_to(new_users_path)
+                    expect(response).to redirect_to(new_user_path)
                 end
             end
         end
