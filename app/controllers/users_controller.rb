@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+	before_filter :authorize, :only => :index
   	def new
   		@new_user = User.new()
   	end

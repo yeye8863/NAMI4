@@ -11,5 +11,9 @@ Rails.application.routes.draw do
   get 'logout' => 'sessions#destroy', :as => 'logout'
 
   get 'homepage' => 'users#index', :as => 'homepage'
+  
+  resources :donors
+  resources :reports
 
+  get 'dashboard' => 'dashboards#index', :as => 'dashboard'
 end
