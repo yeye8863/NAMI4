@@ -15,4 +15,9 @@ Scenario: go to report page
 	Given I am on the home page
 	And I press "Reporting"
 	Then I should be on report page
+
+Scenario: logout
+	Given I am on the home page
+	And I press "Logout"
+	Then I should be on index page
 	
