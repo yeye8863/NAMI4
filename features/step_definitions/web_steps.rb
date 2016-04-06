@@ -260,8 +260,39 @@ Given /the following users exist/ do |users_table|
   end
 end
 
-Given /the email/ do |access_table|
-    access_table.hashes.each do |access|
-        Access.create access
-    end
+Given /the email/ do |accesses_table|
+  accesses_table.hashes.each do |access|
+    Access.create access
+  end
 end
+
+Given /the contacts table/ do |contacts_table|
+  contacts_table.hashes.each do |contact|
+    Contact.create contact
+  end
+end
+
+Given /the donors table/ do |donors_table|
+  donors_table.hashes.each do |donor|
+    Donor.create donor
+  end
+end
+
+Given /the contact people table/ do |contact_person_table|
+  contact_person_table.hashes.each do |contact_person|
+    ContactPerson.create contact_person
+  end
+end
+
+Given /the organizations table/ do |organization_table|
+  organization_table.hashes.each do |organization|
+    Organization.create organization
+  end
+end
+
+Given /^(?:|I ) [have|has] logged in as "[^"]+" with "[^"]+"/ do |username, passwd|
+  steps %{
+    Given I am on the index page
+  	When I login with #{username} and #{passwd}
+  	And I press "Login"
+  }
