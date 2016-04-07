@@ -25,7 +25,8 @@ module NavigationHelpers
       dashboard_path      
     when /^(the )?report\s?page$/
       reports_path
-      
+    when /^(the )?report\s?creator page$/
+      new_report_path
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

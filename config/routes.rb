@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   resources :reports
 
   get 'dashboard' => 'dashboards#index', :as => 'dashboard'
+  get '/reports/new' => 'reports#new'
 end
