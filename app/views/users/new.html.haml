@@ -1,4 +1,5 @@
-.h1.center Sign Up
+#title.container.center 
+  %h1 Sign Up
 
 - unless @new_user.errors.empty?
   #warning
@@ -7,7 +8,7 @@
       - @new_user.errors.full_messages.each do |error|
         %li= error
 
-#signup-form.container
+#mainbody.container
   = form_tag users_path, :method => 'post', :class => 'form left' do
     .form-group
       .row
