@@ -57,6 +57,8 @@ group :development, :test do
   gem 'launchy'
   gem 'rspec-rails'
   gem 'simplecov'
+  gem 'factory_girl_rails'
+  gem 'shoulda-matchers', '~> 3.1'
 end
 
 group :production do

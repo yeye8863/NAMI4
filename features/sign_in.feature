@@ -10,7 +10,7 @@ Scenario: try to login with true identity (happy path)
 	Given I am on the index page
 	When I login with "Jojo" and "notthistime"
 	And I press "Login"
-	Then I should be home
+	Then I should be on home page
 
 Scenario: try to login with false identity (sad path)
 	Given I am on the index page

@@ -7,10 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 users = [
-       {:username => 'jiajia', :password => 'jiajia'},
-       {:username => 'nyp', :password => 'nyp'},
-       {:username => 'zhengye', :password => 'zhengye'},
-       {:username => 'yuanfei', :password => 'yuanfei'}]
+       {:username => 'jiajia', :password => 'jiajia', :password_confirmation => 'jiajia', 
+       :email => '111@gmail.com', :first_name => 'jiajia', :last_name => 'hou'}
+       ]
+       
 users.each do |user|
   User.create!(user)
 end
