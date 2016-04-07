@@ -19,6 +19,10 @@ module NavigationHelpers
       '/login'
     when /^(the )?Homepage$/
       '/'
+    
+    when /^(the )?Home\s?page$/
+      '/'
+      
     when /^(the )?signup\s?page$/
       signup_path
 
