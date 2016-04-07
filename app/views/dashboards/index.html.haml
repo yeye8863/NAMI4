@@ -1,1 +1,20 @@
-%h2 Dashboard
+.container
+  %h1  Dashboard
+
+#mainbody.container
+  .container
+    %table#agenda.table
+      %thead
+        %tr
+          %th Name
+          %th Organization
+          %th Contact Date
+          %th Follow-up Date
+      %tbody
+        -@agenda_records.each do |agenda_record|
+        %tr
+          %td =agenda_record.name
+          %td =agenda_record.organization
+          %td =agenda_record.contact_date
+          %td =agenda_record.followup_date
+          %td =link_to "More",  

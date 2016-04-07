@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   
   resources :donors
   resources :reports
-
+  resources :contacts
+  
   get 'dashboard' => 'dashboards#index', :as => 'dashboard'
 end

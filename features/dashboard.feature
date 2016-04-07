@@ -9,7 +9,6 @@ Background: users has logged in and go to the dashboard page
 	  | donor_id  | contact_person_id | contact_date  | followup_date |
 	  | 1         |                   | 2016-3-20     | 2016-4-11     |
 	  |           | 1                 | 2016-3-21     | 2016-4-10     |  
-	  | 2         | 
 
 	Given the donors table:
 	  | title   | first_name   | last_name   |
@@ -18,7 +17,7 @@ Background: users has logged in and go to the dashboard page
 	 
 	Given the contact people table:
 	  | title   | first_name   | last_name   |  organization_id |
-	  | Mrs.    | Jenny        | White       |  1 |
+	  | Mrs.    | Jenny        | White       |  1               |
 	 
 	Given the organizations table:
 	  | name  |
