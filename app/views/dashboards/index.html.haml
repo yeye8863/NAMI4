@@ -20,7 +20,7 @@
                 %td=agenda_record.organization
                 %td=agenda_record.contact_date
                 %td=agenda_record.followup_date
-                %td #{link_to 'More', '#'}
+                %td=link_to 'More', title: "agenda#{agenda_record.contact_id}", remote: true, class: 'agenda_link'
     .col-sm-6
       %h3 Report Quickview
   .row
