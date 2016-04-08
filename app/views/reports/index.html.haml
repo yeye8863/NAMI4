@@ -1,3 +1,24 @@
 #title.container
   %h2 Report
 
+#mainbody.container
+  .row
+    .col-sm-6
+      %h4 Report Template
+      #report-panel.panel.panel-default
+        %table#report-table.table
+          %thead
+            %tr
+              %th Title
+              %th Description
+              %th Last Modified By
+              %th Follow-up Date
+          %tbody
+          -if @agenda_records
+            -@agenda_records.each do |agenda_record|
+              %tr
+                %td=agenda_record.name
+                %td=agenda_record.organization
+                %td=agenda_record.contact_date
+                %td=agenda_record.followup_date
+                %td=link_to 'More', title: "agenda#{agenda_record.contact_id}", remote: true, class: 'agenda_link'
