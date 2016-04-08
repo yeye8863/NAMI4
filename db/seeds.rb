@@ -68,6 +68,39 @@ contacts = [
           }
           ]
           
+          
+reports = [  
+            {
+             :title => '2014 donation by amount',
+             :description => 'amount between 0 to 500, the whole 2014',
+             :last_run => '2016-04-01',
+             :created_by => 'jojo',
+             :created_at => '2015-01-24',
+             :last_modified_by => 'ste',
+             :last_modified_at => '2016-02-18'
+            },
+            
+            {
+             :title => '2014 donation by city',
+             :description => 'city: Houston, the whole 2014',
+             :last_run => '2016-03-01',
+             :created_by => 'ste',
+             :created_at => '2015-01-19',
+             :last_modified_by => 'jojo',
+             :last_modified_at => '2015-02-18'
+            },
+  
+            {
+             :title => '2013 donation by city',
+             :description => 'city: College Station, the whole 2013',
+             :last_run => '2015-03-01',
+             :created_by => 'ste',
+             :created_at => '2014-01-19',
+             :last_modified_by => 'jojo',
+             :last_modified_at => '2015-02-18'
+            }
+          ]
+          
 donors.each do |donor|
   Donor.create!(donor)
 end
