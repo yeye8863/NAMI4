@@ -53,12 +53,12 @@ organizations = [
 contacts = [
           {
             :contact_date => '2016-04-01',
-            :followup_date => '2016-04-07',
+            :followup_date => '2016-04-09',
             :donor_id => '1'
           },
           {
             :contact_date => '2016-04-02',
-            :followup_date => '2016-04-06',
+            :followup_date => '2016-04-08',
             :donor_id => '2'
           },
           {
