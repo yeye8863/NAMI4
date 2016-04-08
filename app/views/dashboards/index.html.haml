@@ -1,1 +1,30 @@
-%h2 Dashboard
+#title.container
+  %h1  Dashboard
+#mainbody.container
+  .row
+    .col-sm-6
+      %h3 Agenda
+      #agenda-panel.panel.panel-default
+        %table#agenda-table.table
+          %thead
+            %tr
+              %th Name
+              %th Organization
+              %th Contact Date
+              %th Follow-up Date
+          %tbody
+          -if @agenda_records
+            -@agenda_records.each do |agenda_record|
+              %tr
+                %td=agenda_record.name
+                %td=agenda_record.organization
+                %td=agenda_record.contact_date
+                %td=agenda_record.followup_date
+                %td #{link_to 'More', '#'}
+    .col-sm-6
+      %h3 Report Quickview
+  .row
+    .col-sm-6
+      %h3 New Added Contacts
+    .col-sm-6
+      %h3 Admin Tool Box

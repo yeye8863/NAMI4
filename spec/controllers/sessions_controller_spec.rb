@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'spec_helper'
 
 RSpec.describe SessionsController, type: :controller do
   describe "user logging in" do
@@ -54,12 +55,14 @@ RSpec.describe SessionsController, type: :controller do
     it "should route /logout to sessios#destroy" do
       expect(:get => logout_path).to route_to(
         :controller => "sessions",
-        :action => "create"
+        :action => "destroy"
       )
     end
         
     describe 'after successful route to sessions#destroy' do
-      get :destroy
+      before :each do
+        get :destroy
+      end
       it "should assign the flash message" do
         expect(flash[:notice]).to eq("You have successfully logged out!")
       end
@@ -67,7 +70,7 @@ RSpec.describe SessionsController, type: :controller do
         expect(session[:user_id]).to eq(nil)
       end
       it "should redirect to index page" do
-        expect(response).to route_to root_path  
+        expect(response).to redirect_to root_path  
       end
     end
   end

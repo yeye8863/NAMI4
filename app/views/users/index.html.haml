@@ -1,7 +1,12 @@
-%h1 Homepage
-
-= link_to 'Donor Management', donors_path
-= link_to 'Dashboard', dashboard_path
-= link_to 'Report', reports_path
-
-= link_to 'Sign Out', logout_path
+#title.container
+  %h2 Homepage
+#mainbody.container
+  .row
+    .col-sm-3
+      = link_to 'Donor Management', donors_path, :class => "btn btn-default"
+    .col-sm-3
+      = link_to 'Dashboard', dashboard_path, :class => "btn btn-default"
+    .col-sm-3
+      = link_to 'Report', reports_path, :class => "btn btn-default"
+    .col-sm-3
+      = link_to 'Sign Out', logout_path, :class => "btn btn-default"

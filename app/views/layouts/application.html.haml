@@ -1,17 +1,20 @@
 !!!
 %html
   %head
-    %title NAMI Donor Management System
+    %title  NAMI Donor Management System
     = stylesheet_link_tag 'application', 'media' => 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-
-  %body
-    %h1.title NAMI Donor Management System
-    #main
-      - if flash[:notice]
-        #notice.message= flash[:notice]
-      - elsif flash[:warning]
-        #warning.message= flash[:warning]
-
-      = yield
+  %body.container
+    #banner.container
+      .row
+        .col-sm-6
+          #flash
+            - if flash[:notice]
+              =flash[:notice]
+            - elsif flash[:warning]
+              =flash[:warning]
+        .col-sm-6
+          =link_to "Return to Homepage", homepage_path
+        
+    = yield

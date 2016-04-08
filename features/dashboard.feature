@@ -10,7 +10,6 @@ Background: users has logged in and go to the dashboard page
 	  | donor_id  | contact_person_id | contact_date  | followup_date |
 	  | 1         |                   | 2016-3-20     | 2016-4-11     |
 	  |           | 1                 | 2016-3-21     | 2016-4-10     |  
-	  
 
 	Given the donors table:
 	  | title   | first_name   | last_name   |
@@ -19,16 +18,12 @@ Background: users has logged in and go to the dashboard page
 	 
 	Given the contact people table:
 	  | title   | first_name   | last_name   |  organization_id |
-	  | Mrs.    | Jenny        | White       |  1 |
+	  | Mrs.    | Jenny        | White       |  1               |
 	 
 	Given the organizations table:
 	  | name  |
 	  | AAA   |
 	  | BBB   |
-	  
-  Given I have logged in as "Tony" with "testpassword23"
-	And I follow "Dashboard"
-	
 	
 	Given the report table:
      |         Title           |  Create Time | Last Modified Time | Last Run Time |
@@ -52,8 +47,9 @@ Background: users has logged in and go to the dashboard page
 	  | AAA   | 2014-4-15     |  2014-3-10     | 2014-3-21   | 2014-4-10          |
 	  | BBB   | 2013-5-15     | 2013-3-12      | 2013-3-22   | 2013-4-12          |
 
-
-
+	Given I have logged in as "Tony" with "testpassword23"
+	And I follow "Dashboard"
+	
 	Scenario: check out agenda
 	  Then I should find 2 agenda records
 	  And I should see agenda table:
@@ -68,8 +64,6 @@ Background: users has logged in and go to the dashboard page
 	  |         Title           | Create Time  | Last Modified Time |
 	  | 2014first season report |  2014-3-21   | 2014-4-10          |
 	  | 2013second season report|  2013-3-21   | 2013-4-10          |
-	 
-	 
 	
 	Scenario: check out recently edited contact
 	  Then I should find 2 recently edited contact records
