@@ -1,0 +1,18 @@
+%h1 Donor Management
+%h2 Donor Information
+
+= form_tag donors_path do
+
+  = label :donor, :first_name, 'Title'
+  = text_field :donor, 'title'
+
+  = label :movie, :rating, 'Rating'
+  = select :movie, :rating, ['G','PG','PG-13','R','NC-17']
+
+  = label :movie, :release_date, 'Released On'
+  = date_select :movie, :release_date
+
+  = label :movie, :director 'Director'
+  = text_field :movie, 'director'
+  
+  = submit_tag 'Save Changes'
