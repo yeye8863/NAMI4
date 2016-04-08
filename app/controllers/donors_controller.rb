@@ -3,4 +3,9 @@ class DonorsController < ApplicationController
 
     def index
     end
+    
+    def summary
+        id = params[:id]
+        @donor = Donor.find(id)
+    end
 end
