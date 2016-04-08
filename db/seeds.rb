@@ -101,6 +101,10 @@ reports = [
             }
           ]
           
+reports.each do |report|
+    Report.create!(report)
+end
+
 donors.each do |donor|
   Donor.create!(donor)
 end
