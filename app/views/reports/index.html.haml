@@ -12,13 +12,13 @@
               %th Title
               %th Description
               %th Last Modified By
-              %th Follow-up Date
+              %th Last Modified Date
           %tbody
-          -if @agenda_records
-            -@agenda_records.each do |agenda_record|
+          -if @report_records
+            -@report_records.each do |report_record|
               %tr
-                %td=agenda_record.name
-                %td=agenda_record.organization
-                %td=agenda_record.contact_date
-                %td=agenda_record.followup_date
+                %td=report_record.title
+                %td=report_record.description
+                %td=report_record.last_modified_by
+                %td=report_record.last_modified_at
                 %td=link_to 'More', title: "agenda#{agenda_record.contact_id}", remote: true, class: 'agenda_link'
