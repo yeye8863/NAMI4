@@ -1,12 +1,15 @@
-%h1 Login
+#title.container.center 
+  %h1 NAMI BV Management System
 
-= form_tag login_path do
+#mainbody.container
+  #signin-form
+    = form_tag login_path, :class => 'form-inline center' do
+      .form-group
+        = label :session, :username, 'Username'
+        = text_field :session, 'username', :required => true
+      .form-group
+        = label :session, :password, 'Password'
+        = password_field :session, 'password', :required => true
 
-  = label :session, :username, 'Username'
-  = text_field :session, 'username'
-
-  = label :session, :password, 'Password'
-  = password_field :session, 'password'
-  
-  = submit_tag 'Login'
-  = link_to 'Sign Up', new_user_path
+      = submit_tag 'Login', :class => 'btn btn-default'
+      = link_to 'Sign Up', new_user_path, :class => 'btn btn-default'
