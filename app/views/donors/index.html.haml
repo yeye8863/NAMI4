@@ -16,8 +16,10 @@
   = text_field :donor, 'organization'
   
   = submit_tag 'Search'
-
+  = button_tag "Reset", type: :reset 
+  
 = link_to 'Add A New Donor', new_donor_path
+
 
 %h2 Search result
 %table
