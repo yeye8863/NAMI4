@@ -47,27 +47,29 @@ Background: users has logged in and go to the dashboard page
 	  | AAA   | 2014-4-15     |  2014-3-10     | 2014-3-21   | 2014-4-10          |
 	  | BBB   | 2013-5-15     | 2013-3-12      | 2013-3-22   | 2013-4-12          |
 
-	Given I have logged in as "Tony" with "testpassword23"
+    Given I have logged in as "Tony" with "testpassword23"
+    Then I should be on the homepage
 	And I follow "Dashboard"
 	
 	Scenario: check out agenda
+	 
 	  Then I should find 2 agenda records
-	  And I should see agenda table:
+	  And I should find agenda table:
 	  | Name              | Organization  | Contact Date  |  Follow-up Date   |
-	  | Mrs. Jenny White  | AAA           | 2016-3-21     | 2016-4-10         |
-	  | Mr. John Smith    |               | 2016-3-20     | 2016-4-11         |
+	  | Mrs. Jenny White  | AAA           | 2016-03-21     | 2016-04-10         |
+	  | Mr. John Smith    |               | 2016-03-20     | 2016-04-11         |
 
 
 	Scenario: check out recently report
 	  Then I should find 2 recently report records
-	  And I should see the recently report table:
+	  And I should find the recently report table:
 	  |         Title           | Create Time  | Last Modified Time |
-	  | 2014first season report |  2014-3-21   | 2014-4-10          |
-	  | 2013second season report|  2013-3-21   | 2013-4-10          |
+	  | 2014first season report |  2014-03-21   | 2014-04-10          |
+	  | 2013second season report|  2013-03-21   | 2013-04-10          |
 	
 	Scenario: check out recently edited contact
 	  Then I should find 2 recently edited contact records
-	  And I should see the recently edited contact table:
+	  And I should find the recently edited contact table:
 	  |        Name       | Organization  | Contact Date |  Create Time  |Last Modified Time| Last Run Time |
 	  | Mr.  John Smith   |               | 2014-3-12    |  2014-3-22    | 2014-4-12        | 2014-5-15     |
 	  | Mrs. Jenny White  |     AAA       | 2014-3-10    |  2014-3-21    | 2014-4-10        | 2014-4-15     |

@@ -12,17 +12,35 @@
               %th Organization
               %th Contact Date
               %th Follow-up Date
+              %th
           %tbody
-          -if @agenda_records
-            -@agenda_records.each do |agenda_record|
-              %tr
-                %td=agenda_record.name
-                %td=agenda_record.organization
-                %td=agenda_record.contact_date
-                %td=agenda_record.followup_date
-                %td #{link_to 'More', '#'}
+            -if @agenda_records
+              -@agenda_records.each do |agenda_record|
+                %tr
+                  %td=agenda_record.name
+                  %td=agenda_record.organization
+                  %td=agenda_record.contact_date
+                  %td=agenda_record.followup_date
+                  %td #{link_to 'More', '#'}
+                 
     .col-sm-6
       %h3 Report Quickview
+      #recentlyreport-panel.panel.panel-default
+        %table#recentlyreport-table.table
+          %thead
+            %tr
+              %th Title
+              %th Create Time
+              %th Last Modified Time
+              %th
+          %tbody
+            -if @recentlyreport_records
+              -@recentlyreport_records.each do |recentlyreport_record|
+                %tr
+                  %td=recentlyreport_record.title
+                  %td=recentlyreport_record.create time
+                  %td=recentlyreport_record.last modified time
+                  %td #{link_to 'More', '#'}
   .row
     .col-sm-6
       %h3 New Added Contacts
