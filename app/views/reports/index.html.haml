@@ -3,7 +3,7 @@
 
 #mainbody.container
   .row
-    .col-sm-6
+    .col-sm-12
       %h4 Report Template
       #report-panel.panel.panel-default
         %table#report-table.table
@@ -13,6 +13,8 @@
               %th Description
               %th Last Modified By
               %th Last Modified Date
+              %th 
+              %th
           %tbody
           
           -if @report_records
@@ -22,4 +24,7 @@
                 %td=report_record.description
                 %td=report_record.last_modified_by
                 %td=report_record.last_modified_at
-                %td=link_to 'More', title: "agenda#{agenda_record.contact_id}", remote: true, class: 'agenda_link'
+                %td=button_to 'Delete'
+                %td=button_to 'Edit'
+    
+    =button_to 'Add New Template'
