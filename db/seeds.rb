@@ -8,9 +8,8 @@
 
 # user seed
 users = [
-       {:username => 'jiajia', :password => 'jiajia', :password_confirmation => 'jiajia', 
-       {:username => 'tony', :password => 'tony', :password_confirmation => 'tony', 
-       :email => '111@gmail.com', :first_name => 'jiajia', :last_name => 'hou'},y
+       {:username => 'jiajia', :password => 'jiajia', :password_confirmation => 'jiajia',
+       :email => '111@gmail.com', :first_name => 'jiajia', :last_name => 'hou'}
        ]
        
 users.each do |user|

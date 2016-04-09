@@ -1,0 +1,22 @@
+-# in app/views/donors/summary.html.haml
+
+%h2 Summary about #{@donor.first_name}
+
+%table#donor_summary
+  %thead
+    %tr
+      %th{:class => @summary_tab} Summary
+      %th{:class => @basic_tab} Basic
+      %th{:class => @contact_tab} Contact
+      %th{:class => @finance_tab} Finance
+      
+%table#summary
+  %tbody
+    - @donor_attr.each_pair do |key, val|
+      %tr
+        %td
+          = key
+        %td
+          %input{:type => 'text', :value => val, :readonly => true}
+
+%td= link_to "Back", donors_path
