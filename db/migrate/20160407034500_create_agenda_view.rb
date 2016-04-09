@@ -19,7 +19,7 @@ class CreateAgendaView < ActiveRecord::Migration
           c.id as contact_id
         FROM contacts c JOIN contact_people b ON c.contact_person_id = b.id
         JOIN organizations d ON b.organization_id = d.id
-        WHERE c.followup_date >= date('now'))
+        WHERE c.followup_date >= date('now')) as RESULT
         ORDER BY followup_date ASC
         ) 
   end
