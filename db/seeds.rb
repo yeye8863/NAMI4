@@ -79,7 +79,6 @@ reports = [
              :last_modified_by => 'ste',
              :last_modified_at => '2016-02-18'
             },
-            
             {
              :title => '2014 donation by city',
              :description => 'city: Houston, the whole 2014',
@@ -89,7 +88,6 @@ reports = [
              :last_modified_by => 'jojo',
              :last_modified_at => '2015-02-18'
             },
-  
             {
              :title => '2013 donation by city',
              :description => 'city: College Station, the whole 2013',
@@ -102,7 +100,7 @@ reports = [
           ]
           
 reports.each do |report|
-    Report.create!(report)
+  Report.create!(report)
 end
           
 donors.each do |donor|
