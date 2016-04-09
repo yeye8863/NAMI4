@@ -34,3 +34,68 @@ donors = [
 donors.each do |donor|
     Donor.create!(donor)
 end
+
+donors = [
+          {
+            :title => 'Mr.',
+            :first_name => 'Johnny',
+            :last_name => 'Walker'
+          },
+          {
+            :title => 'Mrs.',
+            :first_name => 'Michelle',
+            :last_name => 'Glanger'
+          }
+          ]
+
+contact_people = [
+          {
+            :title => 'Mr.',
+            :first_name => 'Peterson',
+            :last_name => 'Crab',
+            :organization_id => '1'
+          }
+          ]
+
+organizations = [
+          {
+            :name => 'Golden Lion'
+          }
+          ]
+  
+contacts = [
+          {
+            :contact_date => '2016-04-01',
+            :followup_date => '2016-04-12',
+            :donor_id => '1',
+            :narrative => 'Case 1'
+          },
+          {
+            :contact_date => '2016-04-02',
+            :followup_date => '2016-04-13',
+            :donor_id => '2',
+            :narrative => 'Case 2'
+          },
+          {
+            :contact_date => '2016-03-31',
+            :followup_date => '2016-04-11',
+            :contact_person_id => '1',
+            :narrative => 'Case 3'
+          }
+          ]
+          
+donors.each do |donor|
+  Donor.create!(donor)
+end
+
+contact_people.each do |contact_person|
+  ContactPerson.create!(contact_person)
+end
+
+organizations.each do |organization|
+  Organization.create!(organization)
+end
+
+contacts.each do |contact|
+  Contact.create!(contact)
+end
