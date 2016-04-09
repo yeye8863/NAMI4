@@ -2,7 +2,7 @@
 
 %h2 Summary about #{@donor.first_name}
 
-%table#donor_summary
+%table#donor_summary.table
   %thead
     %tr
       %th{:class => @summary_tab} Summary
@@ -10,7 +10,7 @@
       %th{:class => @contact_tab} Contact
       %th{:class => @finance_tab} Finance
       
-%table#summary
+%table#summary.table
   %tbody
     - @donor_attr.each_pair do |key, val|
       %tr
