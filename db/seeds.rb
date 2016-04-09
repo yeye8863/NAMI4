@@ -104,11 +104,7 @@ reports = [
 reports.each do |report|
     Report.create!(report)
 end
-<<<<<<< HEAD
 
-=======
-          
->>>>>>> f0ee33e780d16c9525922697a966e34c84048d4c
 donors.each do |donor|
   Donor.create!(donor)
 end

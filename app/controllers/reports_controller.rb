@@ -3,6 +3,7 @@ class ReportsController < ApplicationController
     
     def index
         @report_records = Report.all
+        debugger
     end
 
     def show
