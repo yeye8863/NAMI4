@@ -25,6 +25,8 @@ module NavigationHelpers
       dashboard_path      
     when /^(the )?report\s?page$/
       reports_path
+    when /^(the )?report\s?creator page$/
+      new_report_path
     when /^(the )?(search )?donor page$/
       donors_path
       

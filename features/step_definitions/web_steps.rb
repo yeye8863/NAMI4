@@ -53,7 +53,11 @@ When /^(?:|I )press "([^"]*)"$/ do |button|
   click_button(button)
 end
 
-When /^(?:|I )follow "([^"]*)"$/ do |link|
+When(/^(?:|I )click "([^"]*)"$/) do |button|
+  click_button(button)
+end
+
+When(/^(?:|I )follow "([^"]*)"$/) do |link|
   click_link(link)
 end
 
@@ -256,6 +260,7 @@ end
 Given /the following users exist/ do |users_table|
   users_table.hashes.each do |user|
     user[:password_confirmation] = user[:password]
+    user[:email] = 
     User.create user
   end
 end

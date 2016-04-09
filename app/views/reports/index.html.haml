@@ -1,2 +1,29 @@
 #title.container
   %h2 Report
+
+#mainbody.container
+  .row
+    .col-sm-12
+      %h4 Report Template
+      #report-panel.panel.panel-default
+        %table#report-table.table
+          %thead
+            %tr
+              %th Title
+              %th Description
+              %th Last Modified By
+              %th Last Modified Date
+              %th 
+              %th
+          %tbody
+          -if @report_records
+            -@report_records.each do |report_record|
+              %tr
+                %td=report_record.title
+                %td=report_record.description
+                %td=report_record.last_modified_by
+                %td=report_record.last_modified_at
+                %td=button_to 'Delete'
+                %td=button_to 'Edit'
+    
+    =button_to 'Add New Template'
