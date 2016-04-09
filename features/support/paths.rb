@@ -19,14 +19,20 @@ module NavigationHelpers
       homepage_path
     when /^(the )?signup\s?page$/
       new_user_path
-    when /^(the )?donor\s?page$/
+    when /^(the )?search donors page$/
       donors_path
     when /^(the )?dashboard\s?page$/
       dashboard_path      
     when /^(the )?report\s?page$/
       reports_path
+<<<<<<< HEAD
     when /^(the )?report\s?creator page$/
       new_report_path
+=======
+    when /^(the )?(search )?donor page$/
+      donors_path
+      
+>>>>>>> 580cac4d044bf6983ff578f631ea1dd09400f186
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

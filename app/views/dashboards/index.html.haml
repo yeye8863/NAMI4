@@ -1,3 +1,4 @@
+=javascript_include_tag "agendas"
 #title.container
   %h1  Dashboard
 #mainbody.container
@@ -12,15 +13,16 @@
               %th Organization
               %th Contact Date
               %th Follow-up Date
+              %th 
           %tbody
-          -if @agenda_records
-            -@agenda_records.each do |agenda_record|
-              %tr
-                %td=agenda_record.name
-                %td=agenda_record.organization
-                %td=agenda_record.contact_date
-                %td=agenda_record.followup_date
-                %td=link_to 'More', title: "agenda#{agenda_record.contact_id}", remote: true, class: 'agenda_link'
+            -if @agenda_records
+              -@agenda_records.each do |agenda_record|
+                %tr
+                  %td=agenda_record.name
+                  %td=agenda_record.organization
+                  %td=agenda_record.contact_date
+                  %td=agenda_record.followup_date
+                  %td=link_to 'More', agenda_path("#{agenda_record.contact_id}"), remote: true, data: {toggle: 'modal', target: '#agendaInfo'}
     .col-sm-6
       %h3 Report Quickview
   .row
@@ -28,3 +30,12 @@
       %h3 New Added Contacts
     .col-sm-6
       %h3 Admin Tool Box
+  #agendaInfo.modal.fade{:role => 'dialog'}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{:type=>'button',:data => {:dismiss => 'modal'},:aria => { :label => 'Close'}}="&times;".html_safe
+          %h4.modal-title Description
+        .modal-body
+        .modal-footer
+          %button.btn.btn-default{:type=>'button',:data => {:dismiss => 'modal'}} Close
