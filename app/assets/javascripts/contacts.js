@@ -5,16 +5,16 @@ $("#contact_tab tbody").on("click", "tr", selRow);
 
 function selRow(event) {
 	if(!$("#edit").hasClass("editing")){
-		if($(this).hasClass("active"))
-			$(this).removeClass("active");
-		else $(this).addClass("active").siblings().removeClass("active");
+		if($(this).hasClass("info"))
+			$(this).removeClass("info");
+		else $(this).addClass("info").siblings().removeClass("info");
 	}
 }
 
 function insRow() {
 	if(!$("#edit").hasClass("editing")){
 		var row = $("#contact_tab tbody")[0].insertRow(0);
-		$(row).addClass("active").siblings().removeClass("active");
+		$(row).addClass("info").siblings().removeClass("info");
 		for(var i=0; i<=2; i++) row.insertCell(i).innerHTML = "<input>";
 		for(var i=3; i<=4; i++) row.insertCell(i);
 		$("#edit").addClass("editing");
@@ -23,7 +23,7 @@ function insRow() {
 }
 
 function editRow() {
-	var selected = $("#contact_tab tbody .active");
+	var selected = $("#contact_tab tbody .info");
 	if(selected.length)
 		if($(this).hasClass("editing")) saveData();
 		else{
@@ -38,7 +38,7 @@ function editRow() {
 }
 
 function saveRow(id){
-	var selected = $("#contact_tab tbody .active");
+	var selected = $("#contact_tab tbody .info");
 	var cells = $("td", selected).slice(0, 3);
 	cells.each(function(){
 		$(this).html($("input", $(this)).val().trim());
@@ -49,7 +49,7 @@ function saveRow(id){
 }
 
 function delRow(){
-	var selected = $("#contact_tab tbody .active");
+	var selected = $("#contact_tab tbody .info");
 	if(selected.length)
 		selected.each(function(){ $(this).remove() });
 	if($("#edit").hasClass("editing")){
@@ -59,7 +59,7 @@ function delRow(){
 }
 
 function delData(){
-	var selected = $("#contact_tab tbody .active");
+	var selected = $("#contact_tab tbody .info");
 	if(selected.length)
 		if(confirm("Are you sure?"))
 			if(selected.data("id"))
@@ -74,7 +74,7 @@ function delData(){
 }
 
 function saveData(){
-	var selected = $("#contact_tab tbody .active");
+	var selected = $("#contact_tab tbody .info");
 	if(selected.length){
 		var attr = [];
 		var cells = $("td", selected).slice(0, 3);
