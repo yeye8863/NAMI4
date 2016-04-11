@@ -1,25 +1,24 @@
-#title.container
+=render :partial=>'layouts/banner'
+#title.container.titleLine
   %h2 Donor Management
-  .h2 Donor Search
-
-  = form_tag donors_path, :method => :get do
-
-    = label :donor, :first_name, 'First Name'
-    = text_field :donor, 'first_name'
-
-    = label :donor, :last_name, 'Last Name'
-    = text_field :donor, 'last_name'
-  
-    = label :donor, :company, 'Company'
-    = text_field :donor, 'company'
-    
-    = label :donor, :organization, 'Organiztion'
-    = text_field :donor, 'organization'
-    
-    = submit_tag 'Search'
-    = button_tag "Reset", type: :reset 
-
-  = link_to 'Add A New Donor', new_donor_path
+#search-box.container
+  = form_tag donors_path, :method => :get, class: 'form-inline' do
+    .form-group
+      = label :donor, :first_name, 'First Name'
+      = text_field :donor, 'first_name', class: 'form-control'
+    .form-group
+      = label :donor, :last_name, 'Last Name'
+      = text_field :donor, 'last_name', class: 'form-control'
+    .form-group
+      = label :donor, :company, 'Company'
+      = text_field :donor, 'company', class: 'form-control'
+    .form-group
+      = label :donor, :organization, 'Organiztion'
+      = text_field :donor, 'organization', class: 'form-control'
+    .button-line.pull-right
+      = submit_tag 'Search', class: 'btn btn-primary'
+      = link_to "Reset", '#', type: :resetm, class: 'btn btn-default' 
+      = link_to 'Add A New Donor', new_donor_path, class:'btn btn-default'
 
 %h2 Search result
 %table.table

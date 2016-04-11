@@ -1,48 +1,61 @@
 -# in app/views/donors/summary.html.haml
-
-%h2 Summary of #{@donor.first_name}
-= link_to "Back", donors_path
-
-%table#donor_summary
-  %thead
-    %tr
-      %th{:class => @summary_tab} Summary
-      %th{:class => @basic_tab} Basic
-      %th{:class => @contact_tab} Contact
-      %th{:class => @finance_tab} Finance
-      
-%h3 Basic Information of #{@donor.first_name}
-%table#basic
-  %tbody
-    - @donor_basic.each_pair do |key, val|
-      %tr
-        %td
-          = key
-        %td
-          %input{:type => 'text', :value => val, :readonly => true}
-
-
-%h3 Contact Records of #{@donor.first_name}
-%table#contact.table.clickable-row{:data => {:id => @donor.id}}
-  %thead
-    %tr
-      - @donor_contact.each do |val|
-        %th
-          = val
-  %tbody
-    - @contacts.each do |contact|
-      %tr{:data => {:id => contact.id}}
-        %td
-          = contact.contact_date
-        %td
-          = contact.followup_date
-        %td
-          = contact.narrative
-        %td
-          = contact.created_by
-        %td
-          = contact.last_modified_by
-%button.btn.btn-success#add{type:'button'} Add
-%button.btn.btn-info#edit{type:'button'} Edit
-%button.btn.btn-danger#delete{type:'button'} Delete
-= javascript_include_tag "contacts"
+=javascript_include_tag 'donors.js'
+=render :partial=>'layouts/banner'
+#title.container.titleLine
+  %h2 Donor Information
+  
+%ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
+  %li.active 
+    %a{:id=>'summary-tab',:href=>'#summary', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'summary'}} Summary
+  %li 
+    %a{:id=>'basic-tab',:href=>'#basic', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'basic'}} Basic
+  %li
+    %a{:id=>'contact-tab',:href=>'#contact', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'contact'}} Contact
+  %li 
+    %a{:id=>'finance-tab',:href=>'#finance', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'finance'}} Finance
+    
+.tab-content
+  #summary.tab-pane.active{:role=>'tabpanel'}
+    %table#summary-table.table
+      %tbody
+        - @donor_attr.each_pair do |key, val|
+          - if val
+            %tr
+              %td.bold= key
+              %td= val
+                
+    =link_to "Back", donors_path, class: 'btn btn-primary'
+  #basic.tab-pane{:role=>'tabpanel'}
+    %table#basic
+      %tbody
+        - @donor_basic.each_pair do |key, val|
+          %tr
+            %td
+              = key
+            %td
+              %input{:type => 'text', :value => val, :readonly => true}
+  #contact.tab-pane{:role=>'tabpanel'}
+    %table#contact.table.clickable-row{:data => {:id => @donor.id}}
+     %thead
+       %tr
+         - @donor_contact.each do |val|
+           %th
+             = val
+     %tbody
+       - @contacts.each do |contact|
+         %tr{:data => {:id => contact.id}}
+           %td
+             = contact.contact_date
+           %td
+             = contact.followup_date
+           %td
+             = contact.narrative
+           %td
+             = contact.created_by
+           %td
+             = contact.last_modified_by
+    %button.btn.btn-success#add{type:'button'} Add
+    %button.btn.btn-info#edit{type:'button'} Edit
+    %button.btn.btn-danger#delete{type:'button'} Delete
+    = javascript_include_tag "contacts" 
+  #finance.tab-pane{:role=>'tabpanel'}
