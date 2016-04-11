@@ -1,7 +1,8 @@
 class CreateAgendaView < ActiveRecord::Migration
   def up
     create_view :agenda_views, 
-      %Q(SELECT * FROM (SELECT 
+      %Q(SELECT * FROM (
+        SELECT 
           a.title||' '||a.first_name||' '||a.last_name as name,
           NULL as organization,
           c.contact_date as contact_date,
@@ -18,7 +19,8 @@ class CreateAgendaView < ActiveRecord::Migration
           c.id as contact_id
         FROM contacts c JOIN contact_people b ON c.contact_person_id = b.id
         JOIN organizations d ON b.organization_id = d.id
-        WHERE c.followup_date >= date('now')) AS res
+        WHERE c.followup_date >= date('now')
+        ) AS res
         ORDER BY followup_date ASC
         ) 
   end
