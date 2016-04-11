@@ -81,23 +81,23 @@ reports = [
              :last_modified_at => '2015-02-18'
             }
           ]
-          
-reports.each do |report|
-  Report.create!(report)
-end
-          
+
 donors.each do |donor|
   Donor.create!(donor)
-end
-
-contact_people.each do |contact_person|
-  ContactPerson.create!(contact_person)
 end
 
 organizations.each do |organization|
   Organization.create!(organization)
 end
 
+contact_people.each do |contact_person|
+  ContactPerson.create!(contact_person)
+end
+
 contacts.each do |contact|
   Contact.create!(contact)
+end
+
+reports.each do |report|
+  Report.create!(report)
 end
