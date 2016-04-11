@@ -1,7 +1,7 @@
 $("#add").click(insRow);
 $("#edit").click(editRow);
 $("#delete").click(delData);
-$("#contact tbody").on("click", "tr", selRow);
+$("#contact_tab tbody").on("click", "tr", selRow);
 
 function selRow(event) {
 	if(!$("#edit").hasClass("editing")){
@@ -13,7 +13,7 @@ function selRow(event) {
 
 function insRow() {
 	if(!$("#edit").hasClass("editing")){
-		var row = $("#contact tbody")[0].insertRow(0);
+		var row = $("#contact_tab tbody")[0].insertRow(0);
 		$(row).addClass("active").siblings().removeClass("active");
 		for(var i=0; i<=2; i++) row.insertCell(i).innerHTML = "<input>";
 		for(var i=3; i<=4; i++) row.insertCell(i);
@@ -23,7 +23,7 @@ function insRow() {
 }
 
 function editRow() {
-	var selected = $("#contact tbody .active");
+	var selected = $("#contact_tab tbody .active");
 	if(selected.length)
 		if($(this).hasClass("editing")) saveData();
 		else{
@@ -38,7 +38,7 @@ function editRow() {
 }
 
 function saveRow(id){
-	var selected = $("#contact tbody .active");
+	var selected = $("#contact_tab tbody .active");
 	var cells = $("td", selected).slice(0, 3);
 	cells.each(function(){
 		$(this).html($("input", $(this)).val().trim());
@@ -49,7 +49,7 @@ function saveRow(id){
 }
 
 function delRow(){
-	var selected = $("#contact tbody .active");
+	var selected = $("#contact_tab tbody .active");
 	if(selected.length)
 		selected.each(function(){ $(this).remove() });
 	if($("#edit").hasClass("editing")){
@@ -59,7 +59,7 @@ function delRow(){
 }
 
 function delData(){
-	var selected = $("#contact tbody .active");
+	var selected = $("#contact_tab tbody .active");
 	if(selected.length)
 		if(confirm("Are you sure?"))
 			if(selected.data("id"))
@@ -74,7 +74,7 @@ function delData(){
 }
 
 function saveData(){
-	var selected = $("#contact tbody .active");
+	var selected = $("#contact_tab tbody .active");
 	if(selected.length){
 		var attr = [];
 		var cells = $("td", selected).slice(0, 3);
@@ -94,7 +94,7 @@ function saveData(){
 			$.ajax({
 				type: "POST",
 				url: "/contacts/",
-				data: {"attr": attr, "id": $("#contact").data("id")},
+				data: {"attr": attr, "id": $("#contact_tab").data("id")},
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) { alert('Error!'); }

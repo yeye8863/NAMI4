@@ -18,7 +18,7 @@
   #summary.tab-pane.active{:role=>'tabpanel'}
     %table#summary-table.table
       %tbody
-        - @donor_attr.each_pair do |key, val|
+        - @donor_basic.each_pair do |key, val|
           - if val
             %tr
               %td.bold= key
@@ -35,25 +35,25 @@
             %td
               %input{:type => 'text', :value => val, :readonly => true}
   #contact.tab-pane{:role=>'tabpanel'}
-    %table#contact.table.clickable-row{:data => {:id => @donor.id}}
-     %thead
-       %tr
-         - @donor_contact.each do |val|
-           %th
-             = val
-     %tbody
-       - @contacts.each do |contact|
-         %tr{:data => {:id => contact.id}}
-           %td
-             = contact.contact_date
-           %td
-             = contact.followup_date
-           %td
-             = contact.narrative
-           %td
-             = contact.created_by
-           %td
-             = contact.last_modified_by
+    %table#contact_tab.table.clickable-row{:data => {:id => @donor.id}}
+      %thead
+        %tr
+          - @donor_contact.each do |val|
+            %th
+              = val
+      %tbody
+        - @contacts.each do |contact|
+          %tr{:data => {:id => contact.id}}
+            %td
+              = contact.contact_date
+            %td
+              = contact.followup_date
+            %td
+              = contact.narrative
+            %td
+              = contact.created_by
+            %td
+              = contact.last_modified_by
     %button.btn.btn-success#add{type:'button'} Add
     %button.btn.btn-info#edit{type:'button'} Edit
     %button.btn.btn-danger#delete{type:'button'} Delete
