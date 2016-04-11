@@ -18,7 +18,7 @@ class DonorsController < ApplicationController
     def show
         id = params[:id]
         @donor = Donor.find(id)
-        @donor_attr = {
+        @donor_basic = {
             'Title' => @donor.title,
             'First Name' => @donor.first_name,
             'Last Name' => @donor.last_name,
@@ -39,5 +39,7 @@ class DonorsController < ApplicationController
             'Created at' => @donor.created_at,
             'Last Modified at' => @donor.last_modified_at
 	        }
+	    @donor_contact = ['Contact Date', 'Followup Date', 'Narrative', 'Created By', 'Last Modified By']
+	    @contacts = Contact.where(:donor_id => @donor.id)
     end
 end

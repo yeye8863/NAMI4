@@ -1,8 +1,9 @@
 -# in app/views/donors/summary.html.haml
 
-%h2 Summary about #{@donor.first_name}
+%h2 Summary of #{@donor.first_name}
+= link_to "Back", donors_path
 
-%table#donor_summary.table
+%table#donor_summary
   %thead
     %tr
       %th{:class => @summary_tab} Summary
@@ -10,13 +11,38 @@
       %th{:class => @contact_tab} Contact
       %th{:class => @finance_tab} Finance
       
-%table#summary.table
+%h3 Basic Information of #{@donor.first_name}
+%table#basic
   %tbody
-    - @donor_attr.each_pair do |key, val|
+    - @donor_basic.each_pair do |key, val|
       %tr
         %td
           = key
         %td
           %input{:type => 'text', :value => val, :readonly => true}
 
-%td= link_to "Back", donors_path
+
+%h3 Contact Records of #{@donor.first_name}
+%table#contact{class:"table clickable-row", cellspacing:"0", width:"100%"}
+  %thead
+    %tr
+      - @donor_contact.each do |val|
+        %th
+          = val
+  %tbody
+    - @contacts.each do |contact|
+      %tr
+        %td
+          = contact.contact_date
+        %td
+          = contact.followup_date
+        %td
+          = contact.narrative
+        %td
+          = contact.created_by
+        %td
+          = contact.last_modified_by
+%button#add{type:'button'} Add
+%button#delete{type:'button'} Delete
+%button#edit{type:'button'} Edit
+= javascript_include_tag "contacts"
