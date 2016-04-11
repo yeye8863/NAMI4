@@ -8,7 +8,6 @@ class DonorsController < ApplicationController
     def new 
     end
     
-
     def create
         @donor = Donor.create!(params[:donor])
         flash[:notice] = "#{@donor.first_name} #{@donor.last_name}  was successfully created."
