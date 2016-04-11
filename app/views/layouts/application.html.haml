@@ -5,16 +5,5 @@
     = stylesheet_link_tag 'application', 'media' => 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  %body.container
-    #banner.container
-      .row
-        .col-sm-6
-          #flash
-            - if flash[:notice]
-              =flash[:notice]
-            - elsif flash[:warning]
-              =flash[:warning]
-        .col-sm-6
-          =link_to "Return to Homepage", homepage_path
-        
-    = yield
+  
+  = yield

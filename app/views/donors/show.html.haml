@@ -1,22 +1,29 @@
 -# in app/views/donors/summary.html.haml
+=javascript_include_tag 'donors.js'
+#title.container.titleLine
+  %h2 Donor Information
 
-%h2 Summary about #{@donor.first_name}
-
-%table#donor_summary.table
-  %thead
-    %tr
-      %th{:class => @summary_tab} Summary
-      %th{:class => @basic_tab} Basic
-      %th{:class => @contact_tab} Contact
-      %th{:class => @finance_tab} Finance
-      
-%table#summary.table
-  %tbody
-    - @donor_attr.each_pair do |key, val|
-      %tr
-        %td
-          = key
-        %td
-          %input{:type => 'text', :value => val, :readonly => true}
-
-%td= link_to "Back", donors_path
+%ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
+  %li.active 
+    %a{:id=>'summary-tab',:href=>'#summary', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'summary'}} Summary
+  %li 
+    %a{:id=>'basic-tab',:href=>'#basic', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'basic'}} Basic
+  %li
+    %a{:id=>'contact-tab',:href=>'#contact', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'contact'}} Contact
+  %li 
+    %a{:id=>'finance-tab',:href=>'#finance', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'finance'}} Finance
+    
+.tab-content
+  #summary.tab-pane.active{:role=>'tabpanel'}
+    %table#summary-table.table
+      %tbody
+        - @donor_attr.each_pair do |key, val|
+          - if val
+            %tr
+              %td.bold= key
+              %td= val
+                
+    =link_to "Back", donors_path, class: 'btn btn-primary'
+  #basic.tab-pane{:role=>'tabpanel'}
+  #contact.tab-pane{:role=>'tabpanel'}
+  #finance.tab-pane{:role=>'tabpanel'}

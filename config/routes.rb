@@ -9,15 +9,12 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new', :as => 'new_login'
   post 'login' => 'sessions#create', :as => 'login'
   get 'logout' => 'sessions#destroy', :as => 'logout'
-
   get 'homepage' => 'users#index', :as => 'homepage'
+  get 'dashboard' => 'dashboards#index', :as => 'dashboard'
   
   resources :donors
   resources :reports
   resources :contacts
   resources :agendas
-  
-  get 'dashboard' => 'dashboards#index', :as => 'dashboard'
-  get '/reports/new' => 'reports#new'
-  
+
 end
