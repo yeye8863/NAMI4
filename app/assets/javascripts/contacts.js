@@ -30,7 +30,7 @@ function editRow() {
 			var cells = $("td", selected).slice(0, 3);
 			cells.each(function(){
 				if($("input", $(this)).length == 0)
-					$(this).html("<input value='" + $(this).text().trim() + "'>");
+					$(this).html("<input style='width:100%' value='" + $(this).text().trim() + "'>");
 			});
 			$(this).text("Save");
 			$(this).addClass("editing");

@@ -44,15 +44,15 @@
       %tbody
         - @contacts.each do |contact|
           %tr{:data => {:id => contact.id}}
-            %td
+            %td{:width => "15%"}
               = contact.contact_date
-            %td
+            %td{:width => "15%"}
               = contact.followup_date
-            %td
+            %td{:width => "40%"}
               = contact.narrative
-            %td
+            %td{:width => "15%"}
               = contact.created_by
-            %td
+            %td{:width => "15%"}
               = contact.last_modified_by
     %button.btn.btn-success#add{type:'button'} Add
     %button.btn.btn-info#edit{type:'button'} Edit
