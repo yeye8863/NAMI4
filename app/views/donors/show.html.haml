@@ -1,8 +1,7 @@
--# in app/views/donors/summary.html.haml
 =render :partial=>'layouts/banner'
 =javascript_include_tag 'donors.js'
-=javascript_include_tag "contacts.js" 
-#title.container.titleLine
+=javascript_include_tag 'contacts.js' 
+#page-title.container.titleLine
   %h2 Donor Information
 %ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
   %li.active 
@@ -27,67 +26,67 @@
                   %td= val
         .pull-right  
           =link_to "Back", donors_path, class: 'btn btn-primary'
-          
   #basic.tab-pane{:role=>'tabpanel'}
-    =form_for @donor, :html=>{:class=>'form donor-form col-sm-offset-1'} do |f|
+    %label#donorId{:style=>'display:none'}=@donor.id
+    =form_for @donor, :remote=>true, :method=>'put', :html=>{:class=>'form donor-form col-sm-offset-1'} do |f|
       .form-group
         .form-group
           .row
             .col-sm-3
               =f.label :title
-              =f.text_field :title, class:'form-control'
+              =f.text_field :title, class:'form-control', id:'title'
             .col-sm-3
               =f.label :salution
-              =f.text_field :salution, class:'form-control'
+              =f.text_field :salution, class:'form-control', id:'salution'
         .form-group
           .row
             .col-sm-3
               =f.label :first_name
-              =f.text_field :first_name, class:'form-control'
+              =f.text_field :first_name, class:'form-control', id:'first_name'
             .col-sm-3
               =f.label :last_name
-              =f.text_field :last_name, class:'form-control'
+              =f.text_field :last_name, class:'form-control', id:'last_name'
             .col-sm-3
               =f.label :middle_name
-              =f.text_field :middle_name, class:'form-control'
+              =f.text_field :middle_name, class:'form-control', id:'middle_name'
         .form-group
           .row
             .col-sm-3  
               =f.label :email
-              =f.text_field :email, class:'form-control'
+              =f.text_field :email, class:'form-control', id:'email'
             .col-sm-3  
               =f.label :home_phone
-              =f.text_field :home_phone, class:'form-control'
+              =f.text_field :home_phone, class:'form-control', id:'home_phone'
             .col-sm-3  
               =f.label :business_phone
-              =f.text_field :business_phone, class:'form-control'
+              =f.text_field :business_phone, class:'form-control', id:'business_phone'
         .form-group
           .row
             .col-sm-3  
               =f.label :company
-              =f.text_field :company, class:'form-control'
+              =f.text_field :company, class:'form-control', id:'company'
             .col-sm-3  
               =f.label :organization
-              =f.text_field :organization, class:'form-control'
+              =f.text_field :organization, class:'form-control', id:'organization'
         .form-group
           .row  
             .col-sm-3  
               =f.label :street_address
-              =f.text_field :street_address, class:'form-control'
+              =f.text_field :street_address, class:'form-control', id:'street_address'
             .col-sm-3
               =f.label :city
-              =f.text_field :city, class:'form-control'
+              =f.text_field :city, class:'form-control', id:'city'
             .col-sm-3  
               =f.label :state
-              =f.text_field :state, class:'form-control'
+              =f.text_field :state, class:'form-control', id:'state'
             .col-sm-3  
               =f.label :country
-              =f.text_field :country, class:'form-control'
+              =f.text_field :country, class:'form-control', id:'country'
             .col-sm-3  
               =f.label :zipcode
-              =f.text_field :zipcode, class:'form-control'
+              =f.text_field :zipcode, class:'form-control', id:'zipcode'
       .button-line.pull-right
-        =f.submit class:'btn btn-default'
+        =f.submit id:'basic-submit', class:'btn btn-default'
         =link_to "Back", donors_path, class: 'btn btn-primary'
   #contact.tab-pane{:role=>'tabpanel'}
     %table#contact_tab.table.clickable-row{:data => {:id => @donor.id}}

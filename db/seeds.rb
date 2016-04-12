@@ -26,22 +26,22 @@ end
 
 #donor seed
 donors = [
-            {:title => 'Mr.', :first_name => 'Albert', :last_name => 'Linkoln', :company => 'Apple', :organization => 'PTSD'},
-            {:title => 'Mrs.', :first_name => 'Sophia', :last_name => 'Elizabeth', :company => 'Google', :organization => 'DSO'},
-            {:title => 'Mr', :first_name => 'Albert', :last_name => 'Zhang', :company => 'Linkendin', :organization => 'PTSD'},
-            {:title => 'Mr.', :first_name => 'Sam', :last_name => 'Smith', :company => 'Apple', :organization => 'PTSD'},
-            {:title => 'Mr.', :first_name => 'Johnny', :last_name => 'Walker'},
-            {:title => 'Mrs.', :first_name => 'Michelle',:last_name => 'Glanger'}
+            {:title => 'mr.', :first_name => 'albert', :last_name => 'linkoln', :company => 'apple', :organization => 'ptsd'},
+            {:title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :company => 'google', :organization => 'dso'},
+            {:title => 'mr', :first_name => 'albert', :last_name => 'zhang', :company => 'linkendin', :organization => 'ptsd'},
+            {:title => 'mr.', :first_name => 'sam', :last_name => 'smith', :company => 'apple', :organization => 'ptsd'},
+            {:title => 'mr.', :first_name => 'johnny', :last_name => 'walker'},
+            {:title => 'mrs.', :first_name => 'michelle',:last_name => 'glanger'}
           ]
 
 contact_people = [
-          {:title => 'Mr.', :first_name => 'Peterson', :last_name => 'Crab', :organization_id => '1'},
-          {:title => 'Mrs.', :first_name => 'Sophia', :last_name => 'Elizabeth', :organization_id => '2'}
+          {:title => 'mr.', :first_name => 'peterson', :last_name => 'crab', :organization_id => '1'},
+          {:title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :organization_id => '2'}
           ]
 
 organizations = [
-          {:name => 'Golden Lion'},
-          {:name => 'Silver Fox'}
+          {:name => 'golden lion'},
+          {:name => 'silver fox'}
           ]
   
 contacts = [
