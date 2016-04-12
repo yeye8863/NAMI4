@@ -1,2 +1,41 @@
-#title.container
+=render :partial=>'layouts/banner'
+#title.container.titleLine
   %h2 Report
+#search-box.container
+  = form_tag reports_path, :method => :get, class: 'form-inline' do
+    .form-group
+      = label :report, :title, 'Title'
+      = text_field :report, 'title', class: 'form-control'
+    .form-group
+      = label :report, :description, 'Description'
+      = text_field :report, 'description', class: 'form-control'
+    .form-group.pull-right
+      = submit_tag 'Search', class: 'btn btn-primary'
+      = link_to "Reset", '#', type: :resetm, class: 'btn btn-default' 
+      = link_to 'Add A New Donor', new_donor_path, class:'btn btn-default'
+#mainbody.container
+  .row
+    .col-sm-12
+      %h4 Report Template
+      #report-panel.panel.panel-default
+        %table#report-table.table
+          %thead
+            %tr
+              %th Title
+              %th Description
+              %th Last Modified By
+              %th Last Modified Date
+              %th 
+              %th
+          %tbody
+          -if @report_records
+            -@report_records.each do |report_record|
+              %tr
+                %td=report_record.title
+                %td=report_record.description
+                %td=report_record.last_modified_by
+                %td=report_record.last_modified_at
+                %td=link_to 'Delete','#', {:class => 'btn btn-default'}
+                %td=link_to 'Edit','#', {:class => 'btn btn-default'}
+    
+    =link_to 'Add New Template','#',{:class => 'btn btn-default pull-right'}

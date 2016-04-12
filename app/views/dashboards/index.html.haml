@@ -1,6 +1,7 @@
+=render :partial=>'layouts/banner'
 =javascript_include_tag "agendas"
-#title.container
-  %h1  Dashboard
+#title.container.titleLine
+  %h2  Dashboard
 #mainbody.container
   .row
     .col-sm-6
@@ -12,7 +13,7 @@
               %th Name
               %th Organization
               %th Contact Date
-              %th Follow-up Date
+              %th Followup Date
               %th 
           %tbody
             -if @agenda_records
