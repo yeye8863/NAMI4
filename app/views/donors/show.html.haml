@@ -1,7 +1,6 @@
 -# in app/views/donors/summary.html.haml
 =render :partial=>'layouts/banner'
 =javascript_include_tag 'donors.js'
-=javascript_include_tag "contacts.js" 
 #title.container.titleLine
   %h2 Donor Information
 %ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
@@ -114,4 +113,5 @@
       %button.btn.btn-info#edit{type:'button'} Edit
       %button.btn.btn-danger#delete{type:'button'} Delete
       =link_to "Back", donors_path, class: 'btn btn-primary'
+    =javascript_include_tag "contacts.js" 
   #finance.tab-pane{:role=>'tabpanel'}

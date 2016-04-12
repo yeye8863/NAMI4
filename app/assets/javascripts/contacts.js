@@ -1,7 +1,34 @@
+//= require bootstrap-datepicker
 $("#add").click(insRow);
 $("#edit").click(editRow);
 $("#delete").click(delData);
 $("#contact_tab tbody").on("click", "tr", selRow);
+
+function selDate(a, b){
+	var now = new Date();
+    var d1 = a.datepicker({
+    	format: "yyyy-mm-dd",
+    	onRender: function(date) {
+    		return date.valueOf() > now.valueOf() ? "disabled" : "";
+    	}
+    }).on('changeDate', function(ev) {
+    	if (ev.date.valueOf() > d2.date.valueOf()) {
+	        var newDate = new Date(ev.date)
+	        newDate.setDate(newDate.getDate() + 1);
+	        d2.setValue(newDate);
+      	}
+    	d1.hide();
+    	b[0].focus();
+    }).data('datepicker');
+    var d2 = b.datepicker({
+    	format: "yyyy-mm-dd",
+      	onRender: function(date) {
+    		return date.valueOf() < d1.date.valueOf() ? "disabled" : "";
+      	}
+    }).on('changeDate', function(ev) {
+      	d2.hide();
+    }).data('datepicker');
+}
 
 function selRow(event) {
 	if(!$("#edit").hasClass("editing")){
@@ -14,12 +41,13 @@ function selRow(event) {
 function insRow() {
 	if(!$("#edit").hasClass("editing")){
 		var row = $("#contact_tab tbody")[0].insertRow(0);
+		var cells = new Array(3);
 		$(row).addClass("info").siblings().removeClass("info");
 		for(var i=0; i<=2; i++){
-			var cell = row.insertCell(i);
-			cell.innerHTML = "<input style='width:100%'>";
-			if(i<2) $(function(){$("input", cell).datepicker({dateFormat:"yy-mm-dd"})});
+			cells[i] = row.insertCell(i);
+			cells[i].innerHTML = "<input value style='width:100%'>";
 		}
+		selDate($("input", cells[0]), $("input", cells[1]));
 		for(var i=3; i<=4; i++) row.insertCell(i);
 		$("#edit").addClass("editing");
 		$("#edit").text("Save");
@@ -36,10 +64,7 @@ function editRow() {
 				if($("input", $(this)).length == 0)
 					$(this).html("<input style='width:100%' value='" + $(this).html().trim() + "'>");
 			});
-			$(function(){
-				$("input", cells[0]).datepicker({dateFormat:"yy-mm-dd"});
-				$("input", cells[1]).datepicker({dateFormat:"yy-mm-dd"});
-			});
+			selDate($("input", cells[0]), $("input", cells[1]));
 			$(this).text("Save");
 			$(this).addClass("editing");
 		}
