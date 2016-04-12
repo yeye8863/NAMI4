@@ -5,12 +5,10 @@ class ContactsController < ApplicationController
         @contact = @donor.contacts.build({
             :contact_date => a[0],
             :followup_date => a[1],
-            :narrative => a[2],
-            :created_by => a[3],
-            :last_modified_by => a[4],
+            :narrative => a[2]
         })
         @contact.save!
-        render :json => @contact.id if request.xhr?
+        render :json => @contact if request.xhr?
     end
 
     def destroy
@@ -25,10 +23,8 @@ class ContactsController < ApplicationController
         @contact.update_attributes!({
             :contact_date => a[0],
             :followup_date => a[1],
-            :narrative => a[2],
-            :created_by => a[3],
-            :last_modified_by => a[4],
+            :narrative => a[2]
         })
-        render :nothing => true
+        render :json => @contact if request.xhr?
     end
 end
