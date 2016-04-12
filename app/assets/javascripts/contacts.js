@@ -56,7 +56,7 @@ function saveRow(data){
 	if(data.id) selected.data("id", data.id);
 	$("#edit").text("Edit");
 	$("#edit").removeClass("editing");
-	$("#contact_tab").notify("Save success!", {className: "success", position:"bottom right"});
+	$("#contact_tab").notify("Save success!", {className: "success", position:"bottom left"});
 }
 
 function delRow(){
@@ -67,7 +67,7 @@ function delRow(){
 		$("#edit").removeClass("editing");
 		$("#edit").text("Edit");
 	}
-	$("#contact_tab").notify("Delete success!", {className: "success", position:"bottom right"});
+	$("#contact_tab").notify("Delete success!", {className: "success", position:"bottom left"});
 }
 
 function delData(){
@@ -81,7 +81,7 @@ function delData(){
 			       	timeout: 5000,
 			       	success: function(data, requestStatus, xhrObject){ delRow(); },
 			       	error: function(xhrObj, textStatus, exception) {
-			       		$("#contact_tab").notify("Failed to delete data!", {className: "error", position:"bottom right"});
+			       		$("#contact_tab").notify("Failed to delete data!", {className: "error", position:"bottom left"});
 			       	}
 				})   
 			else delRow();
@@ -103,7 +103,7 @@ function saveData(){
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#contact_tab").notify("Failed to save data!", {className: "error", position:"bottom right"});
+					$("#contact_tab").notify("Failed to save data!", {className: "error", position:"bottom left"});
 			    }
 			})
 		else
@@ -114,7 +114,7 @@ function saveData(){
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#contact_tab").notify("Failed to add data!", {className: "error", position:"bottom right"});
+					$("#contact_tab").notify("Failed to add data!", {className: "error", position:"bottom left"});
 			    }
 			})
 	}
