@@ -1,6 +1,5 @@
 =render :partial=>'layouts/banner'
 =javascript_include_tag 'donors.js'
-=javascript_include_tag 'contacts.js' 
 #page-title.container.titleLine
   %h2 Donor Information
 %ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
@@ -89,28 +88,31 @@
         =f.submit id:'basic-submit', class:'btn btn-default'
         =link_to "Back", donors_path, class: 'btn btn-primary'
   #contact.tab-pane{:role=>'tabpanel'}
-    %table#contact_tab.table.clickable-row{:data => {:id => @donor.id}}
+    %table.table{:style => "margin:0; width:100%;"} 
       %thead
         %tr
-          - @donor_contact.each do |val|
-            %th
-              = val
-      %tbody
-        - @contacts.each do |contact|
-          %tr{:data => {:id => contact.id}}
-            %td{:width => "15%"}
-              = contact.contact_date
-            %td{:width => "15%"}
-              = contact.followup_date
-            %td{:width => "40%"}
-              = contact.narrative
-            %td{:width => "15%"}
-              = contact.created_by
-            %td{:width => "15%"}
-              = contact.last_modified_by
+          - @donor_contact.each_pair do |key, val|
+            %th{:width => val}
+              = key
+    %div#scroll_tab{:stype => "height: 50%; overflow: auto;"}
+      %table#contact_tab.table.table-hover.clickable-row{:width => "100%", :data => {:id => @donor.id}}
+        %tbody
+          - @contacts.each do |contact|
+            %tr{:data => {:id => contact.id}}
+              %td{:width => "15%"}
+                = contact.contact_date
+              %td{:width => "15%"}
+                = contact.followup_date
+              %td{:width => "40%", :style => "overflow: auto"}
+                = contact.narrative
+              %td{:width => "15%"}
+                = contact.created_by
+              %td{:width => "15%"}
+                = contact.last_modified_by
     .button-line.pull-right
       %button.btn.btn-success#add{type:'button'} Add
       %button.btn.btn-info#edit{type:'button'} Edit
       %button.btn.btn-danger#delete{type:'button'} Delete
       =link_to "Back", donors_path, class: 'btn btn-primary'
+    =javascript_include_tag "contacts.js" 
   #finance.tab-pane{:role=>'tabpanel'}
