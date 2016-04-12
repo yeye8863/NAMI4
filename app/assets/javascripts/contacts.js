@@ -3,6 +3,13 @@ $("#add").click(insRow);
 $("#edit").click(editRow);
 $("#delete").click(delData);
 $("#contact_tab tbody").on("click", "tr", selRow);
+$(document).ready(function(){ resizeDiv(); });
+window.onresize = function(event) { resizeDiv(); }
+
+function resizeDiv() {
+	var vph = $(window).height();
+	$("#scroll_tab").css({overflow: "auto", height: vph*0.5 + "px"});
+}
 
 function selDate(a, b){
 	var now = new Date();
@@ -48,6 +55,7 @@ function insRow() {
 			cells[i].innerHTML = "<input value style='width:100%'>";
 		}
 		selDate($("input", cells[0]), $("input", cells[1]));
+		cells[2].style.cssText = "overflow: auto"
 		for(var i=3; i<=4; i++) row.insertCell(i);
 		$("#edit").addClass("editing");
 		$("#edit").text("Save");
@@ -75,13 +83,13 @@ function saveRow(data){
 	var cells = $("td", selected);
 	if(cells[0]) $(cells[0]).html(data.contact_date);
 	if(cells[1]) $(cells[1]).html(data.followup_date);
-	if(cells[2]) $(cells[2]).html(data.narrative);
+	if(cells[2]) $(cells[2]).text(data.narrative);
 	if(cells[3]) $(cells[3]).html(data.created_by);
 	if(cells[4]) $(cells[4]).html(data.last_modified_by);
 	if(data.id) selected.data("id", data.id);
 	$("#edit").text("Edit");
 	$("#edit").removeClass("editing");
-	$("#contact_tab").notify("Save success!", {className: "success", position:"bottom left"});
+	$("#scroll_tab").notify("Save success!", {arrowShow: false, className: "success", position:"bottom left"});
 }
 
 function delRow(){
@@ -92,7 +100,7 @@ function delRow(){
 		$("#edit").removeClass("editing");
 		$("#edit").text("Edit");
 	}
-	$("#contact_tab").notify("Delete success!", {className: "success", position:"bottom left"});
+	$("#scroll_tab").notify("Delete success!", {arrowShow: false, className: "success", position:"bottom left"});
 }
 
 function delData(){
@@ -106,7 +114,7 @@ function delData(){
 			       	timeout: 5000,
 			       	success: function(data, requestStatus, xhrObject){ delRow(); },
 			       	error: function(xhrObj, textStatus, exception) {
-			       		$("#contact_tab").notify("Failed to delete data!", {className: "error", position:"bottom left"});
+			       		$("#scroll_tab").notify("Failed to delete data!", {arrowShow: false, className: "error", position:"bottom left"});
 			       	}
 				})   
 			else delRow();
@@ -128,7 +136,7 @@ function saveData(){
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#contact_tab").notify("Failed to save data!", {className: "error", position:"bottom left"});
+					$("#scroll_tab").notify("Failed to save data!", {arrowShow: false, className: "error", position:"bottom left"});
 			    }
 			})
 		else
@@ -139,7 +147,7 @@ function saveData(){
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#contact_tab").notify("Failed to add data!", {className: "error", position:"bottom left"});
+					$("#scroll_tab").notify("Failed to add data!", {arrowShow: false, className: "error", position:"bottom left"});
 			    }
 			})
 	}

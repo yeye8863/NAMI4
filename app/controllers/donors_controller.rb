@@ -38,7 +38,13 @@ class DonorsController < ApplicationController
             'Created at' => @donor.created_at,
             'Last Modified at' => @donor.last_modified_at
 	        }
-	    @donor_contact = ['Contact Date', 'Followup Date', 'Narrative', 'Created By', 'Last Modified By']
+	    @donor_contact = {
+	        'Contact Date' => '15%',
+	        'Followup Date' => '15%',
+	        'Narrative' => '40%',
+	        'Created By' => '15%',
+	        'Last Modified By' => '15%'
+	    }
 	    @contacts = Contact.where(:donor_id => @donor.id)
     end
 end
