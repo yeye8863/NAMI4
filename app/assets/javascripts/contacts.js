@@ -55,8 +55,14 @@ function topRow(){
 
 function selRow(event) {
 	if(!$("#edit").hasClass("editing") && $(".dataTables_empty", $(this)).length == 0){
-		if($(this).hasClass("info")) $(this).removeClass("info");
-		else $(this).addClass("info").siblings().removeClass("info");
+		if($(this).hasClass("info"))
+			if(event.ctrlKey || event.metaKey) $(this).removeClass("info");
+			else $(this).removeClass("info").siblings().removeClass("info");
+		else {
+			$(this).addClass("info");
+			if(!(event.ctrlKey || event.metaKey))
+				$(this).siblings().removeClass("info");
+		}
 	}
 }
 
@@ -109,9 +115,12 @@ function delRow(){
 }
 
 function delData(){
-	selected_c = $("#contact_tab tbody .info")
-	if(selected_c.length)
-		if(confirm("Are you sure?"))
+	selected_c = $("#contact_tab tbody .info");
+	if(selected_c.length){
+		var sure;
+		if(event.ctrlKey || event.metaKey) sure = true
+		else sure = confirm("Are you sure?");
+		if(sure)
 			selected_c.each( function(){
 				if($(this).data("id"))
 				 	$.ajax({
@@ -125,6 +134,7 @@ function delData(){
 					})   
 				else delRow();
 			});
+	}
 }
 
 function saveData(){
