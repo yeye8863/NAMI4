@@ -6,25 +6,32 @@
 
 #search-box.container
   = form_tag donors_path, :method => :get, class: 'form-inline', id: 'search_box', :remote =>true do
-    #scope_link
-      = select_tag :scope, options_for_select(["Individual", "Organization"], "Individual"), class: 'form-control'
-    #individual
-      .form-group 
-        = label :donor, :first_name, 'First Name'
-        = text_field :donor, 'first_name', class: 'form-control'
-      .form-group
-        = label :donor, :last_name, 'Last Name'
-        = text_field :donor, 'last_name', class: 'form-control'
-    #organization
-      .form-group
-        = label :donor, :organization, 'Organization'
-        = text_field :donor, 'organization', class: 'form-control'
+    %table{:align => "left", :width => "100%"}
+      %tr
+        %td
+          #scope_link 
+            = select_tag :scope, options_for_select(["Individual", "Organization"], "Individual"), class: 'form-control'
+        %td
+          #individual
+            .form-group 
+              = label :donor, :first_name, 'First Name'
+              = text_field :donor, 'first_name', class: 'form-control'
+            .form-group
+              = label :donor, :last_name, 'Last Name'
+              = text_field :donor, 'last_name', class: 'form-control'
+        %td
+          #organization
+            .form-group
+              = label :donor, :company, 'Company'
+              = text_field :donor, 'company', class: 'form-control'
+            .form-group
+              = label :donor, :organization, 'Organization'
+              = text_field :donor, 'organization', class: 'form-control'
     .button-line.pull-right
       = submit_tag 'Search', class: 'btn btn-primary'
       = link_to "Clear", '#', type: :resetm, class: 'btn btn-default' 
       = link_to 'New Donor', new_donor_path,  class:'btn btn-default'
-      = link_to 'Create', donors_path(:new_donor => :donor), method: 'post'
-
+      
 %h2 Search result
 #search_result
   = render :partial => 'search_result'
