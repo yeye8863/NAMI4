@@ -93,16 +93,17 @@ function editRow(event, r) {
 }
 
 function saveRow(data){
-	var cells = $("td", selected_c);
-	if(cells[0]) $(cells[0]).html(data.contact_date);
-	if(cells[1]) $(cells[1]).html(data.followup_date);
-	if(cells[2]) $(cells[2]).text(data.narrative);
-	if(cells[3]) $(cells[3]).html(data.created_by);
-	if(cells[4]) $(cells[4]).html(data.last_modified_by);
 	if(data.id) selected_c.data("id", data.id);
+	table_c.row(selected_c).data([
+		data.contact_date,
+		data.followup_date,
+		data.narrative,
+		data.created_by,
+		data.last_modified_by
+	]).draw();
 	$("#edit").text("Edit");
 	$("#edit").removeClass("editing");
-	$("#add").notify("Successfully saved!", {arrowShow: false, className: "success", position:"left middle"});
+	$("#add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
 }
 
 function delRow(){
@@ -111,7 +112,7 @@ function delRow(){
 		$("#edit").text("Edit");
 	}
 	table_c.row('.info').remove().draw(false);
-	$("#add").notify("Successfully deleted!", {arrowShow: false, className: "success", position:"left middle"});
+	$("#add").notify("Successfully deleted!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
 }
 
 function delData(){
@@ -129,7 +130,7 @@ function delData(){
 				       	timeout: 5000,
 				       	success: function(data, requestStatus, xhrObject){ delRow(); },
 				       	error: function(xhrObj, textStatus, exception) {
-				       		$("#add").notify("Failed to delete data!", {arrowShow: false, className: "error", position:"left middle"});
+				       		$("#add").notify("Failed to delete data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 				       	}
 					})   
 				else delRow();
@@ -145,11 +146,11 @@ function saveData(){
 			attr.push($("input", $(this)).val().trim());
 		});
 		if(attr[0] == ""){ 
-			$("#add").notify("Please enter contact date.", {arrowShow: false, className: "error", position:"left middle"});
+			$("#add").notify("Please enter contact date.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 			return false;
 		}
 		if(attr[2] == ""){ 
-			$("#add").notify("Please enter narrative.", {arrowShow: false, className: "error", position:"left middle"});
+			$("#add").notify("Please enter narrative.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 			return false;
 		}
 		if(selected_c.data("id"))
@@ -160,7 +161,7 @@ function saveData(){
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#add").notify("Failed to save data!", {arrowShow: false, className: "error", position:"left middle"});
+					$("#add").notify("Failed to save data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 			    }
 			})
 		else
@@ -171,7 +172,7 @@ function saveData(){
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#add").notify("Failed to add data!", {arrowShow: false, className: "error", position:"left middle"});
+					$("#add").notify("Failed to add data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 			    }
 			})
 	}

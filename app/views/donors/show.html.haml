@@ -93,8 +93,8 @@
       %table#contact_tab.table.table-hover.clickable-row{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
         %thead
           %tr
-            - @donor_contact.each do |key|
-              %th
+            - @donor_contact.each_pair do |key, val|
+              %th{:width => val}
                 = key
         %tbody
           - @contacts.each do |contact|
