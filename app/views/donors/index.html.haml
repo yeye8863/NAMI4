@@ -6,6 +6,8 @@
 
 #search-box.container
   = form_tag donors_path, :method => :get, class: 'form-inline', id: 'search_box', :remote =>true do
+    = hidden_field_tag :direction, params[:direction]
+    = hidden_field_tag :sort, params[:sort]
     %table{:align => "left", :width => "100%"}
       %tr
         %td

@@ -15,14 +15,6 @@ class Donor < ActiveRecord::Base
         end
         
         @donors =  Donor.where(inputs)
-        @donors.each do |donor|
-          donor.title.capitalize! if donor.title
-          donor.first_name.capitalize! if donor.first_name
-          donor.last_name.capitalize! if donor.last_name
-          donor.middle_name.capitalize! if donor.middle_name
-          donor.salution.capitalize! if donor.salution
-          donor.company.capitalize! if donor.company
-        end
     end
 
 

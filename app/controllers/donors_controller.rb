@@ -1,8 +1,9 @@
 class DonorsController < ApplicationController
+helper_method :sort_column, :sort_direction
     #before_filter :authorize
 
     def index
-        @donors = Donor.search_by(params[:donor])
+        @donors = Donor.search_by(params[:donor]).order(sort_column + " " + sort_direction).paginate(:per_page => 3, :page => params[:page])
         render(:partial => 'search_result', :object => @donors) if request.xhr?
     end
     
@@ -73,5 +74,14 @@ class DonorsController < ApplicationController
             'Business Phone' => @donor.business_phone
 	        }
       render(:partial => 'donor_info', :object => @donor_basic) if request.xhr?
+    end
+    
+    
+    private
+    def sort_column
+        Donor.column_names.include?(params[:sort]) ? params[:sort] : "last_name"
+    end
+    def sort_direction
+        %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end
