@@ -15,10 +15,8 @@ var table_c = $("#contact_tab").DataTable( {
   	],
 	"order": [[ 0, "desc" ], [ 1, 'desc' ]],
   	"drawCallback": function( settings ) { topRow(); },
-  	"initComplete": function(){
-  	},
   	"dom": 'rt<"bottom-left-info-bar"f>',
-    paging:         false
+    paging: false
 } );
 
 function selDate(a, b){
@@ -56,9 +54,8 @@ function topRow(){
 }
 
 function selRow(event) {
-	if(!$("#edit").hasClass("editing")){
-		if($(this).hasClass("info"))
-			$(this).removeClass("info");
+	if(!$("#edit").hasClass("editing") && $(".dataTables_empty", $(this)).length == 0){
+		if($(this).hasClass("info")) $(this).removeClass("info");
 		else $(this).addClass("info").siblings().removeClass("info");
 	}
 }
@@ -73,7 +70,7 @@ function insRow() {
 
 function editRow(event, r) {
 	if(r) selected_c = r;
-	else selected_c = $("#contact_tab tbody .info");
+	else selected_c = $("#contact_tab tbody .info").first();
 	if(selected_c.length)
 		if($("#edit").hasClass("editing")) saveData();
 		else{
@@ -90,7 +87,6 @@ function editRow(event, r) {
 }
 
 function saveRow(data){
-	selected_c = $("#contact_tab tbody .info");
 	var cells = $("td", selected_c);
 	if(cells[0]) $(cells[0]).html(data.contact_date);
 	if(cells[1]) $(cells[1]).html(data.followup_date);
@@ -113,24 +109,25 @@ function delRow(){
 }
 
 function delData(){
-	selected_c = $("#contact_tab tbody .info");
+	selected_c = $("#contact_tab tbody .info")
 	if(selected_c.length)
 		if(confirm("Are you sure?"))
-			if(selected_c.data("id"))
-			 	$.ajax({
-					type: "DELETE",
-			      	url: "/contacts/" + selected_c.data("id"),
-			       	timeout: 5000,
-			       	success: function(data, requestStatus, xhrObject){ delRow(); },
-			       	error: function(xhrObj, textStatus, exception) {
-			       		$("#add").notify("Failed to delete data!", {arrowShow: false, className: "error", position:"left middle"});
-			       	}
-				})   
-			else delRow();
+			selected_c.each( function(){
+				if($(this).data("id"))
+				 	$.ajax({
+						type: "DELETE",
+				      	url: "/contacts/" + $(this).data("id"),
+				       	timeout: 5000,
+				       	success: function(data, requestStatus, xhrObject){ delRow(); },
+				       	error: function(xhrObj, textStatus, exception) {
+				       		$("#add").notify("Failed to delete data!", {arrowShow: false, className: "error", position:"left middle"});
+				       	}
+					})   
+				else delRow();
+			});
 }
 
 function saveData(){
-	selected_c = $("#contact_tab tbody .info");
 	if(selected_c.length){
 		var attr = [];
 		var cells = $("td", selected_c).slice(0, 3);
