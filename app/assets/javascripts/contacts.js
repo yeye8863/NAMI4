@@ -3,13 +3,23 @@ $("#add").click(insRow);
 $("#edit").click(editRow);
 $("#delete").click(delData);
 $("#contact_tab tbody").on("click", "tr", selRow);
-$(document).ready(function(){ resizeDiv(); });
-window.onresize = function(event) { resizeDiv(); }
 
-function resizeDiv() {
-	var vph = $(window).height();
-	$("#scroll_tab").css({overflow: "auto", height: vph*0.5 + "px"});
-}
+var selected_c;
+var table_c = $("#contact_tab").DataTable( {
+	"columns": [
+    	{ "width": "15%" },
+    	{ "width": "15%" },
+    	{ "width": "40%" },
+    	{ "width": "15%",  "orderable": false },
+    	{ "width": "15%",  "orderable": false },
+  	],
+	"order": [[ 0, "desc" ], [ 1, 'desc' ]],
+  	"drawCallback": function( settings ) { topRow(); },
+  	"initComplete": function(){
+  	},
+  	"dom": 'rt<"bottom-left-info-bar"f>',
+    paging:         false
+} );
 
 function selDate(a, b){
 	var now = new Date();
@@ -37,6 +47,14 @@ function selDate(a, b){
     }).data('datepicker');
 }
 
+function topRow(){
+	if($("#edit").hasClass("editing")){
+			selected_c.detach();
+			$("#contact_tab tbody").prepend(selected_c);
+			selected_c.addClass("info").siblings().removeClass("info");
+	}
+}
+
 function selRow(event) {
 	if(!$("#edit").hasClass("editing")){
 		if($(this).hasClass("info"))
@@ -47,96 +65,95 @@ function selRow(event) {
 
 function insRow() {
 	if(!$("#edit").hasClass("editing")){
-		var row = $("#contact_tab tbody")[0].insertRow(0);
-		var cells = new Array(3);
+		var row = table_c.row.add(["","","","",""]).draw().node();
 		$(row).addClass("info").siblings().removeClass("info");
-		for(var i=0; i<=2; i++){
-			cells[i] = row.insertCell(i);
-			cells[i].innerHTML = "<input value style='width:100%'>";
-		}
-		selDate($("input", cells[0]), $("input", cells[1]));
-		cells[2].style.cssText = "overflow: auto"
-		for(var i=3; i<=4; i++) row.insertCell(i);
-		$("#edit").addClass("editing");
-		$("#edit").text("Save");
+		editRow(0, $(row));
 	}
 }
 
-function editRow() {
-	var selected = $("#contact_tab tbody .info");
-	if(selected.length)
-		if($(this).hasClass("editing")) saveData();
+function editRow(event, r) {
+	if(r) selected_c = r;
+	else selected_c = $("#contact_tab tbody .info");
+	if(selected_c.length)
+		if($("#edit").hasClass("editing")) saveData();
 		else{
-			var cells = $("td", selected).slice(0, 3);
+			$("#edit").text("Save");
+			$("#edit").addClass("editing");
+			var cells = $("td", selected_c).slice(0, 3);
 			cells.each(function(){
 				if($("input", $(this)).length == 0)
 					$(this).html("<input style='width:100%' value='" + $(this).html().trim() + "'>");
 			});
 			selDate($("input", cells[0]), $("input", cells[1]));
-			$(this).text("Save");
-			$(this).addClass("editing");
 		}
+	topRow();
 }
 
 function saveRow(data){
-	var selected = $("#contact_tab tbody .info");
-	var cells = $("td", selected);
+	selected_c = $("#contact_tab tbody .info");
+	var cells = $("td", selected_c);
 	if(cells[0]) $(cells[0]).html(data.contact_date);
 	if(cells[1]) $(cells[1]).html(data.followup_date);
 	if(cells[2]) $(cells[2]).text(data.narrative);
 	if(cells[3]) $(cells[3]).html(data.created_by);
 	if(cells[4]) $(cells[4]).html(data.last_modified_by);
-	if(data.id) selected.data("id", data.id);
+	if(data.id) selected_c.data("id", data.id);
 	$("#edit").text("Edit");
 	$("#edit").removeClass("editing");
-	$("#scroll_tab").notify("Save success!", {arrowShow: false, className: "success", position:"bottom left"});
+	$("#add").notify("Successfully saved!", {arrowShow: false, className: "success", position:"left middle"});
 }
 
 function delRow(){
-	var selected = $("#contact_tab tbody .info");
-	if(selected.length)
-		selected.each(function(){ $(this).remove() });
 	if($("#edit").hasClass("editing")){
 		$("#edit").removeClass("editing");
 		$("#edit").text("Edit");
 	}
-	$("#scroll_tab").notify("Delete success!", {arrowShow: false, className: "success", position:"bottom left"});
+	table_c.row('.info').remove().draw(false);
+	$("#add").notify("Successfully deleted!", {arrowShow: false, className: "success", position:"left middle"});
 }
 
 function delData(){
-	var selected = $("#contact_tab tbody .info");
-	if(selected.length)
+	selected_c = $("#contact_tab tbody .info");
+	if(selected_c.length)
 		if(confirm("Are you sure?"))
-			if(selected.data("id"))
+			if(selected_c.data("id"))
 			 	$.ajax({
 					type: "DELETE",
-			      	url: "/contacts/" + selected.data("id"),
+			      	url: "/contacts/" + selected_c.data("id"),
 			       	timeout: 5000,
 			       	success: function(data, requestStatus, xhrObject){ delRow(); },
 			       	error: function(xhrObj, textStatus, exception) {
-			       		$("#scroll_tab").notify("Failed to delete data!", {arrowShow: false, className: "error", position:"bottom left"});
+			       		$("#add").notify("Failed to delete data!", {arrowShow: false, className: "error", position:"left middle"});
 			       	}
 				})   
 			else delRow();
 }
 
 function saveData(){
-	var selected = $("#contact_tab tbody .info");
-	if(selected.length){
+	selected_c = $("#contact_tab tbody .info");
+	if(selected_c.length){
 		var attr = [];
-		var cells = $("td", selected).slice(0, 3);
+		var cells = $("td", selected_c).slice(0, 3);
 		cells.each(function(){
-			attr.push($("input", $(this)).val());
+			attr.push($("input", $(this)).val().trim());
 		});
-		if(selected.data("id"))
+		if(attr[0] == ""){ 
+			$("#add").notify("Please enter contact date.", {arrowShow: false, className: "error", position:"left middle"});
+			return false;
+		}
+		if(attr[2] == ""){ 
+			$("#add").notify("Please enter narrative.", {arrowShow: false, className: "error", position:"left middle"});
+			return false;
+		}
+		if(selected_c.data("id"))
 			$.ajax({
 				type: "PUT",
-				url: "/contacts/" + selected.data("id"),
+				url: "/contacts/" + selected_c.data("id"),
 				data: {"attr": attr},
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#scroll_tab").notify("Failed to save data!", {arrowShow: false, className: "error", position:"bottom left"});
+					$("#add").notify("Failed to save data!", {arrowShow: false, className: "error", position:"left middle"});
 			    }
 			})
 		else
@@ -147,8 +164,20 @@ function saveData(){
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#scroll_tab").notify("Failed to add data!", {arrowShow: false, className: "error", position:"bottom left"});
+					$("#add").notify("Failed to add data!", {arrowShow: false, className: "error", position:"left middle"});
 			    }
 			})
 	}
 }
+
+/*
+$(document).ready(function(){
+	resizeDiv();
+});
+window.onresize = function(event) { resizeDiv(); }
+
+function resizeDiv() {
+	var vph = $(window).height();
+	$("#contact_tab").css({overflow: "auto", height: vph*0.5 + "px"});
+}
+*/
