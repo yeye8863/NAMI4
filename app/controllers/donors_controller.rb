@@ -3,14 +3,25 @@ class DonorsController < ApplicationController
 
     def index
         @donors = Donor.search_by(params[:donor])
+        render(:partial => 'search_result', :object => @donors) if request.xhr?
     end
     
     def new 
+        @donor = Donor.create
+        redirect_to donor_path :id => @donor.id
+    end
+    
+    def destroy
+        id = params[:id]
+        @donor = Donor.find(id)
+        flash[:notice] = "#{@donor.first_name} #{@donor.last_name} is deleted."
+        @donor.destroy
+        redirect_to donors_path
     end
     
     def create
         @donor = Donor.create!(params[:donor])
-        flash[:notice] = "#{@donor.first_name} #{@donor.last_name}  was successfully created."
+        flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
         redirect_to donors_path
     end
 
