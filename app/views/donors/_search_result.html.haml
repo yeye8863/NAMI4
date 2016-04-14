@@ -1,0 +1,17 @@
+%table.table
+  %thead
+    %tr
+      %th First Name 
+      %th Last Name
+      %th Organization
+      %th Company
+      %th{:colspan => 2} Action
+  %tbody
+    - @donors.each do |donor|
+      %tr
+        %td= donor.first_name 
+        %td= donor.last_name
+        %td= donor.organization 
+        %td= donor.company 
+        %td= link_to "View", donor_path(donor)
+        %td= link_to "Delete", donor_path(donor.id), :method => :delete, :confirm => "Are you sure?"

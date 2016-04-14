@@ -13,3 +13,26 @@ var donorInfo = {
 };
 
 $(donorInfo.setup);
+
+var SearchScope = {
+  select_scope : function() {
+   $('#individual').toggle();
+   $('#organization').toggle();
+  },
+  setup: function() {
+    SearchResult.setup();
+    $('#scope_link').change(SearchScope.select_scope);
+  }
+}
+
+var SearchResult = {
+  setup : function() {
+    $('#search_box').submit(SearchResult.getResult);
+  },
+  getResult : function() {
+    $(document).on('ajax:success',function(event,data,status,xhrObj){
+      $('#search_result').html(data);
+    });
+  }
+};
+$(document).ready(SearchScope.setup);
