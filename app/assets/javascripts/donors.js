@@ -17,7 +17,11 @@ $(donorInfo.setup);
 var SearchScope = {
   select_scope : function() {
    $('#individual').toggle();
+   $('#donor_first_name').val('');
+   $('#donor_last_name').val('');
    $('#organization').toggle();
+   $('#donor_organization').val('');
+   $('#donor_company').val('');
   },
   setup: function() {
     SearchResult.setup();
@@ -36,3 +40,15 @@ var SearchResult = {
   }
 };
 $(document).ready(SearchScope.setup);
+
+var viewResult = {
+  setup : function() {
+    $('#search_result th a, #search_result .pagination a').click(viewResult.render);
+  },
+  render : function(){
+    $(document).on('ajax:success',function(event,data,status,xhrObj){
+      $('#search_result').html(data);
+    });
+  }
+};
+$(document).ready(viewResult.setup);
