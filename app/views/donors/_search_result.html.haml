@@ -1,7 +1,7 @@
 %table.table
   %thead
     %tr
-      %th= sortable "first_name", "First Name" 
+      %th= sortable "first_name", "First Name"
       %th= sortable "last_name", "Last Name"
       %th= sortable "organization", "Organization"
       %th= sortable "company", "Company"
@@ -15,4 +15,4 @@
         %td= donor.company 
         %td= link_to "View", donor_path(donor)
         %td= link_to "Delete", donor_path(donor.id), :method => :delete, :confirm => "Are you sure?"
-= will_paginate @donors
+= js_will_paginate @donors
