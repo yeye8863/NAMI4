@@ -1,12 +1,9 @@
 =render :partial=>'layouts/banner'
 = javascript_include_tag :application
 
-#page-title.container.titleLine
+#page-title.container-fluid.titleLine
   %h2 Donor Management
-  
- 
-
-#search-box.container
+#search-box.container-fluid
   = form_tag donors_path, :method => :get, class: 'form-inline', id: 'search_box', :remote =>true do
     = hidden_field_tag :direction, params[:direction]
     = hidden_field_tag :sort, params[:sort]
@@ -36,8 +33,8 @@
           = link_to "Clear", '#', type: :resetm, class: 'btn btn-default' 
           = link_to 'New Donor', new_donor_path,  class:'btn btn-default' 
       
-
-%h2 Search result
-#search_result
-  = render :partial => 'search_result'
-
+.container-fluid
+  %h2 Search result
+  #search_result
+    = render :partial => 'search_result'
+  

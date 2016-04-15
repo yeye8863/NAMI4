@@ -1,7 +1,7 @@
 =render :partial=>'layouts/banner'
-#page-title.container.titleLine
+#page-title.container-fluid.titleLine
   %h2 Report
-#search-box.container
+#search-box.container-fluid
   = form_tag reports_path, :method => :get, class: 'form-inline' do
     .form-group
       = label :report, :title, 'Title'
@@ -13,7 +13,7 @@
       = submit_tag 'Search', class: 'btn btn-primary'
       = link_to "Reset", '#', type: :resetm, class: 'btn btn-default' 
       = link_to 'Add A New Donor', new_donor_path, class:'btn btn-default'
-#mainbody.container
+#mainbody.container-fluid
   .row
     .col-sm-12
       %h4 Report Template
