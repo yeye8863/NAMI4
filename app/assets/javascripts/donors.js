@@ -22,12 +22,13 @@ var SearchScope = {
    $('#organization').toggle();
    $('#donor_organization').val('');
    $('#donor_company').val('');
+   return false;
   },
   setup: function() {
-    SearchResult.setup();
     $('#scope_link').change(SearchScope.select_scope);
   }
 }
+$(document).ready(SearchScope.setup);
 
 var SearchResult = {
   setup : function() {
@@ -39,7 +40,7 @@ var SearchResult = {
     });
   }
 };
-$(document).ready(SearchScope.setup);
+$(document).ready(SearchResult.setup);
 
 var viewResult = {
   setup : function() {
