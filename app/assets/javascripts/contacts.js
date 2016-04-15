@@ -115,7 +115,7 @@ function delRow(){
 	$("#add").notify("Successfully deleted!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
 }
 
-function delData(){
+function delData(event){
 	selected_c = $("#contact_tab tbody .info");
 	if(selected_c.length){
 		var sure;
