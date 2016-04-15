@@ -3,8 +3,10 @@ helper_method :sort_column, :sort_direction
     #before_filter :authorize
 
     def index
-        @donors = Donor.search_by(params[:donor]).order(sort_column + " " + sort_direction).paginate(:per_page => 3, :page => params[:page])
-        render(:partial => 'search_result', :object => @donors) if request.xhr?
+        @inds = Donor.search_by(params[:donor]).order(sort_column + " " + sort_direction).paginate(:per_page => 3, :page => params[:page])
+        @orgs = Organization.search_by(params[:org]).order(sort_column_org + " " + sort_direction).paginate(:per_page => 3, :page => params[:page])
+        @donors = {:inds => @inds, :orgs => @orgs}
+        render(:partial => 'search_result', :object => @donors ) if request.xhr?
     end
     
     def new 
@@ -86,6 +88,9 @@ helper_method :sort_column, :sort_direction
     private
     def sort_column
         Donor.column_names.include?(params[:sort]) ? params[:sort] : "last_name"
+    end
+    def sort_column_org
+        Organization.column_names.include?(params[:sort]) ? params[:sort] : "name"
     end
     def sort_direction
         %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"

@@ -18,18 +18,18 @@
           .form-group
             = label :donor, :last_name, 'Last Name'
             = text_field :donor, 'last_name', class: 'form-control'
-        #organization
           .form-group
             = label :donor, :company, 'Company'
             = text_field :donor, 'company', class: 'form-control'
+        #organization
           .form-group
-            = label :donor, :organization, 'Organization'
-            = text_field :donor, 'organization', class: 'form-control'
+            = label :org, :name, 'Organization'
+            = text_field :org, 'name', class: 'form-control'
     .row
       .col-md-3.pull-right
         .button-line
           = submit_tag 'Search', class: 'btn btn-primary'
-          = link_to "Clear", '#', type: :resetm, class: 'btn btn-default' 
+          = link_to "Clear", '#', type: :resetm, class: 'btn btn-default', id: 'reset_btn'
           = link_to 'New Donor', new_donor_path,  class:'btn btn-default' 
       
 .container-fluid
