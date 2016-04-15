@@ -12,7 +12,7 @@
   %li 
     %a{:id=>'finance-tab',:href=>'#finance', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'finance'}} Finance
     
-.tab-content
+.tab-content.container-fluid
   #summary.tab-pane.active{:role=>'tabpanel'}
     .container{:style=>'padding-top: 50px'}
       .row.col-sm-offset-3.col-sm-6
@@ -28,7 +28,7 @@
           =link_to "Delete", donor_path(@donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger'
   #basic.tab-pane{:role=>'tabpanel'}
     %label#donorId{:style=>'display:none'}=@donor.id
-    =form_for @donor, :remote=>true, :method=>'put', :html=>{:id=>'donorInfo', :class=>'form donor-form col-sm-offset-1'} do |f|
+    =form_for @donor, :remote=>true, :method=>'put', :html=>{:id=>'donorInfo', :class=>'form donor-form col-sm-offset-3'} do |f|
       .form-group
         .form-group
           .row
