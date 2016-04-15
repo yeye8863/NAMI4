@@ -17,7 +17,11 @@ $(donorInfo.setup);
 var SearchScope = {
   select_scope : function() {
    $('#individual').toggle();
+   $('#donor_first_name').val('');
+   $('#donor_last_name').val('');
    $('#organization').toggle();
+   $('#donor_organization').val('');
+   $('#donor_company').val('');
   },
   setup: function() {
     SearchResult.setup();
