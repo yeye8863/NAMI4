@@ -6,6 +6,7 @@ $("#tabs").on("click", "li", fixHeader);
 $("#contact_tab tbody").on("click", "tr", selRow);
 
 var selected_c;
+var header_c;
 var table_c = $("#contact_tab").DataTable( {
 	"columns": [
     	{ "width": "15%" },
@@ -22,8 +23,12 @@ var table_c = $("#contact_tab").DataTable( {
 
 function fixHeader(){
 	if($("#contact-tab", $(this)).length){
-		if($(".fixedHeader").length == 0)
-			setTimeout(function() {new FixedHeader(table_c);}, 1000);
+		setTimeout(function() {
+			if($(".fixedHeader").length == 0 && $("#contact").hasClass("active")){
+				header_c = new FixedHeader(table_c);
+				$(window).resize(function(){ header_c._fnUpdateClones(true) })
+			}
+		}, 1000);
 	} else $(".fixedHeader").remove();
 }
 
