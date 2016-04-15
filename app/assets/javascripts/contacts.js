@@ -2,6 +2,7 @@
 $("#add").click(insRow);
 $("#edit").click(editRow);
 $("#delete").click(delData);
+$("#tabs").on("click", "li", fixHeader);
 $("#contact_tab tbody").on("click", "tr", selRow);
 
 var selected_c;
@@ -18,6 +19,13 @@ var table_c = $("#contact_tab").DataTable( {
   	"dom": 'rt<"bottom-left-info-bar"f>',
     paging: false
 } );
+
+function fixHeader(){
+	if($("#contact-tab", $(this)).length){
+		if($(".fixedHeader").length == 0)
+			setTimeout(function() {new FixedHeader(table_c);}, 1000);
+	} else $(".fixedHeader").remove();
+}
 
 function selDate(a, b){
 	var now = new Date();

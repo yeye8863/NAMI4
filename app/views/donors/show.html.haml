@@ -91,8 +91,8 @@
   #contact.tab-pane{:role=>'tabpanel'}
     #contact-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:10px;"}
       %table#contact_tab.table.table-hover.clickable-row{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
-        %thead
-          %tr
+        %thead{:style => "width:100%"}
+          %tr{:style => "width:100%"}
             - @donor_contact.each_pair do |key, val|
               %th{:width => val}
                 = key
