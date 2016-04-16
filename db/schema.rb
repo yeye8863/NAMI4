@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407034500) do
+ActiveRecord::Schema.define(version: 20160415170045) do
 
   create_table "accesses", force: :cascade do |t|
     t.string   "email"
@@ -98,7 +98,9 @@ ActiveRecord::Schema.define(version: 20160407034500) do
   end
 
   create_view "agenda_views", <<-'END_VIEW_AGENDA_VIEWS', :force => true
-SELECT * FROM (SELECT 
+SELECT * FROM 
+      (
+        SELECT 
           a.title||' '||a.first_name||' '||a.last_name as name,
           NULL as organization,
           c.contact_date as contact_date,
@@ -115,9 +117,26 @@ SELECT * FROM (SELECT
           c.id as contact_id
         FROM contacts c JOIN contact_people b ON c.contact_person_id = b.id
         JOIN organizations d ON b.organization_id = d.id
-        WHERE c.followup_date >= date('now'))
+        WHERE c.followup_date >= date('now')) as RESULT
         ORDER BY followup_date ASC
   END_VIEW_AGENDA_VIEWS
+
+  create_view "donor_views", <<-'END_VIEW_DONOR_VIEWS', :force => true
+SELECT * FROM 
+      (
+        SELECT 
+          a.title||' '||a.first_name||' '||a.last_name as name,
+          NULL as organization,
+          a.updated_at as updated_at
+        FROM donors a
+        UNION
+        SELECT 
+          b.title||' '||b.first_name||' '||b.last_name as name,
+          d.name as organization,
+          b.updated_at as updated_at
+        FROM organizations d JOIN contact_people b ON b.organization_id = d.id) as RESULT
+        ORDER BY updated_at DESC
+  END_VIEW_DONOR_VIEWS
 
   create_table "filters", force: :cascade do |t|
     t.string   "table_name"

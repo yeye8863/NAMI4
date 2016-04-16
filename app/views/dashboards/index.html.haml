@@ -35,16 +35,31 @@
               %th Last Modified Time
               %th
           %tbody
-            -if @recentlyreport_records
-              -@recentlyreport_records.each do |recentlyreport_record|
+            -if @report_records
+              -@report_records.each do |report|
                 %tr
-                  %td=recentlyreport_record.title
-                  %td=recentlyreport_record.create time
-                  %td=recentlyreport_record.last modified time
-                  %td #{link_to 'More', '#'}
-  .row
+                  %td
+                  %td
+                  %td
+                  %td
+  .row                  
     .col-sm-6
       %h3 New Added Contacts
+      #addedcontact-panel.panel.panel-default
+        %table#addedcontact-table.table
+          %thead
+            %tr
+              %th Name
+              %th Organization
+              %th
+          %tbody
+            -if @donor_records
+              -@donor_records.each do |donor|
+                %tr
+                  %td=donor.name
+                  %td=donor.organization
+                  %td=link_to 'More', '#', remote: true, data: {toggle: 'modal', target: '#addedcontactInfo'}
+    
     .col-sm-6
       %h3 Admin Tool Box
   #agendaInfo.modal.fade{:role => 'dialog'}
