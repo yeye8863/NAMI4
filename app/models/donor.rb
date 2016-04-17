@@ -5,16 +5,16 @@ class Donor < ActiveRecord::Base
     
     has_many :finances
     has_many :contacts
-    
+
     def self.search_by inputs
         if inputs != nil 
            inputs.delete_if {|key, value| value.empty? }
            inputs.each do |key, value|
-               value.capitalize! 
+               value.downcase!
            end
         end
         
-        return Donor.where(inputs)
+        @donors =  Donor.where(inputs)
     end
 
 

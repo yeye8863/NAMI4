@@ -25,14 +25,11 @@ module NavigationHelpers
       dashboard_path      
     when /^(the )?report\s?page$/
       reports_path
-<<<<<<< HEAD
     when /^(the )?report\s?creator page$/
       new_report_path
-=======
     when /^(the )?(search )?donor page$/
       donors_path
-      
->>>>>>> 580cac4d044bf6983ff578f631ea1dd09400f186
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
