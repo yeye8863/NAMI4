@@ -1,41 +1,39 @@
-#title.container
+=render :partial=>'layouts/banner'
+
+#page-title.container-fluid.titleLine
   %h2 Donor Management
-  .h2 Donor Search
-
-  = form_tag donors_path, :method => :get do
-
-    = label :donor, :first_name, 'First Name'
-    = text_field :donor, 'first_name'
-
-    = label :donor, :last_name, 'Last Name'
-    = text_field :donor, 'last_name'
+#search-box.container-fluid
+  = form_tag donors_path, :method => :get, class: 'form-inline', id: 'search_box', :remote =>true do
+    = hidden_field_tag :direction, params[:direction]
+    = hidden_field_tag :sort, params[:sort]
+    .row
+      .col-md-2.pull-left
+        #scope_link 
+          = select_tag :scope, options_for_select(["Individual", "Organization"], "Individual"), class: 'form-control'
+      .col-md-8.pull-left
+        #individual
+          .form-group 
+            = label :donor, :first_name, 'First Name'
+            = text_field :donor, 'first_name', class: 'form-control'
+          .form-group
+            = label :donor, :last_name, 'Last Name'
+            = text_field :donor, 'last_name', class: 'form-control'
+        #organization
+          .form-group
+            = label :donor, :company, 'Company'
+            = text_field :donor, 'company', class: 'form-control'
+          .form-group
+            = label :donor, :organization, 'Organization'
+            = text_field :donor, 'organization', class: 'form-control'
+    .row
+      .col-md-3.pull-right
+        .button-line
+          = submit_tag 'Search', class: 'btn btn-primary'
+          = link_to "Clear", '#', type: :resetm, class: 'btn btn-default' 
+          = link_to 'New Donor', new_donor_path,  class:'btn btn-default' 
+      
+.container-fluid
+  %h2 Search result
+  #search_result
+    = render :partial => 'search_result'
   
-    = label :donor, :company, 'Company'
-    = text_field :donor, 'company'
-    
-    = label :donor, :organization, 'Organiztion'
-    = text_field :donor, 'organization'
-    
-    = submit_tag 'Search'
-    = button_tag "Reset", type: :reset 
-
-  = link_to 'Add A New Donor', new_donor_path
-
-%h2 Search result
-%table.table
-  %thead
-    %tr
-      %th First Name 
-      %th Last Name
-      %th Organiztion
-      %th Company
-      %th More Info
-  %tbody
-    - @donors.each do |donor|
-      %tr
-        %td= donor.first_name 
-        %td= donor.last_name
-        %td= donor.organization 
-        %td= donor.company 
-        %td= link_to "More about #{donor.first_name}", donor_path(donor)
-

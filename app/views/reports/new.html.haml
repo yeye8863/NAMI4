@@ -6,6 +6,23 @@
     
 #mainbody.container
   %h3 Report Creator
+
+  / Nav Tabs
+  %ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'} 
+    %li.active{:role => 'presentation'}
+      %a{"aria-controls" => "info", "data-toggle" => "tab", :href => "#info", :role => "tab"}Info
+    %li{:role => 'presentation'}
+      %a{"aria-controls" => "fields", "data-toggle" => "tab", :href => "#fields", :role => "tab"}Fields        
+  /Tab Content
+  .tab-content
+  	#info.tab-pane{:role => 'tabpenal'}
+  	=form_for @report, :remote=>true, :method=>'put', :html=>{:id=>'donorInfo', :class=>'form donor-form col-sm-offset-1'} do |f|
+  		.row
+  			.col-md-5
+  				%label{:for => title}Title
+  				.input-group
+  					%input.form-control{:type => text}
+
   .row
     %form{:role => "form"}
       #four-box-step.form-group

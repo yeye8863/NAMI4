@@ -1,7 +1,8 @@
+=render :partial=>'layouts/banner'
 =javascript_include_tag "agendas"
-#title.container
-  %h1  Dashboard
-#mainbody.container
+#page-title.container-fluid.titleLine
+  %h2  Dashboard
+#mainbody.container-fluid
   .row
     .col-sm-6
       %h3 Agenda
@@ -12,14 +13,14 @@
               %th Name
               %th Organization
               %th Contact Date
-              %th Follow-up Date
+              %th Followup Date
               %th 
           %tbody
             -if @agenda_records
               -@agenda_records.each do |agenda_record|
                 %tr
-                  %td=agenda_record.name
-                  %td=agenda_record.organization
+                  %td=agenda_record.name.split.map(&:capitalize).join(' ') if agenda_record.name
+                  %td=agenda_record.organization.split.map(&:capitalize).join(' ') if agenda_record.organization
                   %td=agenda_record.contact_date
                   %td=agenda_record.followup_date
                   %td=link_to 'More', agenda_path("#{agenda_record.contact_id}"), remote: true, data: {toggle: 'modal', target: '#agendaInfo'}

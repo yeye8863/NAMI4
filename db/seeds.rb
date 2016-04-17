@@ -26,62 +26,29 @@ end
 
 #donor seed
 donors = [
-    {:first_name => 'Albert', :last_name => 'Linken', :company => 'Apple', :organization => 'PTSD'},
-    {:first_name => 'Sopia', :last_name => 'Linken', :company => 'Google', :organization => 'DSO'},
-    {:first_name => 'Albert', :last_name => 'Zhang', :company => 'Linkendin', :organization => 'PTSD'},
-    {:first_name => 'Sam', :last_name => 'Smith', :company => 'Apple', :organization => 'PTSD'}
-    ]
-donors.each do |donor|
-    Donor.create!(donor)
-end
-
-donors = [
-          {
-            :title => 'Mr.',
-            :first_name => 'Johnny',
-            :last_name => 'Walker'
-          },
-          {
-            :title => 'Mrs.',
-            :first_name => 'Michelle',
-            :last_name => 'Glanger'
-          }
+            {:title => 'mr.', :first_name => 'albert', :last_name => 'linkoln', :company => 'apple', :organization => 'ptsd'},
+            {:title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :company => 'google', :organization => 'dso'},
+            {:title => 'mr', :first_name => 'albert', :last_name => 'zhang', :company => 'linkendin', :organization => 'ptsd'},
+            {:title => 'mr.', :first_name => 'sam', :last_name => 'smith', :company => 'apple', :organization => 'ptsd'},
+            {:title => 'mr.', :first_name => 'johnny', :last_name => 'walker'},
+            {:title => 'mrs.', :first_name => 'michelle',:last_name => 'glanger'}
           ]
 
 contact_people = [
-          {
-            :title => 'Mr.',
-            :first_name => 'Peterson',
-            :last_name => 'Crab',
-            :organization_id => '1'
-          }
+          {:title => 'mr.', :first_name => 'peterson', :last_name => 'crab', :organization_id => '1'},
+          {:title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :organization_id => '2'}
           ]
 
 organizations = [
-          {
-            :name => 'Golden Lion'
-          }
+          {:name => 'golden lion'},
+          {:name => 'silver fox'}
           ]
   
 contacts = [
-          {
-            :contact_date => '2016-04-01',
-            :followup_date => '2016-04-12',
-            :donor_id => '1',
-            :narrative => 'Case 1'
-          },
-          {
-            :contact_date => '2016-04-02',
-            :followup_date => '2016-04-13',
-            :donor_id => '2',
-            :narrative => 'Case 2'
-          },
-          {
-            :contact_date => '2016-03-31',
-            :followup_date => '2016-04-11',
-            :contact_person_id => '1',
-            :narrative => 'Case 3'
-          }
+          {:contact_date => '2016-04-01', :followup_date => '2016-04-22', :donor_id => '1', :narrative => 'Discussion about event in May'},
+          {:contact_date => '2016-04-02', :followup_date => '2016-04-23', :donor_id => '2', :narrative => 'Funding raising for April'},
+          {:contact_date => '2016-03-31', :followup_date => '2016-04-21', :contact_person_id => '1', :narrative => 'Discussion about next donation from Golden Lion'},
+          {:contact_date => '2016-03-31', :followup_date => '2016-04-26', :contact_person_id => '2', :narrative => 'Financial Report to Silver Fox'},
           ]
           
           
@@ -123,14 +90,18 @@ donors.each do |donor|
   Donor.create!(donor)
 end
 
-contact_people.each do |contact_person|
-  ContactPerson.create!(contact_person)
-end
-
 organizations.each do |organization|
   Organization.create!(organization)
 end
 
+contact_people.each do |contact_person|
+  ContactPerson.create!(contact_person)
+end
+
 contacts.each do |contact|
   Contact.create!(contact)
+end
+
+reports.each do |report|
+  Report.create!(report)
 end

@@ -1,0 +1,18 @@
+%table.table.table-striped.table-hover
+  %thead
+    %tr
+      %th= sortable "first_name", "First Name"
+      %th= sortable "last_name", "Last Name"
+      %th= sortable "organization", "Organization"
+      %th= sortable "company", "Company"
+      %th{:colspan => 2} Action
+  %tbody
+    - @donors.each do |donor|
+      %tr
+        %td= donor.first_name 
+        %td= donor.last_name
+        %td= donor.organization 
+        %td= donor.company 
+        %td= link_to "View", donor_path(donor), class: 'btn btn-success btn-xs'
+        %td= link_to "Delete", donor_path(donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger btn-xs'
+= js_will_paginate @donors
