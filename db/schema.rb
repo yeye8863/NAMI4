@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415170045) do
+ActiveRecord::Schema.define(version: 20160418220345) do
 
   create_table "accesses", force: :cascade do |t|
     t.string   "email"
@@ -179,6 +179,9 @@ SELECT * FROM
     t.datetime "created_at",       :null=>false
     t.datetime "last_modified_at"
     t.datetime "updated_at",       :null=>false
+  end
+
+  create_table "report_views", force: :cascade do |t|
   end
 
   create_table "reports", force: :cascade do |t|

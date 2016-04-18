@@ -31,17 +31,16 @@
           %thead
             %tr
               %th Title
-              %th Create Time
+              %th Description
               %th Last Modified Time
               %th
           %tbody
             -if @report_records
               -@report_records.each do |report|
                 %tr
-                  %td
-                  %td
-                  %td
-                  %td
+                  %td=report.title
+                  %td=report.description
+                  %td=report.update_time
   .row                  
     .col-sm-6
       %h3 New Added Contacts
