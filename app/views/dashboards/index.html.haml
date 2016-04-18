@@ -32,6 +32,7 @@
             %tr
               %th Title
               %th Description
+              %th Last Modified By
               %th Last Modified Time
               %th
           %tbody
@@ -40,7 +41,8 @@
                 %tr
                   %td=report.title
                   %td=report.description
-                  %td=report.update_time
+                  %td=report.last_modified_by
+                  %td=report.last_modified_at
   .row                  
     .col-sm-6
       %h3 New Added Contacts
