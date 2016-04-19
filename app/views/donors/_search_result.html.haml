@@ -1,31 +1,54 @@
-#search_ind
-  %table.table.table-striped.table-hover
-    %thead
-      %tr
-        %th= sortable_ind  "first_name", "First Name"
-        %th= sortable_ind  "last_name", "Last Name"
-        %th= sortable_ind  "organization", "Organization"
-        %th= sortable_ind  "company", "Company"
-        %th{:colspan => 2} Action
-    %tbody
-      - @donors[:inds].each do |donor|
-        %tr
-          %td= donor.first_name 
-          %td= donor.last_name
-          %td= donor.organization 
-          %td= donor.company 
-          %td= link_to "View", donor_path(donor), class: 'btn btn-success btn-xs'
-          %td= link_to "Delete", donor_path(donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger btn-xs'
-  = js_will_paginate @donors[:inds], :param_name => 'page_ind'
+#ind_result
+  %h2 Donors 
+  #toolbar_ind.btn-group
+    = link_to new_donor_path, class:'btn btn-default' do
+      %i.glyphicon.glyphicon-plus
+    %button.btn.btn-default{:type => "button"}
+      %i.glyphicon.glyphicon-trash
 
-#search_org  
-  %table.table.table-striped.table-hover
+  %table#table_ind{"data-classes" => "table table-hover", "data-pagination" => "true", "data-query-params" => "queryParams", "data-search" => "true", "data-show-columns" => "true", "data-show-refresh" => "true", "data-show-toggle" => "true", "data-striped" => "true", "data-toggle" => "table", "data-toolbar" => "#toolbar_ind"}          
     %thead
       %tr
-        %th= sortable_org  "name", "Name"
-        %th{:colspan => 2} Action
+        %th Action
+        - @donors[:ind_attr].each do |attr|
+          - if @ind_attr_show.include? attr
+            %th{"data-field" => attr, "data-sortable" => "true"}
+              #{attr}
+          - else
+            %th{"data-field" => attr, "data-sortable" => "true", "data-visible" => "false"}
+              #{attr}
+            
+    %tbody
+      - @donors[:inds].each do |ind|
+        %tr
+          %td
+            = link_to "View", donor_path(ind), class: 'btn btn-success btn-xs'
+          - ind.attributes.each do |attr, val|
+            - if @ind_attr_show.include? attr
+              %td #{val} 
+             
+            
+#org_result
+  %h2 Orgnizations
+  #toolbar_org.btn-group
+    %button.btn.btn-default{:type => "button"}
+      %i.glyphicon.glyphicon-plus
+    %button.btn.btn-default{:type => "button"}
+      %i.glyphicon.glyphicon-trash
+
+  %table#table_org{"data-classes" => "table table-hover", "data-pagination" => "true", "data-query-params" => "queryParams", "data-search" => "true", "data-show-columns" => "true", "data-show-refresh" => "true", "data-show-toggle" => "true", "data-striped" => "true", "data-toggle" => "table", "data-toolbar" => "#toolbar_org"}          
+    %thead
+      %tr
+        %th Action
+        - @donors[:org_attr].each do |attr|
+          - if @org_attr_show.include? attr
+            %th{"data-field" => attr, "data-sortable" => "true"}
+              #{attr}
     %tbody
       - @donors[:orgs].each do |org|
-        %tr
-          %td= org.name 
-  = js_will_paginate @donors[:orgs], :param_name => 'page_org'
+        %tr          
+          %td
+            %button.btn-xs.btn-success View
+          - org.attributes.each do |attr, val|
+            - if @org_attr_show.include? attr
+              %td #{val} 
