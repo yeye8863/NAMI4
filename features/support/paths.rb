@@ -26,6 +26,7 @@ module NavigationHelpers
     when /^(the )?report\s?page$/
       reports_path
 
+
     when /^(the )?report\s?creator page$/
       new_report_path
     when /^(the )?(search )?donor page$/
@@ -65,6 +66,7 @@ module NavigationHelpers
     when /^(the )?(search )?donor page$/
       donors_path
       
+
 
 
     # Add more mappings here.
