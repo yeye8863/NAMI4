@@ -17,15 +17,18 @@ $(donorInfo.setup);
 var SearchScope = {
   select_scope : function() {
    $('#individual').toggle();
+   $('#organization').toggle();
+   SearchScope.reset_field();
+  },
+  reset_field : function() {
    $('#donor_first_name').val('');
    $('#donor_last_name').val('');
-   $('#organization').toggle();
-   $('#donor_organization').val('');
+   $('#org_name').val('');
    $('#donor_company').val('');
-   return false;
   },
   setup: function() {
     $('#scope_link').change(SearchScope.select_scope);
+    $('#reset_btn').click(SearchScope.reset_field);
   }
 }
 $(document).ready(SearchScope.setup);

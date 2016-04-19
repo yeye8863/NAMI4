@@ -1,18 +1,31 @@
-%table.table.table-striped.table-hover
-  %thead
-    %tr
-      %th= sortable "first_name", "First Name"
-      %th= sortable "last_name", "Last Name"
-      %th= sortable "organization", "Organization"
-      %th= sortable "company", "Company"
-      %th{:colspan => 2} Action
-  %tbody
-    - @donors.each do |donor|
+#search_ind
+  %table.table.table-striped.table-hover
+    %thead
       %tr
-        %td= donor.first_name 
-        %td= donor.last_name
-        %td= donor.organization 
-        %td= donor.company 
-        %td= link_to "View", donor_path(donor), class: 'btn btn-success btn-xs'
-        %td= link_to "Delete", donor_path(donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger btn-xs'
-= js_will_paginate @donors
+        %th= sortable_ind  "first_name", "First Name"
+        %th= sortable_ind  "last_name", "Last Name"
+        %th= sortable_ind  "organization", "Organization"
+        %th= sortable_ind  "company", "Company"
+        %th{:colspan => 2} Action
+    %tbody
+      - @donors[:inds].each do |donor|
+        %tr
+          %td= donor.first_name 
+          %td= donor.last_name
+          %td= donor.organization 
+          %td= donor.company 
+          %td= link_to "View", donor_path(donor), class: 'btn btn-success btn-xs'
+          %td= link_to "Delete", donor_path(donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger btn-xs'
+  = js_will_paginate @donors[:inds], :param_name => 'page_ind'
+
+#search_org  
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
+        %th= sortable_org  "name", "Name"
+        %th{:colspan => 2} Action
+    %tbody
+      - @donors[:orgs].each do |org|
+        %tr
+          %td= org.name 
+  = js_will_paginate @donors[:orgs], :param_name => 'page_org'

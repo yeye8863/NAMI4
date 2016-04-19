@@ -2,9 +2,11 @@
 $("#add").click(insRow);
 $("#edit").click(editRow);
 $("#delete").click(delData);
+$("#tabs").on("click", "li", fixHeader);
 $("#contact_tab tbody").on("click", "tr", selRow);
 
 var selected_c;
+var header_c;
 var table_c = $("#contact_tab").DataTable( {
 	"columns": [
     	{ "width": "15%" },
@@ -18,6 +20,17 @@ var table_c = $("#contact_tab").DataTable( {
   	"dom": 'rt<"bottom-left-info-bar"f>',
     paging: false
 } );
+
+function fixHeader(){
+	if($("#contact-tab", $(this)).length){
+		setTimeout(function() {
+			if($(".fixedHeader").length == 0 && $("#contact").hasClass("active")){
+				header_c = new FixedHeader(table_c);
+				$(window).resize(function(){ header_c._fnUpdateClones(true) })
+			}
+		}, 1000);
+	} else $(".fixedHeader").remove();
+}
 
 function selDate(a, b){
 	var now = new Date();
@@ -115,7 +128,7 @@ function delRow(){
 	$("#add").notify("Successfully deleted!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
 }
 
-function delData(){
+function delData(event){
 	selected_c = $("#contact_tab tbody .info");
 	if(selected_c.length){
 		var sure;
