@@ -23,7 +23,7 @@ var SearchScope = {
   reset_field : function() {
    $('#donor_first_name').val('');
    $('#donor_last_name').val('');
-   $('#donor_organization').val('');
+   $('#org_name').val('');
    $('#donor_company').val('');
   },
   setup: function() {

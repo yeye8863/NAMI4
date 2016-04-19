@@ -41,7 +41,17 @@ contact_people = [
 
 organizations = [
           {:name => 'golden lion'},
-          {:name => 'silver fox'}
+          {:name => 'org1'},
+          {:name => 'org2'},
+          {:name => 'org3'},
+          {:name => 'org4'},
+          {:name => 'golden sheep'},
+          {:name => 'golden cow'},
+          {:name => 'golden tiger'},
+          {:name => 'silver fox'},
+          {:name => 'silver sheep'},
+          {:name => 'silver tiger'},
+          {:name => 'silver cow'}
           ]
   
 contacts = [

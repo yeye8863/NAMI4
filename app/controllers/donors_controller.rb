@@ -1,12 +1,15 @@
 class DonorsController < ApplicationController
-helper_method :sort_column, :sort_direction
+helper_method :sort_column_ind, :sort_direction_ind, :sort_column_org, :sort_direction_org
+
     #before_filter :authorize
 
     def index
-        @inds = Donor.search_by(params[:donor]).order(sort_column + " " + sort_direction).paginate(:per_page => 3, :page => params[:page])
-        @orgs = Organization.search_by(params[:org]).order(sort_column_org + " " + sort_direction).paginate(:per_page => 3, :page => params[:page])
+        ind_order = sort_column_ind + " " + sort_direction_ind
+        org_order = sort_column_org + " " + sort_direction_org
+        @inds = Donor.search_by(params[:donor]).order(ind_order).paginate(:per_page => 3, :page => params[:page_ind])
+        @orgs = Organization.search_by(params[:org]).order(org_order).paginate(:per_page => 3, :page => params[:page_org])
         @donors = {:inds => @inds, :orgs => @orgs}
-        render(:partial => 'search_result', :object => @donors ) if request.xhr?
+        render(:partial => 'search_result', :object => @donors) if request.xhr?
     end
     
     def new 
@@ -86,13 +89,16 @@ helper_method :sort_column, :sort_direction
     
     
     private
-    def sort_column
-        Donor.column_names.include?(params[:sort]) ? params[:sort] : "last_name"
+    def sort_column_ind
+        Donor.column_names.include?(params[:sort_ind]) ? params[:sort_ind] : "last_name"
     end
     def sort_column_org
-        Organization.column_names.include?(params[:sort]) ? params[:sort] : "name"
+        Organization.column_names.include?(params[:sort_org]) ? params[:sort_org] : "name"
     end
-    def sort_direction
-        %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    def sort_direction_ind
+        %w[asc desc].include?(params[:direction_ind]) ? params[:direction_ind] : "asc"
+    end
+    def sort_direction_org
+        %w[asc desc].include?(params[:direction_org]) ? params[:direction_org] : "asc"
     end
 end

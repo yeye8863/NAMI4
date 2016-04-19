@@ -11,8 +11,8 @@ class Organization < ActiveRecord::Base
            inputs.each do |key, value|
                value.downcase!
            end
+           search_term = [inputs.keys.map{ |key| "#{key} LIKE ?"}.join(' AND ')] +  inputs.values.map { |val| "%#{val}%" }
         end
-        
-        @donors =  Organization.where(inputs)
+        @donors =  Organization.where(search_term)
     end
 end
