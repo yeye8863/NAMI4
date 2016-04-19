@@ -11,7 +11,7 @@ class ReportsController < ApplicationController
     end
     
     def new 
-        
+        @report = Report.new
     end
     
     def create

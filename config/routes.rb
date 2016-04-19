@@ -17,8 +17,6 @@ Rails.application.routes.draw do
   resources :contacts
   resources :agendas
   
-  get 'dashboard' => 'dashboards#index', :as => 'dashboard'
 
-  
 
 end

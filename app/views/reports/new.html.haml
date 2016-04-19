@@ -1,72 +1,102 @@
+=render :partial=>'layouts/banner'
 :javascript 
-  $(ReportCreator.setup);
+	$(ReportCreator.setup);
 
-#title.container
-  %h1 Report
-    
-#mainbody.container
-  %h3 Report Creator
+#page-title.container-fluid.titleLine
+	%h2 Report
+		
+#mainbody.container-fluid
+	%h3 Report Creator
+	.panel-group
+		.panel.panel-danger
+			.panel-heading{:style => "font-size:20px;"} Info
+			
+			=form_for @report, :html => {:id => 'info', :role => 'form'} do |r|
+				.form-group
+					.row
+						.col-md-3
+							=r.label :title,'Title:'
+							=r.text_field :title, :class => 'form-control', :id => 'title', :placeholder => 'title'
+					.row
+						.col-md-3
+							=r.label :created_by, 'Creator:' 
+							=r.text_field :created_by, :class => 'form-control', :id => 'created_by', :placeholder => 'creator'
+					.row
+						.col-md-5
+							=r.label :description, 'Description:' 
+							=r.text_area :description, :class => 'form-control', :id => 'description', :placeholder => 'discription'
+		.panel.panel-default
+			.panel-heading{:style => "font-size:20px;"} Fields
+			%form{:id => 'fields', :role => "form"}
+				#three-box-step.form-group
+					.row
+						.col-md-3
+							%h5
+								%span.list-title 1) Tables
+							%select.form-control{:id => "tables",:multiple => "", :style => "height: 200px; width: 100%; margin-top: 10px"}
+								%option{:value => "1"} Donor
+								%option{:value => "2"} Orgnization
+								%option{:value => "3"} Contact
+								%option{:value => "4"} Finance
+								%option{:value => "5"} Contact Person
+						.col-md-4
+							%h5
+								%span.list-title 2) Available Fields
+								%select.unselected.fields.form-control{:id => "availablefields", :multiple => "", :style => "height: 200px; width: 100%; margin-top: 10px"}
+						.col-md-5
+							%h5
+								%span.list-title 3) Filter
+					.row
+						.col-md-5
+							%h5
+								%span.list-title 4) Criteria Fields
+						
+	
 
-  / Nav Tabs
-  %ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'} 
-    %li.active{:role => 'presentation'}
-      %a{"aria-controls" => "info", "data-toggle" => "tab", :href => "#info", :role => "tab"}Info
-    %li{:role => 'presentation'}
-      %a{"aria-controls" => "fields", "data-toggle" => "tab", :href => "#fields", :role => "tab"}Fields        
-  /Tab Content
-  .tab-content
-  	#info.tab-pane{:role => 'tabpenal'}
-  	=form_for @report, :remote=>true, :method=>'put', :html=>{:id=>'donorInfo', :class=>'form donor-form col-sm-offset-1'} do |f|
-  		.row
-  			.col-md-5
-  				%label{:for => title}Title
-  				.input-group
-  					%input.form-control{:type => text}
-
-  .row
-    %form{:role => "form"}
-      #four-box-step.form-group
-        .col-md-2
-          %h5
-            %span.list-title 1) Tables
-          %select.form-control{:id => "tables",:multiple => "", :style => "height: 238px; width: 100%; margin-top: 10px"}
-            %option{:value => "1"} Donor
-            %option{:value => "2"} Orgnization
-            %option{:value => "3"} Contact
-            %option{:value => "4"} Finance
-            %option{:value => "5"} Contact Person
-        .col-md-3
-          %h5
-            %span.list-title 2) Available Fields
-            %small 
-              \- showing
-              %span.unselected-count 
-          %input.filter.form-control.filter-unselected{:type => "text", :style => "margin-bottom: 5px;", :placeholder => "Filter"}
-          %select.unselected.fields.form-control{:id => "availablefields", :multiple => "", :style => "height: 200px; width: 100%;"}
-        .col-md-1.center-block{:style => "margin-top:80px"}
-          %button.btn.btn-default.col-md-9.atr{"data-type" => "atr", :style => "margin-bottom: 10px;", :type => "button", :disabled => ""}
-            %span.glyphicon.glyphicon-list
-            %span.glyphicon.glyphicon-chevron-right
-          %button.btn.btn-default.col-md-9.str{"data-type" => "str", :style => "margin-bottom: 20px;", :type => "button", :disabled => ""}
-            %span.glyphicon.glyphicon-chevron-right
-          %button.btn.btn-default.col-md-9.stl{"data-type" => "stl", :style => "margin-bottom: 10px;", :type => "button", :disabled => ""}
-            %span.glyphicon.glyphicon-chevron-left
-          %button.btn.btn-default.col-md-9.atl{"data-type" => "atl", :style => "margin-bottom: 10px;", :type => "button", :disabled => ""}
-            %span.glyphicon.glyphicon-chevron-left
-            %span.glyphicon.glyphicon-list
-        .col-md-3
-          %h5
-            %span.list-title 3) Selected Fields
-            %small 
-              \- showing
-              %span.selected-count 
-          %input.filter.form-control.filter-selected{:type => "text", :style => "margin-bottom: 5px;", :placeholder => "Filter"}
-          %select.selected.fields.form-control{:id => "selectedfields", :multiple => "", :style => "height: 200px; width: 100%;",:name => ""}
-        .col-md-3
-          %h5
-            %span.list-title 4) Filters
-            
-  .row{:style => "margin-top: 50px;"}
-    .col-md-6
-      %h5
-        %span.list-title 5) Criteria Fields
+	.row
+		%form{:role => "form"}
+			#four-box-step.form-group
+				.col-md-2
+					%h5
+						%span.list-title 1) Tables
+					%select.form-control{:id => "tables",:multiple => "", :style => "height: 238px; width: 100%; margin-top: 10px"}
+						%option{:value => "1"} Donor
+						%option{:value => "2"} Orgnization
+						%option{:value => "3"} Contact
+						%option{:value => "4"} Finance
+						%option{:value => "5"} Contact Person
+				.col-md-3
+					%h5
+						%span.list-title 2) Available Fields
+						%small 
+							\- showing
+							%span.unselected-count 
+					%input.filter.form-control.filter-unselected{:type => "text", :style => "margin-bottom: 5px;", :placeholder => "Filter"}
+					%select.unselected.fields.form-control{:id => "availablefields", :multiple => "", :style => "height: 200px; width: 100%;"}
+				.col-md-1.center-block{:style => "margin-top:80px"}
+					%button.btn.btn-default.col-md-9.atr{"data-type" => "atr", :style => "margin-bottom: 10px;", :type => "button", :disabled => ""}
+						%span.glyphicon.glyphicon-list
+						%span.glyphicon.glyphicon-chevron-right
+					%button.btn.btn-default.col-md-9.str{"data-type" => "str", :style => "margin-bottom: 20px;", :type => "button", :disabled => ""}
+						%span.glyphicon.glyphicon-chevron-right
+					%button.btn.btn-default.col-md-9.stl{"data-type" => "stl", :style => "margin-bottom: 10px;", :type => "button", :disabled => ""}
+						%span.glyphicon.glyphicon-chevron-left
+					%button.btn.btn-default.col-md-9.atl{"data-type" => "atl", :style => "margin-bottom: 10px;", :type => "button", :disabled => ""}
+						%span.glyphicon.glyphicon-chevron-left
+						%span.glyphicon.glyphicon-list
+				.col-md-3
+					%h5
+						%span.list-title 3) Selected Fields
+						%small 
+							\- showing
+							%span.selected-count 
+					%input.filter.form-control.filter-selected{:type => "text", :style => "margin-bottom: 5px;", :placeholder => "Filter"}
+					%select.selected.fields.form-control{:id => "selectedfields", :multiple => "", :style => "height: 200px; width: 100%;",:name => ""}
+				.col-md-3
+					%h5
+						%span.list-title 4) Filters
+						
+	.row{:style => "margin-top: 50px;"}
+		.col-md-6
+			%h5
+				%span.list-title 5) Criteria Fields
