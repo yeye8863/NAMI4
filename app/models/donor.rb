@@ -13,7 +13,8 @@ class Donor < ActiveRecord::Base
                value.downcase!
            end
         end
-        
+    
+    
         @donors =  Donor.where(inputs)
     end
 
