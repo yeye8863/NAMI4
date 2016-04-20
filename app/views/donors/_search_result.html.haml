@@ -22,7 +22,6 @@
             - if @ind_attr_show.include? attr
               %td #{val} 
              
-            
 #org_result
   %h2 Orgnizations
   %table#table_org.table.display{:cellspacing => "0", :width => "100%"}
@@ -44,6 +43,7 @@
       - @donors[:orgs].each do |org|
         %tr          
           %td
+            = link_to "View", donor_path(org), class: 'btn btn-success btn-xs'
           - org.attributes.each do |attr, val|
             - if @org_attr_show.include? attr
               %td #{val} 

@@ -14,6 +14,23 @@ var donorInfo = {
 
 $(donorInfo.setup);
 
+
+var newDonorInfo = {
+  setup: function(){
+     $('#newDonorInfo').on('ajax:success',function(event,data,status,xhr){
+      event.preventDefault();
+      $('#donorId').val(data.id);
+      $("#basic-submit").notify("Successfully saved", {className: "success", position:"left middle"});
+    });
+    $('#newDonorInfo').on('ajax:error',function(event,xhr,status,error){
+      event.preventDefault();
+      $("#basic-submit").notify("Error occurred, please try later...", {className: "error", position:"middle middle"});
+    });
+  }  
+}
+
+$(newDonorInfo.setup);
+
 var SearchScope = {
   select_scope : function() {
    $('#individual').toggle();

@@ -25,7 +25,7 @@ function fixHeader(){
 	if($("#contact-tab", $(this)).length){
 		setTimeout(function() {
 			if($(".fixedHeader").length == 0 && $("#contact").hasClass("active")){
-				header_c = new FixedHeader(table_c);
+				header_c = new fixHeader(table_c);
 				$(window).resize(function(){ header_c._fnUpdateClones(true) })
 			}
 		}, 1000);
@@ -181,7 +181,7 @@ function saveData(){
 			$.ajax({
 				type: "POST",
 				url: "/contacts/",
-				data: {"attr": attr, "id": $("#contact_tab").data("id")},
+				data: {"attr": attr, "id": $("#donorId").val()},
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {

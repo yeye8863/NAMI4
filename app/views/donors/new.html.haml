@@ -1,0 +1,88 @@
+#page-title.container-fluid.titleLine
+  %h2 Donor Information
+%ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
+  %li.active
+    %a{:id=>'basic-tab',:href=>'#basic', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'basic'}} Basic
+  %li
+    %a{:id=>'contact-tab',:href=>'#contact', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'contact'}} Contact
+  %li 
+    %a{:id=>'finance-tab',:href=>'#finance', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'finance'}} Finance
+.tab-content.container-fluid
+  #basic.tab-pane.active{:role=>'tabpanel'}
+    %label#donorId{:style=>'display:none'}=@donor.id
+    =form_for @donor, :remote=>true, :method=>'post', :html=>{:id=>'newDonorInfo', :class=>'form donor-form col-sm-offset-3'} do |f|
+      .form-group
+        .form-group
+          .row
+            .col-sm-3
+              =f.label :title
+              =f.text_field :title, class:'form-control', id:'title'
+            .col-sm-3
+              =f.label :salution
+              =f.text_field :salution, class:'form-control', id:'salution'
+        .form-group
+          .row
+            .col-sm-3
+              =f.label :first_name
+              =f.text_field :first_name, class:'form-control', id:'first_name'
+            .col-sm-3
+              =f.label :last_name
+              =f.text_field :last_name, class:'form-control', id:'last_name'
+            .col-sm-3
+              =f.label :middle_name
+              =f.text_field :middle_name, class:'form-control', id:'middle_name'
+        .form-group
+          .row
+            .col-sm-3  
+              =f.label :email
+              =f.text_field :email, class:'form-control', id:'email'
+            .col-sm-3  
+              =f.label :home_phone
+              =f.text_field :home_phone, class:'form-control', id:'home_phone'
+            .col-sm-3  
+              =f.label :business_phone
+              =f.text_field :business_phone, class:'form-control', id:'business_phone'
+            .col-sm-3  
+              =f.label :zipcode
+              =f.text_field :zipcode, class:'form-control', id:'zipcode'
+        .form-group
+          .row
+            .col-sm-3  
+              =f.label :company
+              =f.text_field :company, class:'form-control', id:'company'
+            .col-sm-3  
+              =f.label :organization
+              =f.text_field :organization, class:'form-control', id:'organization'
+        .form-group
+          .row  
+            .col-sm-3  
+              =f.label :street_address
+              =f.text_field :street_address, class:'form-control', id:'street_address'
+            .col-sm-3
+              =f.label :city
+              =f.text_field :city, class:'form-control', id:'city'
+            .col-sm-3  
+              =f.label :state
+              =f.text_field :state, class:'form-control', id:'state'
+            .col-sm-3  
+              =f.label :country
+              =f.text_field :country, class:'form-control', id:'country'
+        .button-line.pull-right    
+          =f.submit id:'basic-submit', class:'btn btn-default'
+          =link_to "Back", donors_path, class: 'btn btn-primary'
+  #contact.tab-pane{:role=>'tabpanel'}
+    #contact-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:10px;"}
+      %table#contact_tab.table.table-hover.clickable-row{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
+        %thead{:style => "width:100%"}
+          %tr{:style => "width:100%"}
+            - @donor_contact.each_pair do |key, val|
+              %th{:width => val}
+                = key
+        %tbody
+    .button-line.bottom-right-info-bar{:style => "padding:0"}
+      =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add"
+      =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit"
+      %button.btn.btn-danger#delete{type:'button'} Delete
+      =link_to "Back", donors_path, class: 'btn btn-primary'
+    =javascript_include_tag 'contacts' 
+  #finance.tab-pane{:role=>'tabpanel'}
