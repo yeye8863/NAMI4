@@ -1,4 +1,3 @@
-//= require bootstrap-datepicker
 $("#add").click(insRow);
 $("#edit").click(editRow);
 $("#delete").click(delData);
