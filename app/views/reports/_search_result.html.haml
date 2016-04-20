@@ -10,6 +10,7 @@
               %th Description
               %th Last Modified By
               %th Last Modified Date
+              %th Create Date
               %th{:colspan => 2} Action
           %tbody
           -if @report_records
@@ -19,7 +20,8 @@
                 %td=report_record.description
                 %td=report_record.last_modified_by
                 %td=report_record.last_modified_at
-                %td=link_to "Edit", report_path(report_record), class: 'btn btn-success btn-xs'
+                %td=report_record.created_at
+                %td=link_to "Edit", edit_report_path(report_record), class: 'btn btn-success btn-xs'
                 %td=link_to "Delete", report_path(report_record.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger btn-xs'
 
     
