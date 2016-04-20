@@ -57,4 +57,52 @@ var viewResult = {
 };
 $(document).ready(viewResult.setup);
 
+$(document).ready(function() {
+    $('#table_ind, #table_org').DataTable();
+});
 
+$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#table_ind tfoot th, #table_org tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder=" '+title+'" />' );
+    } );
+ 
+    // DataTable
+    var table = $('#table_ind, #table_org').DataTable();
+ 
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+});
+
+$(document).ready(function() {
+ 
+    var table = $('#table_ind, #table_org').DataTable();
+    $('#table_ind tbody, #table_org tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    } );
+ 
+    $('#button').click( function () {
+        table.row('.selected').remove().draw( false );
+    } );
+    
+     $('#table_ind').on( 'click', 'tbody td:not(:first-child)', function (e) {
+        editor.inline( this );
+    } );
+} );

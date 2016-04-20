@@ -1,23 +1,18 @@
 #ind_result
   %h2 Donors 
-  #toolbar_ind.btn-group
-    = link_to new_donor_path, class:'btn btn-default' do
-      %i.glyphicon.glyphicon-plus
-    %button.btn.btn-default{:type => "button"}
-      %i.glyphicon.glyphicon-trash
-
-  %table#table_ind{"data-classes" => "table table-hover", "data-pagination" => "true", "data-query-params" => "queryParams", "data-search" => "true", "data-show-columns" => "true", "data-show-refresh" => "true", "data-show-toggle" => "true", "data-striped" => "true", "data-toggle" => "table", "data-toolbar" => "#toolbar_ind"}          
+  %table#table_ind.table.display{:cellspacing => "0", :width => "100%"}
     %thead
       %tr
         %th Action
         - @donors[:ind_attr].each do |attr|
           - if @ind_attr_show.include? attr
-            %th{"data-field" => attr, "data-sortable" => "true"}
-              #{attr}
-          - else
-            %th{"data-field" => attr, "data-sortable" => "true", "data-visible" => "false"}
-              #{attr}
-            
+            %th #{attr}
+    %tfoot
+      %tr
+        %th Action
+        - @donors[:ind_attr].each do |attr|
+          - if @ind_attr_show.include? attr
+            %th #{attr}
     %tbody
       - @donors[:inds].each do |ind|
         %tr
@@ -30,25 +25,25 @@
             
 #org_result
   %h2 Orgnizations
-  #toolbar_org.btn-group
-    %button.btn.btn-default{:type => "button"}
-      %i.glyphicon.glyphicon-plus
-    %button.btn.btn-default{:type => "button"}
-      %i.glyphicon.glyphicon-trash
-
-  %table#table_org{"data-classes" => "table table-hover", "data-pagination" => "true", "data-query-params" => "queryParams", "data-search" => "true", "data-show-columns" => "true", "data-show-refresh" => "true", "data-show-toggle" => "true", "data-striped" => "true", "data-toggle" => "table", "data-toolbar" => "#toolbar_org"}          
+  %table#table_org.table.display{:cellspacing => "0", :width => "100%"}
     %thead
       %tr
         %th Action
         - @donors[:org_attr].each do |attr|
           - if @org_attr_show.include? attr
-            %th{"data-field" => attr, "data-sortable" => "true"}
+            %th
+              #{attr}
+    %tfoot
+      %tr
+        %th Action
+        - @donors[:org_attr].each do |attr|
+          - if @org_attr_show.include? attr
+            %th
               #{attr}
     %tbody
       - @donors[:orgs].each do |org|
         %tr          
           %td
-            %button.btn-xs.btn-success View
           - org.attributes.each do |attr, val|
             - if @org_attr_show.include? attr
               %td #{val} 
