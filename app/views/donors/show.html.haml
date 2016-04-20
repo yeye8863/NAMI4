@@ -26,7 +26,7 @@
           =link_to "Delete", donor_path(@donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger'
   #basic.tab-pane{:role=>'tabpanel'}
     %label#donorId{:style=>'display:none'}=@donor.id
-    =form_for @donor, :remote=>true, :method=>'put', :html=>{:id=>'donorInfo', :class=>'form donor-form'} do |f|
+    =form_for @donor, :remote=>true, :method=>'put', :html=>{:id=>'donorInfo', :class=>'form donor-form col-sm-12'} do |f|
       .form-group
         .form-group
           .row
