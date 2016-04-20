@@ -12,11 +12,39 @@ helper_method :sort_column_ind, :sort_direction_ind, :sort_column_org, :sort_dir
         @inds = Donor.search_by(params[:donor])
         @orgs = Organization.search_by(params[:org])
         @donors = {:inds => @inds, :orgs => @orgs, :ind_attr => @ind_attr, :org_attr => @org_attr}
+        ind_order = sort_column_ind + " " + sort_direction_ind
+        org_order = sort_column_org + " " + sort_direction_org
+        @inds = Donor.search_by(params[:donor]).order(ind_order).paginate(:per_page => 3, :page => params[:page_ind])
+        @orgs = Organization.search_by(params[:org]).order(org_order).paginate(:per_page => 3, :page => params[:page_org])
+        @donors = {:inds => @inds, :orgs => @orgs}
+        
+        if @inds
+          @inds.each do |donor|
+            donor.first_name.capitalize! if donor.first_name
+            donor.last_name.capitalize! if donor.last_name
+            donor.middle_name.capitalize! if donor.middle_name
+            donor.title.capitalize! if donor.title
+            donor.salution.capitalize! if donor.salution
+            donor.company.capitalize! if donor.company
+            donor.city.capitalize! if donor.city
+            donor.state.capitalize! if donor.state
+            donor.country.capitalize! if donor.country
+          end
+        end
+        
+        if @orgs
+          @orgs.each do |org|
+            org.city.capitalize! if org.city
+            org.state.capitalize! if org.state
+            org.country.capitalize! if org.country
+          end
+        end
+        render(:partial => 'search_result', :object => @donors) if request.xhr?
     end
     
     def new 
-        @donor = Donor.create
-        redirect_to donor_path :id => @donor.id
+        @donor = Donor.new
+        render(:partial => 'donor_info', :object => @donor) if request.xhr?
     end
     
     def destroy

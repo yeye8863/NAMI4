@@ -17,3 +17,4 @@
 //= require dataTables/extras/dataTables.fixedHeader
 //= require notify.min
 //= require_tree .
+

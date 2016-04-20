@@ -4,17 +4,23 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root :to => 'sessions#new'
-  resources :users
+  
   # these routes are for showing users a login form, logging them in, and logging them out.
   get 'login' => 'sessions#new', :as => 'new_login'
   post 'login' => 'sessions#create', :as => 'login'
   get 'logout' => 'sessions#destroy', :as => 'logout'
   get 'homepage' => 'users#index', :as => 'homepage'
   get 'dashboard' => 'dashboards#index', :as => 'dashboard'
+  get 'dashboard/donor/:id' => 'dashboards#viewDonor', :as=>'dashboardDonor'
+  get 'dashboard/contact_person/:id' => 'dashboards#viewContactPerson', :as=>'dashboardContactPerson'
   
+  resources :users
   resources :donors
   resources :reports
   resources :contacts
   resources :agendas
-
+  resources :contact_people
+  resources :reports
+  resources :filters
+  
 end

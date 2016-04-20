@@ -16,6 +16,4 @@ class Donor < ActiveRecord::Base
        end
        @donors =  Donor.where(search_term)
     end
-
-
 end

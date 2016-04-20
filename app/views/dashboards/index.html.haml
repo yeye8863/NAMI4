@@ -1,5 +1,6 @@
 =render :partial=>'layouts/banner'
 =javascript_include_tag "agendas"
+=javascript_include_tag "new_added_contacts"
 #page-title.container-fluid.titleLine
   %h2  Dashboard
 #mainbody.container-fluid
@@ -7,28 +8,54 @@
     .col-sm-6
       %h3 Agenda
       #agenda-panel.panel.panel-default
-        %table#agenda-table.table
-          %thead
-            %tr
-              %th Name
-              %th Organization
-              %th Contact Date
-              %th Followup Date
-              %th 
-          %tbody
-            -if @agenda_records
-              -@agenda_records.each do |agenda_record|
-                %tr
-                  %td=agenda_record.name.split.map(&:capitalize).join(' ') if agenda_record.name
-                  %td=agenda_record.organization.split.map(&:capitalize).join(' ') if agenda_record.organization
-                  %td=agenda_record.contact_date
-                  %td=agenda_record.followup_date
-                  %td=link_to 'More', agenda_path("#{agenda_record.contact_id}"), remote: true, data: {toggle: 'modal', target: '#agendaInfo'}
+        = render :partial => 'agendas_view'
     .col-sm-6
       %h3 Report Quickview
-  .row
+      #recentlyreport-panel.panel.panel-default
+        = render :partial => 'reports_view'
+  .row                  
     .col-sm-6
       %h3 New Added Contacts
+      #addedcontact-panel.panel.panel-default
+        %ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
+          %li.active 
+            %a{:id=>'ind-tab',:href=>'#ind', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'ind'}} Individual
+          %li 
+            %a{:id=>'org-tab',:href=>'#org', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'org'}} Organization
+      .tab-content.container-fluid
+        #ind.tab-pane.active{:role=>'tabpanel'}
+          %table#addedcontact-table.table
+            %thead
+              %tr
+                %th Name
+                %th Company
+                %th Organization
+                %th
+            %tbody
+              -if @donors
+                -@donors.each do |donor|
+                  %tr
+                    %td=donor.name.split.map(&:capitalize).join(' ')
+                    %td=donor.company.capitalize! if donor.company
+                    %td=donor.organization.capitalize! if donor.organization
+                    %td=link_to 'More', dashboardDonor_path("#{donor.id}"), remote: true, data: {toggle: 'modal', target: '#addedDonorInfo'}
+        #org.tab-pane
+          %table#addedcontact-table.table
+            %thead
+              %tr
+                %th Name
+                %th Company
+                %th Organization
+                %th
+            %tbody
+              -if @contact_people
+                -@contact_people.each do |contact_person|
+                  %tr
+                    %td=contact_person.name.split.map(&:capitalize).join(' ')
+                    %td=contact_person.company! if contact_person.company
+                    %td=contact_person.organization.capitalize! if contact_person.organization
+                    %td=link_to 'More', dashboardContactPerson_path("#{contact_person.id}"), remote: true, data: {toggle: 'modal', target: '#addedContactPersonInfo'}
+    
     .col-sm-6
       %h3 Admin Tool Box
   #agendaInfo.modal.fade{:role => 'dialog'}
@@ -37,6 +64,24 @@
         .modal-header
           %button.close{:type=>'button',:data => {:dismiss => 'modal'},:aria => { :label => 'Close'}}="&times;".html_safe
           %h4.modal-title Description
+        .modal-body
+        .modal-footer
+          %button.btn.btn-default{:type=>'button',:data => {:dismiss => 'modal'}} Close
+  #addedDonorInfo.modal.fade{:role => 'dialog'}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{:type=>'button',:data => {:dismiss => 'modal'},:aria => { :label => 'Close'}}="&times;".html_safe
+          %h4.modal-title Detail
+        .modal-body
+        .modal-footer
+          %button.btn.btn-default{:type=>'button',:data => {:dismiss => 'modal'}} Close
+  #addedContactPersonInfo.modal.fade{:role => 'dialog'}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{:type=>'button',:data => {:dismiss => 'modal'},:aria => { :label => 'Close'}}="&times;".html_safe
+          %h4.modal-title Detail
         .modal-body
         .modal-footer
           %button.btn.btn-default{:type=>'button',:data => {:dismiss => 'modal'}} Close
