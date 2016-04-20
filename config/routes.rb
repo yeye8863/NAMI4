@@ -21,4 +21,6 @@ Rails.application.routes.draw do
   resources :agendas
   resources :contact_people
   resources :reports
+  resources :filters
+  
 end

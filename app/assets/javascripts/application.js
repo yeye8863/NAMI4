@@ -18,3 +18,4 @@
 //= require bootstrap-sprockets
 //= require notify.min
 //= require_tree .
+
