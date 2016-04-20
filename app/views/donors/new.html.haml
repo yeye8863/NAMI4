@@ -10,7 +10,7 @@
 .tab-content.container-fluid
   #basic.tab-pane.active{:role=>'tabpanel'}
     %label#donorId{:style=>'display:none'}=@donor.id
-    =form_for @donor, :remote=>true, :method=>'post', :html=>{:id=>'newDonorInfo', :class=>'form donor-form col-sm-offset-3'} do |f|
+    =form_for @donor, :remote=>true, :method=>'post', :html=>{:id=>'newDonorInfo', :class=>'form donor-form'} do |f|
       .form-group
         .form-group
           .row
