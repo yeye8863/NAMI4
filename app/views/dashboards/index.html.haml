@@ -8,42 +8,11 @@
     .col-sm-6
       %h3 Agenda
       #agenda-panel.panel.panel-default
-        %table#agenda-table.table
-          %thead
-            %tr
-              %th Name
-              %th Organization
-              %th Contact Date
-              %th Followup Date
-              %th 
-          %tbody
-            -if @agenda_records
-              -@agenda_records.each do |agenda_record|
-                %tr
-                  %td=agenda_record.name.split.map(&:capitalize).join(' ') if agenda_record.name
-                  %td=agenda_record.organization.split.map(&:capitalize).join(' ') if agenda_record.organization
-                  %td=agenda_record.contact_date
-                  %td=agenda_record.followup_date
-                  %td=link_to 'More', agenda_path("#{agenda_record.contact_id}"), remote: true, data: {toggle: 'modal', target: '#agendaInfo'}
+        = render :partial => 'agendas_view'
     .col-sm-6
       %h3 Report Quickview
       #recentlyreport-panel.panel.panel-default
-        %table#recentlyreport-table.table
-          %thead
-            %tr
-              %th Title
-              %th Description
-              %th Last Modified By
-              %th Last Modified Time
-              %th
-          %tbody
-            -if @report_records
-              -@report_records.each do |report|
-                %tr
-                  %td=report.title
-                  %td=report.description
-                  %td=report.last_modified_by
-                  %td=report.last_modified_at
+        = render :partial => 'reports_view'
   .row                  
     .col-sm-6
       %h3 New Added Contacts

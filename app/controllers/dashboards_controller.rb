@@ -3,14 +3,13 @@ require 'date'
 class DashboardsController < ApplicationController
     before_filter :authorize
     def index
-      @agenda_records = AgendaView.all
-      #debugger
-      @agenda_records.each do |record|
-        puts record
-      end
+      @agenda_records = AgendaView.all.paginate(:per_page => 5, :page => params[:page])
       @donors = DonorView.all
       @contact_people = ContactPersonView.all
-      @report_records = Report.all
+      @report_records = Report.all.paginate(:per_page => 5, :page => params[:page])
+      #debugger
+      render_to_string(:partial => 'reports_view', :object => @report_records) if request.xhr?
+      render_to_string(:partial => 'agendas_view', :object => @agenda_records) if request.xhr?
     end
     
     def viewDonor
