@@ -1,5 +1,4 @@
 =render :partial=>'layouts/banner'
-=javascript_include_tag 'donors.js'
 #page-title.container-fluid.titleLine
   %h2 Donor Information
 %ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
@@ -11,7 +10,6 @@
     %a{:id=>'contact-tab',:href=>'#contact', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'contact'}} Contact
   %li 
     %a{:id=>'finance-tab',:href=>'#finance', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'finance'}} Finance
-    
 .tab-content.container-fluid
   #summary.tab-pane.active{:role=>'tabpanel'}
     .container{:style=>'padding-top: 50px'}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418220345) do
+ActiveRecord::Schema.define(version: 20160420040335) do
 
   create_table "accesses", force: :cascade do |t|
     t.string   "email"
@@ -121,21 +121,36 @@ SELECT * FROM
         ORDER BY followup_date ASC
   END_VIEW_AGENDA_VIEWS
 
-  create_view "donor_views", <<-'END_VIEW_DONOR_VIEWS', :force => true
-SELECT * FROM 
-      (
-        SELECT 
+  create_view "contact_person_view", <<-'END_VIEW_CONTACT_PERSON_VIEW', :force => true
+SELECT 
           a.title||' '||a.first_name||' '||a.last_name as name,
-          NULL as organization,
-          a.updated_at as updated_at
+          b.name as organization,
+          a.company as company,
+          a.updated_at as updated_at,
+          a.id as id
+        FROM contact_people a, organizations b
+        WHERE a.organization_id = b.id
+  END_VIEW_CONTACT_PERSON_VIEW
+
+  create_view "contact_person_views", <<-'END_VIEW_CONTACT_PERSON_VIEWS', :force => true
+SELECT 
+          a.title||' '||a.first_name||' '||a.last_name as name,
+          b.name as organization,
+          a.company as company,
+          a.updated_at as updated_at,
+          a.id as id
+        FROM contact_people a, organizations b
+        WHERE a.organization_id = b.id
+  END_VIEW_CONTACT_PERSON_VIEWS
+
+  create_view "donor_views", <<-'END_VIEW_DONOR_VIEWS', :force => true
+SELECT 
+          a.title||' '||a.first_name||' '||a.last_name as name,
+          a.company as company,
+          a.organization as organization,
+          a.updated_at as updated_at,
+          a.id as id
         FROM donors a
-        UNION
-        SELECT 
-          b.title||' '||b.first_name||' '||b.last_name as name,
-          d.name as organization,
-          b.updated_at as updated_at
-        FROM organizations d JOIN contact_people b ON b.organization_id = d.id) as RESULT
-        ORDER BY updated_at DESC
   END_VIEW_DONOR_VIEWS
 
   create_table "filters", force: :cascade do |t|
@@ -179,9 +194,6 @@ SELECT * FROM
     t.datetime "created_at",       :null=>false
     t.datetime "last_modified_at"
     t.datetime "updated_at",       :null=>false
-  end
-
-  create_table "report_views", force: :cascade do |t|
   end
 
   create_table "reports", force: :cascade do |t|
