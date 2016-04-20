@@ -24,7 +24,7 @@ function fixHeader(){
 	if($("#contact-tab", $(this)).length){
 		setTimeout(function() {
 			if($(".fixedHeader").length == 0 && $("#contact").hasClass("active")){
-				header_c = new fixHeader(table_c);
+				header_c = new FixedHeader(table_c);
 				$(window).resize(function(){ header_c._fnUpdateClones(true) })
 			}
 		}, 1000);
@@ -35,26 +35,17 @@ function selDate(a, b){
 	var now = new Date();
     var d1 = a.datepicker({
     	format: "yyyy-mm-dd",
-    	onRender: function(date) {
-    		return date.valueOf() > now.valueOf() ? "disabled" : "";
-    	}
-    }).on('changeDate', function(ev) {
-    	if (ev.date.valueOf() > d2.date.valueOf()) {
-	        var newDate = new Date(ev.date)
-	        newDate.setDate(newDate.getDate() + 1);
-	        d2.setValue(newDate);
-      	}
-    	d1.hide();
+    	endDate: now,
+    	autoclose: true
+    }).on('changeDate', function() {
+    	d2.datepicker("setStartDate", d1.datepicker("getDate"));
     	b[0].focus();
-    }).data('datepicker');
+    });
     var d2 = b.datepicker({
     	format: "yyyy-mm-dd",
-      	onRender: function(date) {
-    		return date.valueOf() < d1.date.valueOf() ? "disabled" : "";
-      	}
-    }).on('changeDate', function(ev) {
-      	d2.hide();
-    }).data('datepicker');
+    	startDate: now,
+    	autoclose: true
+    });
 }
 
 function topRow(){
@@ -69,11 +60,11 @@ function selRow(event) {
 	if(!$("#edit").hasClass("editing") && $(".dataTables_empty", $(this)).length == 0){
 		if($(this).hasClass("info"))
 			if(event.ctrlKey || event.metaKey) $(this).removeClass("info");
-			else $(this).removeClass("info").siblings().removeClass("info");
+			else table_c.$("tr.info").removeClass("info");
 		else {
-			$(this).addClass("info");
 			if(!(event.ctrlKey || event.metaKey))
-				$(this).siblings().removeClass("info");
+				table_c.$("tr.info").removeClass("info");
+			$(this).addClass("info");
 		}
 	}
 }
@@ -180,7 +171,7 @@ function saveData(){
 			$.ajax({
 				type: "POST",
 				url: "/contacts/",
-				data: {"attr": attr, "id": $("#donorId").val()},
+				data: {"attr": attr, "id": $("#contact_tab").data("id")},
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
