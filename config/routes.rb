@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   resources :contacts
   resources :agendas
   resources :addedcontacts
+  resources :reports
 end
