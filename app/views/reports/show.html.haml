@@ -1,0 +1,47 @@
+=render :partial=>'layouts/banner'
+:javascript 
+	$(ReportCreator.setup);
+
+#page-title.container-fluid.titleLine
+	%h2 Report
+		
+#mainbody.container-fluid
+	%h3 Report Creator
+	.panel-group
+		.panel.panel-default
+			.panel-heading{:style => "font-size:20px;"} Title
+			.panel-body
+				=@report_record.title
+		.panel.panel-default
+			.panel-heading{:style => "font-size:20px;"} Creator
+			.panel-body
+				=@report_record.created_by
+		.panel.panel-default
+			.panel-heading{:style => "font-size:20px;"} Description
+			.panel-body
+				=@report_record.description
+		.panel.panel-danger{:style => "margin-top:40px;"}
+			.panel-heading{:style => "font-size:20px;"} Fields
+			%form{:id => 'fields', :role => "form"}
+				#three-box-step.form-group
+					.row
+						.col-md-3
+							%h5
+								%span.list-title 1) Tables
+							%select.form-control{:id => "tables",:multiple => "", :style => "height: 200px; width: 100%; margin-top: 10px"}
+								%option{:value => "1"} Donor
+								%option{:value => "2"} Orgnization
+								%option{:value => "3"} Contact
+								%option{:value => "4"} Finance
+								%option{:value => "5"} Contact Person
+						.col-md-4
+							%h5
+								%span.list-title 2) Available Fields
+								%select.unselected.fields.form-control{:id => "availablefields", :multiple => "", :style => "height: 200px; width: 100%; margin-top: 10px"}
+						.col-md-5
+							%h5
+								%span.list-title 3) Filter
+					.row
+						.col-md-5
+							%h5
+								%span.list-title 4) Criteria Fields

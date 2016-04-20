@@ -14,6 +14,8 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 # Use Haml as the templating library
 gem 'haml'
+#convert to local time
+#gem 'local_time'
 # Use jquery as the JavaScript library
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'bootstrap_form' 

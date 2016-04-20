@@ -16,16 +16,15 @@ class ReportsController < ApplicationController
     end
     
     def create
-    
+        @report = Report.create!(params[:report])
+        flash[:notice] = "#{@report.title} was successfully created."
+        redirect_to report_path(@report.id)
     end
     
     def edit
         
     end
     
-    def show
-        
-    end
     
     def update
         

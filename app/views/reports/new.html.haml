@@ -25,78 +25,13 @@
 						.col-md-5
 							=r.label :description, 'Description:' 
 							=r.text_area :description, :class => 'form-control', :id => 'description', :placeholder => 'discription'
-		.panel.panel-default
-			.panel-heading{:style => "font-size:20px;"} Fields
-			%form{:id => 'fields', :role => "form"}
-				#three-box-step.form-group
 					.row
-						.col-md-3
-							%h5
-								%span.list-title 1) Tables
-							%select.form-control{:id => "tables",:multiple => "", :style => "height: 200px; width: 100%; margin-top: 10px"}
-								%option{:value => "1"} Donor
-								%option{:value => "2"} Orgnization
-								%option{:value => "3"} Contact
-								%option{:value => "4"} Finance
-								%option{:value => "5"} Contact Person
-						.col-md-4
-							%h5
-								%span.list-title 2) Available Fields
-								%select.unselected.fields.form-control{:id => "availablefields", :multiple => "", :style => "height: 200px; width: 100%; margin-top: 10px"}
-						.col-md-5
-							%h5
-								%span.list-title 3) Filter
-					.row
-						.col-md-5
-							%h5
-								%span.list-title 4) Criteria Fields
+						.col-md-1{:style => ""}
+							=r.submit 'Save Info', class: 'btn btn-primary'
+						.col-md-1
+							= link_to "Reset", '#', type: :resetm, class: 'btn btn-default' 
+		
 						
 	
 
-	.row
-		%form{:role => "form"}
-			#four-box-step.form-group
-				.col-md-2
-					%h5
-						%span.list-title 1) Tables
-					%select.form-control{:id => "tables",:multiple => "", :style => "height: 238px; width: 100%; margin-top: 10px"}
-						%option{:value => "1"} Donor
-						%option{:value => "2"} Orgnization
-						%option{:value => "3"} Contact
-						%option{:value => "4"} Finance
-						%option{:value => "5"} Contact Person
-				.col-md-3
-					%h5
-						%span.list-title 2) Available Fields
-						%small 
-							\- showing
-							%span.unselected-count 
-					%input.filter.form-control.filter-unselected{:type => "text", :style => "margin-bottom: 5px;", :placeholder => "Filter"}
-					%select.unselected.fields.form-control{:id => "availablefields", :multiple => "", :style => "height: 200px; width: 100%;"}
-				.col-md-1.center-block{:style => "margin-top:80px"}
-					%button.btn.btn-default.col-md-9.atr{"data-type" => "atr", :style => "margin-bottom: 10px;", :type => "button", :disabled => ""}
-						%span.glyphicon.glyphicon-list
-						%span.glyphicon.glyphicon-chevron-right
-					%button.btn.btn-default.col-md-9.str{"data-type" => "str", :style => "margin-bottom: 20px;", :type => "button", :disabled => ""}
-						%span.glyphicon.glyphicon-chevron-right
-					%button.btn.btn-default.col-md-9.stl{"data-type" => "stl", :style => "margin-bottom: 10px;", :type => "button", :disabled => ""}
-						%span.glyphicon.glyphicon-chevron-left
-					%button.btn.btn-default.col-md-9.atl{"data-type" => "atl", :style => "margin-bottom: 10px;", :type => "button", :disabled => ""}
-						%span.glyphicon.glyphicon-chevron-left
-						%span.glyphicon.glyphicon-list
-				.col-md-3
-					%h5
-						%span.list-title 3) Selected Fields
-						%small 
-							\- showing
-							%span.selected-count 
-					%input.filter.form-control.filter-selected{:type => "text", :style => "margin-bottom: 5px;", :placeholder => "Filter"}
-					%select.selected.fields.form-control{:id => "selectedfields", :multiple => "", :style => "height: 200px; width: 100%;",:name => ""}
-				.col-md-3
-					%h5
-						%span.list-title 4) Filters
-						
-	.row{:style => "margin-top: 50px;"}
-		.col-md-6
-			%h5
-				%span.list-title 5) Criteria Fields
+	
