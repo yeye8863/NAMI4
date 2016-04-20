@@ -19,7 +19,7 @@ class CreateReportView < ActiveRecord::Migration
           b.last_modified_at as last_modified_at
         FROM organizations d JOIN contact_people b ON b.organization_id = d.id) as RESULT
         ORDER BY last_modified_at DESC"
-  end
+    end
   
   def down
     drop_view :report_views, :if_exists => true
