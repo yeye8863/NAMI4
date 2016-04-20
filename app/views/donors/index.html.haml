@@ -10,7 +10,7 @@
         #scope_link 
           = select_tag :scope, options_for_select(["Individual", "Organization"], "Individual"), class: 'form-control'
       .col-md-8.pull-left
-        #individual
+        #individual-box
           .form-group 
             = label :donor, :first_name, 'First Name'
             = text_field :donor, 'first_name', class: 'form-control'
@@ -20,7 +20,7 @@
           .form-group
             = label :donor, :company, 'Company'
             = text_field :donor, 'company', class: 'form-control'
-        #organization
+        #organization-box
           .form-group
             = label :org, :name, 'Organization'
             = text_field :org, 'name', class: 'form-control'

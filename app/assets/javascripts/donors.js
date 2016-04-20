@@ -33,8 +33,8 @@ $(newDonorInfo.setup);
 
 var SearchScope = {
   select_scope : function() {
-   $('#individual').toggle();
-   $('#organization').toggle();
+   $('#individual-box').toggle();
+   $('#organization-box').toggle();
    SearchScope.reset_field();
   },
   reset_field : function() {
