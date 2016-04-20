@@ -26,9 +26,41 @@
                   %td=link_to 'More', agenda_path("#{agenda_record.contact_id}"), remote: true, data: {toggle: 'modal', target: '#agendaInfo'}
     .col-sm-6
       %h3 Report Quickview
-  .row
+      #recentlyreport-panel.panel.panel-default
+        %table#recentlyreport-table.table
+          %thead
+            %tr
+              %th Title
+              %th Description
+              %th Last Modified By
+              %th Last Modified Time
+              %th
+          %tbody
+            -if @report_records
+              -@report_records.each do |report|
+                %tr
+                  %td=report.title
+                  %td=report.description
+                  %td=report.last_modified_by
+                  %td=report.last_modified_at
+  .row                  
     .col-sm-6
       %h3 New Added Contacts
+      #addedcontact-panel.panel.panel-default
+        %table#addedcontact-table.table
+          %thead
+            %tr
+              %th Name
+              %th Organization
+              %th
+          %tbody
+            -if @donor_records
+              -@donor_records.each do |donor|
+                %tr
+                  %td=donor.name
+                  %td=donor.organization
+                  %td=link_to 'More', donor_path("#{donor_record.contact_id}"), remote: true, data: {toggle: 'modal', target: '#addedcontactInfo'}
+    
     .col-sm-6
       %h3 Admin Tool Box
   #agendaInfo.modal.fade{:role => 'dialog'}

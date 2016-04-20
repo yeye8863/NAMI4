@@ -11,8 +11,8 @@
 # * Verbose to read
 #
 # A much better approach is to write your own higher level step definitions, following
-# the advice in the following blog posts:
-#
+# the advice in the following blog posts
+
 # * http://benmabey.com/2008/05/19/imperative-vs-declarative-scenarios-in-user-stories.html
 # * http://dannorth.net/2011/01/31/whose-domain-is-it-anyway/
 # * http://elabs.se/blog/15-you-re-cuking-it-wrong
@@ -295,9 +295,16 @@ Given /the organizations table/ do |organization_table|
   end
 end
 
-Given /^(?:|I ) [have|has] logged in as "[^"]+" with "[^"]+"/ do |username, passwd|
+Given /^the report table/ do |report_table|
+    report_table.hashes.each do |report|
+    Report.create report
+  end 
+end
+
+Given /^I have logged in as "([^"]*)" with "([^"]*)"$/ do |username, passwd|
   steps %{
-    Given I am on the index page
-  	When I login with #{username} and #{passwd}
-  	And I press "Login"
+  Given I am on the index page
+  When I login with "#{username}" and "#{passwd}"
+	And I press "Login"
   }
+end

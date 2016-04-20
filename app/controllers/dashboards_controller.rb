@@ -5,9 +5,11 @@ class DashboardsController < ApplicationController
     def index
       @agenda_records = AgendaView.all
       #debugger
-      puts @agenda_records
       @agenda_records.each do |record|
         puts record
       end
+      @donor_records = DonorView.all
+      @report_records = Report.all
     end
 end
+
