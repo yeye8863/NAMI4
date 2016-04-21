@@ -1,7 +1,7 @@
 =render :partial=>'layouts/banner'
 :javascript 
 	$(ReportCreator.setup);
-
+=javascript_include_tag "filter.js"
 #page-title.container-fluid.titleLine
 	%h2 Report
 		
@@ -38,9 +38,18 @@
 							%h5
 								%span.list-title 2) Available Fields
 								%select.unselected.fields.form-control{:id => "availablefields", :multiple => "", :style => "height: 200px; width: 100%; margin-top: 10px"}
-						.col-md-5
+						.col-md-4
 							%h5
 								%span.list-title 3) Filter
+								
+								=form_for @filter, :html => {:id => 'string-filter', :role => 'form'} do |f|
+									.form-group{:style => 'margin-top:10px;margin-left:20px;'}
+										.row
+											.col-md-3
+												=f.label :value,'Value:'
+												=f.text_field :value, :class => 'form-control', :id => 'value', :placeholder => 'value'
+											.col-md-1.pull-right{:style => 'margin-top:160px'}
+												=link_to "Add this filter", "#filter_add", class: 'btn btn-success', id: "filter_add"
 					.row
 						.col-md-5
 							%h5

@@ -9,6 +9,7 @@ class ReportsController < ApplicationController
     def show
         id = params[:id] 
         @report_record = Report.find(id) 
+        @filter = Filter.new
     end
     
     def new 
