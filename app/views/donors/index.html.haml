@@ -2,35 +2,9 @@
 #page-title.container-fluid.titleLine
   %h2 Donor Management
 #mainbody.container-fluid
-  #search_section.container-fluid
-    = form_tag donors_path, :method => :get, class: 'form-inline', id: 'search-box', :remote =>false do
-      = hidden_field_tag :direction, params[:direction]
-      = hidden_field_tag :sort, params[:sort]
-      .row
-        .col-md-2.pull-left
-          #scope_link 
-            = select_tag :scope, options_for_select(["Individual", "Organization"], "Individual"), class: 'form-control'
-        .col-md-8.pull-left
-          #individual-box
-            .form-group 
-              = label :donor, :first_name, 'First Name'
-              = text_field :donor, 'first_name', class: 'form-control'
-            .form-group
-              = label :donor, :last_name, 'Last Name'
-              = text_field :donor, 'last_name', class: 'form-control'
-            .form-group
-              = label :donor, :company, 'Company'
-              = text_field :donor, 'company', class: 'form-control'
-          #organization-box
-            .form-group
-              = label :org, :name, 'Organization'
-              = text_field :org, 'name', class: 'form-control'
-      .row
-        .col-md-3.pull-right
-          .button-line
-            = submit_tag 'Search', class: 'btn btn-primary'
-            = link_to "Clear", '#', type: :resetm, class: 'btn btn-default', id: 'reset_btn'
-            = link_to 'New Donor', new_donor_path,  class:'btn btn-default' 
+  .row
+    .col-sm-offset-10.col-sm-2
+      = link_to 'New Donor', new_donor_path,  class:'btn btn-default' 
   #search_result.container-fluid
     = render :partial=>'search_result'
 

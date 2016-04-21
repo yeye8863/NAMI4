@@ -20,7 +20,10 @@
             = link_to "View", donor_path(ind), class: 'btn btn-success btn-xs'
           - ind.attributes.each do |attr, val|
             - if @ind_attr_show.include? attr
-              %td #{val} 
+              - if val
+                %td=val.capitalize!
+              - else
+                %td
              
 #org_result.container-fluid
   %h2 Orgnizations
@@ -46,4 +49,7 @@
             = link_to "View", donor_path(org), class: 'btn btn-success btn-xs'
           - org.attributes.each do |attr, val|
             - if @org_attr_show.include? attr
-              %td #{val} 
+              - if val
+                %td=val.split.map(&:capitalize).join(' ')
+              - else
+                %td

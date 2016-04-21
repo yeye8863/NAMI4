@@ -5,8 +5,7 @@ helper_method :sort_column_ind, :sort_direction_ind, :sort_column_org, :sort_dir
 
     def index
         @ind_attr = Donor.attribute_names
-        @ind_attr_show = ["title", "first_name", "last_name",  "email", "organization", "company", "street_address", 
-        "city", "state", "country", "zipcode", "home_phone", "business_phone"]
+        @ind_attr_show = ["title", "first_name", "last_name", "organization", "company"]
         @org_attr = Organization.attribute_names
         @org_attr_show = ["name", "street_address", "city", "state", "country", "zipcode", "fax"]
         @inds = Donor.search_by(params[:donor])
