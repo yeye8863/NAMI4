@@ -1,55 +1,29 @@
-#ind_result.container-fluid
-  %h2 Donors 
-  %table#table_ind.table.display{:cellspacing => "0", :width => "100%"}
+#donor_result.container-fluid
+  %h2 Donor Management
+  %table#table_donor.table.display{:cellspacing => "0", :width => "100%"}
     %thead
       %tr
         %th Action
-        - @donors[:ind_attr].each do |attr|
-          - if @ind_attr_show.include? attr
+        - @donor_attr.each do |attr|
+          - if @donor_attr_show.include? attr
             %th #{attr}
     %tfoot
       %tr
         %th Action
-        - @donors[:ind_attr].each do |attr|
-          - if @ind_attr_show.include? attr
+        - @donor_attr.each do |attr|
+          - if @donor_attr_show.include? attr
             %th #{attr}
     %tbody
-      - @donors[:inds].each do |ind|
+      - @donors.each do |donor|
         %tr
           %td
-            = link_to "View", donor_path(ind), class: 'btn btn-success btn-xs'
-          - ind.attributes.each do |attr, val|
-            - if @ind_attr_show.include? attr
-              - if val
-                %td=val.capitalize!
-              - else
-                %td
-             
-#org_result.container-fluid
-  %h2 Orgnizations
-  %table#table_org.table.display{:cellspacing => "0", :width => "100%"}
-    %thead
-      %tr
-        %th Action
-        - @donors[:org_attr].each do |attr|
-          - if @org_attr_show.include? attr
-            %th
-              #{attr}
-    %tfoot
-      %tr
-        %th Action
-        - @donors[:org_attr].each do |attr|
-          - if @org_attr_show.include? attr
-            %th
-              #{attr}
-    %tbody
-      - @donors[:orgs].each do |org|
-        %tr          
-          %td
-            = link_to "View", donor_path(org), class: 'btn btn-success btn-xs'
-          - org.attributes.each do |attr, val|
-            - if @org_attr_show.include? attr
-              - if val
-                %td=val.split.map(&:capitalize).join(' ')
-              - else
-                %td
+            = link_to "View", donor_path(donor), class: 'btn btn-success btn-xs'
+          - donor.attributes.each do |attr, val|
+            - if @donor_attr_show.include? attr
+              %td #{val} 
+  .button-line.right{:style => "padding:10"}
+    =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add"
+    =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit"
+    %button.btn.btn-danger#delete{type:'button'} Delete
+    =link_to "Back", donors_path, class: 'btn btn-primary'
+>>>>>>> b56bb1aa7b2410ad786b664b536ffa92890650da
