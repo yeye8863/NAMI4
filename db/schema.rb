@@ -60,7 +60,9 @@ ActiveRecord::Schema.define(version: 20160421031154) do
   end
 
   create_view "agenda_views", <<-'END_VIEW_AGENDA_VIEWS', :force => true
-SELECT * FROM (SELECT 
+SELECT * FROM 
+      (
+        SELECT 
           a.title||' '||a.first_name||' '||a.last_name as name,
           NULL as organization,
           c.contact_date as contact_date,
@@ -77,7 +79,7 @@ SELECT * FROM (SELECT
           c.id as contact_id
         FROM contacts c JOIN contact_people b ON c.contact_person_id = b.id
         JOIN organizations d ON b.organization_id = d.id
-        WHERE c.followup_date >= date('now'))
+        WHERE c.followup_date >= date('now')) as RESULT
         ORDER BY followup_date ASC
   END_VIEW_AGENDA_VIEWS
 
@@ -108,6 +110,8 @@ SELECT
     t.string   "value"
     t.decimal  "min_value"
     t.decimal  "max_value"
+    t.datetime "min_datetime"
+    t.datetime "max_datetime"
     t.string   "created_by"
     t.datetime "created_at",       :null=>false
     t.string   "last_modified_by"
