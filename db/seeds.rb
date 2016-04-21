@@ -38,7 +38,7 @@ contact_people = [
           {:title => 'mr.', :first_name => 'peterson', :last_name => 'crab', :organization_id => '1'},
           {:title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :organization_id => '2'}
           ]
-
+=begin
 organizations = [
           {:name => 'golden lion'},
           {:name => 'org1'},
@@ -53,7 +53,7 @@ organizations = [
           {:name => 'silver tiger'},
           {:name => 'silver cow'}
           ]
-  
+=end  
 contacts = [
           {:contact_date => '2016-04-01', :followup_date => '2016-04-22', :donor_id => '1', :narrative => 'Discussion about event in May'},
           {:contact_date => '2016-04-02', :followup_date => '2016-04-23', :donor_id => '2', :narrative => 'Funding raising for April'},
@@ -197,7 +197,7 @@ end
 donors.each do |donor|
   Donor.create!(donor)
 end
-
+=begin
 organizations.each do |organization|
   Organization.create!(organization)
 end
@@ -205,7 +205,7 @@ end
 contact_people.each do |contact_person|
   ContactPerson.create!(contact_person)
 end
-
+=end
 contacts.each do |contact|
   Contact.create!(contact)
 end

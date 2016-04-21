@@ -108,9 +108,9 @@
               %td{:width => "15%"}
                 = contact.last_modified_by
     .button-line.bottom-right-info-bar{:style => "padding:0"}
-      =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add"
-      =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit"
-      %button.btn.btn-danger#delete{type:'button'} Delete
+      =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add_contact"
+      =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit_contact"
+      %button.btn.btn-danger#delete_contact{type:'button'} Delete
       =link_to "Back", donors_path, class: 'btn btn-primary'
     =javascript_include_tag "contacts.js" 
   #finance.tab-pane{:role=>'tabpanel'}

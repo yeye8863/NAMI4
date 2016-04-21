@@ -1,6 +1,6 @@
-$("#add").click(insRow);
-$("#edit").click(editRow);
-$("#delete").click(delData);
+$("#add_contact").click(insRow);
+$("#edit_contact").click(editRow);
+$("#delete_contact").click(delData);
 $("#tabs").on("click", "li", fixHeader);
 $("#contact_tab tbody").on("click", "tr", selRow);
 
@@ -49,7 +49,7 @@ function selDate(a, b){
 }
 
 function topRow(){
-	if($("#edit").hasClass("editing")){
+	if($("#edit_contact").hasClass("editing")){
 			selected_c.detach();
 			$("#contact_tab tbody").prepend(selected_c);
 			selected_c.addClass("info").siblings().removeClass("info");
@@ -57,7 +57,7 @@ function topRow(){
 }
 
 function selRow(event) {
-	if(!$("#edit").hasClass("editing") && $(".dataTables_empty", $(this)).length == 0){
+	if(!$("#edit_contact").hasClass("editing") && $(".dataTables_empty", $(this)).length == 0){
 		if($(this).hasClass("info"))
 			if(event.ctrlKey || event.metaKey) $(this).removeClass("info");
 			else table_c.$("tr.info").removeClass("info");
@@ -70,7 +70,7 @@ function selRow(event) {
 }
 
 function insRow() {
-	if(!$("#edit").hasClass("editing")){
+	if(!$("#edit_contact").hasClass("editing")){
 		var row = table_c.row.add(["","","","",""]).draw().node();
 		$(row).addClass("info").siblings().removeClass("info");
 		editRow(0, $(row));
@@ -81,10 +81,10 @@ function editRow(event, r) {
 	if(r) selected_c = r;
 	else selected_c = $("#contact_tab tbody .info").first();
 	if(selected_c.length)
-		if($("#edit").hasClass("editing")) saveData();
+		if($("#edit_contact").hasClass("editing")) saveData();
 		else{
-			$("#edit").text("Save");
-			$("#edit").addClass("editing");
+			$("#edit_contact").text("Save");
+			$("#edit_contact").addClass("editing");
 			var cells = $("td", selected_c).slice(0, 3);
 			cells.each(function(){
 				if($("input", $(this)).length == 0)
@@ -104,18 +104,18 @@ function saveRow(data){
 		data.created_by,
 		data.last_modified_by
 	]).draw();
-	$("#edit").text("Edit");
-	$("#edit").removeClass("editing");
-	$("#add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
+	$("#edit_contact").text("Edit");
+	$("#edit_contact").removeClass("editing");
+	$("#add_contact").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
 }
 
 function delRow(){
-	if($("#edit").hasClass("editing")){
-		$("#edit").removeClass("editing");
-		$("#edit").text("Edit");
+	if($("#edit_contact").hasClass("editing")){
+		$("#edit_contact").removeClass("editing");
+		$("#edit_contact").text("Edit");
 	}
 	table_c.row('.info').remove().draw(false);
-	$("#add").notify("Successfully deleted!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
+	$("#add_contact").notify("Successfully deleted!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
 }
 
 function delData(event){
@@ -133,7 +133,7 @@ function delData(event){
 				       	timeout: 5000,
 				       	success: function(data, requestStatus, xhrObject){ delRow(); },
 				       	error: function(xhrObj, textStatus, exception) {
-				       		$("#add").notify("Failed to delete data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+				       		$("#add_contact").notify("Failed to delete data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 				       	}
 					})   
 				else delRow();
@@ -149,11 +149,11 @@ function saveData(){
 			attr.push($("input", $(this)).val().trim());
 		});
 		if(attr[0] == ""){ 
-			$("#add").notify("Please enter contact date.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			$("#add_contact").notify("Please enter contact date.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 			return false;
 		}
 		if(attr[2] == ""){ 
-			$("#add").notify("Please enter narrative.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			$("#add_contact").notify("Please enter narrative.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 			return false;
 		}
 		if(selected_c.data("id"))
@@ -164,7 +164,7 @@ function saveData(){
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#add").notify("Failed to save data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+					$("#add_contact").notify("Failed to save data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 			    }
 			})
 		else
@@ -175,7 +175,7 @@ function saveData(){
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#add").notify("Failed to add data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+					$("#add_contact").notify("Failed to add data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 			    }
 			})
 	}
