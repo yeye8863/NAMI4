@@ -74,19 +74,23 @@ var viewResult = {
 };
 $(document).ready(viewResult.setup);
 
-$(document).ready(function() {
-    $('#table_ind, #table_org').DataTable();
-});
 
 $(document).ready(function() {
+    $('#table_donor').DataTable( {
+        "dom": '<"toolbar">frtip'
+    } );
+ 
+    $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
+} );
+$(document).ready(function() {
     // Setup - add a text input to each footer cell
-    $('#table_ind tfoot th, #table_org tfoot th').each( function () {
+    $('#table_donor tfoot th').each( function () {
         var title = $(this).text();
         $(this).html( '<input type="text" placeholder=" '+title+'" />' );
     } );
  
     // DataTable
-    var table = $('#table_ind, #table_org').DataTable();
+    var table = $('#table_donor').DataTable();
  
     // Apply the search
     table.columns().every( function () {
@@ -104,8 +108,8 @@ $(document).ready(function() {
 
 $(document).ready(function() {
  
-    var table = $('#table_ind, #table_org').DataTable();
-    $('#table_ind tbody, #table_org tbody').on( 'click', 'tr', function () {
+    var table = $('#table_donor').DataTable();
+    $('#table_donor tbody').on( 'click', 'tr', function () {
         if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
         }
@@ -119,7 +123,7 @@ $(document).ready(function() {
         table.row('.selected').remove().draw( false );
     } );
     
-     $('#table_ind').on( 'click', 'tbody td:not(:first-child)', function (e) {
+     $('#table_donor').on( 'click', 'tbody td:not(:first-child)', function (e) {
         editor.inline( this );
     } );
 } );
