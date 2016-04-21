@@ -1,0 +1,19 @@
+%table#agenda-table.table
+  %thead
+    %tr
+      %th Name
+      %th Organization
+      %th Contact Date
+      %th Followup Date
+      %th 
+  %tbody
+    -if @agenda_records
+      -@agenda_records.each do |agenda_record|
+        %tr
+          %td=agenda_record.name.split.map(&:capitalize).join(' ') if agenda_record.name
+          %td=agenda_record.organization.split.map(&:capitalize).join(' ') if agenda_record.organization
+          %td=agenda_record.contact_date
+          %td=agenda_record.followup_date
+          %td=link_to 'More', agenda_path("#{agenda_record.contact_id}"), remote: true, data: {toggle: 'modal', target: '#agendaInfo'}
+
+= js_will_paginate @agenda_records

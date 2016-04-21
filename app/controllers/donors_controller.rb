@@ -1,15 +1,24 @@
 class DonorsController < ApplicationController
-helper_method :sort_column, :sort_direction
+
     #before_filter :authorize
 
     def index
-        @donors = Donor.search_by(params[:donor]).order(sort_column + " " + sort_direction).paginate(:per_page => 3, :page => params[:page])
-        render(:partial => 'search_result', :object => @donors) if request.xhr?
+        @donor_attr = Donor.attribute_names
+        @donor_attr_show = ["type", "title", "first_name", "last_name",  "email", "organization", "company", "street_address", 
+        "city", "state", "country", "zipcode", "home_phone", "business_phone"]
+        @donors = Donor.search_by(params[:donor])
     end
     
     def new 
-        @donor = Donor.create
-        redirect_to donor_path :id => @donor.id
+        @donor = Donor.new
+        @donor_contact = {
+	        'Contact Date' => '15%',
+	        'Followup Date' => '15',
+	        'Narrative' => '40%',
+	        'Created By' => '15%',
+	        'Last Modified By' =>'15%'
+	      }
+        #render(:partial => 'donor_info', :object => @donor) if request.xhr?
     end
     
     def destroy
@@ -23,7 +32,7 @@ helper_method :sort_column, :sort_direction
     def create
         @donor = Donor.create!(params[:donor])
         flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
-        redirect_to donors_path
+        render :json => {:id => @donor.id}
     end
 
     def show
@@ -84,10 +93,4 @@ helper_method :sort_column, :sort_direction
     
     
     private
-    def sort_column
-        Donor.column_names.include?(params[:sort]) ? params[:sort] : "last_name"
-    end
-    def sort_direction
-        %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-    end
 end

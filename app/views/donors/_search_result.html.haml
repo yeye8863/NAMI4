@@ -1,18 +1,28 @@
-%table.table.table-striped.table-hover
-  %thead
-    %tr
-      %th= sortable "first_name", "First Name"
-      %th= sortable "last_name", "Last Name"
-      %th= sortable "organization", "Organization"
-      %th= sortable "company", "Company"
-      %th{:colspan => 2} Action
-  %tbody
-    - @donors.each do |donor|
+#donor_result.container-fluid
+  %h2 Donor Management
+  %table#table_donor.table.display{:cellspacing => "0", :width => "100%"}
+    %thead
       %tr
-        %td= donor.first_name 
-        %td= donor.last_name
-        %td= donor.organization 
-        %td= donor.company 
-        %td= link_to "View", donor_path(donor), class: 'btn btn-success btn-xs'
-        %td= link_to "Delete", donor_path(donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger btn-xs'
-= js_will_paginate @donors
+        %th Action
+        - @donor_attr.each do |attr|
+          - if @donor_attr_show.include? attr
+            %th #{attr}
+    %tfoot
+      %tr
+        %th Action
+        - @donor_attr.each do |attr|
+          - if @donor_attr_show.include? attr
+            %th #{attr}
+    %tbody
+      - @donors.each do |donor|
+        %tr
+          %td
+            = link_to "View", donor_path(donor), class: 'btn btn-success btn-xs'
+          - donor.attributes.each do |attr, val|
+            - if @donor_attr_show.include? attr
+              %td #{val} 
+  .button-line.right{:style => "padding:10"}
+    =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add"
+    =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit"
+    %button.btn.btn-danger#delete{type:'button'} Delete
+    =link_to "Back", donors_path, class: 'btn btn-primary'

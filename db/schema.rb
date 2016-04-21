@@ -11,38 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407034500) do
+ActiveRecord::Schema.define(version: 20160421031154) do
 
   create_table "accesses", force: :cascade do |t|
     t.string   "email"
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
   end
-
-  create_table "contact_people", force: :cascade do |t|
-    t.string   "title"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "middle_name"
-    t.string   "salution"
-    t.string   "email"
-    t.string   "company"
-    t.string   "street_address"
-    t.string   "city"
-    t.string   "state",            :default=>"Texas"
-    t.string   "country",          :default=>"United States"
-    t.integer  "zipcode"
-    t.string   "home_phone"
-    t.string   "business_phone"
-    t.string   "mobile_phone"
-    t.string   "created_by"
-    t.datetime "created_at",       :null=>false
-    t.string   "last_modified_by"
-    t.datetime "last_modified_at"
-    t.integer  "organization_id"
-    t.datetime "updated_at",       :null=>false
-  end
-  add_index "contact_people", ["organization_id"], :name=>"index_contact_people_on_organization_id"
 
   create_table "contacts", force: :cascade do |t|
     t.date     "contact_date"
@@ -80,21 +55,8 @@ ActiveRecord::Schema.define(version: 20160407034500) do
     t.datetime "created_at",       :null=>false
     t.datetime "last_modified_at"
     t.datetime "updated_at",       :null=>false
-  end
-
-  create_table "organizations", force: :cascade do |t|
-    t.string   "name"
-    t.string   "street_address"
-    t.string   "city"
-    t.string   "state",            :default=>"Texas"
-    t.string   "country",          :default=>"United States"
-    t.integer  "zipcode"
-    t.string   "fax"
-    t.string   "created_by"
-    t.datetime "created_at",       :null=>false
-    t.string   "last_modified_by"
-    t.datetime "last_modified_at"
-    t.datetime "updated_at",       :null=>false
+    t.string   "type"
+    t.integer  "active"
   end
 
   create_view "agenda_views", <<-'END_VIEW_AGENDA_VIEWS', :force => true
@@ -118,6 +80,27 @@ SELECT * FROM (SELECT
         WHERE c.followup_date >= date('now'))
         ORDER BY followup_date ASC
   END_VIEW_AGENDA_VIEWS
+
+  create_view "contact_person_views", <<-'END_VIEW_CONTACT_PERSON_VIEWS', :force => true
+SELECT 
+          a.title||' '||a.first_name||' '||a.last_name as name,
+          b.name as organization,
+          a.company as company,
+          a.updated_at as updated_at,
+          a.id as id
+        FROM contact_people a, organizations b
+        WHERE a.organization_id = b.id
+  END_VIEW_CONTACT_PERSON_VIEWS
+
+  create_view "donor_views", <<-'END_VIEW_DONOR_VIEWS', :force => true
+SELECT 
+          a.title||' '||a.first_name||' '||a.last_name as name,
+          a.company as company,
+          a.organization as organization,
+          a.updated_at as updated_at,
+          a.id as id
+        FROM donors a
+  END_VIEW_DONOR_VIEWS
 
   create_table "filters", force: :cascade do |t|
     t.string   "table_name"

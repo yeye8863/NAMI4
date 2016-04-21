@@ -28,3 +28,8 @@ class ContactsController < ApplicationController
         render :json => @contact if request.xhr?
     end
 end
+
+
+
+
+
