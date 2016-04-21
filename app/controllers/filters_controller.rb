@@ -14,26 +14,31 @@ class FiltersController < ApplicationController
     end
     
     def create
-        @report = Report.find(params[:id])
-        flash[:notice] = "#{@filter} was successfully created."
-        redirect_to new_report_path
+        a = params[:attr]
+        @donor = Donor.find(params[:id]);
+        @contact = @donor.contacts.build({
+            :contact_date => a[0],
+            :followup_date => a[1],
+            :narrative => a[2]
+        })
+        @contact.save!
+        render :json => @contact if request.xhr?
     end
-    
-    def edit
-        
-    end
-    
     
     def update
-        
+        @contact = Contact.find(params[:id])
+        a = params[:attr]
+        @contact.update_attributes!({
+            :contact_date => a[0],
+            :followup_date => a[1],
+            :narrative => a[2]
+        })
+        render :json => @contact if request.xhr?
     end
     
     def destroy
-        id = params[:id]
-        @report_record = Report.find(id)
-        flash[:notice] = "#{@report_record.title} is deleted."
-        @report_record.destroy
-        redirect_to reports_path
-    
+        @contact = Contact.find(params[:id])
+        @contact.destroy
+        render :nothing => true
     end
 end

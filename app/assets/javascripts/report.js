@@ -7,77 +7,72 @@ var ReportCreator = {
     },
   
   DonorFields: function(){
-     return('<option value="title">Title</option>'
-      +'<option value="first_name">First Name</option>'
-      +'<option value="last_name">Last Name</option>'
-      +'<option value="middle_name">Middle Name</option>'
-      +'<option value="salution">Salution</option>'
-      +'<option value="email">Email</option>'
-      +'<option value="organization">Organization</option>'
-      +'<option value="company">Company</option>'
-      +'<option value="street_address">Street Address</option>'
-      +'<option value="city">City</option>'
-      +'<option value="state">State</option>'
-      +'<option value="country">Country</option>'
-      +'<option value="zipcode">Zip Code</option>'
-      +'<option value="home_phone">Home Phone</option>'
-      +'<option value="business_phone">Business Phone</option>'
-      +'<option value="created_by">Create by (Person)</option>'
-      +'<option value="last_modified_by">Last Modified by (Person)</option>'
-      +'<option value="created_at">Created at (Date)</option>'
-      +'<option value="last_modified_at">Last Modified at (Date)</option>');
+     return('<option value="none_title">Title</option>'
+      +'<option value="none_first_name">First Name</option>'
+      +'<option value="none_last_name">Last Name</option>'
+      +'<option value="none_middle_name">Middle Name</option>'
+      +'<option value="none_salution">Salution</option>'
+      +'<option value="none_email">Email</option>'
+      +'<option value="string_organization">Organization</option>'
+      +'<option value="string_company">Company</option>'
+      +'<option value="none_street_address">Street Address</option>'
+      +'<option value="string_city">City</option>'
+      +'<option value="string_state">State</option>'
+      +'<option value="string_country">Country</option>'
+      +'<option value="none_zipcode">Zip Code</option>'
+      +'<option value="none_home_phone">Home Phone</option>'
+      +'<option value="none_business_phone">Business Phone</option>'
+      +'<option value="string_created_by">Create by (Person)</option>'
+      +'<option value="string_last_modified_by">Last Modified by (Person)</option>'
+      +'<option value="datetime_created_at">Created at (Date)</option>'
+      +'<option value="datetime_last_modified_at">Last Modified at (Date)</option>');
   }, 
     
   OrginationFields: function(){
-    return('<option value="name">Name</option>'
-    +'<option value="street_address">Street Address</option>'
-    +'<option value="city">City</option>'
-    +'<option value="state">State</option>'
-    +'<option value="country">Country</option>'
-    +'<option value="zipcode">Zip Code</option>'
-    +'<option value="fax">Fax</option>'
-    +'<option value="created_by">Create by (Person)</option>'
-    +'<option value="last_modified_by">Last Modified by (Person)</option>'
-    +'<option value="created_at">Created at (Date)</option>'
-    +'<option value="last_modified_at">Last Modified at (Date)</option>');
+    return('<option value="string_name">Name</option>'
+    +'<option value="none_street_address">Street Address</option>'
+    +'<option value="string_city">City</option>'
+    +'<option value="string_state">State</option>'
+    +'<option value="string_country">Country</option>'
+    +'<option value="none_zipcode">Zip Code</option>'
+    +'<option value="none_fax">Fax</option>'
+    +'<option value="string_created_by">Create by (Person)</option>'
+    +'<option value="string_last_modified_by">Last Modified by (Person)</option>'
+    +'<option value="datetime_created_at">Created at (Date)</option>'
+    +'<option value="datetime_last_modified_at">Last Modified at (Date)</option>');
   },
 
   ContactFields: function(){
-    return('<option value="contact_date">Contact Date</option>'
-           +'<option value="followup_date">Followup Date</option>'
-           +'<option value="narrative">Narrative</option>'
-           +'<option value="donor">Donor</option>'
-           +'<option value="contact_person">Contact Person</option>'
-           +'<option value="created_by">Create by (Person)</option>'
-           +'<option value="last_modified_by">Last Modified by (Person)</option>'
-           +'<option value="created_at">Created at (Date)</option>'
-           +'<option value="last_modified_at">Last Modified at (Date)</option>');
+    return('<option value="datetime_contact_date">Contact Date</option>'
+           +'<option value="datetime_followup_date">Followup Date</option>'
+           +'<option value="none_narrative">Narrative</option>'
+           +'<option value="string_created_by">Create by (Person)</option>'
+           +'<option value="string_last_modified_by">Last Modified by (Person)</option>'
+           +'<option value="datetime_created_at">Created at (Date)</option>'
+           +'<option value="datetime_last_modified_at">Last Modified at (Date)</option>');
       },
       
   FinanceFields: function(){
-    return('<option value="type">Type</option>'
-        +'<option value="date">Date</option>'
-        +'<option value="amount">Amount</option>'
-        +'<option value="description">Description</option>'
-        +'<option value="donor">Donor</option>'
-        +'<option value="organization">Orgination</option>'
-        +'<option value="contact">Contact</option>'
-        +'<option value="designation">Designation</option>'
-        +'<option value="created_by">Create by (Person)</option>'
-        +'<option value="last_modified_by">Last Modified by (Person)</option>'
-        +'<option value="created_at">Created at (Date)</option>'
-        +'<option value="last_modified_at">Last Modified at (Date)</option>');
+    return('<option value="string_type">Type</option>'
+        +'<option value="datetime_date">Date</option>'
+        +'<option value="decimal_amount">Amount</option>'
+        +'<option value="none_description">Description</option>'
+        +'<option value="string_designation">Designation</option>'
+        +'<option value="string_created_by">Create by (Person)</option>'
+        +'<option value="string_last_modified_by">Last Modified by (Person)</option>'
+        +'<option value="datetime_created_at">Created at (Date)</option>'
+        +'<option value="datetime_last_modified_at">Last Modified at (Date)</option>');
   },
   
   ContactPersonFields: function(){
-    return('<option value="title">Title</option>'
-        +'<option value="first_name">First Name</option>'
-        +'<option value="last_name">Last Name</option>'
-        +'<option value="middle_name">Middle Name</option>'
-        +'<option value="salution">Salution</option>'
-        +'<option value="email">Email</option>'
-        +'<option value="company">Company</option>'
-        +'<option value="street_address">Street Address</option>'
+    return('<option value="none_title">Title</option>'
+        +'<option value="none_first_name">First Name</option>'
+        +'<option value="none_last_name">Last Name</option>'
+        +'<option value="none_middle_name">Middle Name</option>'
+        +'<option value="none_salution">Salution</option>'
+        +'<option value="none_email">Email</option>'
+        +'<option value="none_company">Company</option>'
+        +'<option value="none_street_address">Street Address</option>'
         +'<option value="city">City</option>'
         +'<option value="state">State</option>'
         +'<option value="country">Country</option>'
@@ -123,7 +118,12 @@ var ReportCreator = {
       default:
         return false;
     }
-    $('.atr').prop('disabled', false);
+  },
+  
+  filter_part: function() {
+  	switch(this.value){
+  		case ''	
+  	}
   },
   
   addListeners: function() {
@@ -225,7 +225,7 @@ var ReportCreator = {
    
       $('#tables').change(ReportCreator.fields_extract);
         
-      $('.fields').change(ReportCreator.addListeners);
+      $('#availablefields').change(ReportCreator.filter_part);
     
   }
 };
