@@ -1,15 +1,29 @@
 class DonorsController < ApplicationController
-helper_method :sort_column, :sort_direction
+helper_method :sort_column_ind, :sort_direction_ind, :sort_column_org, :sort_direction_org
+
     #before_filter :authorize
 
     def index
-        @donors = Donor.search_by(params[:donor]).order(sort_column + " " + sort_direction).paginate(:per_page => 3, :page => params[:page])
-        render(:partial => 'search_result', :object => @donors) if request.xhr?
+        @ind_attr = Donor.attribute_names
+        @ind_attr_show = ["title", "first_name", "last_name",  "email", "organization", "company", "street_address", 
+        "city", "state", "country", "zipcode", "home_phone", "business_phone"]
+        @org_attr = Organization.attribute_names
+        @org_attr_show = ["name", "street_address", "city", "state", "country", "zipcode", "fax"]
+        @inds = Donor.search_by(params[:donor])
+        @orgs = Organization.search_by(params[:org])
+        @donors = {:inds => @inds, :orgs => @orgs, :ind_attr => @ind_attr, :org_attr => @org_attr}
     end
     
     def new 
-        @donor = Donor.create
-        redirect_to donor_path :id => @donor.id
+        @donor = Donor.new
+        @donor_contact = {
+	        'Contact Date' => '15%',
+	        'Followup Date' => '15',
+	        'Narrative' => '40%',
+	        'Created By' => '15%',
+	        'Last Modified By' =>'15%'
+	      }
+        #render(:partial => 'donor_info', :object => @donor) if request.xhr?
     end
     
     def destroy
@@ -23,7 +37,7 @@ helper_method :sort_column, :sort_direction
     def create
         @donor = Donor.create!(params[:donor])
         flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
-        redirect_to donors_path
+        render :json => {:id => @donor.id}
     end
 
     def show
@@ -84,10 +98,16 @@ helper_method :sort_column, :sort_direction
     
     
     private
-    def sort_column
-        Donor.column_names.include?(params[:sort]) ? params[:sort] : "last_name"
+    def sort_column_ind
+        Donor.column_names.include?(params[:sort_ind]) ? params[:sort_ind] : "last_name"
     end
-    def sort_direction
-        %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    def sort_column_org
+        Organization.column_names.include?(params[:sort_org]) ? params[:sort_org] : "name"
+    end
+    def sort_direction_ind
+        %w[asc desc].include?(params[:direction_ind]) ? params[:direction_ind] : "asc"
+    end
+    def sort_direction_org
+        %w[asc desc].include?(params[:direction_org]) ? params[:direction_org] : "asc"
     end
 end

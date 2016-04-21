@@ -12,11 +12,8 @@ class Donor < ActiveRecord::Base
            inputs.each do |key, value|
                value.downcase!
            end
-        end
-    
-    
-        @donors =  Donor.where(inputs)
+           search_term = [inputs.keys.map{ |key| "#{key} LIKE ?"}.join(' AND ')] +  inputs.values.map { |val| "%#{val}%" }
+       end
+       @donors =  Donor.where(search_term)
     end
-
-
 end

@@ -3,7 +3,7 @@ class ReportsController < ApplicationController
     
     def index
         @report_records = Report.search_by(params[:report_record]).paginate(:per_page => 5, :page => params[:page])
-        render(:partial => 'search_result', :object => @report_record) if request.xhr?
+        render(:partial => 'search_result', :object => @report_records) if request.xhr?
     end
 
     def show
