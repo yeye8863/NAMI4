@@ -7,8 +7,8 @@ var ReportCreator = {
     },
   
   DonorFields: function(){
-     return('<option value="none_title">Title</option>'
-      +'<option value="none_first_name">First Name</option>'
+     return('<option value="title">Title</option>'
+      +'<option value="first_name">First Name</option>'
       +'<option value="none_last_name">Last Name</option>'
       +'<option value="none_middle_name">Middle Name</option>'
       +'<option value="none_salution">Salution</option>'
