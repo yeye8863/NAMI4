@@ -1,28 +1,30 @@
 #donor_result.container-fluid
   %h2 Donor Management
   %table#table_donor.table.display{:cellspacing => "0", :width => "100%"}
-    %thead
+    %thead{:data => {:attrname => @donor_attr_show}}
       %tr
         %th Action
+        %th Type
         - @donor_attr.each do |attr|
           - if @donor_attr_show.include? attr
-            %th #{attr}
+            %th #{attr.humanize}
     %tfoot
       %tr
         %th Action
+        %th Type
         - @donor_attr.each do |attr|
           - if @donor_attr_show.include? attr
-            %th #{attr}
+            %th #{attr.humanize}
     %tbody
       - @donors.each do |donor|
-        %tr
+        %tr{:data => {:id => donor.id}}
           %td
             = link_to "View", donor_path(donor), class: 'btn btn-success btn-xs'
+          %td #{donor.type}
           - donor.attributes.each do |attr, val|
             - if @donor_attr_show.include? attr
               %td #{val} 
   .button-line.right{:style => "padding:10"}
-    =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add"
-    =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit"
+    =link_to "Add", "#table_donor", class: 'btn btn-success', id: "add_row"
+    =link_to "Edit", "#table_donor", class: 'btn btn-info', id: "edit_row", :remote => true
     %button.btn.btn-danger#delete{type:'button'} Delete
-    =link_to "Back", donors_path, class: 'btn btn-primary'

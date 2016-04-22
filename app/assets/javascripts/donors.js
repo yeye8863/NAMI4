@@ -110,20 +110,80 @@ $(document).ready(function() {
  
     var table = $('#table_donor').DataTable();
     $('#table_donor tbody').on( 'click', 'tr', function () {
-        if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
+        if ( !$('#table_donor').hasClass('locked') ){
+            if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
         }
-        else {
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        }
-    } );
- 
-    $('#button').click( function () {
-        table.row('.selected').remove().draw( false );
     } );
     
-     $('#table_donor').on( 'click', 'tbody td:not(:first-child)', function (e) {
-        editor.inline( this );
+     $('#edit_row').on( 'click', function (e) {
+        if ($('#table_donor').hasClass('locked')){
+            
+            saveData();
+            
+        
+        }
+        else{
+            $('#table_donor').addClass('locked');
+            $('#table_donor tr.selected td').slice(2).each( function () {
+                var title = $(this).text();
+                $(this).html( "<input style='width:100%' value='" + $(this).html().trim() + "'>");
+            } );
+	        $("#edit_row").text("Save");
+        }
+ 
     } );
+    
+    
+    function saveData(){
+        head = $('#table_donor thead');
+        attr_name = head.data("attrname");
+        selected_c = $('#table_donor tr.selected');
+	    if(selected_c.length){
+	    	var attr = [];
+	    	var cells = $("td", selected_c).slice(2);
+	    	cells.each(function(){
+	    		attr.push($("input", $(this)).val().trim());
+	    	});
+	    	var id = selected_c.data("id");
+    		if(selected_c.data("id"))
+    			$.ajax({
+    				type: "PUT",
+	    			url: "/donors/" + selected_c.data("id"),
+	    			data: {"donor" : {attr_name : attr}},
+	    			timeout: 5000,
+	    		    success: function(data, requestStatus, xhrObject){ saveRow(data, selected_c); },
+	    		    error: function(xhrObj, textStatus, exception) {
+			    	$("#add_row").notify("Failed to save data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			       }
+		    	})
+	    	else
+		    	$.ajax({
+		    		type: "POST",
+		    		url: "/donor/",
+		    		data: {"attr": attr, "id": $("#donorId").val()},
+		    		timeout: 5000,
+		    	    success: function(data, requestStatus, xhrObject){ saveRow(data); },
+		    	    error: function(xhrObj, textStatus, exception) {
+		    			$("#add").notify("Failed to add data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+		    	    }
+		    	})
+        	}
+    };
+    
+    function saveRow(data, selected_c){
+	    if(data.id) selected_c.data("id", data.id);
+	    table_c.row(selected_c).data([
+	    	data.all
+	    ]).draw();
+	    $("#edit_row").text("Edit");
+        $('#table_donor').romoveClass('locked');
+        $("#add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"}); 
+    }
+
 } );

@@ -4,7 +4,7 @@ class DonorsController < ApplicationController
 
     def index
         @donor_attr = Donor.attribute_names
-        @donor_attr_show = ["type", "title", "first_name", "last_name",  "email", "organization", "company", "street_address", 
+        @donor_attr_show = ["title", "first_name", "last_name",  "email", "organization", "company", "street_address", 
         "city", "state", "country", "zipcode", "home_phone", "business_phone"]
         @donors = Donor.search_by(params[:donor])
     end
