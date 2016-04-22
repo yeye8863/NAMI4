@@ -4,9 +4,14 @@ class DonorsController < ApplicationController
 
     def index
         @donor_attr = Donor.attribute_names
+<<<<<<< HEAD
         @donor_attr_show = ["title", "first_name", "last_name",  "email", "organization", "company", "street_address", 
         "city", "state", "country", "zipcode", "home_phone", "business_phone"]
         @donors = Donor.search_by(params[:donor])
+=======
+        @donor_attr_show = ["flag", "title", "first_name", "last_name", "organization", "company"]
+        @donors = Donor.search_by(params[:donor]).where('active = 1')
+>>>>>>> master
     end
     
     def new 
@@ -25,11 +30,12 @@ class DonorsController < ApplicationController
         id = params[:id]
         @donor = Donor.find(id)
         flash[:notice] = "#{@donor.first_name} #{@donor.last_name} is deleted."
-        @donor.destroy
+        @donor.update_attributes(:active => 0)
         redirect_to donors_path
     end
     
     def create
+        params[:donor][:active] = 1
         @donor = Donor.create!(params[:donor])
         flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
         render :json => {:id => @donor.id}
@@ -39,18 +45,18 @@ class DonorsController < ApplicationController
         id = params[:id]
         @donor = Donor.find(id)
         @donor_basic = {
-            'Title' => (@donor.title.capitalize! if @donor.title),
-            'First Name' => (@donor.first_name.capitalize! if @donor.first_name),
-            'Last Name' => (@donor.last_name.capitalize! if @donor.last_name),
-            'Middle Name' => (@donor.middle_name.capitalize! if @donor.middle_name),
-            'Salution' => (@donor.salution.capitalize! if @donor.salution),
+            'Title' => (@donor.title.capitalize if @donor.title),
+            'First Name' => (@donor.first_name.capitalize if @donor.first_name),
+            'Last Name' => (@donor.last_name.capitalize if @donor.last_name),
+            'Middle Name' => (@donor.middle_name.capitalize if @donor.middle_name),
+            'Salution' => (@donor.salution.capitalize if @donor.salution),
             'Email' => @donor.email,
   	        'Organization' => @donor.organization,
-  	        'Company' => (@donor.company.capitalize! if @donor.company),
-  	        'Street Address' => @donor.street_address,
-  	        'City' => (@donor.city.capitalize! if @donor.city),
-  	        'State' => (@donor.state.capitalize! if @donor.state),
-  	        'Countrt' => (@donor.country.capitalize! if @donor.country),
+  	        'Company' => (@donor.company.split.map(&:capitalize).join(' ') if @donor.company),
+  	        'Street Address' => (@donor.street_address.split.map(&:capitalize).join(' ') if @donor.street_address),
+  	        'City' => (@donor.city.capitalize if @donor.city),
+  	        'State' => (@donor.state.capitalize if @donor.state),
+  	        'Countrt' => (@donor.country.capitalize if @donor.country),
   	        'Zip Code' => @donor.zipcode,
             'Home Phone' => @donor.home_phone,
             'Business Phone' => @donor.business_phone
@@ -72,25 +78,45 @@ class DonorsController < ApplicationController
       end
       @donor.update_attributes(params[:donor])
       @donor_basic = {
-            'Title' => (@donor.title.capitalize! if @donor.title),
-            'First Name' => (@donor.first_name.capitalize! if @donor.first_name),
-            'Last Name' => (@donor.last_name.capitalize! if @donor.last_name),
-            'Middle Name' => (@donor.middle_name.capitalize! if @donor.middle_name),
-            'Salution' => (@donor.salution.capitalize! if @donor.salution),
+            'Title' => (@donor.title.capitalize if @donor.title),
+            'First Name' => (@donor.first_name.capitalize if @donor.first_name),
+            'Last Name' => (@donor.last_name.capitalize if @donor.last_name),
+            'Middle Name' => (@donor.middle_name.capitalize if @donor.middle_name),
+            'Salution' => (@donor.salution.capitalize if @donor.salution),
             'Email' => @donor.email,
   	        'Organization' => @donor.organization,
-  	        'Company' => (@donor.company.capitalize! if @donor.company),
+  	        'Company' => (@donor.company.capitalize if @donor.company),
   	        'Street Address' => @donor.street_address,
-  	        'City' => (@donor.city.capitalize! if @donor.city),
-  	        'State' => (@donor.state.capitalize! if @donor.state),
-  	        'Countrt' => (@donor.country.capitalize! if @donor.country),
+  	        'City' => (@donor.city.capitalize if @donor.city),
+  	        'State' => (@donor.state.capitalize if @donor.state),
+  	        'Countrt' => (@donor.country.capitalize if @donor.country),
   	        'Zip Code' => @donor.zipcode,
             'Home Phone' => @donor.home_phone,
             'Business Phone' => @donor.business_phone
 	        }
-      render(:partial => 'donor_info', :object => @donor_basic) if request.xhr?
+      render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr?
     end
     
-    
-    private
+    def showSummary
+      id = params[:id]
+      @donor = Donor.find(id)
+      @donor_basic = {
+          'Title' => (@donor.title.capitalize if @donor.title),
+          'First Name' => (@donor.first_name.capitalize if @donor.first_name),
+          'Last Name' => (@donor.last_name.capitalize if @donor.last_name),
+          'Middle Name' => (@donor.middle_name.capitalize if @donor.middle_name),
+          'Salution' => (@donor.salution.capitalize if @donor.salution),
+          'Email' => @donor.email,
+  	      'Organization' => @donor.organization,
+  	      'Company' => (@donor.company.split.map(&:capitalize).join(' ') if @donor.company),
+  	      'Street Address' => @donor.street_address.split.map(&:capitalize).join(' '),
+  	      'City' => (@donor.city.capitalize if @donor.city),
+  	      'State' => (@donor.state.capitalize if @donor.state),
+  	      'Countrt' => (@donor.country.capitalize if @donor.country),
+  	      'Zip Code' => @donor.zipcode,
+          'Home Phone' => @donor.home_phone,
+          'Business Phone' => @donor.business_phone
+	     }
+	     render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr?
+    end
 end

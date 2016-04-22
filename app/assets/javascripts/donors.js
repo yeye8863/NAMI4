@@ -14,7 +14,6 @@ var donorInfo = {
 
 $(donorInfo.setup);
 
-
 var newDonorInfo = {
   setup: function(){
      $('#newDonorInfo').on('ajax:success',function(event,data,status,xhr){
@@ -31,37 +30,6 @@ var newDonorInfo = {
 
 $(newDonorInfo.setup);
 
-var SearchScope = {
-  select_scope : function() {
-   $('#individual-box').toggle();
-   $('#organization-box').toggle();
-   SearchScope.reset_field();
-  },
-  reset_field : function() {
-   $('#donor_first_name').val('');
-   $('#donor_last_name').val('');
-   $('#org_name').val('');
-   $('#donor_company').val('');
-  },
-  setup: function() {
-    $('#scope_link').change(SearchScope.select_scope);
-    $('#reset_btn').click(SearchScope.reset_field);
-  }
-}
-$(document).ready(SearchScope.setup);
-
-var SearchResult = {
-  setup : function() {
-    $('#search_box').submit(SearchResult.getResult);
-  },
-  getResult : function() {
-    $(document).on('ajax:success',function(event,data,status,xhrObj){
-      $('#search_result').html(data);
-    });
-  }
-};
-$(document).ready(SearchResult.setup);
-
 var viewResult = {
   setup : function() {
     $('#search_result th a, #search_result .pagination a').click(viewResult.render);
@@ -72,19 +40,13 @@ var viewResult = {
     });
   }
 };
-$(document).ready(viewResult.setup);
 
-
-$(document).ready(function() {
-    $('#table_donor').DataTable( {
-        "dom": '<"toolbar">frtip'
-    } );
- 
-    $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
-} );
-$(document).ready(function() {
+var dataTable = {
+  setup: function(){
+    viewResult.setup();
+    $('#table_donor').DataTable();
     // Setup - add a text input to each footer cell
-    $('#table_donor tfoot th').each( function () {
+    $('#table_donor tfoot th.filter').each( function () {
         var title = $(this).text();
         $(this).html( '<input type="text" placeholder=" '+title+'" />' );
     } );
@@ -95,7 +57,6 @@ $(document).ready(function() {
     // Apply the search
     table.columns().every( function () {
         var that = this;
- 
         $( 'input', this.footer() ).on( 'keyup change', function () {
             if ( that.search() !== this.value ) {
                 that
@@ -104,10 +65,7 @@ $(document).ready(function() {
             }
         } );
     } );
-});
-
-$(document).ready(function() {
- 
+  
     var table = $('#table_donor').DataTable();
     $('#table_donor tbody').on( 'click', 'tr', function () {
         if ( !$('#table_donor').hasClass('locked') ){
@@ -186,4 +144,28 @@ $(document).ready(function() {
         $("#add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"}); 
     }
 
-} );
+
+  }
+};
+
+$(dataTable.setup);
+
+var summaryInfo={
+  setup: function(){
+    $('#table_donor td #view').on('click',summaryInfo.showSummary);
+  },
+  showSummary: function(event){
+    event.preventDefault();
+    $.ajax({
+      url: $(this).attr('href'),
+      method: 'get',
+      timeout: 5000,
+      success: function(data,request,xhrObj){
+        $('#donorSummary .modal-body').html(data);
+        $('#donorSummary').modal();
+      }
+    });
+  }
+};
+
+$(summaryInfo.setup)

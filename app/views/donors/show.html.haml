@@ -14,13 +14,7 @@
   #summary.tab-pane.active{:role=>'tabpanel'}
     .container{:style=>'padding-top: 50px'}
       .row.col-sm-offset-3.col-sm-6
-        %table#summary-table.table.donor-form
-          %tbody
-            - @donor_basic.each_pair do |key, val|
-              - if val
-                %tr
-                  %td.bold= key
-                  %td= val
+        =render :partial => 'donor_summary'
         .pull-right  
           =link_to "Back", donors_path, class: 'btn btn-primary'
           =link_to "Delete", donor_path(@donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger'
@@ -30,6 +24,9 @@
       .form-group
         .form-group
           .row
+            .col-sm-3
+              =f.label :type
+              =f.select(:flag, [['Individual','I'],['Organization','O']],{},{:class=>'form-control'})
             .col-sm-3
               =f.label :title
               =f.text_field :title, class:'form-control', id:'title'

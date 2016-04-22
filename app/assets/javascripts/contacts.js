@@ -25,7 +25,7 @@ function fixHeader(){
 	if($("#contact-tab", $(this)).length){
 		setTimeout(function() {
 			if($(".fixedHeader").length == 0 && $("#contact").hasClass("active")){
-				header_c = new fixHeader(table_c);
+				header_c = new FixedHeader(table_c);
 				$(window).resize(function(){ header_c._fnUpdateClones(true) })
 			}
 		}, 1000);

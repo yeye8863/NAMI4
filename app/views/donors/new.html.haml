@@ -16,6 +16,9 @@
         .form-group
           .row
             .col-sm-3
+              =f.label :type
+              =f.select(:flag, [['Individual','I'],['Organization','O']],{},{:class=>'form-control'})
+            .col-sm-3
               =f.label :title
               =f.text_field :title, class:'form-control', id:'title'
             .col-sm-3
