@@ -1,29 +1,26 @@
-#donor_result.container-fluid
-  %h2 Donor Management
+#search-box.container-fluid
   %table#table_donor.table.display{:cellspacing => "0", :width => "100%"}
     %thead
       %tr
-        %th Action
-        - @donor_attr.each do |attr|
-          - if @donor_attr_show.include? attr
-            %th #{attr}
+        %th action
+        - @donor_attr_show.each do |attr|
+          %th #{attr}
     %tfoot
       %tr
-        %th Action
-        - @donor_attr.each do |attr|
-          - if @donor_attr_show.include? attr
-            %th #{attr}
+        %th
+        - @donor_attr_show.each do |attr|
+          %th.filter #{attr}
     %tbody
       - @donors.each do |donor|
         %tr
-          %td
-            = link_to "View", donor_path(donor), class: 'btn btn-success btn-xs'
-          - donor.attributes.each do |attr, val|
-            - if @donor_attr_show.include? attr
-              %td #{val} 
+          %td{:style => 'width:15%'}
+            = link_to "View", donorSummary_path(donor.id), id: 'view', remote: true, class: 'btn btn-success btn-xs'
+            = link_to "Edit", donor_path(donor.id), class: 'btn btn-success btn-xs'
+            = link_to "Delete", donor_path(donor.id), method: 'delete', class: 'btn btn-danger btn-xs'
+          - attrs = donor.attributes
+          - @donor_attr_show.each do |attr|
+            - if attrs.include? attr
+              %td=donor[attr].capitalize if donor[attr] 
   .button-line.right{:style => "padding:10"}
-    =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add"
-    =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit"
-    %button.btn.btn-danger#delete{type:'button'} Delete
-    =link_to "Back", donors_path, class: 'btn btn-primary'
->>>>>>> b56bb1aa7b2410ad786b664b536ffa92890650da
+    =link_to "Add New", new_donor_path, class: 'btn btn-success', id: "add"
+    =link_to "Back", homepage_path, class: 'btn btn-primary'

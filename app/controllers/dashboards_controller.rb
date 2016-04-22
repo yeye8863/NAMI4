@@ -4,8 +4,7 @@ class DashboardsController < ApplicationController
     before_filter :authorize
     def index
       @agenda_records = AgendaView.all.paginate(:per_page => 5, :page => params[:page])
-      @donors = DonorView.all
-      @contact_people = ContactPersonView.all
+      @donors = Donor.all.paginate(:per_page => 5, :page => params[:page])
       @report_records = Report.all.paginate(:per_page => 5, :page => params[:page])
       #debugger
       render_to_string(:partial => 'reports_view', :object => @report_records) if request.xhr?
