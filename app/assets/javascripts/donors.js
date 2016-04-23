@@ -31,6 +31,7 @@ var newDonorInfo = {
 $(newDonorInfo.setup);
 
 
+
 var dataTable = {
   setup: function(){
     // DataTable
@@ -77,7 +78,6 @@ var dataTable = {
         else if ($('#table_donor tr').hasClass('selected')){
             original_row = save_raw_data();
             $('#table_donor').addClass('locked');
-            row_orginial_data = $('#table_donor tr.selected td').slice(1);
             $('#table_donor tr.selected td').slice(1).each( function () {
                 var title = $(this).text();
                 $(this).html( "<input style='width:100%' value='" + $(this).html().trim() + "'>");
@@ -91,7 +91,7 @@ var dataTable = {
     } );
     
     function save_raw_data(){
-        selected_c = $('#table_donor tr.selected');
+        var selected_c = $('#table_donor tr.selected');
 	      if(selected_c.length){
 	        var attr = [];
 	    	  var cells = $("td", selected_c).slice(1);
