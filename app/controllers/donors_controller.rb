@@ -32,7 +32,11 @@ class DonorsController < ApplicationController
         params[:donor][:active] = 1
         @donor = Donor.create!(params[:donor])
         flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
-        render :json => {:id => @donor.id}
+        if params[:where] == "inplace"
+            render :json => @donor
+        else
+            render :json => {:id => @donor.id}
+        end
     end
 
     def show
@@ -79,6 +83,8 @@ class DonorsController < ApplicationController
         type = "Organization"
       end
       
+      render :json => @donor if request.xhr? && params[:where] == "inplace"
+      
       @donor_basic = {
             'Type' => type,
             'Title' => (@donor.title.capitalize if @donor.title),
@@ -97,7 +103,7 @@ class DonorsController < ApplicationController
             'Home Phone' => @donor.home_phone,
             'Business Phone' => @donor.business_phone
 	        }
-      render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr?
+      render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr? && !params[:where] == "inplace"
     end
     
     def showByContact
