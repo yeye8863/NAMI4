@@ -37,6 +37,7 @@ class DonorsController < ApplicationController
 
     def show
         id = params[:id]
+        @active = params[:active]
         @donor = Donor.find(id)
         @donor_basic = {
             'Title' => (@donor.title.capitalize if @donor.title),
@@ -71,7 +72,15 @@ class DonorsController < ApplicationController
         attr[1].downcase!
       end
       @donor.update_attributes(params[:donor])
+      
+      if @donor.flag == "I"
+        type = "Individual"
+      elsif @donor.flag == "O"
+        type = "Organization"
+      end
+      
       @donor_basic = {
+            'Type' => type,
             'Title' => (@donor.title.capitalize if @donor.title),
             'First Name' => (@donor.first_name.capitalize if @donor.first_name),
             'Last Name' => (@donor.last_name.capitalize if @donor.last_name),
@@ -91,10 +100,53 @@ class DonorsController < ApplicationController
       render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr?
     end
     
+    def showByContact
+      contact_id = params[:contactId]
+      @contact = Contact.find(contact_id)
+      @donor = @contact.donor
+      @active = params[:active]
+      
+      @donor_basic = {
+            'Title' => (@donor.title.capitalize if @donor.title),
+            'First Name' => (@donor.first_name.capitalize if @donor.first_name),
+            'Last Name' => (@donor.last_name.capitalize if @donor.last_name),
+            'Middle Name' => (@donor.middle_name.capitalize if @donor.middle_name),
+            'Salution' => (@donor.salution.capitalize if @donor.salution),
+            'Email' => @donor.email,
+  	        'Organization' => @donor.organization,
+  	        'Company' => (@donor.company.split.map(&:capitalize).join(' ') if @donor.company),
+  	        'Street Address' => (@donor.street_address.split.map(&:capitalize).join(' ') if @donor.street_address),
+  	        'City' => (@donor.city.capitalize if @donor.city),
+  	        'State' => (@donor.state.capitalize if @donor.state),
+  	        'Countrt' => (@donor.country.capitalize if @donor.country),
+  	        'Zip Code' => @donor.zipcode,
+            'Home Phone' => @donor.home_phone,
+            'Business Phone' => @donor.business_phone
+	        }
+	    @donor_contact = {
+	        'Contact Date' => '15%',
+	        'Followup Date' => '15',
+	        'Narrative' => '40%',
+	        'Created By' => '15%',
+	        'Last Modified By' =>'15%'
+	    }
+	    @contacts = Contact.where(:donor_id => @donor.id)
+      
+      render 'show'
+    end
+    
     def showSummary
       id = params[:id]
       @donor = Donor.find(id)
+      
+      if @donor.flag == "I"
+        type = "Individual"
+      elsif @donor.flag == "O"
+        type = "Organization"
+      end
+      
       @donor_basic = {
+          'Type' => type,
           'Title' => (@donor.title.capitalize if @donor.title),
           'First Name' => (@donor.first_name.capitalize if @donor.first_name),
           'Last Name' => (@donor.last_name.capitalize if @donor.last_name),
@@ -103,7 +155,7 @@ class DonorsController < ApplicationController
           'Email' => @donor.email,
   	      'Organization' => @donor.organization,
   	      'Company' => (@donor.company.split.map(&:capitalize).join(' ') if @donor.company),
-  	      'Street Address' => @donor.street_address.split.map(&:capitalize).join(' '),
+  	      'Street Address' => (@donor.street_address.split.map(&:capitalize).join(' ') if @donor.street_address),
   	      'City' => (@donor.city.capitalize if @donor.city),
   	      'State' => (@donor.state.capitalize if @donor.state),
   	      'Countrt' => (@donor.country.capitalize if @donor.country),

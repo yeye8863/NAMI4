@@ -18,7 +18,7 @@ var newDonorInfo = {
   setup: function(){
      $('#newDonorInfo').on('ajax:success',function(event,data,status,xhr){
       event.preventDefault();
-      $('#donorId').val(data.id);
+      $('#donorId').text(data.id);
       $("#basic-submit").notify("Successfully saved", {className: "success", position:"left middle"});
     });
     $('#newDonorInfo').on('ajax:error',function(event,xhr,status,error){
@@ -107,4 +107,31 @@ var summaryInfo={
   }
 };
 
-$(summaryInfo.setup)
+$(summaryInfo.setup);
+
+$(function(){
+  var active = $('#activeLabel').text();
+  switch (active){
+    case '1':
+      {
+        $('.active').removeClass('active');
+        $('#basic-tab').parent().addClass('active');
+        $('#basic').addClass('active');
+        break;
+      }
+    case '2':
+      {
+        $('.active').removeClass('active');
+        $('#contact-tab').parent().addClass('active');
+        $('#contact').addClass('active');
+        break;
+      }
+    case '3':
+      {
+        $('.active').removeClass('active');
+        $('#finance-tab').parent().addClass('active');
+        $('#finance').addClass('active');
+        break;
+      }
+  }
+})

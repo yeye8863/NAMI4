@@ -5,12 +5,12 @@ class CreateAgendaView < ActiveRecord::Migration
       (
         SELECT 
           a.title||' '||a.first_name||' '||a.last_name as name,
-          NULL as organization,
+          a.organization as organization,
           c.contact_date as contact_date,
           c.followup_date as followup_date,
           c.id as contact_id
         FROM donors a JOIN contacts c ON a.id = c.donor_id
-        WHERE c.followup_date >= date('now')) as RESULT
+        WHERE c.followup_date >= date('now') AND a.active = 1) as RESULT
         ORDER BY followup_date ASC"
   end
   

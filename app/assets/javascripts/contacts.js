@@ -15,10 +15,9 @@ var table_c = $("#contact_tab").DataTable( {
     	{ "width": "15%",  "orderable": false },
     	{ "width": "15%",  "orderable": false },
   	],
-	"order": [[ 0, "desc" ], [ 1, 'desc' ]],
-  	"drawCallback": function( settings ) { topRow(); },
-  	"dom": 'rt<"bottom-left-info-bar"f>',
-    paging: false
+	"order": [[ 1, 'asc' ]],
+  //"drawCallback": function( settings ) { topRow(); },
+  "dom": 'rt<"bottom-left-info-bar"f>'
 } );
 
 function fixHeader(){
@@ -102,7 +101,7 @@ function editRow(event, r) {
 			});
 			selDate($("input", cells[0]), $("input", cells[1]));
 		}
-	topRow();
+	//topRow();
 }
 
 function saveRow(data){
@@ -181,7 +180,7 @@ function saveData(){
 			$.ajax({
 				type: "POST",
 				url: "/contacts/",
-				data: {"attr": attr, "id": $("#donorId").val()},
+				data: {"attr": attr, "id": $("#donorId").text()},
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {

@@ -11,9 +11,9 @@ Rails.application.routes.draw do
   get 'logout' => 'sessions#destroy', :as => 'logout'
   get 'homepage' => 'users#index', :as => 'homepage'
   get 'donorSummary/:id' => 'donors#showSummary', :as => 'donorSummary'
+  get 'donorContact' => 'donors#showByContact', :as => 'donorContact'
   get 'dashboard' => 'dashboards#index', :as => 'dashboard'
   get 'dashboard/donor/:id' => 'dashboards#viewDonor', :as=>'dashboardDonor'
-  get 'dashboard/contact_person/:id' => 'dashboards#viewContactPerson', :as=>'dashboardContactPerson'
   
   resources :users
   resources :donors

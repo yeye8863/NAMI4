@@ -1,6 +1,7 @@
 =render :partial=>'layouts/banner'
 #page-title.container-fluid.titleLine
   %h2 Donor Information
+  %label#activeLabel.hidden=@active
 %ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
   %li.active 
     %a{:id=>'summary-tab',:href=>'#summary', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'summary'}} Summary
@@ -16,10 +17,10 @@
       .row.col-sm-offset-3.col-sm-6
         =render :partial => 'donor_summary'
         .pull-right  
-          =link_to "Back", donors_path, class: 'btn btn-primary'
+          =link_to "Back", :back , class: 'btn btn-primary'
           =link_to "Delete", donor_path(@donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger'
   #basic.tab-pane{:role=>'tabpanel'}
-    %label#donorId{:style=>'display:none'}=@donor.id
+    %label#donorId.hidden=@donor.id
     =form_for @donor, :remote=>true, :method=>'put', :html=>{:id=>'donorInfo', :class=>'form donor-form col-sm-12'} do |f|
       .form-group
         .form-group
@@ -82,7 +83,7 @@
               =f.text_field :country, class:'form-control', id:'country'
         .button-line.pull-right    
           =f.submit id:'basic-submit', class:'btn btn-default'
-          =link_to "Back", donors_path, class: 'btn btn-primary'
+          =link_to "Back", :back, class: 'btn btn-primary'
   #contact.tab-pane{:role=>'tabpanel'}
     #contact-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:10px;"}
       %table#contact_tab.table.table-hover.clickable-row{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
@@ -108,6 +109,6 @@
       =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add"
       =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit"
       %button.btn.btn-danger#delete{type:'button'} Delete
-      =link_to "Back", donors_path, class: 'btn btn-primary'
-    =javascript_include_tag "contacts.js" 
+      =link_to "Back", :back, class: 'btn btn-primary'
+    =javascript_include_tag "contacts" 
   #finance.tab-pane{:role=>'tabpanel'}

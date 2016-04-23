@@ -19,7 +19,7 @@
                   %td.bold=key
                   %td=val
         .pull-right  
-          =link_to "Back", donors_path, class: 'btn btn-primary'
+          =link_to "Back", :back, class: 'btn btn-primary'
           =link_to "Delete", donor_path(@donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger'
   #basic.tab-pane{:role=>'tabpanel'}
     %label#donorId{:style=>'display:none'}=@donor.id
@@ -82,7 +82,7 @@
               =f.text_field :country, class:'form-control', id:'country'
         .button-line.pull-right    
           =f.submit id:'basic-submit', class:'btn btn-default'
-          =link_to "Back", donors_path, class: 'btn btn-primary'
+          =link_to "Back", :back , class: 'btn btn-primary'
   #contact.tab-pane{:role=>'tabpanel'}
     #contact-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:10px;"}
       %table#contact_tab.table.table-hover.clickable-row{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
@@ -108,6 +108,6 @@
       =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add"
       =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit"
       %button.btn.btn-danger#delete{type:'button'} Delete
-      =link_to "Back", donors_path, class: 'btn btn-primary'
+      =link_to "Back", :back , class: 'btn btn-primary'
     =javascript_include_tag "contacts.js" 
   #finance.tab-pane{:role=>'tabpanel'}
