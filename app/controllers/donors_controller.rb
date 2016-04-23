@@ -103,7 +103,7 @@ class DonorsController < ApplicationController
             'Home Phone' => @donor.home_phone,
             'Business Phone' => @donor.business_phone
 	        }
-      render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr? && !params[:where] == "inplace"
+      render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr? || !params[:where] == "inplace"
     end
     
     def showByContact
