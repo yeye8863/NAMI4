@@ -26,16 +26,6 @@ end
 
 #donor seed
 donors = [
-<<<<<<< HEAD
-            {:title => 'mr.', :first_name => 'albert', :last_name => 'linkoln', :company => 'apple', :organization => 'ptsd'},
-            {:title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :company => 'google', :organization => 'dso'},
-            {:title => 'mr', :first_name => 'albert', :last_name => 'zhang', :company => 'linkendin', :organization => 'ptsd'},
-            {:title => 'mr.', :first_name => 'sam', :last_name => 'smith', :company => 'apple', :organization => 'ptsd'},
-            {:title => 'mr.', :first_name => 'johnny', :last_name => 'walker'},
-            {:title => 'mrs.', :first_name => 'michelle',:last_name => 'glanger'}
-          ]
-
-=======
             {:flag => 'I', :title => 'mr.', :first_name => 'albert', :last_name => 'linkoln', :company => 'apple', :organization => 'ptsd', :active => 1},
             {:flag => 'O', :title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :company => 'google', :organization => 'dso', :active => 1},
             {:flag => 'I', :title => 'mr', :first_name => 'albert', :last_name => 'zhang', :company => 'linkendin', :organization => 'ptsd', :active => 0},
@@ -44,7 +34,6 @@ donors = [
             {:flag => 'I', :title => 'mrs.', :first_name => 'michelle',:last_name => 'glanger',:company => '', :organization => '', :active => 0}
           ]
   
->>>>>>> master
 contacts = [
           {:contact_date => '2016-04-01', :followup_date => '2016-04-22', :donor_id => '1', :narrative => 'Discussion about event in May'},
           {:contact_date => '2016-04-02', :followup_date => '2016-04-23', :donor_id => '2', :narrative => 'Funding raising for April'},

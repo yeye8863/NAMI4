@@ -4,14 +4,8 @@ class DonorsController < ApplicationController
 
     def index
         @donor_attr = Donor.attribute_names
-<<<<<<< HEAD
-        @donor_attr_show = ["title", "first_name", "last_name",  "email", "organization", "company", "street_address", 
-        "city", "state", "country", "zipcode", "home_phone", "business_phone"]
-        @donors = Donor.search_by(params[:donor])
-=======
         @donor_attr_show = ["flag", "title", "first_name", "last_name", "organization", "company"]
         @donors = Donor.search_by(params[:donor]).where('active = 1')
->>>>>>> master
     end
     
     def new 
@@ -38,7 +32,11 @@ class DonorsController < ApplicationController
         params[:donor][:active] = 1
         @donor = Donor.create!(params[:donor])
         flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
-        render :json => {:id => @donor.id}
+        if params[:where] == "inplace"
+            render :json => @donor
+        else
+            render :json => {:id => @donor.id}
+        end
     end
 
     def show
@@ -77,6 +75,7 @@ class DonorsController < ApplicationController
         attr[1].downcase!
       end
       @donor.update_attributes(params[:donor])
+      render :json => @donor if request.xhr? && params[:where] == "inplace"
       @donor_basic = {
             'Title' => (@donor.title.capitalize if @donor.title),
             'First Name' => (@donor.first_name.capitalize if @donor.first_name),
@@ -94,7 +93,7 @@ class DonorsController < ApplicationController
             'Home Phone' => @donor.home_phone,
             'Business Phone' => @donor.business_phone
 	        }
-      render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr?
+      render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr? && !params[:where] == "inplace"
     end
     
     def showSummary
