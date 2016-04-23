@@ -26,12 +26,12 @@ end
 
 #donor seed
 donors = [
-            {:flag => 'I', :title => 'mr.', :first_name => 'albert', :last_name => 'linkoln', :company => 'apple', :organization => 'ptsd', :active => 1},
-            {:flag => 'O', :title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :company => 'google', :organization => 'dso', :active => 1},
-            {:flag => 'I', :title => 'mr', :first_name => 'albert', :last_name => 'zhang', :company => 'linkendin', :organization => 'ptsd', :active => 0},
-            {:flag => 'O', :title => 'mr.', :first_name => 'sam', :last_name => 'smith', :company => 'apple', :organization => 'ptsd', :active => 1},
-            {:flag => 'I', :title => 'mr.', :first_name => 'johnny', :last_name => 'walker',:company => '', :organization => '', :active => 1},
-            {:flag => 'I', :title => 'mrs.', :first_name => 'michelle',:last_name => 'glanger',:company => '', :organization => '', :active => 0}
+            {:flag => 'Ind', :title => 'mr.', :first_name => 'albert', :last_name => 'linkoln', :company => 'apple', :organization => 'ptsd', :active => 1},
+            {:flag => 'Org', :title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :company => 'google', :organization => 'dso', :active => 1},
+            {:flag => 'Ind', :title => 'mr', :first_name => 'albert', :last_name => 'zhang', :company => 'linkendin', :organization => 'ptsd', :active => 0},
+            {:flag => 'Org', :title => 'mr.', :first_name => 'sam', :last_name => 'smith', :company => 'apple', :organization => 'ptsd', :active => 1},
+            {:flag => 'Ind', :title => 'mr.', :first_name => 'johnny', :last_name => 'walker',:company => '', :organization => '', :active => 1},
+            {:flag => 'Ind', :title => 'mrs.', :first_name => 'michelle',:last_name => 'glanger',:company => '', :organization => '', :active => 0}
           ]
   
 contacts = [
