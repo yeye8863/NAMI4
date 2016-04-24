@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :donors
   resources :reports
   resources :contacts
+  resources :finances
   resources :agendas
   resources :contact_people
   resources :reports

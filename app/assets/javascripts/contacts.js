@@ -1,4 +1,4 @@
-function nyp_table(table_name){
+function nyp_table(table_name, config){
 	
 $("#add_"+table_name).click(insRow);
 $("#edit_"+table_name).click(editRow);
@@ -6,19 +6,17 @@ $("#delete_"+table_name).click(delData);
 $("#tabs").on("click", "li", fixHeader);
 $("#table_"+table_name+" tbody").on("click", "tr", selRow);
 
+var inkey = ["i", "I", "d", "D"];
 var selected_c;
 var header_c;
 var table_c = $("#table_"+table_name).DataTable( {
-	"columns": [
-    	{ "width": "15%" },
-    	{ "width": "15%" },
-    	{ "width": "40%" },
-    	{ "width": "15%",  "orderable": false },
-    	{ "width": "15%",  "orderable": false },
-  	],
-	"order": [[ 0, "desc" ], [ 1, 'desc' ]],
+	"columnDefs": [
+		{"targets": config.norder, "orderable": false}
+	],
+	"order": config.sort,
   	"drawCallback": function( settings ) { topRow(); },
   	"dom": 'rt<"bottom-left-info-bar"f>',
+	destroy: true,
     paging: false
 } );
 
@@ -39,15 +37,20 @@ function selDate(a, b){
     	format: "yyyy-mm-dd",
     	endDate: now,
     	autoclose: true
-    }).on('changeDate', function() {
-    	d2.datepicker("setStartDate", d1.datepicker("getDate"));
-    	b[0].focus();
     });
-    var d2 = b.datepicker({
-    	format: "yyyy-mm-dd",
-    	startDate: now,
-    	autoclose: true
-    });
+    if(b){
+    	d1.on('changeDate', function() {
+	    	d2.datepicker("setStartDate", d1.datepicker("getDate"));
+	    	b[0].focus();
+    	});
+	    var d2_start = d1.datepicker("getDate");
+	    if(!d2_start) d2_start = now;
+	    var d2 = b.datepicker({
+	    	format: "yyyy-mm-dd",
+	    	startDate: d2_start,
+	    	autoclose: true
+	    });
+    }
 }
 
 function topRow(){
@@ -73,7 +76,8 @@ function selRow(event) {
 
 function insRow() {
 	if(!$("#edit_"+table_name).hasClass("editing")){
-		var row = table_c.row.add(["","","","",""]).draw().node();
+		var row = table_c.row.add(config.edit).draw().node();
+		$("td", $(row)).html("");
 		$(row).addClass("info").siblings().removeClass("info");
 		editRow(0, $(row));
 	}
@@ -87,25 +91,22 @@ function editRow(event, r) {
 		else{
 			$("#edit_"+table_name).text("Save");
 			$("#edit_"+table_name).addClass("editing");
-			var cells = $("td", selected_c).slice(0, 3);
-			cells.each(function(){
-				if($("input", $(this)).length == 0)
-					$(this).html("<input style='width:100%' value='" + $(this).html().trim() + "'>");
+			var cells = $("td", selected_c);
+			var dcell = [];
+			cells.each(function(idx, val){
+				if($("input", val).length == 0 && inkey.indexOf(config.edit[idx]) != -1 ){
+					$(val).html("<input type='text' value='" + $(val).html().trim() + "'>");
+					if(config.edit[idx] == "d" || config.edit[idx] == "D") dcell.push($("input", val));
+				}
 			});
-			selDate($("input", cells[0]), $("input", cells[1]));
+			if(dcell != []) selDate(dcell[0], dcell[1]);
 		}
 	topRow();
 }
 
 function saveRow(data){
 	if(data.id) selected_c.data("id", data.id);
-	table_c.row(selected_c).data([
-		data.contact_date,
-		data.followup_date,
-		data.narrative,
-		data.created_by,
-		data.last_modified_by
-	]).draw();
+	table_c.row(selected_c).data( data.val ).draw();
 	$("#edit_"+table_name).text("Edit");
 	$("#edit_"+table_name).removeClass("editing");
 	$("#add_"+table_name).notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
@@ -131,7 +132,7 @@ function delData(event){
 				if($(this).data("id"))
 				 	$.ajax({
 						type: "DELETE",
-				      	url: "/contacts/" + $(this).data("id"),
+				      	url: "/"+table_name+"s/" + $(this).data("id"),
 				       	timeout: 5000,
 				       	success: function(data, requestStatus, xhrObject){ delRow(); },
 				       	error: function(xhrObj, textStatus, exception) {
@@ -146,45 +147,53 @@ function delData(event){
 function saveData(){
 	if(selected_c.length){
 		var attr = [];
-		var cells = $("td", selected_c).slice(0, 3);
-		cells.each(function(){
-			attr.push($("input", $(this)).val().trim());
+		var err = false;
+		var cells = $("td", selected_c);
+		cells.each(function(idx, val){
+			if(config.edit[idx] != "x"){
+				var item = $("input", val).val().trim();
+				if(item == "" && (["I", "D"].indexOf(config.edit[idx]) != -1)){ 
+					err = true;
+					console.log($("input", val));
+					$("input", val).addClass("err");
+					$("#add_"+table_name).notify("Please enter missing items.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+					return false;
+				} else $("input", val).removeClass("alert-dange");
+				attr.push(item);
+			}
 		});
-		if(attr[0] == ""){ 
-			$("#add_"+table_name).notify("Please enter contact date.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
-			return false;
+		if(!err){
+			if(selected_c.data("id"))
+				$.ajax({
+					type: "PUT",
+					url: "/"+table_name+"s/" + selected_c.data("id"),
+					data: {"attr": attr},
+					timeout: 5000,
+				    success: function(data, requestStatus, xhrObject){ saveRow(data); },
+				    error: function(xhrObj, textStatus, exception) {
+						$("#add_"+table_name).notify("Failed to save data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+				    }
+				})
+			else
+				$.ajax({
+					type: "POST",
+					url: "/"+table_name+"s/",
+					data: {"attr": attr, "id": $("#table_"+table_name).data("id")},
+					timeout: 5000,
+				    success: function(data, requestStatus, xhrObject){ saveRow(data); },
+				    error: function(xhrObj, textStatus, exception) {
+						$("#add_"+table_name).notify("Failed to add data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+				    }
+				});
 		}
-		if(attr[2] == ""){ 
-			$("#add_"+table_name).notify("Please enter narrative.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
-			return false;
-		}
-		if(selected_c.data("id"))
-			$.ajax({
-				type: "PUT",
-				url: "/contacts/" + selected_c.data("id"),
-				data: {"attr": attr},
-				timeout: 5000,
-			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
-			    error: function(xhrObj, textStatus, exception) {
-					$("#add_"+table_name).notify("Failed to save data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
-			    }
-			})
-		else
-			$.ajax({
-				type: "POST",
-				url: "/contacts/",
-				data: {"attr": attr, "id": $("#table_"+table_name).data("id")},
-				timeout: 5000,
-			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
-			    error: function(xhrObj, textStatus, exception) {
-					$("#add_"+table_name).notify("Failed to add data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
-			    }
-			})
 	}
 }
 };
 
-$(document).ready(nyp_table("contact"));
+$(document).ready(function(){
+	nyp_table("contact", {norder: [3,4], sort: [[ 0, "desc" ], [ 1, "desc" ]], edit: ["D","d","I","x","x"] });
+	nyp_table("finance", {norder: [], sort: [[1, "desc"]], edit: ["I","D","I","i","i","x"] });
+});
 
 
 /*

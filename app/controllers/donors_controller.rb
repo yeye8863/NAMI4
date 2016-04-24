@@ -63,6 +63,15 @@ class DonorsController < ApplicationController
 	        'Last Modified By' =>'15%'
 	    }
 	    @contacts = Contact.where(:donor_id => @donor.id)
+	    @finances = Finance.where(:donor => @donor.id)
+	    @donor_finance = [
+            'type',
+            'date',
+            'amount',
+            'description', 
+            'designation',
+            'contact' 
+        ]
     end
     
     def update

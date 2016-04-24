@@ -10,7 +10,15 @@ class ContactsController < ApplicationController
             :last_modified_by => User.find(session[:user_id]).username
         })
         @contact.save!
-        render :json => @contact if request.xhr?
+        jdata={
+            :id => @contact.id,
+            :val => [@contact.contact_date,
+                     @contact.followup_date,
+                     @contact.narrative,
+                     @contact.created_by,
+                     @contact.last_modified_by
+            ]}
+        render :json => jdata if request.xhr?
     end
 
     def destroy
@@ -28,7 +36,15 @@ class ContactsController < ApplicationController
             :narrative => a[2],
             :last_modified_by => User.find(session[:user_id]).username
         })
-        render :json => @contact if request.xhr?
+        jdata={
+            :id => @contact.id,
+            :val => [@contact.contact_date,
+                     @contact.followup_date,
+                     @contact.narrative,
+                     @contact.created_by,
+                     @contact.last_modified_by
+            ]}
+        render :json => jdata if request.xhr?
     end
 end
 

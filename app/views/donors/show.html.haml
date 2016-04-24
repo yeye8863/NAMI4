@@ -1,3 +1,4 @@
+=javascript_include_tag "contacts.js" 
 =render :partial=>'layouts/banner'
 #page-title.container-fluid.titleLine
   %h2 Donor Information
@@ -97,20 +98,36 @@
         %tbody
           - @contacts.each do |contact|
             %tr{:data => {:id => contact.id}}
-              %td{:width => "15%"}
+              %td
                 = contact.contact_date
-              %td{:width => "15%"}
+              %td
                 = contact.followup_date
-              %td{:width => "40%"} 
+              %td
                 = contact.narrative
-              %td{:width => "15%"}
+              %td
                 = contact.created_by
-              %td{:width => "15%"}
+              %td
                 = contact.last_modified_by
     .button-line.bottom-right-info-bar{:style => "padding:0"}
       =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add_contact"
       =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit_contact"
       %button.btn.btn-danger#delete_contact{type:'button'} Delete
       =link_to "Back", donors_path, class: 'btn btn-primary'
-    =javascript_include_tag "contacts.js" 
   #finance.tab-pane{:role=>'tabpanel'}
+    #finance-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:10px;"}
+      %table#table_finance.table.table-hover{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
+        %thead{:style => "width:100%"}
+          %tr{:style => "width:100%"}
+            - @donor_finance.each do |key|
+              %th #{key.humanize}
+        %tbody
+          - @finances.each do |finance|
+            %tr{:data => {:id => finance.id}}
+              - @donor_finance.each do |key|
+                %th
+                  = finance[key]
+    .button-line.bottom-right-info-bar{:style => "padding:0"}
+      =link_to "Add", "#finance_tab", class: 'btn btn-success', id: "add_finance"
+      =link_to "Edit", "#finance_tab", class: 'btn btn-info', id: "edit_finance"
+      %button.btn.btn-danger#delete_finance{type:'button'} Delete
+      =link_to "Back", donors_path, class: 'btn btn-primary'
