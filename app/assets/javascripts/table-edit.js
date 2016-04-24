@@ -3,12 +3,14 @@ function nyp_table(table_name, config){
 $("#add_"+table_name).click(insRow);
 $("#edit_"+table_name).click(editRow);
 $("#delete_"+table_name).click(delData);
+$("#cancel_"+table_name).click(cnclRow);
 $("#tabs").on("click", "li", fixHeader);
 $("#table_"+table_name+" tbody").on("click", "tr", selRow);
 
 var inkey = ["i", "I", "d", "D"];
 var selected_c;
 var header_c;
+var original;
 var table_c = $("#table_"+table_name).DataTable( {
 	"columnDefs": [
 		{"targets": config.norder, "orderable": false}
@@ -78,6 +80,7 @@ function insRow() {
 	if(!$("#edit_"+table_name).hasClass("editing")){
 		var row = table_c.row.add(config.edit).draw().node();
 		$("td", $(row)).html("");
+		$(row).addClass("newrow");
 		$(row).addClass("info").siblings().removeClass("info");
 		editRow(0, $(row));
 	}
@@ -91,6 +94,9 @@ function editRow(event, r) {
 		else{
 			$("#edit_"+table_name).text("Save");
 			$("#edit_"+table_name).addClass("editing");
+			$("#delete_"+table_name).hide();
+			$("#cancel_"+table_name).show();
+			original = table_c.row(selected_c).data();
 			var cells = $("td", selected_c);
 			var dcell = [];
 			cells.each(function(idx, val){
@@ -105,20 +111,30 @@ function editRow(event, r) {
 }
 
 function saveRow(data){
+	rstBtn();
 	if(data.id) selected_c.data("id", data.id);
+	selected_c.removeClass("newrow");
 	table_c.row(selected_c).data( data.val ).draw();
-	$("#edit_"+table_name).text("Edit");
-	$("#edit_"+table_name).removeClass("editing");
-	$("#add_"+table_name).notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
+	$("#add_"+table_name).notify("Successfully saved!", {gap: 230, arrowShow: false, className: "success", position:"left middle"});
+}
+
+function cnclRow(){
+	rstBtn();
+	if(selected_c.hasClass("newrow")) table_c.row(selected_c).remove().draw(false);
+	else table_c.row(selected_c).data(original);
 }
 
 function delRow(){
-	if($("#edit_"+table_name).hasClass("editing")){
-		$("#edit_"+table_name).removeClass("editing");
-		$("#edit_"+table_name).text("Edit");
-	}
+	if($("#edit_"+table_name).hasClass("editing")) rstBtn();
 	table_c.row('.info').remove().draw(false);
-	$("#add_"+table_name).notify("Successfully deleted!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
+	$("#add_"+table_name).notify("Successfully deleted!", {gap: 230, arrowShow: false, className: "success", position:"left middle"});
+}
+
+function rstBtn(){
+	$("#edit_"+table_name).text("Edit");
+	$("#edit_"+table_name).removeClass("editing");
+	$("#cancel_"+table_name).hide();
+	$("#delete_"+table_name).show();
 }
 
 function delData(event){
@@ -136,7 +152,7 @@ function delData(event){
 				       	timeout: 5000,
 				       	success: function(data, requestStatus, xhrObject){ delRow(); },
 				       	error: function(xhrObj, textStatus, exception) {
-				       		$("#add_"+table_name).notify("Failed to delete data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+				       		$("#add_"+table_name).notify("Failed to delete data!", {gap: 230, arrowShow: false, className: "error", position:"left middle"});
 				       	}
 					})   
 				else delRow();
@@ -156,7 +172,7 @@ function saveData(){
 					err = true;
 					console.log($("input", val));
 					$("input", val).addClass("err");
-					$("#add_"+table_name).notify("Please enter missing items.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+					$("#add_"+table_name).notify("Please enter missing items.", {gap: 230, arrowShow: false, className: "error", position:"left middle"});
 					return false;
 				} else $("input", val).removeClass("alert-dange");
 				attr.push(item);
@@ -171,18 +187,18 @@ function saveData(){
 					timeout: 5000,
 				    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 				    error: function(xhrObj, textStatus, exception) {
-						$("#add_"+table_name).notify("Failed to save data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+						$("#add_"+table_name).notify("Failed to save data!", {gap: 230, arrowShow: false, className: "error", position:"left middle"});
 				    }
 				})
 			else
 				$.ajax({
 					type: "POST",
 					url: "/"+table_name+"s/",
-					data: {"attr": attr, "id": $("#table_"+table_name).data("id")},
+					data: {"attr": attr, "id": $("#donorId").text()}, //$("#table_"+table_name).data("id")},
 					timeout: 5000,
 				    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 				    error: function(xhrObj, textStatus, exception) {
-						$("#add_"+table_name).notify("Failed to add data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+						$("#add_"+table_name).notify("Failed to add data!", {gap: 230, arrowShow: false, className: "error", position:"left middle"});
 				    }
 				});
 		}
@@ -192,7 +208,7 @@ function saveData(){
 
 $(document).ready(function(){
 	nyp_table("contact", {norder: [3,4], sort: [[ 0, "desc" ], [ 1, "desc" ]], edit: ["D","d","I","x","x"] });
-	nyp_table("finance", {norder: [], sort: [[1, "desc"]], edit: ["I","D","I","i","i","x"] });
+	nyp_table("finance", {norder: [], sort: [[1, "desc"], [2, "desc"]], edit: ["I","D","I","i","i","x"] });
 });
 
 

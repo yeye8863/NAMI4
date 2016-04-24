@@ -10,13 +10,21 @@ class DonorsController < ApplicationController
     
     def new 
         @donor = Donor.new
-        @donor_contact = {
-	        'Contact Date' => '15%',
-	        'Followup Date' => '15',
-	        'Narrative' => '40%',
-	        'Created By' => '15%',
-	        'Last Modified By' =>'15%'
-	      }
+        @donor_contact = [
+	        "contact_date",
+	        "followup_date",
+	        "narrative",
+	        "created_by",
+	        "last_modified_by"
+	    ]
+	    @donor_finance = [
+            '_type',
+            'date',
+            'amount',
+            'description', 
+            'designation',
+            'contact' 
+        ]
         #render(:partial => 'donor_info', :object => @donor) if request.xhr?
     end
     
@@ -60,17 +68,17 @@ class DonorsController < ApplicationController
             'Home Phone' => @donor.home_phone,
             'Business Phone' => @donor.business_phone
 	        }
-	    @donor_contact = {
-	        'Contact Date' => '15%',
-	        'Followup Date' => '15',
-	        'Narrative' => '40%',
-	        'Created By' => '15%',
-	        'Last Modified By' =>'15%'
-	    }
+	    @donor_contact = [
+	        "contact_date",
+	        "followup_date",
+	        "narrative",
+	        "created_by",
+	        "last_modified_by"
+	    ]
 	    @contacts = Contact.where(:donor_id => @donor.id)
 	    @finances = Finance.where(:donor => @donor.id)
 	    @donor_finance = [
-            'type',
+            '_type',
             'date',
             'amount',
             'description', 

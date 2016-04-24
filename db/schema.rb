@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160422100000) do
+ActiveRecord::Schema.define(version: 20160424015247) do
 
   create_table "accesses", force: :cascade do |t|
     t.string   "email"
@@ -89,7 +89,7 @@ SELECT * FROM
   add_index "filters", ["report_id"], :name=>"index_filters_on_report_id"
 
   create_table "finances", force: :cascade do |t|
-    t.string   "type"
+    t.string   "_type"
     t.date     "date"
     t.decimal  "amount"
     t.text     "description"

@@ -3,7 +3,7 @@ class FinancesController < ApplicationController
         a = params[:attr]
         @donor = Donor.find(params[:id])
         @finance = @donor.finances.build({
-            :type => a[0],
+            :_type => a[0],
             :date => a[1],
             :amount => a[2],
             :description => a[3],
@@ -15,7 +15,7 @@ class FinancesController < ApplicationController
         @finance.save!
         jdata={
             :id => @finance.id,
-            :val => [@finance.type,
+            :val => [@finance._type,
                      @finance.date,
                      @finance.amount,
                      @finance.description,
@@ -35,7 +35,7 @@ class FinancesController < ApplicationController
         @finance = Finance.find(params[:id])
         a = params[:attr]
         @finance.update_attributes!({
-            :type => a[0],
+            :_type => a[0],
             :date => a[1],
             :amount => a[2],
             :description => a[3],
@@ -46,7 +46,7 @@ class FinancesController < ApplicationController
         })
         jdata={
             :id => @finance.id,
-            :val => [@finance.type,
+            :val => [@finance._type,
                      @finance.date,
                      @finance.amount,
                      @finance.description,
