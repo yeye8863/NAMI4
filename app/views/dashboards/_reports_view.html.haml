@@ -1,4 +1,4 @@
-%table#recentlyreport-table.table
+%table#reportTable.table.display{:cellspacing => "0", :width => "100%"}
   %thead
     %tr
       %th Title
@@ -11,5 +11,3 @@
           %td=report_record.title
           %td=report_record.description
           %td=report_record.last_modified_by
-        
-= js_will_paginate @report_records

@@ -1,6 +1,7 @@
-%table#agenda-table.table
+%table#agendaTable.table.display{:cellspacing => "0", :width => "100%"}
   %thead
     %tr
+      %th.hidden
       %th Name
       %th Organization
       %th Contact Date
@@ -10,10 +11,9 @@
     -if @agenda_records
       -@agenda_records.each do |agenda_record|
         %tr
+          %td.hidden=agenda_record.contact_id
           %td=agenda_record.name.split.map(&:capitalize).join(' ') if agenda_record.name
           %td=agenda_record.organization.split.map(&:capitalize).join(' ') if agenda_record.organization
           %td=agenda_record.contact_date
           %td=agenda_record.followup_date
           %td=link_to 'More', agenda_path("#{agenda_record.contact_id}"), remote: true, data: {toggle: 'modal', target: '#agendaInfo'}
-
-= js_will_paginate @agenda_records

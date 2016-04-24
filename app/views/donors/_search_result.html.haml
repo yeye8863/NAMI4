@@ -1,28 +1,28 @@
-#donor_result.container-fluid
-  %h2 Donor Management
+#search-box.container-fluid
   %table#table_donor.table.display{:cellspacing => "0", :width => "100%"}
-    %thead
+    %thead{:data => {:attrname => @donor_attr_show}}
       %tr
         %th Action
-        - @donor_attr.each do |attr|
-          - if @donor_attr_show.include? attr
-            %th #{attr}
+        - @donor_attr_show.each do |attr|
+          %th #{attr.humanize}
     %tfoot
       %tr
-        %th Action
-        - @donor_attr.each do |attr|
-          - if @donor_attr_show.include? attr
-            %th #{attr}
+        %th
+        - @donor_attr_show.each do |attr|
+          %th.filter #{attr.humanize}
     %tbody
       - @donors.each do |donor|
-        %tr
-          %td
-            = link_to "View", donor_path(donor), class: 'btn btn-success btn-xs'
-          - donor.attributes.each do |attr, val|
-            - if @donor_attr_show.include? attr
-              %td #{val} 
+        %tr{:data => {:id => donor.id}}
+          %td#actions{:style => 'width:15%'}
+            = link_to "View", donorSummary_path(donor.id), id: 'view', remote: true, class: 'btn btn-success btn-xs'
+            = link_to "Edit", donor_path(donor.id), class: 'btn btn-success btn-xs'
+            = link_to "Delete", donor_path(donor.id),  id: 'delete', method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-danger btn-xs'
+          - attrs = donor.attributes
+          - @donor_attr_show.each do |attr|
+            - if attrs.include? attr
+              %td=donor[attr].capitalize if donor[attr] 
   .button-line.right{:style => "padding:10"}
-    =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add"
-    =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit"
-    %button.btn.btn-danger#delete{type:'button'} Delete
-    =link_to "Back", donors_path, class: 'btn btn-primary'
+    =link_to "Add New", new_donor_path, class: 'btn btn-success', id: "add"
+    =link_to "Quick Add","#table_donor" , class: 'btn btn-info', id: "quick_add"
+    =link_to "Quick Edit", "#table_donor", class: 'btn btn-info', id: "quick_edit"
+    =link_to "Cancel", "#table_donor", class: 'btn btn-danger', id:"cancel"

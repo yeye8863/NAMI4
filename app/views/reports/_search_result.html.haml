@@ -24,4 +24,3 @@
               %td=link_to "Delete", report_path(report_record.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger btn-xs'
  
   =link_to 'Add New Template', new_report_path, {:class => 'btn btn-default pull-right'} 
-= js_will_paginate @report_records
