@@ -14,7 +14,8 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require dataTables/jquery.dataTables
-//= require dataTables/extras/dataTables.fixedHeader
 //= require bootstrap-datepicker/core
 //= require notify.min
 //= require_tree .
+
+//removed = require dataTables/extras/dataTables.fixedHeader

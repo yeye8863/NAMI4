@@ -1,10 +1,11 @@
 function nyp_table(table_name, config){
 	
+$("#view_"+table_name).click(viewRow);
 $("#add_"+table_name).click(insRow);
 $("#edit_"+table_name).click(editRow);
 $("#delete_"+table_name).click(delData);
 $("#cancel_"+table_name).click(cnclRow);
-$("#tabs").on("click", "li", fixHeader);
+//$("#tabs").on("click", "li", fixHeader);
 $("#table_"+table_name+" tbody").on("click", "tr", selRow);
 
 var inkey = ["i", "I", "d", "D"];
@@ -16,11 +17,23 @@ var table_c = $("#table_"+table_name).DataTable( {
 		{"targets": config.norder, "orderable": false}
 	],
 	"order": config.sort,
-  	"drawCallback": function( settings ) { topRow(); },
-  	"dom": 'rt<"bottom-left-info-bar"f>',
-	destroy: true,
-    paging: false
+  	"dom": "rt<'col-md-6'li><'col-md-6'p>",
+	destroy: true
 } );
+
+var typingTimer;
+var $input = $('#search_'+table_name);
+
+$input.on('keyup', function () {
+	clearTimeout(typingTimer);
+	typingTimer = setTimeout(function(){
+		table_c.search($input.val()).draw(false);
+	}, 500);
+});
+
+$input.on('keydown', function () {
+  clearTimeout(typingTimer);
+});
 
 function fixHeader(){
 	if($("#"+table_name+"-tab", $(this)).length){
@@ -55,11 +68,21 @@ function selDate(a, b){
     }
 }
 
-function topRow(){
-	if($("#edit_"+table_name).hasClass("editing")){
-			selected_c.detach();
-			$("#table_"+table_name+" tbody").prepend(selected_c);
-			selected_c.addClass("info").siblings().removeClass("info");
+function viewRow(){
+	if(!$("#edit_"+table_name).hasClass("editing")){
+		var now = $("#table_"+table_name+" tbody .info").first();
+		if(now.is(selected_c) == false){
+			selected_c = now;
+			if(selected_c.length){
+				var cells = $("td", selected_c);
+				config.edit.forEach(function(val, idx){
+					var field = $("#" + table_name + "_field" + idx);
+					field.val($(cells[idx]).html().trim());
+					field.prop("readonly", true);
+				});
+				$("#info_"+table_name).collapse("show");
+			}
+		} else $("#info_"+table_name).collapse("toggle");
 	}
 }
 
@@ -78,56 +101,58 @@ function selRow(event) {
 
 function insRow() {
 	if(!$("#edit_"+table_name).hasClass("editing")){
-		var row = table_c.row.add(config.edit).draw().node();
-		$("td", $(row)).html("");
-		$(row).addClass("newrow");
-		$(row).addClass("info").siblings().removeClass("info");
-		editRow(0, $(row));
+		editRow(0, true);
 	}
 }
 
-function editRow(event, r) {
-	if(r) selected_c = r;
-	else selected_c = $("#table_"+table_name+" tbody .info").first();
-	if(selected_c.length)
+function editRow(event, newrow) {
 		if($("#edit_"+table_name).hasClass("editing")) saveData();
-		else{
-			$("#edit_"+table_name).text("Save");
-			$("#edit_"+table_name).addClass("editing");
-			$("#delete_"+table_name).hide();
-			$("#cancel_"+table_name).show();
-			original = table_c.row(selected_c).data();
-			var cells = $("td", selected_c);
-			var dcell = [];
-			cells.each(function(idx, val){
-				if($("input", val).length == 0 && inkey.indexOf(config.edit[idx]) != -1 ){
-					$(val).html("<input type='text' value='" + $(val).html().trim() + "'>");
-					if(config.edit[idx] == "d" || config.edit[idx] == "D") dcell.push($("input", val));
-				}
-			});
-			if(dcell != []) selDate(dcell[0], dcell[1]);
+		else {
+			if(newrow) selected_c = -1;
+			else selected_c = $("#table_"+table_name+" tbody .info").first();
+			if(selected_c.length || newrow){
+				$("#edit_"+table_name).text("Save");
+				$("#edit_"+table_name).addClass("editing");
+				$("#delete_"+table_name).hide();
+				$("#cancel_"+table_name).show();
+				$("#info_"+table_name).collapse("show");
+				var cells = $("td", selected_c);
+				var dcell = [];
+				config.edit.forEach(function(val, idx){
+						var field = $("#" + table_name + "_field" + idx);
+						if(newrow) field.val("");
+						else field.val($(cells[idx]).html().trim());
+						if(val == "d" || val == "D") dcell.push(field);
+						if(inkey.indexOf(val) != -1) field.prop("readonly", false);
+						else field.prop("readonly", true);
+						field.removeClass("err");
+				});
+				if(dcell != []) selDate(dcell[0], dcell[1]);
+			}
 		}
-	topRow();
 }
 
 function saveRow(data){
 	rstBtn();
-	if(data.id) selected_c.data("id", data.id);
-	selected_c.removeClass("newrow");
-	table_c.row(selected_c).data( data.val ).draw();
-	$("#add_"+table_name).notify("Successfully saved!", {gap: 230, arrowShow: false, className: "success", position:"left middle"});
+	if(selected_c != -1){
+		if(data.id) selected_c.data("id", data.id);
+		table_c.row(selected_c).data( data.val ).draw();
+	} else {
+		var row = table_c.row.add(data.val).draw().node();
+		if(data.id) $(row).data("id", data.id);
+	}
+	$("#title_"+table_name).notify("Successfully saved!", {arrowShow: false, className: "success", position:"right middle"});
 }
 
 function cnclRow(){
-	rstBtn();
-	if(selected_c.hasClass("newrow")) table_c.row(selected_c).remove().draw(false);
-	else table_c.row(selected_c).data(original);
+rstBtn();
+	$("#info_"+table_name+" .err").removeClass("err");
 }
 
 function delRow(){
 	if($("#edit_"+table_name).hasClass("editing")) rstBtn();
 	table_c.row('.info').remove().draw(false);
-	$("#add_"+table_name).notify("Successfully deleted!", {gap: 230, arrowShow: false, className: "success", position:"left middle"});
+	$("#title_"+table_name).notify("Successfully deleted!", {arrowShow: false, className: "success", position:"right middle"});
 }
 
 function rstBtn(){
@@ -135,6 +160,7 @@ function rstBtn(){
 	$("#edit_"+table_name).removeClass("editing");
 	$("#cancel_"+table_name).hide();
 	$("#delete_"+table_name).show();
+	$("#info_"+table_name).collapse("hide");
 }
 
 function delData(event){
@@ -152,34 +178,33 @@ function delData(event){
 				       	timeout: 5000,
 				       	success: function(data, requestStatus, xhrObject){ delRow(); },
 				       	error: function(xhrObj, textStatus, exception) {
-				       		$("#add_"+table_name).notify("Failed to delete data!", {gap: 230, arrowShow: false, className: "error", position:"left middle"});
+				       		$("#title_"+table_name).notify("Failed to delete data!", {arrowShow: false, className: "error", position:"right middle"});
 				       	}
 					})   
 				else delRow();
 			});
 	}
+	selected_c = -1;
 }
 
 function saveData(){
-	if(selected_c.length){
+	if(selected_c.length || selected_c == -1){
 		var attr = [];
 		var err = false;
-		var cells = $("td", selected_c);
-		cells.each(function(idx, val){
-			if(config.edit[idx] != "x"){
-				var item = $("input", val).val().trim();
-				if(item == "" && (["I", "D"].indexOf(config.edit[idx]) != -1)){ 
+		config.edit.forEach(function(val, idx) {
+		    if(val != "x"){
+				var field = $("#" + table_name + "_field" + idx);
+				var item = field.val().trim();
+				if(item == "" && (["I", "D"].indexOf(val) != -1)){ 
 					err = true;
-					console.log($("input", val));
-					$("input", val).addClass("err");
-					$("#add_"+table_name).notify("Please enter missing items.", {gap: 230, arrowShow: false, className: "error", position:"left middle"});
-					return false;
-				} else $("input", val).removeClass("alert-dange");
+					field.addClass("err");
+					$("#title_"+table_name).notify("Please enter missing items.", {arrowShow: false, className: "error", position:"right middle"});
+				} else field.removeClass("err");
 				attr.push(item);
-			}
+		    }
 		});
 		if(!err){
-			if(selected_c.data("id"))
+			if(selected_c != -1 && selected_c.data("id"))
 				$.ajax({
 					type: "PUT",
 					url: "/"+table_name+"s/" + selected_c.data("id"),
@@ -187,7 +212,7 @@ function saveData(){
 					timeout: 5000,
 				    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 				    error: function(xhrObj, textStatus, exception) {
-						$("#add_"+table_name).notify("Failed to save data!", {gap: 230, arrowShow: false, className: "error", position:"left middle"});
+						$("#title_"+table_name).notify("Failed to save data!", {arrowShow: false, className: "error", position:"right middle"});
 				    }
 				})
 			else
@@ -198,17 +223,18 @@ function saveData(){
 					timeout: 5000,
 				    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 				    error: function(xhrObj, textStatus, exception) {
-						$("#add_"+table_name).notify("Failed to add data!", {gap: 230, arrowShow: false, className: "error", position:"left middle"});
+						$("#title_"+table_name).notify("Failed to add data!", {arrowShow: false, className: "error", position:"right middle"});
 				    }
 				});
 		}
 	}
 }
+
 };
 
 $(document).ready(function(){
 	nyp_table("contact", {norder: [3,4], sort: [[ 0, "desc" ], [ 1, "desc" ]], edit: ["D","d","I","x","x"] });
-	nyp_table("finance", {norder: [], sort: [[1, "desc"], [2, "desc"]], edit: ["I","D","I","i","i","x"] });
+//	nyp_table("finance", {norder: [], sort: [[1, "desc"], [2, "desc"]], edit: ["I","D","I","i","i","x"] });
 });
 
 

@@ -85,24 +85,55 @@
           =f.submit id:'basic-submit', class:'btn btn-default'
           =link_to "Back", :back, class: 'btn btn-primary'
   #contact.tab-pane{:role=>'tabpanel'}
-    #contact-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:10px;"}
-      %table#table_contact.table.table-hover{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
-        %thead{:style => "width:100%"}
-          %tr{:style => "width:100%"}
+    .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
+      .container-fluid
+        .navbar-header
+          %a.navbar-brand#title_contact Donor Contact Records
+        .navbar-default
+          %form.navbar-form.navbar-right
+            .form-group
+              %input.form-control#search_contact{:placeholder => "Search", :type => "text"}
+              =link_to "Detail", "#contact_tab", class: 'btn btn-default', id: "view_contact"
+              =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add_contact"
+              =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit_contact"
+              =link_to "Delete", "#contact_tab", class: 'btn btn-danger', id: "delete_contact"
+              =link_to "Cancel", "#contact_tab", class: 'btn btn-warning', id: "cancel_contact", style: "display:none;"
+              =link_to "Back", donors_path, class: 'btn btn-primary'
+    #info_contact.collapse{role:"tabpanel"}
+      .well{style:"background-color:#ffffff;"}
+        .container
+          .row
+            .col-md-3
+              .form-group
+                %label.control-label Contact date 
+                %input#contact_field0.form-control{type:"text"}
+              .form-group
+                %label.control-label Followup date
+                %input#contact_field1.form-control{type:"text"}
+            .col-md-9
+              %label Narrative
+              %textarea#contact_field2.form-control{rows:"5"}
+          .row{style:"margin-top: 10px"}
+            .col-md-6
+            .col-md-3
+              .input-group.input-group-sm
+                %span.input-group-addon Created By
+                %input.form-control#contact_field3{readonly:"true", style:"width:150px"}
+            .col-md-3
+              .input-group.input-group-sm
+                %span.input-group-addon Last Modified By
+                %input.form-control#contact_field4{readonly:"true", style:"width:150px"}
+    %table#table_contact.table.table-hover.table-bordered{:style => "width:100%;margin-top:15px;", :data => {:id => @donor.id}}
+      %thead{:style => "width:100%"}
+        %tr{:style => "width:100%"}
+          - @donor_contact.each do |key|
+            %th #{key.humanize}
+      %tbody
+        - @contacts.each do |contact|
+          %tr{:data => {:id => contact.id}}
             - @donor_contact.each do |key|
-              %th #{key.humanize}
-        %tbody
-          - @contacts.each do |contact|
-            %tr{:data => {:id => contact.id}}
-              - @donor_contact.each do |key|
-                %td
-                  = contact[key]
-    .button-line.bottom-right-info-bar{:style => "padding:0"}
-      =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add_contact"
-      =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit_contact"
-      %button.btn.btn-danger#delete_contact{type:'button'} Delete
-      %button.btn.btn-warning#cancel_contact{type:'button', style:"display:none;"} Cancel
-      =link_to "Back", donors_path, class: 'btn btn-primary'
+              %td
+                = contact[key]
   #finance.tab-pane{:role=>'tabpanel'}
     #finance-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:10px;"}
       %table#table_finance.table.table-hover{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
