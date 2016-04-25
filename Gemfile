@@ -36,6 +36,7 @@ gem "schema_plus_views"
 gem 'bcrypt', '~> 3.1.7'
 gem 'protected_attributes', '~> 1.0.2'
 gem 'jquery-datatables-rails', '~> 3.3.0'
+gem 'bootstrap-datepicker-rails', '~> 1.6', '>= 1.6.0.1'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
