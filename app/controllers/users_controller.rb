@@ -1,5 +1,15 @@
 class UsersController < ApplicationController
 	before_filter :authorize, :only => :index
+	
+	def index
+		@users = User.all
+		@user_attr_show = ['first_name','last_name','email']
+	end
+	
+	def show
+		
+	end
+	
   	def new
   		@new_user = User.new()
   	end
@@ -22,7 +32,10 @@ class UsersController < ApplicationController
 		end
 	end
 	
-	def index
+	def edit
 		
+	end
+	
+	def homepage
 	end
 end

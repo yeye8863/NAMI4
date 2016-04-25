@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new', :as => 'new_login'
   post 'login' => 'sessions#create', :as => 'login'
   get 'logout' => 'sessions#destroy', :as => 'logout'
-  get 'homepage' => 'users#index', :as => 'homepage'
+  get 'homepage' => 'users#homepage', :as => 'homepage'
   get 'donorSummary/:id' => 'donors#showSummary', :as => 'donorSummary'
   get 'donorContact' => 'donors#showByContact', :as => 'donorContact'
   get 'dashboard' => 'dashboards#index', :as => 'dashboard'

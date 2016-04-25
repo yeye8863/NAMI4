@@ -1,13 +1,25 @@
 =render :partial=>'layouts/banner'
 #page-title.container-fluid.titleLine
-  %h2 Homepage
-#mainbody.container-fluid.center
-  .row
-    .col-sm-3
-      = link_to 'Donor Management', donors_path, :class => "btn btn-default"
-    .col-sm-3
-      = link_to 'Dashboard', dashboard_path, :class => "btn btn-default"
-    .col-sm-3
-      = link_to 'Report', reports_path, :class => "btn btn-default"
-    .col-sm-3
-      = link_to 'Sign Out', logout_path, :class => "btn btn-default"
+  %h2 User Overview
+#mainbody.container-fluid
+  %table#user_table.table.display{:cellspacing => "0", :width => "100%"}
+    %thead
+      %tr
+        %th Action
+        %th First Name
+        %th Last Name
+        %th Email Address
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td
+          %td=user.first_name.humanize
+          %td=user.last_name.humanize
+          %td=user.email
+    %tfoot
+      %tr
+        %th
+        - @user_attr_show.each do |attr|
+          %th.filter #{attr.humanize}
+          
+  = link_to 'Back', :back, class:'btn btn-default pull-right'
