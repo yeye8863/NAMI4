@@ -8,8 +8,16 @@ class ReportsController < ApplicationController
 
     def show
         id = params[:id] 
-        @report_record = Report.find(id) 
-        @filter = Filter.new
+        @report = Report.find(id) 
+        @report_filter = {
+        	'Table' => '25%',
+        	'Field' => '25%',
+        	'Value' => '10%',
+        	'Amount Min' => '10%',
+        	'Amount Max' => '10%',
+        	'Date Min' => '10%',
+        	'Date Max' => '10%'
+        }
     end
     
     def new 

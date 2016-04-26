@@ -34,26 +34,8 @@ donors = [
             {:title => 'mrs.', :first_name => 'michelle',:last_name => 'glanger'}
           ]
 
-contact_people = [
-          {:title => 'mr.', :first_name => 'peterson', :last_name => 'crab', :organization_id => '1'},
-          {:title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :organization_id => '2'}
-          ]
 
-organizations = [
-          {:name => 'golden lion'},
-          {:name => 'org1'},
-          {:name => 'org2'},
-          {:name => 'org3'},
-          {:name => 'org4'},
-          {:name => 'golden sheep'},
-          {:name => 'golden cow'},
-          {:name => 'golden tiger'},
-          {:name => 'silver fox'},
-          {:name => 'silver sheep'},
-          {:name => 'silver tiger'},
-          {:name => 'silver cow'}
-          ]
-  
+
 contacts = [
           {:contact_date => '2016-04-01', :followup_date => '2016-04-22', :donor_id => '1', :narrative => 'Discussion about event in May'},
           {:contact_date => '2016-04-02', :followup_date => '2016-04-23', :donor_id => '2', :narrative => 'Funding raising for April'},
@@ -198,13 +180,6 @@ donors.each do |donor|
   Donor.create!(donor)
 end
 
-organizations.each do |organization|
-  Organization.create!(organization)
-end
-
-contact_people.each do |contact_person|
-  ContactPerson.create!(contact_person)
-end
 
 contacts.each do |contact|
   Contact.create!(contact)
