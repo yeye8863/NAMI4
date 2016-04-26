@@ -125,35 +125,7 @@ class DonorsController < ApplicationController
       contact_id = params[:contactId]
       @contact = Contact.find(contact_id)
       @donor = @contact.donor
-      @active = params[:active]
-      
-      @donor_basic = {
-            'Title' => (@donor.title.capitalize if @donor.title),
-            'First Name' => (@donor.first_name.capitalize if @donor.first_name),
-            'Last Name' => (@donor.last_name.capitalize if @donor.last_name),
-            'Middle Name' => (@donor.middle_name.capitalize if @donor.middle_name),
-            'Salution' => (@donor.salution.capitalize if @donor.salution),
-            'Email' => @donor.email,
-  	        'Organization' => @donor.organization,
-  	        'Company' => (@donor.company.split.map(&:capitalize).join(' ') if @donor.company),
-  	        'Street Address' => (@donor.street_address.split.map(&:capitalize).join(' ') if @donor.street_address),
-  	        'City' => (@donor.city.capitalize if @donor.city),
-  	        'State' => (@donor.state.capitalize if @donor.state),
-  	        'Countrt' => (@donor.country.capitalize if @donor.country),
-  	        'Zip Code' => @donor.zipcode,
-            'Home Phone' => @donor.home_phone,
-            'Business Phone' => @donor.business_phone
-	        }
-	    @donor_contact = {
-	        'Contact Date' => '15%',
-	        'Followup Date' => '15',
-	        'Narrative' => '40%',
-	        'Created By' => '15%',
-	        'Last Modified By' =>'15%'
-	    }
-	    @contacts = Contact.where(:donor_id => @donor.id)
-      
-      render 'show'
+      redirect_to controller:'donors', action:'show', id:@donor.id, active:2
     end
     
     def showSummary
