@@ -1,13 +1,11 @@
 var donorInfo = {
   setup: function(){
     $('#donorInfo').on('ajax:success',function(event,data,status,xhr){
-      event.preventDefault();
       $('#summary-table tbody').html(data);
       $("#basic-submit").notify("Successfully saved", {className: "success", position:"left middle"});
     });
     $('#donorInfo').on('ajax:error',function(event,xhr,status,error){
-      event.preventDefault();
-      $("#basic-submit").notify("Error occurred, please try later...", {className: "error", position:"middle middle"});
+      $("#basic-submit").notify("Error occurred, please try later...", {className: "error", position:"left middle"});
     });
   }
 };
@@ -17,13 +15,11 @@ $(donorInfo.setup);
 var newDonorInfo = {
   setup: function(){
      $('#newDonorInfo').on('ajax:success',function(event,data,status,xhr){
-      event.preventDefault();
       $('#donorId').text(data.id);
       $("#basic-submit").notify("Successfully saved", {className: "success", position:"left middle"});
     });
     $('#newDonorInfo').on('ajax:error',function(event,xhr,status,error){
-      event.preventDefault();
-      $("#basic-submit").notify("Error occurred, please try later...", {className: "error", position:"middle middle"});
+      $("#basic-submit").notify("Error occurred, please try later...", {className: "error", position:"left middle"});
     });
   }  
 }

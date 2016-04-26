@@ -3,11 +3,24 @@ class UsersController < ApplicationController
 	
 	def index
 		@users = User.all
-		@user_attr_show = ['first_name','last_name','email']
+		@user_attr_show = ['first_name','last_name','email','function']
 	end
 	
 	def show
-		
+		id = params[:id]
+		@user = User.find(id)
+		@user_info = {
+			'first_name' => @user.first_name,
+			'last_name' => @user.last_name,
+			'email' => @user.email,
+			'username' => @user.username,
+			'function' => @user.function,
+			'street_address' => @user.street_address,
+			'city' => @user.city,
+			'state' => @user.state,
+			'country' => @user.country
+		}
+		render(:partial => 'user_info',:object => @user_info) if request.xhr?
 	end
 	
   	def new
@@ -16,6 +29,7 @@ class UsersController < ApplicationController
 
 	def create
 		@new_user = User.new(params[:user])
+		@new_user.current_password = params[:user][:password]
 		if Access.exists?(:email => params[:user][:email])
 			#valid access email
 			if @new_user.save # password match
@@ -33,7 +47,43 @@ class UsersController < ApplicationController
 	end
 	
 	def edit
-		
+		id = params[:id]
+		@user = User.find(id)
+		@user_info = {
+			'first_name' => @user.first_name,
+			'last_name' => @user.last_name,
+			'email' => @user.email,
+			'username' => @user.username,
+			'function' => @user.function,
+			'street_address' => @user.street_address,
+			'city' => @user.city,
+			'state' => @user.state,
+			'country' => @user.country
+		}
+	end
+	
+	def update
+		@user = User.find(params[:id])
+		user_update = {
+			:first_name => params[:user][:first_name],
+			:last_name => params[:user][:last_name],
+			:password => @user.current_password,
+			:password_confirmation => @user.current_password,
+			:email => params[:user][:email],
+			:function => params[:user][:function],
+			:phone_number => params[:user][:phone_number],
+			:street_address => params[:user][:street_address],
+			:city => params[:user][:city],
+			:state => params[:user][:state],
+			:country => params[:user][:country],
+			:zipcode => params[:user][:zipcode]
+		}
+		if @user.update_attributes(user_update)
+			render json: @user if request.xhr?
+	    else
+			Rails.logger.info(@user.errors.messages.inspect)
+			render :action => 'edit'
+		end
 	end
 	
 	def homepage

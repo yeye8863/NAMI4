@@ -90,7 +90,7 @@
         %thead{:style => "width:100%"}
           %tr{:style => "width:100%"}
             - @donor_contact.each do |key|
-              %th #{key.humanize}
+              %th #{key.humanize} 
         %tbody
           - @contacts.each do |contact|
             %tr{:data => {:id => contact.id}}
@@ -102,7 +102,7 @@
       =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit_contact"
       %button.btn.btn-danger#delete_contact{type:'button'} Delete
       %button.btn.btn-warning#cancel_contact{type:'button', style:"display:none;"} Cancel
-      =link_to "Back", donors_path, class: 'btn btn-primary'
+      =link_to "Back", :back, class: 'btn btn-primary'
   #finance.tab-pane{:role=>'tabpanel'}
     #finance-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:10px;"}
       %table#table_finance.table.table-hover{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
@@ -121,4 +121,4 @@
       =link_to "Edit", "#finance_tab", class: 'btn btn-info', id: "edit_finance"
       %button.btn.btn-danger#delete_finance{type:'button'} Delete
       %button.btn.btn-warning#cancel_finance{type:'button', style:"display:none;"} Cancel
-      =link_to "Back", donors_path, class: 'btn btn-primary'
+      =link_to "Back", :back, class: 'btn btn-primary'

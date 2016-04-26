@@ -5,21 +5,38 @@
   %table#user_table.table.display{:cellspacing => "0", :width => "100%"}
     %thead
       %tr
+        %th.hidden
         %th Action
         %th First Name
         %th Last Name
         %th Email Address
+        %th Function
     %tbody
       - @users.each do |user|
         %tr
-          %td
+          %td.hidden=user.id
+          %td{:style => 'width:15%'}
+            = link_to 'View', user_path(user.id), id:'viewbtn', class:'btn btn-success btn-xs'
+            = link_to 'Edit', edit_user_path(user.id), id:'editbtn', class:'btn btn-success btn-xs'
+            = link_to 'Delete', user_path(user.id), id:'deletebtn', method:'delete',  data: {confirm: "Are you sure?"},class:'btn btn-danger btn-xs'
           %td=user.first_name.humanize
           %td=user.last_name.humanize
           %td=user.email
+          %td=user.function.humanize if user.function
     %tfoot
       %tr
         %th
         - @user_attr_show.each do |attr|
           %th.filter #{attr.humanize}
           
-  = link_to 'Back', :back, class:'btn btn-default pull-right'
+  = link_to 'Back', :back, class:'btn btn-primary pull-right'
+  
+#userInfo.modal.fade{:role => 'dialog'}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{:type=>'button',:data => {:dismiss => 'modal'},:aria => { :label => 'Close'}}="&times;".html_safe
+        %h4.modal-title Detail
+      .modal-body
+      .modal-footer
+        %button.btn.btn-default{:type=>'button',:data => {:dismiss => 'modal'}} Close

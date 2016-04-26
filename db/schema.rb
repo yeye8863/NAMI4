@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160424015247) do
+ActiveRecord::Schema.define(version: 20160425194910) do
 
   create_table "accesses", force: :cascade do |t|
     t.string   "email"
@@ -129,6 +129,7 @@ SELECT * FROM
     t.string   "username"
     t.string   "email"
     t.string   "password_digest"
+    t.string   "current_password"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "function"
@@ -137,6 +138,12 @@ SELECT * FROM
     t.datetime "created_at",       :null=>false
     t.datetime "last_modified_at"
     t.datetime "updated_at",       :null=>false
+    t.string   "phone_number"
+    t.string   "street_address"
+    t.string   "city"
+    t.string   "state",            :default=>"Texas"
+    t.string   "country",          :default=>"United States"
+    t.integer  "zipcode"
   end
 
 end

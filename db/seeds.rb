@@ -8,8 +8,18 @@
 
 # user seed
 users = [
-       {:username => 'jiajia', :password => 'jiajia', :password_confirmation => 'jiajia',
-       :email => '111@gmail.com', :first_name => 'jiajia', :last_name => 'hou'}
+       {:username => 'jiajia', :password => 'jiajia', :password_confirmation => 'jiajia', :current_password=>'jiajia',
+       :email => '111@gmail.com', :first_name => 'jiajia', :last_name => 'hou', :function => '1,2,3,4',
+       :phone_number => '12345678', :street_address => 'sesame street', :zipcode => 77840      
+       },
+       {:username => 'user2', :password => 'user2', :password_confirmation => 'user2', :current_password=>'user2',
+       :email => '222@gmail.com', :first_name => 'James', :last_name => 'Bond', :function => '1,2,3',
+       :phone_number => '12345679', :street_address => 'sesame street', :zipcode => 77841      
+       },
+       {:username => 'user3', :password => 'user3', :password_confirmation => 'user3', :current_password=>'user3',
+       :email => '333@gmail.com', :first_name => 'Emily', :last_name => 'Jones', :function => '1',
+       :phone_number => '12345680', :street_address => 'sesame street', :zipcode => 77842      
+       }
        ]
        
 users.each do |user|
