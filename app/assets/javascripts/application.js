@@ -17,5 +17,3 @@
 //= require bootstrap-datepicker/core
 //= require notify.min
 //= require_tree .
-
-//removed = require dataTables/extras/dataTables.fixedHeader

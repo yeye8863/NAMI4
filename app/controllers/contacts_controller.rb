@@ -15,9 +15,13 @@ class ContactsController < ApplicationController
             :val => [@contact.contact_date,
                      @contact.followup_date,
                      @contact.narrative,
+                     @contact.finances
+            ],
+            :info => [
                      @contact.created_by,
                      @contact.last_modified_by
-            ]}
+            ]
+        }
         render :json => jdata if request.xhr?
     end
 
@@ -41,9 +45,13 @@ class ContactsController < ApplicationController
             :val => [@contact.contact_date,
                      @contact.followup_date,
                      @contact.narrative,
+                     @contact.finances
+            ],
+            :info => [
                      @contact.created_by,
                      @contact.last_modified_by
-            ]}
+            ]
+        }
         render :json => jdata if request.xhr?
     end
 end

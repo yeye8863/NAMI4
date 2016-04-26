@@ -93,11 +93,11 @@
           %form.navbar-form.navbar-right
             .form-group
               %input.form-control#search_contact{:placeholder => "Search", :type => "text"}
-              =link_to "Detail", "#contact_tab", class: 'btn btn-default', id: "view_contact"
-              =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add_contact"
-              =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit_contact"
-              =link_to "Delete", "#contact_tab", class: 'btn btn-danger', id: "delete_contact"
-              =link_to "Cancel", "#contact_tab", class: 'btn btn-warning', id: "cancel_contact", style: "display:none;"
+              .btn.btn-default#view_contact Detail
+              .btn.btn-success#add_contact Add
+              .btn.btn-info#edit_contact Edit
+              .btn.btn-danger#delete_contact Delete
+              .btn.btn-warning#cancel_contact{style:"display:none;"} Cancel
               =link_to "Back", donors_path, class: 'btn btn-primary'
     #info_contact.collapse{role:"tabpanel"}
       .well{style:"background-color:#ffffff;"}
@@ -105,10 +105,10 @@
           .row
             .col-md-3
               .form-group
-                %label.control-label Contact date 
+                %label.control-label Contact Date
                 %input#contact_field0.form-control{type:"text"}
               .form-group
-                %label.control-label Followup date
+                %label.control-label Followup Date
                 %input#contact_field1.form-control{type:"text"}
             .col-md-9
               %label Narrative
@@ -118,11 +118,11 @@
             .col-md-3
               .input-group.input-group-sm
                 %span.input-group-addon Created By
-                %input.form-control#contact_field3{readonly:"true", style:"width:150px"}
+                %input.form-control#contact_cb{readonly:"true", style:"width:150px"}
             .col-md-3
               .input-group.input-group-sm
                 %span.input-group-addon Last Modified By
-                %input.form-control#contact_field4{readonly:"true", style:"width:150px"}
+                %input.form-control#contact_lmb{readonly:"true", style:"width:150px"}
     %table#table_contact.table.table-hover.table-bordered{:style => "width:100%;margin-top:15px;", :data => {:id => @donor.id}}
       %thead{:style => "width:100%"}
         %tr{:style => "width:100%"}
@@ -130,26 +130,64 @@
             %th #{key.humanize}
       %tbody
         - @contacts.each do |contact|
-          %tr{:data => {:id => contact.id}}
+          %tr{:data => {:id => contact.id, :lmb => contact.last_modified_by, :cb => contact.created_by}}
             - @donor_contact.each do |key|
               %td
                 = contact[key]
   #finance.tab-pane{:role=>'tabpanel'}
-    #finance-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:10px;"}
-      %table#table_finance.table.table-hover{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
+    .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
+      .container-fluid
+        .navbar-header
+          %a.navbar-brand#title_finance Donor Finance Records
+        .navbar-default
+          %form.navbar-form.navbar-right
+            .form-group
+              %input.form-control#search_finance{:placeholder => "Search", :type => "text"}
+              .btn.btn-default#view_finance Detail
+              .btn.btn-success#add_finance Add
+              .btn.btn-info#edit_finance Edit
+              .btn.btn-danger#delete_finance Delete
+              .btn.btn-warning#cancel_finance{style:"display:none;"} Cancel
+              =link_to "Back", donors_path, class: 'btn btn-primary'
+    #info_finance.collapse{role:"tabpanel"}
+      .well{style:"background-color:#ffffff;"}
+        .container
+          .row
+            .col-md-3
+              .form-group
+                %label.control-label Type
+                %input#finance_field0.form-control{type:"text"}
+              .form-group
+                %label.control-label Date
+                %input#finance_field1.form-control{type:"text"}
+              .form-group
+                %label.control-label Amount
+                %input#finance_field2.form-control{type:"text"}
+            .col-md-9
+              %label Description
+              %textarea#finance_field3.form-control{rows:"5"}
+              .form-group
+                %label.control-label Designation
+                %input#finance_field4.form-control{type:"text"}
+          .row{style:"margin-top: 10px"}
+            .col-md-6
+            .col-md-3
+              .input-group.input-group-sm
+                %span.input-group-addon Created By
+                %input.form-control#finance_cb{readonly:"true", style:"width:150px"}
+            .col-md-3
+              .input-group.input-group-sm
+                %span.input-group-addon Last Modified By
+                %input.form-control#finance_lmb{readonly:"true", style:"width:150px"}
+    #finance-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:15px;"}
+      %table#table_finance.table.table-hover.table-bordered{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
         %thead{:style => "width:100%"}
           %tr{:style => "width:100%"}
             - @donor_finance.each do |key|
               %th #{key.humanize}
         %tbody
           - @finances.each do |finance|
-            %tr{:data => {:id => finance.id}}
+            %tr{:data => {:id => finance.id, :lmb => finance.last_modified_by, :cb => finance.created_by}}
               - @donor_finance.each do |key|
                 %td
                   = finance[key]
-    .button-line.bottom-right-info-bar{:style => "padding:0"}
-      =link_to "Add", "#finance_tab", class: 'btn btn-success', id: "add_finance"
-      =link_to "Edit", "#finance_tab", class: 'btn btn-info', id: "edit_finance"
-      %button.btn.btn-danger#delete_finance{type:'button'} Delete
-      %button.btn.btn-warning#cancel_finance{type:'button', style:"display:none;"} Cancel
-      =link_to "Back", donors_path, class: 'btn btn-primary'

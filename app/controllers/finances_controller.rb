@@ -21,7 +21,12 @@ class FinancesController < ApplicationController
                      @finance.description,
                      @finance.designation,
                      @finance.contact
-            ]}
+            ],
+            :info => [
+                     @finance.created_by,
+                     @finance.last_modified_by
+            ]
+        }
         render :json => jdata if request.xhr?
     end
 
@@ -52,7 +57,12 @@ class FinancesController < ApplicationController
                      @finance.description,
                      @finance.designation,
                      @finance.contact
-            ]}
+            ],
+            :info => [
+                     @finance.created_by,
+                     @finance.last_modified_by
+            ]
+        }
         render :json => jdata if request.xhr?
         
     end

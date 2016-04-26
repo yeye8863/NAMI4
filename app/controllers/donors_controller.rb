@@ -14,8 +14,7 @@ class DonorsController < ApplicationController
 	        "contact_date",
 	        "followup_date",
 	        "narrative",
-	        "created_by",
-	        "last_modified_by"
+	        "finances"
 	    ]
 	    @donor_finance = [
             '_type',
@@ -72,8 +71,7 @@ class DonorsController < ApplicationController
 	        "contact_date",
 	        "followup_date",
 	        "narrative",
-	        "created_by",
-	        "last_modified_by"
+	        "finances"
 	    ]
 	    @contacts = Contact.where(:donor_id => @donor.id)
 	    @finances = Finance.where(:donor => @donor.id)

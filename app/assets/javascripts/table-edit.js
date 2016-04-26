@@ -5,13 +5,10 @@ $("#add_"+table_name).click(insRow);
 $("#edit_"+table_name).click(editRow);
 $("#delete_"+table_name).click(delData);
 $("#cancel_"+table_name).click(cnclRow);
-//$("#tabs").on("click", "li", fixHeader);
 $("#table_"+table_name+" tbody").on("click", "tr", selRow);
 
 var inkey = ["i", "I", "d", "D"];
 var selected_c;
-var header_c;
-var original;
 var table_c = $("#table_"+table_name).DataTable( {
 	"columnDefs": [
 		{"targets": config.norder, "orderable": false}
@@ -34,17 +31,6 @@ $input.on('keyup', function () {
 $input.on('keydown', function () {
   clearTimeout(typingTimer);
 });
-
-function fixHeader(){
-	if($("#"+table_name+"-tab", $(this)).length){
-		setTimeout(function() {
-			if($(".fixedHeader").length == 0 && $("#"+table_name).hasClass("active")){
-				header_c = new FixedHeader(table_c);
-				$(window).resize(function(){ header_c._fnUpdateClones(true) })
-			}
-		}, 1000);
-	} else $(".fixedHeader").remove();
-}
 
 function selDate(a, b){
 	var now = new Date();
@@ -80,6 +66,8 @@ function viewRow(){
 					field.val($(cells[idx]).html().trim());
 					field.prop("readonly", true);
 				});
+				$("#"+table_name+"_cb").val(selected_c.data("cb"));
+				$("#"+table_name+"_lmb").val(selected_c.data("lmb"));
 				$("#info_"+table_name).collapse("show");
 			}
 		} else $("#info_"+table_name).collapse("toggle");
@@ -127,6 +115,13 @@ function editRow(event, newrow) {
 						else field.prop("readonly", true);
 						field.removeClass("err");
 				});
+				if(newrow){
+					$("#"+table_name+"_cb").val("");
+					$("#"+table_name+"_lmb").val("");
+				} else {
+					$("#"+table_name+"_cb").val(selected_c.data("cb"));
+					$("#"+table_name+"_lmb").val(selected_c.data("lmb"));
+				}
 				if(dcell != []) selDate(dcell[0], dcell[1]);
 			}
 		}
@@ -137,9 +132,17 @@ function saveRow(data){
 	if(selected_c != -1){
 		if(data.id) selected_c.data("id", data.id);
 		table_c.row(selected_c).data( data.val ).draw();
+		if(data.info){
+			$(selected_c).data("lmb", data.info[1]);
+			$(selected_c).data("cb", data.info[0]);
+		}
 	} else {
 		var row = table_c.row.add(data.val).draw().node();
 		if(data.id) $(row).data("id", data.id);
+		if(data.info){
+			$(row).data("lmb", data.info[1]);
+			$(row).data("cb", data.info[0]);
+		}
 	}
 	$("#title_"+table_name).notify("Successfully saved!", {arrowShow: false, className: "success", position:"right middle"});
 }
@@ -150,7 +153,7 @@ rstBtn();
 }
 
 function delRow(){
-	if($("#edit_"+table_name).hasClass("editing")) rstBtn();
+	rstBtn();
 	table_c.row('.info').remove().draw(false);
 	$("#title_"+table_name).notify("Successfully deleted!", {arrowShow: false, className: "success", position:"right middle"});
 }
@@ -233,8 +236,8 @@ function saveData(){
 };
 
 $(document).ready(function(){
-	nyp_table("contact", {norder: [3,4], sort: [[ 0, "desc" ], [ 1, "desc" ]], edit: ["D","d","I","x","x"] });
-//	nyp_table("finance", {norder: [], sort: [[1, "desc"], [2, "desc"]], edit: ["I","D","I","i","i","x"] });
+	nyp_table("contact", {norder: [3], sort: [[ 0, "desc" ], [ 1, "desc" ]], edit: ["D","d","I","x"] });
+	nyp_table("finance", {norder: [5], sort: [[1, "desc"], [2, "desc"]], edit: ["I","D","I","i","i","x"] });
 });
 
 
