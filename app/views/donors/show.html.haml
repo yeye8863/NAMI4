@@ -98,7 +98,7 @@
               .btn.btn-info#edit_contact Edit
               .btn.btn-danger#delete_contact Delete
               .btn.btn-warning#cancel_contact{style:"display:none;"} Cancel
-              =link_to "Back", donors_path, class: 'btn btn-primary'
+              =link_to "Back", :back, class: 'btn btn-primary'
     #info_contact.collapse{role:"tabpanel"}
       .well{style:"background-color:#ffffff;"}
         .container
@@ -148,7 +148,7 @@
               .btn.btn-info#edit_finance Edit
               .btn.btn-danger#delete_finance Delete
               .btn.btn-warning#cancel_finance{style:"display:none;"} Cancel
-              =link_to "Back", donors_path, class: 'btn btn-primary'
+              =link_to "Back", :back, class: 'btn btn-primary'
     #info_finance.collapse{role:"tabpanel"}
       .well{style:"background-color:#ffffff;"}
         .container
