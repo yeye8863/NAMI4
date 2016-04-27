@@ -1,7 +1,8 @@
 =render :partial=>'layouts/banner'
 #page-title.container-fluid.titleLine
   %h2 Donor Management
-= render :partial=>'search_result'
+#mainbody.container-fluid
+  = render :partial=>'search_result'
 
 #donorSummary.modal.fade{:role => 'dialog'}
   .modal-dialog

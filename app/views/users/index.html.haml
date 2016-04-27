@@ -22,7 +22,7 @@
           %td=user.first_name.humanize
           %td=user.last_name.humanize
           %td=user.email
-          %td=user.function.split.map(&:capitalize).join(' ')
+          %td=user.function.split.map(&:capitalize).join(' ') if user.function
     %tfoot
       %tr
         %th
