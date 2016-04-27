@@ -26,9 +26,7 @@ var newDonorInfo = {
 
 $(newDonorInfo.setup);
 
-
-
-var dataTable = {
+var donorDataTable = {
   setup: function(){
     // DataTable
     var table = $('#table_donor').DataTable();
@@ -67,7 +65,7 @@ var dataTable = {
     
     var original_row;
 // 2. quick edit row
-     $('#quick_edit').on( 'click', function (e) {
+     $('#donor-result #quick_edit').on( 'click', function (e) {
         if ($('#table_donor').hasClass('locked')){
             saveData();
         }
@@ -78,10 +76,10 @@ var dataTable = {
                 var title = $(this).text();
                 $(this).html( "<input style='width:100%' value='" + $(this).html().trim() + "'>");
             } );
-	        $("#quick_edit").text("Save");
-	        $("#cancel").show();
-	        $("#add").hide();
-	        $("#quick_add").hide();
+	        $("#donor-result #quick_edit").text("Save");
+	        $("#donor-result #cancel").show();
+	        $("#donor-result #add").hide();
+	        $("#donor-result #quick_add").hide();
         }
  
     } );
@@ -102,7 +100,7 @@ var dataTable = {
     
     
 // 3. quick add row
-    $('#quick_add').on( 'click', function (e) {
+    $('#donor-result #quick_add').on( 'click', function (e) {
         if ($('#table_donor').hasClass('locked')){
             saveData();
         }
@@ -114,17 +112,17 @@ var dataTable = {
                 var title = $(this).text();
                 $(this).html( "<input style='width:100%' value='" + $(this).html().trim() + "'>");
             } );
-	        $("#quick_add").text("Save");
-	        $("#cancel").show();
-	        $("#add").hide();
-	        $("#quick_edit").hide();
+	        $("#donor-result #quick_add").text("Save");
+	        $("#donor-result #cancel").show();
+	        $("#donor-result #add").hide();
+	        $("#donor-result #quick_edit").hide();
         }
  
     } );
     
     
 // 4. cancel 
-    $('#cancel').on( 'click', function (e) {
+    $('#donor-result #cancel').on( 'click', function (e) {
       var selected_c = $('#table_donor tr.selected');
       if ($('#table_donor').hasClass('locked')){
         // new row
@@ -153,11 +151,11 @@ var dataTable = {
     
 // 6. show all button
     function reset_btn(){
-	    $("#add").show();
-        $("#quick_add").text("Quick Add").show();
-	    $("#quick_edit").text("Quick Edit").show();
-	    $("#cancel").hide();
-	    $("#table_donor").removeClass("locked");
+	    $("#donor-result #add").show();
+      $("#donor-result #quick_add").text("Quick Add").show();
+	    $("#donor-result #quick_edit").text("Quick Edit").show();
+	    $("#donor-result #cancel").hide();
+	    $("#donor-result #table_donor").removeClass("locked");
     }
     
     function saveData(){
@@ -180,7 +178,7 @@ var dataTable = {
 	    			timeout: 5000,
 	    		    success: function(data, requestStatus, xhrObject){ saveRow(data, selected_c); },
 	    		    error: function(xhrObj, textStatus, exception) {
-			    	$("#add_row").notify("Failed to save data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			    	$("#donor-result #add_row").notify("Failed to save data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 			       }
 		    	})
 	    	else
@@ -191,7 +189,7 @@ var dataTable = {
 		    		timeout: 5000,
 		    	    success: function(data, requestStatus, xhrObject){ saveRow(data, selected_c); },
 		    	    error: function(xhrObj, textStatus, exception) {
-		    			$("#add").notify("Failed to add data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+		    			$("#donor-result #add").notify("Failed to add data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 		    	    }
 		    	})
         	}
@@ -211,14 +209,14 @@ var dataTable = {
 	      data.company
 	      ]).draw();
 	    reset_btn();
-      $("#add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"}); 
+      $("#donor-result #add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"}); 
     }
 
 
   }
 };
 
-$(dataTable.setup);
+$(donorDataTable.setup);
 
 var summaryInfo={
   setup: function(){

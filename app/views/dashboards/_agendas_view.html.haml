@@ -16,4 +16,4 @@
           %td=agenda_record.organization.split.map(&:capitalize).join(' ') if agenda_record.organization
           %td=agenda_record.contact_date
           %td=agenda_record.followup_date
-          %td=link_to 'More', agenda_path("#{agenda_record.contact_id}"), remote: true, data: {toggle: 'modal', target: '#agendaInfo'}
+          %td=link_to 'More', agenda_path("#{agenda_record.contact_id}"), remote: true, class:'btn btn-xs btn-success', data: {toggle: 'modal', target: '#agendaInfo'}

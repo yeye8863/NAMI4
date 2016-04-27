@@ -1,17 +1,17 @@
 var AgendaInfo = {
   setup: function(){
     $('#agendaTable td a').click(AgendaInfo.getAgendaInfo);
-    return false
   },
   getAgendaInfo: function(event){
     event.preventDefault();
-    $.ajax({type:'GET',
-            url: $(this).attr('href'),
-            timeout: 5000,
-            success: AgendaInfo.showAgendaInfo,
-            error: function(xhrobj,textStatus,exception){
-              alert('Error!');
-            }
+    $.ajax({
+      type:'GET',
+      url: $(this).attr('href'),
+      success: AgendaInfo.showAgendaInfo,
+      error: function(xhrobj,textStatus,exception){
+        alert('Error!');
+        return false;
+      }
     });
     return false;
   },
@@ -27,33 +27,32 @@ var AgendaInfo = {
 
 $(AgendaInfo.setup);
 
-var AddedDonorInfo = {
+/*var AddedDonorInfo = {
   setup: function(){
     $('#addedDonorTable td a').click(AddedDonorInfo.getAddedDonorInfo);
-    return false
   },
   getAddedDonorInfo: function(event){
     event.preventDefault();
-    $.ajax({type:'GET',
-            url: $(this).attr('href'),
-            timeout: 5000,
-            success: AddedDonorInfo.showAddedDonorInfo,
-            error: function(xhrobj,textStatus,exception){
-              alert('Error!');
-            }
+    $.ajax({
+      type:'GET',
+      url: $(this).attr('href'),
+      success: function(data,request,xhrobj){
+        $('#addedDonorInfo .modal-body').html(data);
+        $('#addedDonorInfo').modal();
+        return false;
+      },
+      error: function(xhrobj,textStatus,exception){
+        alert('Error!');
+        return false;
+      }
     });
-  },
-  showAddedDonorInfo: function(data,request,xhrobj){
-    $('#addedDonorInfo .modal-body').html(data);
-    $('#addedDonorInfo').modal();
-    return false;
   },
   hideAddedDonorInfo: function(){
     return false;
   }
 };
 
-$(AddedDonorInfo.setup);
+$(AddedDonorInfo.setup);*/
 
 
 var dataTable = {

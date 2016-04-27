@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'dashboard/donor/:id' => 'dashboards#viewDonor', :as=>'dashboardDonor'
   
   resources :users
+  resources :accesses
   resources :donors
   resources :reports
   resources :contacts

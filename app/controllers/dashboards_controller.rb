@@ -38,7 +38,7 @@ class DashboardsController < ApplicationController
             'Home Phone' => @donor.home_phone,
             'Business Phone' => @donor.business_phone
 	        }
-      render(:partial => 'new_added_donor',:object=>@donor_basic) if request.xhr?
+      render(:partial => 'added_donor_info',:object=>@donor_basic) if request.xhr?
     end
 end
 

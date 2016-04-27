@@ -64,13 +64,22 @@ class UsersController < ApplicationController
 	
 	def update
 		@user = User.find(params[:id])
+		function =  params[:user][:function]
+		func_str = ""
+		if function
+			function.each do |f|
+				if f!=""
+					func_str+=f.gsub("\"",'')+", "
+				end
+			end
+		end
 		user_update = {
 			:first_name => params[:user][:first_name],
 			:last_name => params[:user][:last_name],
 			:password => @user.current_password,
 			:password_confirmation => @user.current_password,
 			:email => params[:user][:email],
-			:function => params[:user][:function],
+			:function => func_str.chomp(', '),
 			:phone_number => params[:user][:phone_number],
 			:street_address => params[:user][:street_address],
 			:city => params[:user][:city],
@@ -84,6 +93,14 @@ class UsersController < ApplicationController
 			Rails.logger.info(@user.errors.messages.inspect)
 			render :action => 'edit'
 		end
+	end
+	
+	def destroy
+		id = params[:id]
+        @user = User.find(id)
+        flash[:notice] = "#{@user.first_name} #{@user.last_name} is deleted."
+        User.destroy(@user)
+        redirect_to users_path
 	end
 	
 	def homepage

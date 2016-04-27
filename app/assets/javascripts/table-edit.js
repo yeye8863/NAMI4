@@ -236,7 +236,7 @@ function saveData(){
 };
 
 $(document).ready(function(){
-	nyp_table("contact", {norder: [3], sort: [[ 0, "desc" ], [ 1, "desc" ]], edit: ["D","d","I","x"] });
+	nyp_table("contact", {norder: [3], sort: [[ 1, "asc" ]], edit: ["D","d","I","x"] });
 	nyp_table("finance", {norder: [5], sort: [[1, "desc"], [2, "desc"]], edit: ["I","D","I","i","i","x"] });
 });
 

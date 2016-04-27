@@ -37,7 +37,11 @@ class DonorsController < ApplicationController
     
     def create
         params[:donor][:active] = 1
-        @donor = Donor.create!(params[:donor])
+        to_create={}
+        params[:donor].each do |attr|
+          to_create[attr[0]] = attr[1].to_s.downcase
+        end
+        @donor = Donor.create!(to_create)
         flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
         if params[:where] == "inplace"
             render :json => @donor
@@ -87,10 +91,11 @@ class DonorsController < ApplicationController
     
     def update
       @donor = Donor.find(params[:id])
+      to_update={}
       params[:donor].each do |attr|
-        attr[1].downcase!
+        to_update[attr[0]] = attr[1].downcase
       end
-      @donor.update_attributes(params[:donor])
+      @donor.update_attributes(to_update)
       
       if @donor.flag == "I"
         type = "Individual"
