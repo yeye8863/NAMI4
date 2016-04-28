@@ -1,9 +1,11 @@
 function nypTable(table_name, config){
 
 var inkey = ["i", "I", "d", "D", "b", "B"];
+var self = this;
+var original;
 var selected_c;
 var foreign_key;
-var foreign_tab;
+var foreign_obj;
 var foreign_row;
 var table_c = $("#table_"+table_name).DataTable( {
 	"columnDefs": [
@@ -60,14 +62,14 @@ function showForeign(data) {
 		regexp += "(^"+ val +"$)"
 		if(idx < data.length-1) regexp += "|";
 	});
-	foreign_tab.column("#table_"+foreign_key+" th:last").search(regexp,true,false).draw();
+	foreign_obj.tab.column("#table_"+foreign_key+" th:last").search(regexp,true,false).draw();
 	$("#" + foreign_key + "-tab").tab("show");
 }
 
 function editForeign(data){
 	var field = $("#" + table_name + "_field" + (config.edit.length-1));
 	var val = [];
-	foreign_tab.rows().every(function(){
+	foreign_obj.tab.rows().every(function(){
 		var r = this.data();
 		var s = "";
 		foreign_row.forEach(function(val){ s += r[val].substring(0, 50) + " | " });
@@ -77,7 +79,28 @@ function editForeign(data){
 		var item = $("<option value='"+val[0]+"'>"+val[1]+"</option>")
 		if($("[value='"+val[0]+"']" ,field).length == 0) field.append(item);
 	});
-	if(data) field.val(data);
+	if(data){
+		field.val(data);
+		original = data;
+	}
+}
+
+this.saveForeign = function (now, remote){
+	if(remote){
+		getForeign(now, function(data) {
+			$("#table_"+foreign_key+" .foreign_key")
+				.closest("td[data-search='"+data[0]+"'] .foreign_key")
+				.hide();
+		});
+	} else {
+		foreign_obj.saveForeign(now, true);
+		$("#table_"+foreign_key+" .foreign_key")
+			.closest("td[data-search='"+original[0]+"'] .foreign_key")
+			.hide();
+		$("#table_"+foreign_key+" .foreign_key")
+			.closest("td[data-search='"+now+"'] .foreign_key")
+			.show();
+	}
 }
 
 function selDate(a, b){
@@ -281,7 +304,11 @@ function saveData(){
 					url: "/"+table_name+"s/" + selected_c.data("id"),
 					data: {"attr": attr},
 					timeout: 5000,
-				    success: function(data, requestStatus, xhrObject){ saveRow(data); },
+				    success: function(data, requestStatus, xhrObject){
+				    	saveRow(data);
+				    	x=self;
+				    	self.saveForeign(attr[attr.length-1], false);
+				    },
 				    error: function(xhrObj, textStatus, exception) {
 						$("#title_"+table_name).notify("Failed to save data!", {arrowShow: false, className: "error", position:"right middle"});
 				    }
@@ -292,7 +319,10 @@ function saveData(){
 					url: "/"+table_name+"s/",
 					data: {"attr": attr, "id": $("#donorId").text()}, 
 					timeout: 5000,
-				    success: function(data, requestStatus, xhrObject){ saveRow(data); },
+				    success: function(data, requestStatus, xhrObject){
+				    	saveRow(data);
+				    	self.saveForeign(attr[attr.length-1], false);
+				    },
 				    error: function(xhrObj, textStatus, exception) {
 						$("#title_"+table_name).notify("Failed to add data!", {arrowShow: false, className: "error", position:"right middle"});
 				    }
@@ -305,8 +335,8 @@ this.tab = table_c;
 this.foreign_key = function(key){
 	foreign_key = key;
 }
-this.foreign_tab = function(tab){
-	foreign_tab = tab;
+this.foreign_obj = function(tab){
+	foreign_obj = tab;
 }
 this.foreign_row = function(row){
 	foreign_row = row;
@@ -318,10 +348,10 @@ $(document).ready(function(){
 	var tabc = new nypTable("contact", {norder: [3], sort: [[ 0, "desc" ], [ 1, "desc" ]], edit: ["D","d","I","b"] });
 	var tabf = new nypTable("finance", {norder: [5], sort: [[1, "desc"], [2, "desc"]], edit: ["I","D","I","i","i","b"] });
 	tabc.foreign_key("finance");
-	tabc.foreign_tab(tabf.tab);
+	tabc.foreign_obj(tabf);
 	tabc.foreign_row([1,2,0]);
 	tabf.foreign_key("contact");
-	tabf.foreign_tab(tabc.tab);
+	tabf.foreign_obj(tabc);
 	tabf.foreign_row([0,2]);
 	y=tabc;
 	z=tabf;
