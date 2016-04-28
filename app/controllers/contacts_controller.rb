@@ -10,13 +10,24 @@ class ContactsController < ApplicationController
             :last_modified_by => User.find(session[:user_id]).username
         })
         @contact.save!
+        if(a[3].kind_of? Array)
+            a[3].each do |x|
+                fin = Finance.find(x)
+                fin.update_attributes!({:contact => @contact})
+            end
+        else
+            if a[3] != "" && !a[3].nil?
+                fin = Finance.find(a[3])
+                fin.update_attributes!({:contact => @contact})
+            end
+        end
         jdata={
             :id => @contact.id,
             :val => [@contact.contact_date,
                      @contact.followup_date,
-                     @contact.narrative,
-                     @contact.finances
+                     @contact.narrative
             ],
+            :no_foreign => @contact.finances.empty?,
             :info => [
                      @contact.created_by,
                      @contact.last_modified_by
@@ -34,25 +45,42 @@ class ContactsController < ApplicationController
     def update
         @contact = Contact.find(params[:id])
         a = params[:attr]
+        
         @contact.update_attributes!({
             :contact_date => a[0],
             :followup_date => a[1],
             :narrative => a[2],
             :last_modified_by => User.find(session[:user_id]).username
         })
+        if(a[3].kind_of? Array)
+            a[3].each do |x|
+                fin = Finance.find(x)
+                fin.update_attributes!({:contact => @contact})
+            end
+        else
+            if a[3] != "" && !a[3].nil?
+                fin = Finance.find(a[3])
+                fin.update_attributes!({:contact => @contact})
+            end
+        end
         jdata={
             :id => @contact.id,
             :val => [@contact.contact_date,
                      @contact.followup_date,
-                     @contact.narrative,
-                     @contact.finances
+                     @contact.narrative
             ],
+            :no_foreign => @contact.finances.empty?,
             :info => [
                      @contact.created_by,
                      @contact.last_modified_by
             ]
         }
         render :json => jdata if request.xhr?
+    end
+    
+    def show
+        @contact = Contact.find(params[:id])
+        render :json => @contact.finances.pluck(:id) if request.xhr?
     end
 end
 

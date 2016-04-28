@@ -115,6 +115,9 @@
               %textarea#contact_field2.form-control{rows:"5"}
           .row{style:"margin-top: 10px"}
             .col-md-6
+              %label Finance
+              %select#contact_field3{required:"true"}
+                %option{"disabled" => true, "selected" => true, value:""} Select related finance record
             .col-md-3
               .input-group.input-group-sm
                 %span.input-group-addon Created By
@@ -128,12 +131,15 @@
         %tr{:style => "width:100%"}
           - @donor_contact.each do |key|
             %th #{key.humanize}
+          %th Finances
       %tbody
         - @contacts.each do |contact|
           %tr{:data => {:id => contact.id, :lmb => contact.last_modified_by, :cb => contact.created_by}}
             - @donor_contact.each do |key|
               %td
                 = contact[key]
+            %td{:data => {:search => contact.id}}
+              .btn.btn-xs.btn-default.foreign_key{:style => (contact.finances.empty?)?"display:none":""} Show finance
   #finance.tab-pane{:role=>'tabpanel'}
     .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
       .container-fluid
@@ -171,6 +177,9 @@
                 %input#finance_field4.form-control{type:"text"}
           .row{style:"margin-top: 10px"}
             .col-md-6
+              %label Contact
+              %select#finance_field5{required:"true"}
+                %option{"disabled" => true, "selected" => true, value:""} Select related contact record
             .col-md-3
               .input-group.input-group-sm
                 %span.input-group-addon Created By
@@ -185,9 +194,12 @@
           %tr{:style => "width:100%"}
             - @donor_finance.each do |key|
               %th #{key.humanize}
+            %th Contact
         %tbody
           - @finances.each do |finance|
             %tr{:data => {:id => finance.id, :lmb => finance.last_modified_by, :cb => finance.created_by}}
               - @donor_finance.each do |key|
                 %td
                   = finance[key]
+              %td{:data => {:search => finance.id}}
+                .btn.btn-xs.btn-default.foreign_key{:style => (finance.contact.nil?)?"display:none":""} Show contact

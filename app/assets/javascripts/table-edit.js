@@ -1,14 +1,10 @@
-function nyp_table(table_name, config){
-	
-$("#view_"+table_name).click(viewRow);
-$("#add_"+table_name).click(insRow);
-$("#edit_"+table_name).click(editRow);
-$("#delete_"+table_name).click(delData);
-$("#cancel_"+table_name).click(cnclRow);
-$("#table_"+table_name+" tbody").on("click", "tr", selRow);
+function nypTable(table_name, config){
 
-var inkey = ["i", "I", "d", "D"];
+var inkey = ["i", "I", "d", "D", "b", "B"];
 var selected_c;
+var foreign_key;
+var foreign_tab;
+var foreign_row;
 var table_c = $("#table_"+table_name).DataTable( {
 	"columnDefs": [
 		{"targets": config.norder, "orderable": false}
@@ -18,19 +14,71 @@ var table_c = $("#table_"+table_name).DataTable( {
 	destroy: true
 } );
 
+$("#view_"+table_name).click(viewRow);
+$("#add_"+table_name).click(insRow);
+$("#edit_"+table_name).click(editRow);
+$("#delete_"+table_name).click(delData);
+$("#cancel_"+table_name).click(cnclRow);
+$("#table_"+table_name+" tbody").on("click", "tr", selRow);
+$("#table_"+table_name+" tbody .foreign_key").click(function(e){
+	getForeign($(e.target).closest("tr").data("id"), showForeign);
+});
+
+(function(){
 var typingTimer;
 var $input = $('#search_'+table_name);
 
 $input.on('keyup', function () {
 	clearTimeout(typingTimer);
 	typingTimer = setTimeout(function(){
-		table_c.search($input.val()).draw(false);
+		table_c.column("#table_"+table_name+" th:last").search($input.val()).draw();
+		table_c.search($input.val()).draw();
 	}, 500);
 });
 
 $input.on('keydown', function () {
   clearTimeout(typingTimer);
 });
+})();
+
+function getForeign(id, fn){
+	if(id == -1) fn(null)
+	else $.ajax({
+		type: "GET",
+		url: "/"+table_name+"s/" + id,
+		timeout: 5000,
+		success: fn,
+		error: function(xhrObj, textStatus, exception) {
+			$("#title_"+table_name).notify("Failed to get data!", {arrowShow: false, className: "error", position:"right middle"});
+		}
+	});
+}
+
+function showForeign(data) {
+	var regexp="";
+	if(data) data.forEach(function(val, idx){
+		regexp += "(^"+ val +"$)"
+		if(idx < data.length-1) regexp += "|";
+	});
+	foreign_tab.column("#table_"+foreign_key+" th:last").search(regexp,true,false).draw();
+	$("#" + foreign_key + "-tab").tab("show");
+}
+
+function editForeign(data){
+	var field = $("#" + table_name + "_field" + (config.edit.length-1));
+	var val = [];
+	foreign_tab.rows().every(function(){
+		var r = this.data();
+		var s = "";
+		foreign_row.forEach(function(val){ s += r[val].substring(0, 50) + " | " });
+		val.push([$(this.node()).data("id"), s]);
+	});
+	val.forEach(function(val){
+		var item = $("<option value='"+val[0]+"'>"+val[1]+"</option>")
+		if($("[value='"+val[0]+"']" ,field).length == 0) field.append(item);
+	});
+	if(data) field.val(data);
+}
 
 function selDate(a, b){
 	var now = new Date();
@@ -63,8 +111,9 @@ function viewRow(){
 				var cells = $("td", selected_c);
 				config.edit.forEach(function(val, idx){
 					var field = $("#" + table_name + "_field" + idx);
-					field.val($(cells[idx]).html().trim());
-					field.prop("readonly", true);
+					if(val == "b") getForeign(selected_c.data("id"), editForeign);
+					else field.val($(cells[idx]).html().trim());
+					field.prop("disabled", true);
 				});
 				$("#"+table_name+"_cb").val(selected_c.data("cb"));
 				$("#"+table_name+"_lmb").val(selected_c.data("lmb"));
@@ -108,11 +157,15 @@ function editRow(event, newrow) {
 				var dcell = [];
 				config.edit.forEach(function(val, idx){
 						var field = $("#" + table_name + "_field" + idx);
-						if(newrow) field.val("");
+						if(newrow){
+							if(val == "b") getForeign(-1, editForeign);
+							else field.val("");
+						}
+						else if(val == "b") getForeign(selected_c.data("id"), editForeign);
 						else field.val($(cells[idx]).html().trim());
 						if(val == "d" || val == "D") dcell.push(field);
-						if(inkey.indexOf(val) != -1) field.prop("readonly", false);
-						else field.prop("readonly", true);
+						if(inkey.indexOf(val) != -1) field.prop("disabled", false);
+						else field.prop("disabled", true);
 						field.removeClass("err");
 				});
 				if(newrow){
@@ -131,14 +184,28 @@ function saveRow(data){
 	rstBtn();
 	if(selected_c != -1){
 		if(data.id) selected_c.data("id", data.id);
-		table_c.row(selected_c).data( data.val ).draw();
+		table_c.row(selected_c).data( data.val.concat({
+			"display": "<btn class='btn-default btn-xs btn foreign_key'>Show finance</btn>",
+			"@data-search": String(data.id) || 0
+		}) ).draw();
+		if(data.no_foreign) $(".foreign_key", selected_c).hide();
+		else $(".foreign_key", selected_c).click(function(e){
+			getForeign($(e.target).closest("tr").data("id"), showForeign);
+		});
 		if(data.info){
-			$(selected_c).data("lmb", data.info[1]);
-			$(selected_c).data("cb", data.info[0]);
+			selected_c.data("lmb", data.info[1]);
+			selected_c.data("cb", data.info[0]);
 		}
 	} else {
-		var row = table_c.row.add(data.val).draw().node();
+		var row = table_c.row.add(data.val.concat({
+			"display": "<btn class='btn-default btn-xs btn foreign_key'>Show finance</btn>",
+			"@data-search": String(data.id) || 0
+		})).draw().node();
 		if(data.id) $(row).data("id", data.id);
+		if(data.no_foreign) $(".foreign_key", row).hide();
+		else $(".foreign_key", row).click(function(e){
+			getForeign($(e.target).closest("tr").data("id"), showForeign);
+		});
 		if(data.info){
 			$(row).data("lmb", data.info[1]);
 			$(row).data("cb", data.info[0]);
@@ -197,7 +264,8 @@ function saveData(){
 		config.edit.forEach(function(val, idx) {
 		    if(val != "x"){
 				var field = $("#" + table_name + "_field" + idx);
-				var item = field.val().trim();
+				var item = "";
+				if(field.val()) item = field.val().trim();
 				if(item == "" && (["I", "D"].indexOf(val) != -1)){ 
 					err = true;
 					field.addClass("err");
@@ -222,7 +290,7 @@ function saveData(){
 				$.ajax({
 					type: "POST",
 					url: "/"+table_name+"s/",
-					data: {"attr": attr, "id": $("#donorId").text()}, //$("#table_"+table_name).data("id")},
+					data: {"attr": attr, "id": $("#donorId").text()}, 
 					timeout: 5000,
 				    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 				    error: function(xhrObj, textStatus, exception) {
@@ -233,13 +301,33 @@ function saveData(){
 	}
 }
 
+this.tab = table_c;
+this.foreign_key = function(key){
+	foreign_key = key;
+}
+this.foreign_tab = function(tab){
+	foreign_tab = tab;
+}
+this.foreign_row = function(row){
+	foreign_row = row;
+}
+
 };
 
 $(document).ready(function(){
-	nyp_table("contact", {norder: [3], sort: [[ 0, "desc" ], [ 1, "desc" ]], edit: ["D","d","I","x"] });
-	nyp_table("finance", {norder: [5], sort: [[1, "desc"], [2, "desc"]], edit: ["I","D","I","i","i","x"] });
+	var tabc = new nypTable("contact", {norder: [3], sort: [[ 0, "desc" ], [ 1, "desc" ]], edit: ["D","d","I","b"] });
+	var tabf = new nypTable("finance", {norder: [5], sort: [[1, "desc"], [2, "desc"]], edit: ["I","D","I","i","i","b"] });
+	tabc.foreign_key("finance");
+	tabc.foreign_tab(tabf.tab);
+	tabc.foreign_row([1,2,0]);
+	tabf.foreign_key("contact");
+	tabf.foreign_tab(tabc.tab);
+	tabf.foreign_row([0,2]);
+	y=tabc;
+	z=tabf;
 });
 
+var x,y,z;
 
 /*
 $(document).ready(function(){
