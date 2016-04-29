@@ -5,7 +5,7 @@ var ReportCreator = {
   options: {
     parentElement: '#four-box-step'
     },
-  
+    
   DonorFields: function(){
      return('<option value="title">Title</option>'
       +'<option value="first_name">First Name</option>'
@@ -53,37 +53,57 @@ var ReportCreator = {
   
   
   fields_extract: function() {
-    switch (this.value) {
-      case '1':
-        this.style.color = 'red';
-        document.getElementById("availablefields").innerHTML = ReportCreator.DonorFields();
-        
+    switch ($('#selectpicker-tab option:selected').val()) {
+      case 'donor':
+        //this.style.color = 'red';
+        $('#selectpicker-fld')
+        	.html('<option value="datetime_contact_date">Contact Date</option>'
+           +'<option value="datetime_followup_date">Followup Date</option>'
+           +'<option value="none_narrative">Narrative</option>'
+           +'<option value="string_created_by">Create by (Person)</option>'
+           +'<option value="string_last_modified_by">Last Modified by (Person)</option>'
+           +'<option value="datetime_created_at">Created at (Date)</option>'
+           +'<option value="datetime_last_modified_at">Last Modified at (Date)</option>')
+        	.selectpicker('refresh');
         break;
         
-      case '2':
-        this.style.color = 'blue';
-        document.getElementById("availablefields").innerHTML = ReportCreator.OrginationFields();
+      case 'contact':
+        //this.style.color = "#00ff00";
+        document.getElementById("selectpicker-fld").innerHTML = ReportCreator.ContactFields();
+        break;
+        
+      case 'finance':
+        //this.style.color = '#660066';
+        document.getElementById("selectpicker-fld").innerHTML = ReportCreator.FinanceFields();
         break;
       
-      case '3':
-        this.style.color = "#00ff00";
-        document.getElementById("availablefields").innerHTML = ReportCreator.ContactFields();
-        break;
-        
-      case '4':
-        this.style.color = '#660066';
-        document.getElementById("availablefields").innerHTML = ReportCreator.FinanceFields();
-        break;
-      
-      case '5':
-        this.style.color = '#ffcc00';
-        document.getElementById("availablefields").innerHTML = ReportCreator.ContactPersonFields();
-        break;
-        
       default:
         return false;
     }
     $('.atr').prop('disabled', false);
+  },
+  
+  filter_part: function() {
+  	switch(this.value.split('_')[0]){
+  		case 'none':
+  			//
+  		break;
+  		
+  		case 'string':
+  			//document.getElementById("filter").innerHTML = ReportCreator.filter_html.string;
+  		break;
+  		
+  		case 'decimal':
+  			
+  		break;
+  		
+  		case 'datetime':
+  			
+  		break;
+  		
+  		default:
+  		//
+  	}
   },
   
   addListeners: function() {
@@ -92,7 +112,7 @@ var ReportCreator = {
             $('.str').prop('disabled', false);
         };
         
-      var unselected = $('#availablefields');
+      var unselected = $('#selectpicker-fld');
       var selected = $('#selectedfields');
       
       $('#four-box-step').find('button').bind('click', function() {
@@ -186,6 +206,10 @@ var ReportCreator = {
       $('#tables').change(ReportCreator.fields_extract);
         
       $('.fields').change(ReportCreator.addListeners);
+      $('#selectpicker-tab').change(ReportCreator.fields_extract);
+       
+
+      //$('#selectpicker-fld').change(ReportCreator.filter_part);
     
   }
 };

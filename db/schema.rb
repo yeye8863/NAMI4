@@ -110,8 +110,8 @@ SELECT
     t.string   "value"
     t.decimal  "min_value"
     t.decimal  "max_value"
-    t.datetime "min_datetime"
-    t.datetime "max_datetime"
+    t.date     "min_date"
+    t.date     "max_date"
     t.string   "created_by"
     t.datetime "created_at",       :null=>false
     t.string   "last_modified_by"

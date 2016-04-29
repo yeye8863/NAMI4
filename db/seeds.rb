@@ -35,6 +35,8 @@ donors = [
           ]
 
   
+
+
 contacts = [
           {:contact_date => '2016-04-01', :followup_date => '2016-04-22', :donor_id => '1', :narrative => 'Discussion about event in May'},
           {:contact_date => '2016-04-02', :followup_date => '2016-04-23', :donor_id => '2', :narrative => 'Funding raising for April'},
@@ -178,6 +180,7 @@ end
 donors.each do |donor|
   Donor.create!(donor)
 end
+
 
 
 
