@@ -1,7 +1,5 @@
 =render :partial=>'layouts/banner'
-:javascript 
-	$(ReportCreator.setup);
-
+=javascript_include_tag "report"
 #page-title.container-fluid.titleLine
 	%h2 Report
 		
@@ -30,10 +28,8 @@
 								%span.list-title 1) Tables
 							%select.form-control{:id => "tables",:multiple => "", :style => "height: 200px; width: 100%; margin-top: 10px"}
 								%option{:value => "1"} Donor
-								%option{:value => "2"} Orgnization
 								%option{:value => "3"} Contact
 								%option{:value => "4"} Finance
-								%option{:value => "5"} Contact Person
 						.col-md-4
 							%h5
 								%span.list-title 2) Available Fields

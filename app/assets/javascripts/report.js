@@ -28,20 +28,7 @@ var ReportCreator = {
       +'<option value="datetime_last_modified_at">Last Modified at (Date)</option>');
   }, 
     
-  OrginationFields: function(){
-    return('<option value="string_name">Name</option>'
-    +'<option value="none_street_address">Street Address</option>'
-    +'<option value="string_city">City</option>'
-    +'<option value="string_state">State</option>'
-    +'<option value="string_country">Country</option>'
-    +'<option value="none_zipcode">Zip Code</option>'
-    +'<option value="none_fax">Fax</option>'
-    +'<option value="string_created_by">Create by (Person)</option>'
-    +'<option value="string_last_modified_by">Last Modified by (Person)</option>'
-    +'<option value="datetime_created_at">Created at (Date)</option>'
-    +'<option value="datetime_last_modified_at">Last Modified at (Date)</option>');
-  },
-
+  
   ContactFields: function(){
     return('<option value="datetime_contact_date">Contact Date</option>'
            +'<option value="datetime_followup_date">Followup Date</option>'
@@ -64,28 +51,6 @@ var ReportCreator = {
         +'<option value="datetime_last_modified_at">Last Modified at (Date)</option>');
   },
   
-  ContactPersonFields: function(){
-    return('<option value="none_title">Title</option>'
-        +'<option value="none_first_name">First Name</option>'
-        +'<option value="none_last_name">Last Name</option>'
-        +'<option value="none_middle_name">Middle Name</option>'
-        +'<option value="none_salution">Salution</option>'
-        +'<option value="none_email">Email</option>'
-        +'<option value="none_company">Company</option>'
-        +'<option value="none_street_address">Street Address</option>'
-        +'<option value="city">City</option>'
-        +'<option value="state">State</option>'
-        +'<option value="country">Country</option>'
-        +'<option value="zipcode">Zip Code</option>'
-        +'<option value="home_phone">Home Phone</option>'
-        +'<option value="business_phone">Business Phone</option>'
-        +'<option value="mobile_phone">Mobile Phone</option>'
-        +'<option value="organization">Organization</option>'
-        +'<option value="created_by">Create by (Person)</option>'
-        +'<option value="last_modified_by">Last Modified by (Person)</option>'
-        +'<option value="created_at">Created at (Date)</option>'
-        +'<option value="last_modified_at">Last Modified at (Date)</option>');
-  },
   
   fields_extract: function() {
     switch (this.value) {
@@ -118,12 +83,7 @@ var ReportCreator = {
       default:
         return false;
     }
-  },
-  
-  filter_part: function() {
-  	switch(this.value){
-  		case ''	
-  	}
+    $('.atr').prop('disabled', false);
   },
   
   addListeners: function() {
@@ -225,7 +185,7 @@ var ReportCreator = {
    
       $('#tables').change(ReportCreator.fields_extract);
         
-      $('#availablefields').change(ReportCreator.filter_part);
+      $('.fields').change(ReportCreator.addListeners);
     
   }
 };
@@ -234,4 +194,4 @@ var ReportCreator = {
 $.fn.isVisible = function() {
         return !($(this).css('visibility') == 'hidden' || $(this).css('display') == 'none');
   };
-//$(ReportCreator.setup);
+$(ReportCreator.setup);
