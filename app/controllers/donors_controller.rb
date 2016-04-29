@@ -74,8 +74,7 @@ class DonorsController < ApplicationController
 	    @donor_contact = [
 	        "contact_date",
 	        "followup_date",
-	        "narrative",
-	        "finances"
+	        "narrative"
 	    ]
 	    @contacts = Contact.where(:donor_id => @donor.id)
 	    @finances = Finance.where(:donor => @donor.id)
@@ -84,8 +83,7 @@ class DonorsController < ApplicationController
             'date',
             'amount',
             'description', 
-            'designation',
-            'contact' 
+            'designation'
         ]
     end
     
