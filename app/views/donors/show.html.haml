@@ -139,7 +139,7 @@
               %td
                 = contact[key]
             %td{:data => {:search => contact.id}}
-              .btn.btn-xs.btn-default.foreign_key{:style => (contact.finances.empty?)?"display:none":""} Show finance
+              .btn.btn-xs.btn-default.foreign_key{:style => (contact.finances.nil?)?"display:none":""} Show finance
   #finance.tab-pane{:role=>'tabpanel'}
     .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
       .container-fluid

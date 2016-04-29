@@ -11,11 +11,14 @@ class FinancesController < ApplicationController
             :created_by => User.find(session[:user_id]).username,
             :last_modified_by => User.find(session[:user_id]).username
         })
-        
-        if a[5] != "" && !a[5].nil?
-            @finance.contact = Contact.find(a[5])
-        end
         @finance.save!
+        if a[5] != "" && !a[5].nil?
+            con = Contact.find(a[5])
+            if(!con.finances.nil?)
+                original = con.finances.id
+            end
+            con.update_attributes!({:finances => @finance})
+        end
         jdata={
             :id => @finance.id,
             :val => [@finance._type,
@@ -24,6 +27,7 @@ class FinancesController < ApplicationController
                      @finance.description,
                      @finance.designation
             ],
+            :original => original,
             :no_foreign => @finance.contact.nil?,
             :info => [
                      @finance.created_by,
@@ -52,7 +56,12 @@ class FinancesController < ApplicationController
             :last_modified_by => User.find(session[:user_id]).username
         })
         if a[5] != "" && !a[5].nil?
-            @finance.update_attributes!({:contact => Contact.find(a[5])})
+            con = Contact.find(a[5])
+            if(!con.finances.nil?)
+                original = con.finances.id
+            end
+            #@finance.update_attributes!({:contact => con})
+            con.update_attributes!({:finances => @finance})
         end
         jdata={
             :id => @finance.id,
@@ -62,6 +71,7 @@ class FinancesController < ApplicationController
                      @finance.description,
                      @finance.designation
             ],
+            :original => original,
             :no_foreign => @finance.contact.nil?,
             :info => [
                      @finance.created_by,
@@ -74,6 +84,11 @@ class FinancesController < ApplicationController
     
     def show
         @finance = Finance.find(params[:id])
-        render :json => [@finance.contact.id] if request.xhr?
+        if @finance.contact.nil?
+            jdata = ""
+        else
+            jdata = @finance.contact.id
+        end
+        render :json => [jdata] if request.xhr?
     end
 end

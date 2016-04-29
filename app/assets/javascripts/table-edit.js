@@ -1,7 +1,6 @@
 function nypTable(table_name, config){
 
 var inkey = ["i", "I", "d", "D", "b", "B"];
-var self = this;
 var original;
 var selected_c;
 var foreign_key;
@@ -85,22 +84,11 @@ function editForeign(data){
 	}
 }
 
-this.saveForeign = function (now, remote){
-	if(remote){
-		getForeign(now, function(data) {
-			$("#table_"+foreign_key+" .foreign_key")
-				.closest("td[data-search='"+data[0]+"'] .foreign_key")
-				.hide();
-		});
-	} else {
-		foreign_obj.saveForeign(now, true);
-		$("#table_"+foreign_key+" .foreign_key")
-			.closest("td[data-search='"+original[0]+"'] .foreign_key")
-			.hide();
-		$("#table_"+foreign_key+" .foreign_key")
-			.closest("td[data-search='"+now+"'] .foreign_key")
-			.show();
-	}
+function saveForeign(now, remote){
+	console.log(remote);
+		if(original) $("#table_"+foreign_key+" tbody td[data-search='"+original[0]+"'] .foreign_key").hide();
+		if(remote) $("#table_"+table_name+" tbody td[data-search='"+remote+"'] .foreign_key").hide();
+		$("#table_"+foreign_key+" tbody td[data-search='"+now+"'] .foreign_key").show();
 }
 
 function selDate(a, b){
@@ -306,8 +294,7 @@ function saveData(){
 					timeout: 5000,
 				    success: function(data, requestStatus, xhrObject){
 				    	saveRow(data);
-				    	x=self;
-				    	self.saveForeign(attr[attr.length-1], false);
+				    	saveForeign(attr[attr.length-1], data.original);
 				    },
 				    error: function(xhrObj, textStatus, exception) {
 						$("#title_"+table_name).notify("Failed to save data!", {arrowShow: false, className: "error", position:"right middle"});
@@ -321,7 +308,7 @@ function saveData(){
 					timeout: 5000,
 				    success: function(data, requestStatus, xhrObject){
 				    	saveRow(data);
-				    	self.saveForeign(attr[attr.length-1], false);
+				    	saveForeign(attr[attr.length-1], data.original);
 				    },
 				    error: function(xhrObj, textStatus, exception) {
 						$("#title_"+table_name).notify("Failed to add data!", {arrowShow: false, className: "error", position:"right middle"});
