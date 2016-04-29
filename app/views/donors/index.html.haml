@@ -1,5 +1,15 @@
 =render :partial=>'layouts/banner'
 #page-title.container-fluid.titleLine
-#search_result.container-fluid
+  %h2 Donor Management
+#mainbody.container-fluid
   = render :partial=>'search_result'
 
+#donorSummary.modal.fade{:role => 'dialog'}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{:type=>'button',:data => {:dismiss => 'modal'},:aria => { :label => 'Close'}}="&times;".html_safe
+        %h4.modal-title Summary
+      .modal-body
+      .modal-footer
+        %button.btn.btn-default{:type=>'button',:data => {:dismiss => 'modal'}} Close

@@ -28,6 +28,7 @@ gem 'autoprefixer-rails'
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
+gem 'jquery-turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -36,6 +37,7 @@ gem "schema_plus_views"
 gem 'bcrypt', '~> 3.1.7'
 gem 'protected_attributes', '~> 1.0.2'
 gem 'jquery-datatables-rails', '~> 3.3.0'
+gem 'bootstrap-datepicker-rails', '~> 1.6', '>= 1.6.0.1'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

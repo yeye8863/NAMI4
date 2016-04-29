@@ -10,11 +10,14 @@
     %a{:id=>'finance-tab',:href=>'#finance', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'finance'}} Finance
 .tab-content.container-fluid
   #basic.tab-pane.active{:role=>'tabpanel'}
-    %label#donorId{:style=>'display:none'}=@donor.id
+    %label#donorId.hidden=@donor.id
     =form_for @donor, :remote=>true, :method=>'post', :html=>{:id=>'newDonorInfo', :class=>'form donor-form col-sm-12'} do |f|
       .form-group
         .form-group
           .row
+            .col-sm-3
+              =f.label :type
+              =f.select(:flag, [['Individual','I'],['Organization','O']],{},{:class=>'form-control'})
             .col-sm-3
               =f.label :title
               =f.text_field :title, class:'form-control', id:'title'
@@ -72,18 +75,99 @@
           =f.submit id:'basic-submit', class:'btn btn-default'
           =link_to "Back", donors_path, class: 'btn btn-primary'
   #contact.tab-pane{:role=>'tabpanel'}
-    #contact-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:10px;"}
-      %table#contact_tab.table.table-hover.clickable-row{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
+    .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
+      .container-fluid
+        .navbar-header
+          %a.navbar-brand#title_contact Donor Contact Records
+        .navbar-default
+          %form.navbar-form.navbar-right
+            .form-group
+              %input.form-control#search_contact{:placeholder => "Search", :type => "text"}
+              .btn.btn-default#view_contact Detail
+              .btn.btn-success#add_contact Add
+              .btn.btn-info#edit_contact Edit
+              .btn.btn-danger#delete_contact Delete
+              .btn.btn-warning#cancel_contact{style:"display:none;"} Cancel
+              =link_to "Back", donors_path, class: 'btn btn-primary'
+    #info_contact.collapse{role:"tabpanel"}
+      .well{style:"background-color:#ffffff;"}
+        .container
+          .row
+            .col-md-3
+              .form-group
+                %label.control-label Contact Date
+                %input#contact_field0.form-control{type:"text"}
+              .form-group
+                %label.control-label Followup Date
+                %input#contact_field1.form-control{type:"text"}
+            .col-md-9
+              %label Narrative
+              %textarea#contact_field2.form-control{rows:"5"}
+          .row{style:"margin-top: 10px"}
+            .col-md-6
+            .col-md-3
+              .input-group.input-group-sm
+                %span.input-group-addon Created By
+                %input.form-control#contact_cb{readonly:"true", style:"width:150px"}
+            .col-md-3
+              .input-group.input-group-sm
+                %span.input-group-addon Last Modified By
+                %input.form-control#contact_lmb{readonly:"true", style:"width:150px"}
+    %table#table_contact.table.table-hover.table-bordered{:style => "width:100%;margin-top:15px;", :data => {:id => @donor.id}}
+      %thead{:style => "width:100%"}
+        %tr{:style => "width:100%"}
+          - @donor_contact.each do |key|
+            %th #{key.humanize}
+      %tbody
+  #finance.tab-pane{:role=>'tabpanel'}
+    .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
+      .container-fluid
+        .navbar-header
+          %a.navbar-brand#title_finance Donor Finance Records
+        .navbar-default
+          %form.navbar-form.navbar-right
+            .form-group
+              %input.form-control#search_finance{:placeholder => "Search", :type => "text"}
+              .btn.btn-default#view_finance Detail
+              .btn.btn-success#add_finance Add
+              .btn.btn-info#edit_finance Edit
+              .btn.btn-danger#delete_finance Delete
+              .btn.btn-warning#cancel_finance{style:"display:none;"} Cancel
+              =link_to "Back", donors_path, class: 'btn btn-primary'
+    #info_finance.collapse{role:"tabpanel"}
+      .well{style:"background-color:#ffffff;"}
+        .container
+          .row
+            .col-md-3
+              .form-group
+                %label.control-label Type
+                %input#finance_field0.form-control{type:"text"}
+              .form-group
+                %label.control-label Date
+                %input#finance_field1.form-control{type:"text"}
+              .form-group
+                %label.control-label Amount
+                %input#finance_field2.form-control{type:"text"}
+            .col-md-9
+              %label Description
+              %textarea#finance_field3.form-control{rows:"5"}
+              .form-group
+                %label.control-label Designation
+                %input#finance_field4.form-control{type:"text"}
+          .row{style:"margin-top: 10px"}
+            .col-md-6
+            .col-md-3
+              .input-group.input-group-sm
+                %span.input-group-addon Created By
+                %input.form-control#finance_cb{readonly:"true", style:"width:150px"}
+            .col-md-3
+              .input-group.input-group-sm
+                %span.input-group-addon Last Modified By
+                %input.form-control#finance_lmb{readonly:"true", style:"width:150px"}
+    #finance-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:15px;"}
+      %table#table_finance.table.table-hover.table-bordered{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
         %thead{:style => "width:100%"}
           %tr{:style => "width:100%"}
-            - @donor_contact.each_pair do |key, val|
-              %th{:width => val}
-                = key
+            - @donor_finance.each do |key|
+              %th #{key.humanize}
         %tbody
-    .button-line.bottom-right-info-bar{:style => "padding:0"}
-      =link_to "Add", "#contact_tab", class: 'btn btn-success', id: "add"
-      =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit"
-      %button.btn.btn-danger#delete{type:'button'} Delete
-      =link_to "Back", donors_path, class: 'btn btn-primary'
-    =javascript_include_tag 'contacts' 
-  #finance.tab-pane{:role=>'tabpanel'}
