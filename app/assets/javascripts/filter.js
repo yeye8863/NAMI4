@@ -16,17 +16,16 @@ $(document).ready(function() {
 		}
 	
 		$("#add").click(insRow);
-		$("#edit").click(editRow);
+		$("#edit").on('click',editRow);
 		$("#delete").click(delData);
 		$("#filter_tab tbody").on("click", "tr", selRow);
 } );
 
-$(function(){
-});
 
 
 var selected_c;
 var header_c;
+var table_c;
 
 
 /*"order": [[ 0, "desc" ], [ 1, 'desc' ]],
@@ -132,13 +131,14 @@ function selRow(event) {
 
 function insRow() {
 	if(!$("#edit").hasClass("editing")){
-		var row = table_c.row.add(["","","33","44","55","66","77"]).draw().node();
+		var row = table_c.row.add(["","","","","","",""]).draw().node();
 		$(row).addClass("info").siblings().removeClass("info");
 		editRow(0, $(row));
 	}
 }
 
 function editRow(event, r) {
+		//event.preventDefault();
 	if(r) selected_c = r;
 	else selected_c = $("#filter_tab tbody .info").first();
 	if(selected_c.length)
@@ -185,13 +185,13 @@ function editRow(event, r) {
         $('.selectpicker#selectpicker-fld').selectpicker('toggle');
         $('.selectpicker#selectpicker-fld')
 					.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-						+'<option value="datetime_contact_date">Contact Date</option>'
-						+'<option value="datetime_followup_date">Followup Date</option>'
-						+'<option value="none_narrative">Narrative</option>'
-						+'<option value="string_created_by">Create by (Person)</option>'
-						+'<option value="string_last_modified_by">Last Modified by (Person)</option>'
-						+'<option value="datetime_created_at">Created at (Date)</option>'
-						+'<option value="datetime_last_modified_at">Last Modified at (Date)</option>')
+						+'<option value="datetime-contact_date">Contact Date</option>'
+						+'<option value="datetime-followup_date">Followup Date</option>'
+						+'<option value="none-narrative">Narrative</option>'
+						+'<option value="string-created_by">Create by (Person)</option>'
+						+'<option value="string-last_modified_by">Last Modified by (Person)</option>'
+						+'<option value="datetime-created_at">Created at (Date)</option>'
+						+'<option value="datetime-last_modified_at">Last Modified at (Date)</option>')
 					.selectpicker('refresh');
         break;
         
@@ -199,25 +199,25 @@ function editRow(event, r) {
         $('.selectpicker#selectpicker-fld').selectpicker('toggle');
         $('.selectpicker#selectpicker-fld')
 					.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-								+'<option value="none_title">Title</option>'
-					      +'<option value="none_first_name">First Name</option>'
-					      +'<option value="none_last_name">Last Name</option>'
-					      +'<option value="none_middle_name">Middle Name</option>'
-					      +'<option value="none_salution">Salution</option>'
-					      +'<option value="none_email">Email</option>'
-					      +'<option value="string_organization">Organization</option>'
-					      +'<option value="string_company">Company</option>'
-					      +'<option value="none_street_address">Street Address</option>'
-					      +'<option value="string_city">City</option>'
-					      +'<option value="string_state">State</option>'
-					      +'<option value="string_country">Country</option>'
-					      +'<option value="none_zipcode">Zip Code</option>'
-					      +'<option value="none_home_phone">Home Phone</option>'
-					      +'<option value="none_business_phone">Business Phone</option>'
-					      +'<option value="string_created_by">Create by (Person)</option>'
-					      +'<option value="string_last_modified_by">Last Modified by (Person)</option>'
-					      +'<option value="datetime_created_at">Created at (Date)</option>'
-					      +'<option value="datetime_last_modified_at">Last Modified at (Date)</option>')
+								+'<option value="none-title">Title</option>'
+					      +'<option value="none-first_name">First Name</option>'
+					      +'<option value="none-last_name">Last Name</option>'
+					      +'<option value="none-middle_name">Middle Name</option>'
+					      +'<option value="none-salution">Salution</option>'
+					      +'<option value="none-email">Email</option>'
+					      +'<option value="string-organization">Organization</option>'
+					      +'<option value="string-company">Company</option>'
+					      +'<option value="none-street_address">Street Address</option>'
+					      +'<option value="string-city">City</option>'
+					      +'<option value="string-state">State</option>'
+					      +'<option value="string-country">Country</option>'
+					      +'<option value="none-zipcode">Zip Code</option>'
+					      +'<option value="none-home_phone">Home Phone</option>'
+					      +'<option value="none-business_phone">Business Phone</option>'
+					      +'<option value="string-created_by">Create by (Person)</option>'
+					      +'<option value="string-last_modified_by">Last Modified by (Person)</option>'
+					      +'<option value="datetime-created_at">Created at (Date)</option>'
+					      +'<option value="datetime-last_modified_at">Last Modified at (Date)</option>')
 					.selectpicker('refresh');
         break;
         
@@ -225,15 +225,15 @@ function editRow(event, r) {
         $('.selectpicker#selectpicker-fld').selectpicker('toggle');
         $('.selectpicker#selectpicker-fld')
 					.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-								+'<option value="string_type">Type</option>'
-				        +'<option value="datetime_date">Date</option>'
-				        +'<option value="decimal_amount">Amount</option>'
-				        +'<option value="none_description">Description</option>'
-				        +'<option value="string_designation">Designation</option>'
-				        +'<option value="string_created_by">Create by (Person)</option>'
-				        +'<option value="string_last_modified_by">Last Modified by (Person)</option>'
-				        +'<option value="datetime_created_at">Created at (Date)</option>'
-				        +'<option value="datetime_last_modified_at">Last Modified at (Date)</option>')
+								+'<option value="string-type">Type</option>'
+				        +'<option value="datetime-date">Date</option>'
+				        +'<option value="decimal-amount">Amount</option>'
+				        +'<option value="none-description">Description</option>'
+				        +'<option value="string-designation">Designation</option>'
+				        +'<option value="string-created_by">Create by (Person)</option>'
+				        +'<option value="string-last_modified_by">Last Modified by (Person)</option>'
+				        +'<option value="datetime-created_at">Created at (Date)</option>'
+				        +'<option value="datetime-last_modified_at">Last Modified at (Date)</option>')
 					.selectpicker('refresh');
         break;
       
@@ -247,11 +247,13 @@ function editRow(event, r) {
 function saveRow(data){
 	if(data.id) selected_c.data("id", data.id);
 	table_c.row(selected_c).data([
-		data.contact_date,
-		data.followup_date,
-		data.narrative,
-		data.created_by,
-		data.last_modified_by
+		data.table_name,
+		data.field_name,
+		data.value,
+		data.min_value,
+		data.max_value,
+		data.min_date,
+		data.max_date
 	]).draw();
 	$("#edit").text("Edit");
 	$("#edit").removeClass("editing");
@@ -278,7 +280,7 @@ function delData(event){
 				if($(this).data("id"))
 				 	$.ajax({
 						type: "DELETE",
-				      	url: "/contacts/" + $(this).data("id"),
+				      	url: "/filter/" + $(this).data("id"),
 				       	timeout: 5000,
 				       	success: function(data, requestStatus, xhrObject){ delRow(); },
 				       	error: function(xhrObj, textStatus, exception) {
@@ -293,22 +295,33 @@ function delData(event){
 function saveData(){
 	if(selected_c.length){
 		var attr = [];
-		var cells = $("td", selected_c).slice(0, 3);
-		cells.each(function(){
-			attr.push($("input", $(this)).val().trim());
+		var cells_sel_tab = $("td", selected_c).slice(0, 1);
+		cells_sel_tab.each(function(){
+			attr.push($("select", $(this)).val());
+		});
+		
+		var cells_sel_fld = $("td", selected_c).slice(1, 2);
+		cells_sel_fld.each(function(){
+			var fld=$("select", $(this)).val().split('-');
+			attr.push(fld[1]);
+		});
+		
+		var cells_inp = $("td", selected_c).slice(2, 7);
+		cells_inp.each(function(){
+			attr.push($("input", $(this)).val());
 		});
 		if(attr[0] == ""){ 
-			$("#add").notify("Please enter contact date.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			$("#add").notify("Please select the Table.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 			return false;
 		}
-		if(attr[2] == ""){ 
-			$("#add").notify("Please enter narrative.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+		if(attr[1] == ""){ 
+			$("#add").notify("Please select the Field.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
 			return false;
 		}
 		if(selected_c.data("id"))
 			$.ajax({
 				type: "PUT",
-				url: "/contacts/" + selected_c.data("id"),
+				url: "/filters/" + selected_c.data("id"),
 				data: {"attr": attr},
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
@@ -319,8 +332,8 @@ function saveData(){
 		else
 			$.ajax({
 				type: "POST",
-				url: "/contacts/",
-				data: {"attr": attr, "id": $("#donorId").val()},
+				url: "/filters/",
+				data: {"attr": attr, "id": $("#ReportId").text()},
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {

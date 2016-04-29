@@ -7,6 +7,7 @@
 		
 #mainbody.container-fluid
 	%h3 Report Creator
+	%label#ReportId{:style=>'display:none'}=@report.id
 	.panel-group
 		.panel.panel-default
 			.panel-heading{:style => "font-size:20px;"} Title
@@ -29,6 +30,23 @@
 							%th{:width => val}
 								= key
 				%tbody
+					/				
+						- @filters.each do |filter|
+							%tr{:data => {:id => filter.id}}
+								%td
+									= filter.table_name
+								%td
+									= filter.field_name
+								%td
+									= filter.value
+								%td
+									= filter.min_value
+								%td
+									= filter.max_value
+								%td
+									= filter.min_date
+								%td
+									= filter.max_date
 		.button-line.bottom-right-info-bar{:style => "padding:0"}
 			=link_to "Add", "#filter_tab", class: 'btn btn-success', id: "add"
 			=link_to "Edit", "#filter_tab", class: 'btn btn-info', id: "edit"
