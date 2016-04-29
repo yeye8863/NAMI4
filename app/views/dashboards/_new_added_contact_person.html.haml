@@ -1,7 +1,0 @@
-%table.table
-  %tbody
-  - @contact_person_basic.each_pair do |key,val|
-    - if val and not val.to_s.empty?
-      %tr
-        %td.bold=key
-        %td=val

@@ -1,0 +1,18 @@
+=render :partial=>'layouts/banner'
+#page-title.container-fluid.titleLine
+  %h2 Access Overview
+#mainbody.container-fluid
+  #access-result.container-fluid
+    %table#access_table.table.display{:cellspacing => "0", :width => "100%"}
+      %thead{:data => {:attrname => @access_attr}}
+        %tr
+          %th.filter Email Address
+      %tbody
+        - @accesses.each do |access|
+          %tr
+            %td=access.email
+    .button-line.right{:style => "padding:10"}
+      =link_to "Quick Add","#access_table" , class: 'btn btn-info', id: "quick_add"
+      =link_to "Quick Edit", "#access_table", class: 'btn btn-info', id: "quick_edit"
+      =link_to "Cancel", "#access_table", class: 'btn btn-danger', id:"cancel"
+      =link_to 'Back', users_path, class:'btn btn-primary'
