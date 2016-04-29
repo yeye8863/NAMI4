@@ -1,0 +1,56 @@
+=render :partial=>'layouts/banner'
+:javascript
+  $('#userInfo').on('ajax:success',function(event,data,status,xhr){
+    $("#user-submit").notify("Successfully saved", {className: "success", position:"left middle"});
+  });
+  $('#userInfo').on('ajax:error',function(event,xhr,status,error){
+    $("#user-submit").notify("Error occurred, please try later...", {className: "error", position:"left middle"});
+  });
+#page-title.container-fluid.titleLine
+  %h2 Edit User Information
+#mainbody.container-fluid
+  =form_for @user, remote: true, method: 'put', html:{id:'userInfo', class:'form col-sm-12'} do |f|
+    .form-group
+      .row
+        .col-sm-3
+          =f.label :first_name
+          =f.text_field :first_name, class:'form-control', id:'first_name'
+        .col-sm-3
+          =f.label :last_name
+          =f.text_field :last_name, class:'form-control', id:'last_name'
+        .col-sm-3
+          =f.label :function
+          =f.select :function, [["Donor Management","donor management"],
+                                ["Dashboard","dashboard"],
+                                ["Report Management","report management"],
+                                ["User Management","user management"]],
+                                {},
+                                {:multiple => true, :class => 'form-control'}
+    .form-group
+      .row
+        .col-sm-3  
+          =f.label :email
+          =f.text_field :email, class:'form-control', id:'email'
+        .col-sm-3  
+          =f.label :phone_number
+          =f.text_field :phone_number, class:'form-control', id:'home_phone'
+        .col-sm-3  
+          =f.label :zipcode
+          =f.text_field :zipcode, class:'form-control', id:'zipcode'
+    .form-group
+      .row  
+        .col-sm-3  
+          =f.label :street_address
+          =f.text_field :street_address, class:'form-control', id:'street_address'
+        .col-sm-3
+          =f.label :city
+          =f.text_field :city, class:'form-control', id:'city'
+        .col-sm-3  
+          =f.label :state
+          =f.text_field :state, class:'form-control', id:'state'
+        .col-sm-3  
+          =f.label :country
+          =f.text_field :country, class:'form-control', id:'country'
+    .button-line.pull-right    
+      =f.submit id:'user-submit', class:'btn btn-default'
+      =link_to "Back", :back, class: 'btn btn-primary'  

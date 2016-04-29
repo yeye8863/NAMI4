@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421031154) do
+ActiveRecord::Schema.define(version: 20160425194910) do
 
   create_table "accesses", force: :cascade do |t|
     t.string   "email"
@@ -24,14 +24,12 @@ ActiveRecord::Schema.define(version: 20160421031154) do
     t.date     "followup_date"
     t.text     "narrative"
     t.integer  "donor_id"
-    t.integer  "contact_person_id"
     t.string   "created_by"
-    t.datetime "created_at",        :null=>false
+    t.datetime "created_at",       :null=>false
     t.string   "last_modified_by"
     t.datetime "last_modified_at"
-    t.datetime "updated_at",        :null=>false
+    t.datetime "updated_at",       :null=>false
   end
-  add_index "contacts", ["contact_person_id"], :name=>"index_contacts_on_contact_person_id"
   add_index "contacts", ["donor_id"], :name=>"index_contacts_on_donor_id"
 
   create_table "donors", force: :cascade do |t|
@@ -55,7 +53,7 @@ ActiveRecord::Schema.define(version: 20160421031154) do
     t.datetime "created_at",       :null=>false
     t.datetime "last_modified_at"
     t.datetime "updated_at",       :null=>false
-    t.string   "type"
+    t.string   "flag"
     t.integer  "active"
   end
 
@@ -64,11 +62,12 @@ SELECT * FROM
       (
         SELECT 
           a.title||' '||a.first_name||' '||a.last_name as name,
-          NULL as organization,
+          a.organization as organization,
           c.contact_date as contact_date,
           c.followup_date as followup_date,
           c.id as contact_id
         FROM donors a JOIN contacts c ON a.id = c.donor_id
+<<<<<<< HEAD
         WHERE c.followup_date >= date('now')
         UNION
         SELECT 
@@ -80,29 +79,11 @@ SELECT * FROM
         FROM contacts c JOIN contact_people b ON c.contact_person_id = b.id
         JOIN organizations d ON b.organization_id = d.id
         WHERE c.followup_date >= date('now')) as RESULT
+=======
+        WHERE c.followup_date >= date('now') AND a.active = 1) as RESULT
+>>>>>>> master
         ORDER BY followup_date ASC
   END_VIEW_AGENDA_VIEWS
-
-  create_view "contact_person_views", <<-'END_VIEW_CONTACT_PERSON_VIEWS', :force => true
-SELECT 
-          a.title||' '||a.first_name||' '||a.last_name as name,
-          b.name as organization,
-          a.company as company,
-          a.updated_at as updated_at,
-          a.id as id
-        FROM contact_people a, organizations b
-        WHERE a.organization_id = b.id
-  END_VIEW_CONTACT_PERSON_VIEWS
-
-  create_view "donor_views", <<-'END_VIEW_DONOR_VIEWS', :force => true
-SELECT 
-          a.title||' '||a.first_name||' '||a.last_name as name,
-          a.company as company,
-          a.organization as organization,
-          a.updated_at as updated_at,
-          a.id as id
-        FROM donors a
-  END_VIEW_DONOR_VIEWS
 
   create_table "filters", force: :cascade do |t|
     t.string   "table_name"
@@ -110,8 +91,13 @@ SELECT
     t.string   "value"
     t.decimal  "min_value"
     t.decimal  "max_value"
+<<<<<<< HEAD
     t.date     "min_date"
     t.date     "max_date"
+=======
+    t.datetime "min_datetime"
+    t.datetime "max_datetime"
+>>>>>>> master
     t.string   "created_by"
     t.datetime "created_at",       :null=>false
     t.string   "last_modified_by"
@@ -122,13 +108,12 @@ SELECT
   add_index "filters", ["report_id"], :name=>"index_filters_on_report_id"
 
   create_table "finances", force: :cascade do |t|
-    t.string   "type"
+    t.string   "_type"
     t.date     "date"
     t.decimal  "amount"
     t.text     "description"
     t.string   "designation"
     t.integer  "donor_id"
-    t.integer  "organization_id"
     t.integer  "contact_id"
     t.string   "created_by"
     t.datetime "created_at",       :null=>false
@@ -138,7 +123,6 @@ SELECT
   end
   add_index "finances", ["contact_id"], :name=>"index_finances_on_contact_id"
   add_index "finances", ["donor_id"], :name=>"index_finances_on_donor_id"
-  add_index "finances", ["organization_id"], :name=>"index_finances_on_organization_id"
 
   create_table "functions", force: :cascade do |t|
     t.string   "name"
@@ -172,6 +156,12 @@ SELECT
     t.datetime "created_at",       :null=>false
     t.datetime "last_modified_at"
     t.datetime "updated_at",       :null=>false
+    t.string   "phone_number"
+    t.string   "street_address"
+    t.string   "city"
+    t.string   "state",            :default=>"Texas"
+    t.string   "country",          :default=>"United States"
+    t.integer  "zipcode"
   end
 
 end

@@ -8,8 +8,18 @@
 
 # user seed
 users = [
-       {:username => 'jiajia', :password => 'jiajia', :password_confirmation => 'jiajia',
-       :email => '111@gmail.com', :first_name => 'jiajia', :last_name => 'hou'}
+       {:username => 'jiajia', :password => 'jiajia', :password_confirmation => 'jiajia', :current_password=>'jiajia',
+       :email => '111@gmail.com', :first_name => 'jiajia', :last_name => 'hou', :function => '1,2,3,4',
+       :phone_number => '12345678', :street_address => 'sesame street', :zipcode => 77840      
+       },
+       {:username => 'user2', :password => 'user2', :password_confirmation => 'user2', :current_password=>'user2',
+       :email => '222@gmail.com', :first_name => 'James', :last_name => 'Bond', :function => '1,2,3',
+       :phone_number => '12345679', :street_address => 'sesame street', :zipcode => 77841      
+       },
+       {:username => 'user3', :password => 'user3', :password_confirmation => 'user3', :current_password=>'user3',
+       :email => '333@gmail.com', :first_name => 'Emily', :last_name => 'Jones', :function => '1',
+       :phone_number => '12345680', :street_address => 'sesame street', :zipcode => 77842      
+       }
        ]
        
 users.each do |user|
@@ -26,6 +36,7 @@ end
 
 #donor seed
 donors = [
+<<<<<<< HEAD
             {:title => 'mr.', :first_name => 'albert', :last_name => 'linkoln', :company => 'apple', :organization => 'ptsd'},
             {:title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :company => 'google', :organization => 'dso'},
             {:title => 'mr', :first_name => 'albert', :last_name => 'zhang', :company => 'linkendin', :organization => 'ptsd'},
@@ -36,11 +47,21 @@ donors = [
 
 
 
+=======
+            {:flag => 'I', :title => 'mr.', :first_name => 'albert', :last_name => 'linkoln', :company => 'apple', :organization => 'ptsd', :active => 1},
+            {:flag => 'O', :title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :company => 'google', :organization => 'dso', :active => 1},
+            {:flag => 'I', :title => 'mr', :first_name => 'albert', :last_name => 'zhang', :company => 'linkendin', :organization => 'ptsd', :active => 0},
+            {:flag => 'O', :title => 'mr.', :first_name => 'sam', :last_name => 'smith', :company => 'apple', :organization => 'ptsd', :active => 1},
+            {:flag => 'I', :title => 'mr.', :first_name => 'johnny', :last_name => 'walker',:company => '', :organization => '', :active => 1},
+            {:flag => 'I', :title => 'mrs.', :first_name => 'michelle',:last_name => 'glanger',:company => '', :organization => '', :active => 0}
+          ]
+  
+>>>>>>> master
 contacts = [
           {:contact_date => '2016-04-01', :followup_date => '2016-04-22', :donor_id => '1', :narrative => 'Discussion about event in May'},
           {:contact_date => '2016-04-02', :followup_date => '2016-04-23', :donor_id => '2', :narrative => 'Funding raising for April'},
-          {:contact_date => '2016-03-31', :followup_date => '2016-04-21', :contact_person_id => '1', :narrative => 'Discussion about next donation from Golden Lion'},
-          {:contact_date => '2016-03-31', :followup_date => '2016-04-26', :contact_person_id => '2', :narrative => 'Financial Report to Silver Fox'},
+          {:contact_date => '2016-03-31', :followup_date => '2016-04-21', :donor_id => '1', :narrative => 'Discussion about next donation from Golden Lion'},
+          {:contact_date => '2016-03-31', :followup_date => '2016-04-26', :donor_id => '2', :narrative => 'Financial Report to Silver Fox'},
           ]
           
           
@@ -180,11 +201,10 @@ donors.each do |donor|
   Donor.create!(donor)
 end
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 contacts.each do |contact|
   Contact.create!(contact)
-end
-
-reports.each do |report|
-  Report.create!(report)
 end
