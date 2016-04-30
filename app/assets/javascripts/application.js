@@ -20,8 +20,7 @@
 //= require bootstrap-datepicker/core
 //= require notify.min
 //= require_tree .
-<<<<<<< HEAD
 //= require bootstrap-select
+//= require bootstrap-datepicker
 
-=======
->>>>>>> master
+

@@ -1,6 +1,4 @@
 =render :partial=>'layouts/banner'
-=javascript_include_tag "filter.js"
-//=javascript_include_tag "field.js"
 
 #page-title.container-fluid.titleLine
 	%h2 Report
@@ -30,56 +28,11 @@
 							%th{:width => val}
 								= key
 				%tbody
-					/				
-						- @filters.each do |filter|
-							%tr{:data => {:id => filter.id}}
-								%td
-									= filter.table_name
-								%td
-									= filter.field_name
-								%td
-									= filter.value
-								%td
-									= filter.min_value
-								%td
-									= filter.max_value
-								%td
-									= filter.min_date
-								%td
-									= filter.max_date
 		.button-line.bottom-right-info-bar{:style => "padding:0"}
-			=link_to "Add", "#filter_tab", class: 'btn btn-success', id: "add"
-			=link_to "Edit", "#filter_tab", class: 'btn btn-info', id: "edit"
-			%button.btn.btn-danger#delete{type:'button'} Delete
+			%button.btn.btn-success#add Add
+			%button.btn.btn-info#edit Edit
+			%button.btn.btn-warning#save{style:"display:none;"} Save
+			%button.btn.btn-danger#delete Delete
 			=link_to "Back", reports_path, class: 'btn btn-primary'
-		=javascript_include_tag "filter.js"
-		/
-			.panel.panel-danger{:style => "margin-top:40px;"}
-				.panel-heading{:style => "font-size:20px;"} Fields
-				%form{:id => 'fields', :role => "form"}
-					#three-box-step.form-group
-						.row
-							.col-md-3
-								%h5
-									%span.list-title 1) Tables
-								%select.form-control{:id => "tables",:multiple => "", :style => "height: 200px; width: 100%; margin-top: 10px"}
-									%option{:value => "1"} Donor
-									%option{:value => "2"} Orgnization
-									%option{:value => "3"} Contact
-									%option{:value => "4"} Finance
-									%option{:value => "5"} Contact Person
-							.col-md-4
-								%h5
-									%span.list-title 2) Available Fields
-									%select.unselected.fields.form-control{:id => "availablefields", :multiple => "", :style => "height: 200px; width: 100%; margin-top: 10px"}
-							.col-md-4
-								%h5
-									%span.list-title 3) Filter
-									.form-group{:style => 'margin-top:10px;margin-left:20px;'}
-										.row
-											.col-md-3#filter
-											.col-md-1.pull-right{:style => 'margin-top:160px'}
-						.row
-							.col-md-5
-								%h5
-									%span.list-title 4) Criteria Fields
+
+		
