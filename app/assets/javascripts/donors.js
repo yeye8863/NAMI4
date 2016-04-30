@@ -30,7 +30,8 @@ var donorDataTable = {
   setup: function(){
     // DataTable
     var table = $('#table_donor').DataTable({
-        aoColumns :[
+      "bStateSave": true,
+      aoColumns :[
           { "sTitle": "Action","bSortable": false },
           { "sTitle": "Flag","bSortable": false, },
           { "sTitle": "Title", "bSortable": false,},
@@ -38,18 +39,32 @@ var donorDataTable = {
           { "sTitle": "Last Name", "bSortable": true,},
           { "sTitle": "Organization ", "bSortable": true},
           { "sTitle": "Company ", "bSortable": true}
-        ]
-    }).order([3,'asc']).draw();
-// 1. column search
-    // Setup - add a text input to each footer cell
+        ],
+      fnDrawCallback: function(){
+        summaryInfo.setup();
+      },
+      aaSorting: [3,'asc']
+    });
+    
+    
+    $('#table_donor tbody').on('click', 'tr', function(){
+      if (!$('#table_donor').hasClass('locked')){
+        if ( $(this).hasClass('selected') ) {
+          $(this).removeClass('selected');
+        }else {
+          $('tr.selected').removeClass('selected');
+          $(this).addClass('selected');
+        }
+      }
+    });
+      
+    // append column search box
     $('#table_donor tfoot th.filter').each( function () {
         var title = $(this).text();
         $(this).html( '<input type="text" placeholder=" '+title+'" />' );
     } );
- 
-    donorDataTable.bindSelect();
     
-    // Apply the search
+    // apply column search
     table.columns().every( function () {
         var that = this;
         $( 'input', this.footer() ).on( 'keyup change', function () {
@@ -61,10 +76,9 @@ var donorDataTable = {
         } );
     } );
   
-
-    
     var original_row;
-// 2. quick edit row
+    
+    //  quick edit row
      $('#donor-result #quick_edit').on( 'click', function (e) {
         if ($('#table_donor').hasClass('locked')){
             saveData();
@@ -99,7 +113,7 @@ var donorDataTable = {
     };
     
     
-// 3. quick add row
+    //  quick add row
     $('#donor-result #quick_add').on( 'click', function (e) {
         if ($('#table_donor').hasClass('locked')){
             saveData();
@@ -120,8 +134,7 @@ var donorDataTable = {
  
     } );
     
-    
-// 4. cancel 
+    //  cancel 
     $('#donor-result #cancel').on( 'click', function (e) {
       var selected_c = $('#table_donor tr.selected');
       if ($('#table_donor').hasClass('locked')){
@@ -141,7 +154,7 @@ var donorDataTable = {
       }
     });
 
-// 5. save data and draw new row
+    //  save data and draw new row
     function toObject(names, values) {
       var result = {};
       for (var i = 0; i < names.length; i++)
@@ -149,7 +162,7 @@ var donorDataTable = {
       return result;
     };
     
-// 6. show all button
+    // reset all button
     function reset_btn(){
 	    $("#donor-result #add").show();
       $("#donor-result #quick_add").text("Quick Add").show();
@@ -158,6 +171,7 @@ var donorDataTable = {
 	    $("#donor-result #table_donor").removeClass("locked");
     }
     
+    // submit data
     function saveData(){
         var head = $('#table_donor thead');
         var attr_name = head.data("attrname");
@@ -195,22 +209,20 @@ var donorDataTable = {
         	}
     };
 
+    // redraw data table
     function saveRow(data, selected_c){
 	    if(data.id) selected_c.data("id", data.id);
 	    var butns;
-	    if($('tr.selected #actions').length>0){
+	    if($('tr.newrow').length>0){
+	      $("tr.newrow td:first-child").attr({'id':"actions","class":"","style":'width:15%'})
+	      butns = "<a id='view'; class='btn btn-success btn-xs' href='/donorSummary/"+data.id+"', data-remote='true'>View</a>\
+                 <a class='btn btn-success btn-xs' href='/donors/"+data.id+"'>Edit</a>\
+                 <a id='delete' class='btn btn-danger btn-xs' href='/donors/"+data.id+"' data-method='delete' rel='nofollow' data-confirm='Are you sure?'>Delete</a>";
+	    }else{
 	      butns = $("tr.selected #actions").html();
 	    }
-	    else{
-	      $("tr.selected td:first-child").attr({'id':"actions","class":"","style":'width:15%'})
-	      $("tr.selected").removeClass('newrow')
-	      butns = "<a id='view'; class='btn btn-success btn-xs' href='/donorSummary/"+data.id+"', data-remote='true'>View</a>\
-                <a class='btn btn-success btn-xs' href='/donors/"+data.id+"'>Edit</a>\
-                <a id='delete' class='btn btn-danger btn-xs' href='/donors/"+data.id+"' data-method='delete' rel='nofollow' data-confirm='Are you sure?'>Delete</a>";
-	    }
 	   
-	    var row = table.row(selected_c);
-  	  row.data([
+  	  table.row(selected_c).data([
   	      butns,
   	      data.flag,
   	      data.title,
@@ -218,31 +230,11 @@ var donorDataTable = {
   	      data.last_name,
   	      data.organization,
   	      data.company
-  	      ]);
-  	      
-	    table.draw(false);
+  	      ]).draw(false);
 	    reset_btn();
-	    donorDataTable.bindSelect();
-	    summaryInfo.setup();
-      $("#donor-result #add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"}); 
-    }
-
-
-  },
-  bindSelect:function(){
-    // 2. selection by click
-    var table = $('#table_donor').DataTable();
-    $('#table_donor tbody tr td:not(:first-child)').on('click', function () {
-        if ( !$('#table_donor').hasClass('locked') ){
-            if ( $(this).parent().hasClass('selected') ) {
-                $(this).parent().removeClass('selected');
-            }
-            else {
-                table.$('tr.selected').removeClass('selected');
-                $(this).parent().addClass('selected');
-            }
-        }
-    } );
+	    $('tr.newrow').removeClass('newrow');
+       $("#donor-result #add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"}); 
+     }
   }
 };
 
@@ -265,8 +257,6 @@ var summaryInfo={
     });
   }
 };
-
-$(summaryInfo.setup);
 
 $(function(){
   var active = $('#activeLabel').text();
