@@ -27,7 +27,7 @@
       %tr
         %th
         - @user_attr_show.each do |attr|
-          %th.filter #{attr.humanize}
+          %th.filter=attr
   .button-line.pull-right       
     = link_to 'Access Control', accesses_path, class:'btn btn-primary' 
     = link_to 'Back', dashboard_path, class:'btn btn-primary'
