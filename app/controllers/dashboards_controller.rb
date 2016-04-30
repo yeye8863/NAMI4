@@ -1,7 +1,4 @@
-require 'date'
-
 class DashboardsController < ApplicationController
-    before_filter :authorize
     def index
       @agenda_records = AgendaView.all
       @donors = Donor.all.where('active = 1').order(updated_at: :desc)

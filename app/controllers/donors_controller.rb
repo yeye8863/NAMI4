@@ -1,7 +1,5 @@
 class DonorsController < ApplicationController
 
-    #before_filter :authorize
-
     def index
         @donor_attr = Donor.attribute_names
         @donor_attr_show = ["flag", "title", "first_name", "last_name", "organization", "company"]

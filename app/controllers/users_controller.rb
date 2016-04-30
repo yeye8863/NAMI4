@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-	before_filter :authorize, :only => :index
-	
 	def index
 		@users = User.all
 		@user_attr_show = ['first_name','last_name','email','function']

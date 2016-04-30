@@ -1,4 +1,6 @@
 class AccessesController < ApplicationController
+    #before_action :check_authorization
+    
     def index
         @accesses = Access.all()
         @access_attr = ['email']
@@ -24,5 +26,9 @@ class AccessesController < ApplicationController
     end
     
     def destroy
+        @access = Access.find()
+        @access = Access.destroy
     end
+    
+    
 end
