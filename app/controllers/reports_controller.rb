@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-    before_filter :authorize
+    before_action :check_authorization
     
     def index
         @report_records = Report.search_by(params[:report_record]).paginate(:per_page => 5, :page => params[:page])
@@ -36,6 +36,12 @@ class ReportsController < ApplicationController
         flash[:notice] = "#{@report_record.title} is deleted."
         @report_record.destroy
         redirect_to reports_path
+    end
     
+    def check_authorization
+      unless current_user.function.include? 'report management'
+          flash[:notice]="Sorry, authorization check failed!"
+          redirect_to homepage_path
+      end
     end
 end

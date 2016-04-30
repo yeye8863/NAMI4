@@ -1,5 +1,6 @@
 class DonorsController < ApplicationController
-
+    before_action :check_authorization
+    
     def index
         @donor_attr = Donor.attribute_names
         @donor_attr_show = ["flag", "title", "first_name", "last_name", "organization", "company"]
@@ -149,5 +150,12 @@ class DonorsController < ApplicationController
           'Business Phone' => @donor.business_phone
 	     }
 	     render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr?
+    end
+    
+    def check_authorization
+        unless current_user.function.include? 'donor management'
+            flash[:notice]="Sorry, authorization check failed!"
+            redirect_to homepage_path
+        end
     end
 end
