@@ -180,8 +180,74 @@ reports = [
             }
           ]
           
+          
+filters =[
+					{
+						:table_name => 'finances',
+						:field_name => 'date',
+						:value =>'',
+						:min_value =>'',
+						:max_value =>'',
+						:min_date =>'2014-01-01',
+						:max_date =>'2014-12-31',
+						:created_by =>'',
+						:created_at =>'',
+						:last_modified_at =>'',
+						:last_modified_by =>'',
+						:report => '15',
+					},
+					
+					{
+						:table_name => 'finances',
+						:field_name => 'amount',
+						:value =>'',
+						:min_value =>'0',
+						:max_value =>'1000',
+						:min_date =>'',
+						:max_date =>'',
+						:created_by =>'',
+						:created_at =>'',
+						:last_modified_at =>'',
+						:last_modified_by =>'',
+						:report => '15',
+					},
+					
+					{
+						:table_name => 'donors',
+						:field_name => 'first_name',
+						:value =>'',
+						:min_value =>'',
+						:max_value =>'',
+						:min_date =>'',
+						:max_date =>'',
+						:created_by =>'',
+						:created_at =>'',
+						:last_modified_at =>'',
+						:last_modified_by =>'',
+						:report => '15',
+					},
+	
+					{
+						:table_name => 'donors',
+						:field_name => 'last_name',
+						:value =>'',
+						:min_value =>'',
+						:max_value =>'',
+						:min_date =>'',
+						:max_date =>'',
+						:created_by =>'',
+						:created_at =>'',
+						:last_modified_at =>'',
+						:last_modified_by =>'',
+						:report => '15',
+					}
+]          
 reports.each do |report|
   Report.create!(report)
+end
+
+filters.each do |filter|
+  Filter.create!(filter)
 end
 
 donors.each do |donor|

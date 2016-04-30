@@ -15,9 +15,12 @@ $(document).ready(function() {
 		}
 	
 		$("#add").click(Filworker.insRow);
+		
+		
+			
 	//	$("#edit").on('click',Filworker.editRow);
 	//	$("#delete").click(Filworker.delData);
-	//	$("#save").click(Filworker.saveData);
+		$("#save").click(Filworker.saveData);
 	//	$("#filter_tab tbody").on("click", "tr", Filworker.selRow);
 } );
 
@@ -36,8 +39,8 @@ var Filworker = {
 			$(row).addClass("info").siblings().removeClass("info");
 			
 			//reset buttons
-			$("#save",$("button")).show();
-			$("#edit",$("button")).hide();
+		  //$("#save",$("button")).show();
+			$("#edit").hide();
 			
 			Filworker.addRow($(row));
 	  }
@@ -54,7 +57,8 @@ var Filworker = {
 				$("#add").addClass("adding");
 				var cells_sel_tab = $("td", selected_c).slice(0, 1);
 				var cells_sel_fld = $("td", selected_c).slice(1, 2);
-				var cells_inp = $("td", selected_c).slice(2, 7);
+				var cells_inp = $("td", selected_c).slice(2, 5);
+				var cells_date = $("td", selected_c).slice(5, 7);
 				
 				cells_sel_tab.each(function(){
 					if($("select", $(this)).length == 0)
@@ -77,20 +81,23 @@ var Filworker = {
 				
 				cells_inp.each(function(){
 					if($("input", $(this)).length == 0)
-						$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>").selectpicker();
+						$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>");
 				});
 				
-				//config the datepicking
-				Filworker.choDate($("input", cells_inp[3]), $("input", cells_inp[4]));
-				
+				cells_date.each(function(){
+					if($("input", $(this)).length == 0)
+						$(this).html("<input style='width:100%;' type='text' data-date-format='yyyy-mm-dd' class='datepicker'>");
+				});
 				$('.selectpicker').selectpicker();
+				$('.datepicker').datepicker();
+				//config the datepicking
+				//Filworker.choDate(cells_date[0], cells_date[1]);
 				
 			}
 		
 			Filworker.topRow();
-	
 			//dynamic field select
-			$('.selectpicker#selectpicker-tab').change(function(){
+		$('.selectpicker#selectpicker-tab').change(function(){
 							
 		    var selected = $(this).find("option:selected").val();
 		    $('.selectpicker#selectpicker-fld').find('[value=placeholder]').remove();
@@ -99,7 +106,6 @@ var Filworker = {
 		      case 'contact':
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
-		        	
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
 								+'<option value="datetime-contact_date">Contact Date</option>'
 								+'<option value="datetime-followup_date">Followup Date</option>'
@@ -164,8 +170,78 @@ var Filworker = {
 	},
 	
 	saveData: function(){
+		if(selected_c.length){
+		var attr = [];
+		var cells_sel_tab = $("td", selected_c).slice(0, 1);
+		cells_sel_tab.each(function(){
+			attr.push($("select", $(this)).val());
+		});
 		
+		var cells_sel_fld = $("td", selected_c).slice(1, 2);
+		cells_sel_fld.each(function(){
+			var fld=$("select", $(this)).val().split('-');
+			attr.push(fld[1]);
+		});
+		
+		var cells_inp = $("td", selected_c).slice(2, 5);
+		cells_inp.each(function(){
+			attr.push($("input", $(this)).val());
+		});
+		
+		var cells_date = $("td", selected_c).slice(5, 7);
+		cells_date.each(function(){
+			attr.push($("input", $(this)).val());
+		});
+		
+		if(attr[0] == ""){ 
+			$("#add").notify("Please select the Table.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			return false;
+		}
+		if(attr[1] == ""){ 
+			$("#add").notify("Please select the Field.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			return false;
+		}
+		if(selected_c.data("id"))
+			$.ajax({
+				type: "PUT",
+				url: "/filters/" + selected_c.data("id"),
+				data: {"attr": attr},
+				timeout: 5000,
+			    success: function(data, requestStatus, xhrObject){ Filworker.saveRow(data); },
+			    error: function(xhrObj, textStatus, exception) {
+					$("#add").notify("Failed to save data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			    }
+			})
+		else
+			$.ajax({
+				type: "POST",
+				url: "/filters/",
+				data: {"attr": attr, "id": $("#ReportId").text()},
+				timeout: 5000,
+			    success: function(data, requestStatus, xhrObject){ Filworker.saveRow(data); },
+			    error: function(xhrObj, textStatus, exception) {
+					$("#add").notify("Failed to add data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			    }
+			})
+	}
 	},
+	
+  saveRow: function(data){
+	if(data.id) selected_c.data("id", data.id);
+	table_c.row(selected_c).data([
+		data.table_name,
+		data.field_name,
+		data.value,
+		data.min_value,
+		data.max_value,
+		data.min_date,
+		data.max_date
+	]).draw();
+	$("#add").removeClass("adding");
+	$("#add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
+	$("#edit").show();
+},
+
 	
 	topRow : function(){
 		if($("#add").hasClass("adding")){
@@ -180,7 +256,12 @@ var Filworker = {
 	},
 	
 	delRow: function(){
-		
+		if($("#edit").hasClass("editing")){
+		$("#edit").removeClass("editing");
+		$("#edit").text("Edit");
+	}
+	table_c.row('.info').remove().draw(false);
+	$("#add").notify("Successfully deleted!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
 	},
 	
 	delData :function(){
@@ -188,33 +269,40 @@ var Filworker = {
 	},
 	
 	choDate : function(a,b){
-		var d1 = a.datepicker({
-		format: 'yyyy-mm-dd',
-	}).on('changeDate', function(evnt) {
-			if (evnt.date.valueOf() > d2.date.valueOf()) {
-		        var newDate = new Date(evnt.date)
+			var now = new Date();
+			/*
+			var d1 = a.datepicker({
+					format: 'yyyy-mm-dd',
+					autoclose: true
+			});
+		
+			var d2 = b.datepicker({
+					format: 'yyyy-mm-dd',
+					autoclose: true
+			})
+			*/
+			/*		
+			a
+			.datepicker()
+			.on('changeDate', function(e) {
+			if (e.date.valueOf() > b.date.valueOf()) {
+		        var newDate = new Date(a.date)
 		        newDate.setDate(newDate.getDate() + 1);
-		        d2.setValue(newDate);
+		        b.setValue(newDate);
 	      	}
-      d1.hide();
+      a.hide();
       b[0].focus();
-    }).data('datepicker');	
+    })	
 	
-	var d2 = b.datepicker({
-		format: 'yyyy-mm-dd',
-		/*
-		onRender: function(date){
-			return date.valueOf() < d1.date.valueOf() ? "disabled" : "";
-		}*/
-	}).on('changeDate', function(evnt) {
-				if (evnt.date.valueOf() < d1.date.valueOf()){
-					alert("Date Max should greater than Date Min")
-					var d1Date = new Date(d1.date.valueOf())
-		       d1Date.setDate(d1Date.getDate() + 1);
-		        d2.setValue(d1Date);
-				}
-      	d2.hide();
-    }).data('datepicker')
+			b.on('changeDate', function(evnt) {
+					if (evnt.date.valueOf() < d1.date.valueOf()){
+						alert("Date Max should greater than Date Min")
+						var d1Date = new Date(d1.date.valueOf())
+			       d1Date.setDate(d1Date.getDate() + 1);
+			        d2.setValue(d1Date);
+					}
+	      	d2.hide();
+	    })*/
 	},
 	
 	
