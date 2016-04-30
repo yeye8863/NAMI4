@@ -15,14 +15,18 @@ class FiltersController < ApplicationController
     
     def create
         a = params[:attr]
-        @donor = Donor.find(params[:id]);
-        @contact = @donor.contacts.build({
-            :contact_date => a[0],
-            :followup_date => a[1],
-            :narrative => a[2]
+        @report = Report.find(params[:id]);
+        @filter = @report.filters.build({
+            :table_name => a[0],
+            :field_name => a[1],
+            :value => a[2],
+            :min_value => a[3],
+            :max_value => a[4],
+            :min_date => a[5],
+            :max_date => a[6]
         })
-        @contact.save!
-        render :json => @contact if request.xhr?
+        @filter.save!
+        render :json => @filter if request.xhr?
     end
     
     def update

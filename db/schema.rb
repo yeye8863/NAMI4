@@ -67,7 +67,7 @@ SELECT * FROM
           c.followup_date as followup_date,
           c.id as contact_id
         FROM donors a JOIN contacts c ON a.id = c.donor_id
-<<<<<<< HEAD
+
         WHERE c.followup_date >= date('now')
         UNION
         SELECT 
@@ -79,9 +79,11 @@ SELECT * FROM
         FROM contacts c JOIN contact_people b ON c.contact_person_id = b.id
         JOIN organizations d ON b.organization_id = d.id
         WHERE c.followup_date >= date('now')) as RESULT
-=======
+
         WHERE c.followup_date >= date('now') AND a.active = 1) as RESULT
->>>>>>> 91817de7bcef60ba03dd2a95a4a6c529c7575e41
+
+        WHERE c.followup_date >= date('now') AND a.active = 1) as RESULT
+
         ORDER BY followup_date ASC
   END_VIEW_AGENDA_VIEWS
 
@@ -91,10 +93,10 @@ SELECT * FROM
     t.string   "value"
     t.decimal  "min_value"
     t.decimal  "max_value"
-
     t.date     "min_date"
     t.date     "max_date"
-
+    t.date     "min_date"
+    t.date     "max_date"
     t.string   "created_by"
     t.datetime "created_at",       :null=>false
     t.string   "last_modified_by"
@@ -145,6 +147,7 @@ SELECT * FROM
     t.string   "username"
     t.string   "email"
     t.string   "password_digest"
+    t.string   "current_password"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "function"

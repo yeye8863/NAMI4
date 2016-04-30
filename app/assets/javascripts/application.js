@@ -21,4 +21,6 @@
 //= require notify.min
 //= require_tree .
 //= require bootstrap-select
+//= require bootstrap-datepicker
+
 

@@ -20,7 +20,7 @@
               %td=report_record.last_modified_by
               %td=report_record.last_modified_at
               %td=report_record.created_at
-              %td=link_to "Edit", edit_report_path(report_record), class: 'btn btn-success btn-xs'
+              %td=link_to "Edit", edit_report_path(report_record.id), class: 'btn btn-success btn-xs'
               %td=link_to "Delete", report_path(report_record.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger btn-xs'
  
   =link_to 'Add New Template', new_report_path, {:class => 'btn btn-default pull-right'} 

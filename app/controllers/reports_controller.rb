@@ -18,6 +18,7 @@ class ReportsController < ApplicationController
         	'Date Min' => '10%',
         	'Date Max' => '10%'
         }
+        @filters = Filter.where(:report => id)
     end
     
     def new 
@@ -31,7 +32,17 @@ class ReportsController < ApplicationController
     end
     
     def edit
-        
+        @report = Report.find(params[:id])
+        @report_filter = {
+        	'Table' => '25%',
+        	'Field' => '25%',
+        	'Value' => '10%',
+        	'Amount Min' => '10%',
+        	'Amount Max' => '10%',
+        	'Date Min' => '10%',
+        	'Date Max' => '10%'
+        }
+        @filters = Filter.where(:report => @report.id)
     end
     
     def update
