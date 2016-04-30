@@ -7,8 +7,8 @@ var ReportCreator = {
     },
     
   DonorFields: function(){
-     return('<option value="none_title">Title</option>'
-      +'<option value="none_first_name">First Name</option>'
+     return('<option value="title">Title</option>'
+      +'<option value="first_name">First Name</option>'
       +'<option value="none_last_name">Last Name</option>'
       +'<option value="none_middle_name">Middle Name</option>'
       +'<option value="none_salution">Salution</option>'
@@ -80,6 +80,7 @@ var ReportCreator = {
       default:
         return false;
     }
+    $('.atr').prop('disabled', false);
   },
   
   filter_part: function() {
@@ -202,6 +203,9 @@ var ReportCreator = {
  
   setup: function() {
    
+      $('#tables').change(ReportCreator.fields_extract);
+        
+      $('.fields').change(ReportCreator.addListeners);
       $('#selectpicker-tab').change(ReportCreator.fields_extract);
        
 
@@ -214,5 +218,4 @@ var ReportCreator = {
 $.fn.isVisible = function() {
         return !($(this).css('visibility') == 'hidden' || $(this).css('display') == 'none');
   };
-
-
+$(ReportCreator.setup);

@@ -2,7 +2,7 @@ class ReportsController < ApplicationController
     before_filter :authorize
     
     def index
-        @report_records = Report.search_by(params[:report_record]).paginate(:per_page => 5, :page => params[:page])
+        @report_records = Report.search_by(params[:report_record]).paginate(:per_page => 4, :page => params[:page])
         render(:partial => 'search_result', :object => @report_records) if request.xhr?
     end
 
@@ -44,7 +44,6 @@ class ReportsController < ApplicationController
         }
         @filters = Filter.where(:report => @report.id)
     end
-    
     
     def update
         

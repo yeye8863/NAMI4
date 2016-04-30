@@ -36,6 +36,7 @@ end
 
 #donor seed
 donors = [
+
             {:flag => 'I', :title => 'mr.', :first_name => 'albert', :last_name => 'linkoln', :company => 'apple', :organization => 'ptsd', :active => 1},
             {:flag => 'O', :title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :company => 'google', :organization => 'dso', :active => 1},
             {:flag => 'I', :title => 'mr', :first_name => 'albert', :last_name => 'zhang', :company => 'linkendin', :organization => 'ptsd', :active => 0},
@@ -44,6 +45,7 @@ donors = [
             {:flag => 'I', :title => 'mrs.', :first_name => 'michelle',:last_name => 'glanger',:company => '', :organization => '', :active => 0}
           ]
   
+
 contacts = [
           {:contact_date => '2016-04-01', :followup_date => '2016-04-22', :donor_id => '1', :narrative => 'Discussion about event in May'},
           {:contact_date => '2016-04-02', :followup_date => '2016-04-23', :donor_id => '2', :narrative => 'Funding raising for April'},
