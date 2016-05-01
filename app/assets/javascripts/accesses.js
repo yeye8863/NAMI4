@@ -24,7 +24,7 @@ var accessDataTable = {
             else if ($('#access_table tr').hasClass('selected')){
                 original_row = save_raw_data();
                 $('#access_table').addClass('locked');
-                $('#access_table tr.selected td').each( function () {
+                $('#access_table tr.selected td:first-child').each( function () {
                     var title = $(this).text();
                     $(this).html( "<input style='width:100%' value='" + $(this).html().trim() + "'>");
                 } );
@@ -41,7 +41,7 @@ var accessDataTable = {
     	        var attr = [];
     	    	  var cells = $("td", selected_c).slice(1);
     	    	  
-    	    	  $('#access_table tr.selected td').each( function () {
+    	    	  $('#access_table tr.selected td:first-child').each( function () {
                 var title = $(this).text();
     	    		  attr.push(title);
               });
@@ -56,10 +56,10 @@ var accessDataTable = {
                 saveData();
             }
             else{
-                var row = table.row.add([""]).draw().node();
+                var row = table.row.add(["",""]).draw().node();
                 $('#access_table').addClass('locked');
                 $(row).addClass("selected").addClass("newrow").siblings().removeClass("selected");
-                $('#access_table tr.selected td').each( function () {
+                $('#access_table tr.selected td:first-child').each( function () {
                     var title = $(this).text();
                     $(this).html( "<input style='width:100%' value='" + $(this).html().trim() + "'>");
                 } );
@@ -110,7 +110,7 @@ var accessDataTable = {
             var selected_c = $('#access_table tr.selected');
     	    if(selected_c.length){
     	    	var attr = [];
-    	    	var cells = $("td", selected_c);
+    	    	var cells = $("td:first-child", selected_c);
     	    	cells.each(function(){
     	    		attr.push($("input", $(this)).val().trim());
     	    	});
@@ -144,9 +144,16 @@ var accessDataTable = {
         function saveRow(data, selected_c){
     	    if(data.id) selected_c.data("id", data.id);
     	    var row = table.row(selected_c)
+    	    var btn = ""
+    	    if($('tr.newrow').length>0){
+    	        btn += "<a id='deletebtn' class='btn btn-danger btn-xs' href='/accesses/"+data.id+"' data-method='delete' rel='nofollow' data-confirm='Are you sure?'>Delete</a>";
+    	    }else{
+    	        btn += $("tr.selected #deletebtn").html();
+    	    }
     	    row.data([
-    	      data.email
-    	      ]).draw();
+    	      data.email,
+    	      btn
+    	    ]).draw();
     	    reset_btn();
           $("#access-result #quick_add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"}); 
         }

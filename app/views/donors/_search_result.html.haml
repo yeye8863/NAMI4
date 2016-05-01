@@ -20,7 +20,7 @@
           - attrs = donor.attributes
           - @donor_attr_show.each do |attr|
             - if attrs.include? attr
-              %td=donor[attr].split.map(&:capitalize).join(' ') if donor[attr] 
+              %td=donor[attr]
   .button-line.right{:style => "padding:10"}
     =link_to "Add New", new_donor_path, class: 'btn btn-success', id: "add"
     =link_to "Quick Add","#table_donor" , class: 'btn btn-info', id: "quick_add"

@@ -9,15 +9,15 @@
 # user seed
 users = [
        {:username => 'jiajia', :password => 'jiajia', :password_confirmation => 'jiajia', :current_password=>'jiajia',
-       :email => '111@gmail.com', :first_name => 'jiajia', :last_name => 'hou', :function => '1,2,3,4',
+       :email => '111@gmail.com', :first_name => 'Jiajia', :last_name => 'Hou', :function => 'donor management, dashboard, report management, user management',
        :phone_number => '12345678', :street_address => 'sesame street', :zipcode => 77840      
        },
        {:username => 'user2', :password => 'user2', :password_confirmation => 'user2', :current_password=>'user2',
-       :email => '222@gmail.com', :first_name => 'James', :last_name => 'Bond', :function => '1,2,3',
+       :email => '222@gmail.com', :first_name => 'James', :last_name => 'Bond', :function => 'donor management, dashboard, report management',
        :phone_number => '12345679', :street_address => 'sesame street', :zipcode => 77841      
        },
        {:username => 'user3', :password => 'user3', :password_confirmation => 'user3', :current_password=>'user3',
-       :email => '333@gmail.com', :first_name => 'Emily', :last_name => 'Jones', :function => '1',
+       :email => '333@gmail.com', :first_name => 'Emily', :last_name => 'Jones', :function => 'donor management',
        :phone_number => '12345680', :street_address => 'sesame street', :zipcode => 77842      
        }
        ]
@@ -36,21 +36,20 @@ end
 
 #donor seed
 donors = [
-
-            {:flag => 'I', :title => 'mr.', :first_name => 'albert', :last_name => 'linkoln', :company => 'apple', :organization => 'ptsd', :active => 1},
-            {:flag => 'O', :title => 'mrs.', :first_name => 'sophia', :last_name => 'elizabeth', :company => 'google', :organization => 'dso', :active => 1},
-            {:flag => 'I', :title => 'mr', :first_name => 'albert', :last_name => 'zhang', :company => 'linkendin', :organization => 'ptsd', :active => 0},
-            {:flag => 'O', :title => 'mr.', :first_name => 'sam', :last_name => 'smith', :company => 'apple', :organization => 'ptsd', :active => 1},
-            {:flag => 'I', :title => 'mr.', :first_name => 'johnny', :last_name => 'walker',:company => '', :organization => '', :active => 1},
-            {:flag => 'I', :title => 'mrs.', :first_name => 'michelle',:last_name => 'glanger',:company => '', :organization => '', :active => 0}
+            {:flag => 'I', :title => 'Mr.', :first_name => 'Albert', :last_name => 'Linkoln', :company => 'Apple', :organization => 'PTSD'},
+            {:flag => 'O', :title => 'Mrs.', :first_name => 'Sophia', :last_name => 'Elizabeth', :company => 'Google', :organization => 'Google Charity'},
+            {:flag => 'I', :title => 'Mr.', :first_name => 'Albert', :last_name => 'Zhang', :company => 'Linkedin', :organization => 'ABCD'},
+            {:flag => 'O', :title => 'Mr.', :first_name => 'Sam', :last_name => 'Smith', :company => 'Apple', :organization => 'PTSD'},
+            {:flag => 'I', :title => 'Mr.', :first_name => 'Johnny', :last_name => 'Walker',:company => 'Federal Government', :organization => 'ABba'},
+            {:flag => 'I', :title => 'Mrs.', :first_name => 'Michelle',:last_name => 'Glanger',:company => 'NASA', :organization => 'abBa'}
           ]
   
 
 contacts = [
-          {:contact_date => '2016-04-01', :followup_date => '2016-04-22', :donor_id => '1', :narrative => 'Discussion about event in May'},
-          {:contact_date => '2016-04-02', :followup_date => '2016-04-23', :donor_id => '2', :narrative => 'Funding raising for April'},
-          {:contact_date => '2016-03-31', :followup_date => '2016-04-21', :donor_id => '1', :narrative => 'Discussion about next donation from Golden Lion'},
-          {:contact_date => '2016-03-31', :followup_date => '2016-04-26', :donor_id => '2', :narrative => 'Financial Report to Silver Fox'},
+          {:contact_date => '2016-04-01', :followup_date => '2016-05-22', :donor_id => '1', :narrative => 'Discussion about event in May'},
+          {:contact_date => '2016-04-02', :followup_date => '2016-05-23', :donor_id => '2', :narrative => 'Funding raising for April'},
+          {:contact_date => '2016-03-31', :followup_date => '2016-05-21', :donor_id => '1', :narrative => 'Discussion about next donation from Golden Lion'},
+          {:contact_date => '2016-03-31', :followup_date => '2016-05-26', :donor_id => '3', :narrative => 'Financial Report to Silver Fox'},
           ]
           
           
@@ -184,65 +183,65 @@ reports = [
           
           
 filters =[
-					{
-						:table_name => 'finances',
-						:field_name => 'date',
-						:value =>'',
-						:min_value =>'',
-						:max_value =>'',
-						:min_date =>'2014-01-01',
-						:max_date =>'2014-12-31',
-						:created_by =>'',
-						:created_at =>'',
-						:last_modified_at =>'',
-						:last_modified_by =>'',
-						:report => '15',
-					},
+			{
+				:table_name => 'finances',
+				:field_name => 'date',
+				:value =>'',
+				:min_value =>'',
+				:max_value =>'',
+				:min_date =>'2014-01-01',
+				:max_date =>'2014-12-31',
+				:created_by =>'',
+				:created_at =>'',
+				:last_modified_at =>'',
+				:last_modified_by =>'',
+				:report_id => 1
+			},
 					
-					{
-						:table_name => 'finances',
-						:field_name => 'amount',
-						:value =>'',
-						:min_value =>'0',
-						:max_value =>'1000',
-						:min_date =>'',
-						:max_date =>'',
-						:created_by =>'',
-						:created_at =>'',
-						:last_modified_at =>'',
-						:last_modified_by =>'',
-						:report => '15',
-					},
+			{
+				:table_name => 'finances',
+				:field_name => 'amount',
+				:value =>'',
+				:min_value =>'0',
+				:max_value =>'1000',
+				:min_date =>'',
+				:max_date =>'',
+				:created_by =>'',
+				:created_at =>'',
+				:last_modified_at =>'',
+				:last_modified_by =>'',
+				:report_id => 1
+			},
 					
-					{
-						:table_name => 'donors',
-						:field_name => 'first_name',
-						:value =>'',
-						:min_value =>'',
-						:max_value =>'',
-						:min_date =>'',
-						:max_date =>'',
-						:created_by =>'',
-						:created_at =>'',
-						:last_modified_at =>'',
-						:last_modified_by =>'',
-						:report => '15',
-					},
+			{
+				:table_name => 'donors',
+				:field_name => 'first_name',
+				:value =>'ds',
+				:min_value =>'',
+				:max_value =>'',
+				:min_date =>'',
+				:max_date =>'',
+				:created_by =>'',
+				:created_at =>'',
+				:last_modified_at =>'',
+				:last_modified_by =>'',
+				:report_id => 1
+			},
 	
-					{
-						:table_name => 'donors',
-						:field_name => 'last_name',
-						:value =>'',
-						:min_value =>'',
-						:max_value =>'',
-						:min_date =>'',
-						:max_date =>'',
-						:created_by =>'',
-						:created_at =>'',
-						:last_modified_at =>'',
-						:last_modified_by =>'',
-						:report => '15',
-					}
+			{
+				:table_name => 'donors',
+				:field_name => 'last_name',
+				:value =>'bsa',
+				:min_value =>'',
+				:max_value =>'',
+				:min_date =>'',
+				:max_date =>'',
+				:created_by =>'',
+				:created_at =>'',
+				:last_modified_at =>'',
+				:last_modified_by =>'',
+				:report_id => 1
+			}
 ]          
 reports.each do |report|
   Report.create!(report)
