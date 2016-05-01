@@ -15,6 +15,8 @@ var table_c = $("#table_"+table_name).DataTable( {
 	destroy: true
 } );
 
+table_c.row("#table_"+table_name+" tbody #"+table_name+"_template").remove().draw(false);
+
 $("#view_"+table_name).click(viewRow);
 $("#add_"+table_name).click(insRow);
 $("#edit_"+table_name).click(editRow);
@@ -85,7 +87,6 @@ function editForeign(data){
 }
 
 function saveForeign(now, remote){
-	console.log(remote);
 		if(original) $("#table_"+foreign_key+" tbody td[data-search='"+original[0]+"'] .foreign_key").hide();
 		if(remote) $("#table_"+table_name+" tbody td[data-search='"+remote+"'] .foreign_key").hide();
 		$("#table_"+foreign_key+" tbody td[data-search='"+now+"'] .foreign_key").show();
