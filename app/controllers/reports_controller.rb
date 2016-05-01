@@ -57,4 +57,14 @@ class ReportsController < ApplicationController
         redirect_to reports_path
     
     end
+    
+    private
+    def sort_column
+        Donor.column_names.include?(params[:sort]) ? params[:sort] : "title"
+    end
+    def sort_direction
+        %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+    
+    
 end
