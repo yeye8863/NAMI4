@@ -1,4 +1,5 @@
 class ReportsController < ApplicationController
+helper_method :sort_column, :sort_direction
     before_filter :authorize
     
     def index
@@ -60,7 +61,7 @@ class ReportsController < ApplicationController
     
     private
     def sort_column
-        Donor.column_names.include?(params[:sort]) ? params[:sort] : "title"
+        Donor.column_names.include?(params[:sort]) ? params[:sort] : "title","description","last_modified_by","last_modified_at","created_at"
     end
     def sort_direction
         %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
