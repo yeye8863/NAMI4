@@ -14,14 +14,15 @@ $(document).ready(function() {
     	});
 		}
 	
+		
+		
 		$("#add").click(Filworker.insRow);
 		
-		
-			
 	//	$("#edit").on('click',Filworker.editRow);
-	//	$("#delete").click(Filworker.delData);
+		$("#delete").click(Filworker.delData);
 		$("#save").click(Filworker.saveData);
-	//	$("#filter_tab tbody").on("click", "tr", Filworker.selRow);
+		$("#canc").click(Filworker.cncRow);
+  	$("#filter_tab tbody").on("click", "tr", Filworker.selRow);
 } );
 
 
@@ -36,13 +37,17 @@ var Filworker = {
 	insRow : function(){
 		if(!$("#add").hasClass("adding")){
 			var row = table_c.row.add(["","","","","","",""]).draw().node();
-			$(row).addClass("info").siblings().removeClass("info");
+			$(row).addClass("selected").siblings().removeClass("selected");
 			
 			//reset buttons
-		  //$("#save",$("button")).show();
+		  $("#save").show();
+			$("#canc").show();
 			$("#edit").hide();
+			$("#delete").hide();
 			
+			//
 			Filworker.addRow($(row));
+			Filworker.topRow();
 	  }
 	},
 	
@@ -51,7 +56,7 @@ var Filworker = {
 		if(J_row) selected_c = J_row;
 		else      
 			$("#add")
-		     .notify("Failed to add a new line!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});//selected_c = $("#filter_tab tbody .info").first();
+		     .notify("Failed to add a new line!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});//selected_c = $("#filter_tab tbody .selected").first();
 		
 		if(selected_c.length){
 				$("#add").addClass("adding");
@@ -86,16 +91,17 @@ var Filworker = {
 				
 				cells_date.each(function(){
 					if($("input", $(this)).length == 0)
-						$(this).html("<input style='width:100%;' type='text' data-date-format='yyyy-mm-dd' class='datepicker'>");
+						$(this).html("<input style='width:100%;' type='text' class='datepicker'>");
 				});
 				$('.selectpicker').selectpicker();
-				$('.datepicker').datepicker();
+				$('.datepicker').datepicker({
+					format: 'yyyy-mm-dd',
+					autoclose: true});
 				//config the datepicking
 				//Filworker.choDate(cells_date[0], cells_date[1]);
 				
 			}
 		
-			Filworker.topRow();
 			//dynamic field select
 		$('.selectpicker#selectpicker-tab').change(function(){
 							
@@ -165,6 +171,34 @@ var Filworker = {
 			});
 	},
 	
+	cncRow: function(){
+        // new row
+        if ($("#add").hasClass("adding")){
+	        table_c.row(selected_c).remove().draw(false);
+            Filworker.reBtn();
+        }
+        // edit row
+        else if($("#edit").hasClass("editing")){
+          var butns = $("#actions").html();
+	        var row = table_c.row(selected_c)
+	        original_row[0] = butns;
+	        row.data(original_row).draw();
+          Filworker.reBtn();
+        }
+      
+	}
+	,
+	
+	reBtn: function(){
+		$("#add").removeClass("adding");
+		$("#edit").removeClass("editing");
+		$("#add").show();
+		$("#edit").show();
+		$("#delete").show();
+		$("#canc").hide();
+		$("#save").hide();
+	},
+	
 	editRow: function(){
 		
 	},
@@ -194,11 +228,11 @@ var Filworker = {
 		});
 		
 		if(attr[0] == ""){ 
-			$("#add").notify("Please select the Table.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			$("#add").notify("Please select the Table.", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
 			return false;
 		}
 		if(attr[1] == ""){ 
-			$("#add").notify("Please select the Field.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			$("#add").notify("Please select the Field.", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
 			return false;
 		}
 		if(selected_c.data("id"))
@@ -209,7 +243,7 @@ var Filworker = {
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ Filworker.saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#add").notify("Failed to save data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+					$("#add").notify("Failed to save data!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
 			    }
 			})
 		else
@@ -220,7 +254,7 @@ var Filworker = {
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ Filworker.saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#add").notify("Failed to add data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+					$("#add").notify("Failed to add data!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
 			    }
 			})
 	}
@@ -237,9 +271,12 @@ var Filworker = {
 		data.min_date,
 		data.max_date
 	]).draw();
-	$("#add").removeClass("adding");
-	$("#add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
-	$("#edit").show();
+
+	$("#add").notify("Successfully saved!", {gap: 20, arrowShow: false, className: "success", position:"left middle"});
+	
+	//reset button
+	Filworker.reBtn();
+	
 },
 
 	
@@ -247,30 +284,52 @@ var Filworker = {
 		if($("#add").hasClass("adding")){
 			selected_c.detach();
 			$("#filter_tab tbody").prepend(selected_c);
-		//selected_c.addClass("info").siblings().removeClass("info");
+		//selected_c.addClass("selected").siblings().removeClass("selected");
 		}
 	},
 	
-	selRow: function(){
-		
+	selRow: function(event){
+		if (!$("#add").hasClass("adding") && !$("#edit").hasClass("editing")){
+			if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table_c.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+		}
 	},
 	
 	delRow: function(){
-		if($("#edit").hasClass("editing")){
-		$("#edit").removeClass("editing");
-		$("#edit").text("Edit");
-	}
-	table_c.row('.info').remove().draw(false);
-	$("#add").notify("Successfully deleted!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
+
+	  table_c.row('.selected').remove().draw(false);
+	  $("#add").notify("Successfully deleted!", {gap: 20, arrowShow: false, className: "success", position:"left middle"});
 	},
 	
 	delData :function(){
-		
+		selected_c = $("#filter_tab tbody .selected")
+		if(selected_c.length){
+			var sure = confirm("Are you Sure?");
+			if (sure){
+				selected_c.each(function(){
+					if ($(this).data("id"))
+							$.ajax({
+								type: "DELETE",
+								url : "/filters/"+$(this).data("id"),
+								timeout: 5000,
+								success: function(data, requestStatus, xhrObject){Filworker.delRow();},
+								error: function(xhrObj, textStatus, exception){
+									$("#add").notify("Failed to delete data!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
+								}
+							})
+				});
+			}
+		}
 	},
 	
 	choDate : function(a,b){
-			var now = new Date();
-			/*
+			//var now = new Date();
+			
 			var d1 = a.datepicker({
 					format: 'yyyy-mm-dd',
 					autoclose: true
@@ -280,7 +339,7 @@ var Filworker = {
 					format: 'yyyy-mm-dd',
 					autoclose: true
 			})
-			*/
+			
 			/*		
 			a
 			.datepicker()
