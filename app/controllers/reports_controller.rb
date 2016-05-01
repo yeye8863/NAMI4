@@ -61,7 +61,7 @@ helper_method :sort_column, :sort_direction
     
     private
     def sort_column
-        Donor.column_names.include?(params[:sort]) ? params[:sort] : "title","description","last_modified_by","last_modified_at","created_at"
+        Donor.column_names.include?(params[:sort]) ? params[:sort] : "created_at"
     end
     def sort_direction
         %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
