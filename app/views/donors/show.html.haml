@@ -133,6 +133,12 @@
             %th #{key.humanize}
           %th Finances
       %tbody
+        %tr#contact_template
+          %td
+          %td
+          %td
+          %td{:data => {:search => -1}}
+            .btn.btn-xs.btn-default.foreign_key{:style => "display:none"} Show nothing
         - @contacts.each do |contact|
           %tr{:data => {:id => contact.id, :lmb => contact.last_modified_by, :cb => contact.created_by}}
             - @donor_contact.each do |key|
@@ -196,6 +202,14 @@
               %th #{key.humanize}
             %th Contact
         %tbody
+          %tr#finance_template
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td{:data => {:search => -1}}
+              .btn.btn-xs.btn-default.foreign_key{:style => "display:none"} Show nothing
           - @finances.each do |finance|
             %tr{:data => {:id => finance.id, :lmb => finance.last_modified_by, :cb => finance.created_by}}
               - @donor_finance.each do |key|
