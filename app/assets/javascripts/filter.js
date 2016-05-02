@@ -28,8 +28,7 @@ $(document).ready(function() {
 var selected_c;
 var original_c;
 var table_c;
-var table1;
-var field1;
+
 
 
 var Filworker = {
@@ -344,7 +343,7 @@ var Filworker = {
 	
 	editFld :function(a,b,c){
 		var table1 = original_c[0].trim().toLowerCase();
-		//console.log(table1.trim())
+		console.log(table1.trim())
 		$("select",a).selectpicker('val', table1);
 		
 		var selected = $("select",a).find("option:selected").val();

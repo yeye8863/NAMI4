@@ -185,7 +185,7 @@ reports = [
           
 filters =[
 			{
-				:table_name => 'finances',
+				:table_name => 'finance',
 				:field_name => 'date',
 				:value =>'',
 				:min_value =>'',
@@ -200,7 +200,7 @@ filters =[
 			},
 					
 			{
-				:table_name => 'finances',
+				:table_name => 'finance',
 				:field_name => 'amount',
 				:value =>'',
 				:min_value =>'0',
@@ -215,7 +215,7 @@ filters =[
 			},
 					
 			{
-				:table_name => 'donors',
+				:table_name => 'donor',
 				:field_name => 'first_name',
 				:value =>'ds',
 				:min_value =>'',
@@ -230,7 +230,7 @@ filters =[
 			},
 	
 			{
-				:table_name => 'donors',
+				:table_name => 'donor',
 				:field_name => 'last_name',
 				:value =>'bsa',
 				:min_value =>'',
