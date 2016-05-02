@@ -165,7 +165,7 @@ var Filworker = {
 						        +'<option value="description">Description</option>'
 						        +'<option value="designation">Designation</option>'
 						        +'<option value="created_by">Create by (Person)</option>'
-						        +'<option value="-last_modified_by">Last Modified by (Person)</option>'
+						        +'<option value="last_modified_by">Last Modified by (Person)</option>'
 						        +'<option value="created_at">Created at (Date)</option>'
 						        +'<option value="last_modified_at">Last Modified at (Date)</option>')
 							.selectpicker('refresh');
