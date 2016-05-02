@@ -85,7 +85,11 @@ var DonorTable={
 
 var ReportTable={
   setup: function(){
-    $('#reportTable').DataTable({'bSort': false});
+    var table = $('#reportTable').DataTable({'bSort': false});
+    $('#reportTable tbody').on('click','tr',function(){
+      var reportId = table.row(this).data()[0];
+      $(location).attr('href', '/reports/'+reportId);
+    });
   }
 };
 

@@ -12,6 +12,11 @@ class ReportsController < ApplicationController
       @report = Report.find(id) 
       @filters = @report.filters
       
+      if @filters.empty?
+        flash[:notice] = 'No report fields specified'
+        redirect_to reports_path
+      end
+      
       configs={}
       @attr_names = []
       @filters.each do |filter|
