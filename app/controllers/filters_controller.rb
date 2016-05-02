@@ -17,8 +17,8 @@ class FiltersController < ApplicationController
         a = params[:attr]
         @report = Report.find(params[:id]);
         @filter = @report.filters.build({
-            :table_name => a[0],
-            :field_name => a[1],
+            :table_name => (a[0].downcase if a[0]),
+            :field_name => (a[1].downcase if a[1]),
             :value => a[2],
             :min_value => a[3],
             :max_value => a[4],
@@ -26,6 +26,9 @@ class FiltersController < ApplicationController
             :max_date => a[6]
         })
         @filter.save!
+        
+        @filter.table_name = a[0].humanize if a[0]
+        @filter.field_name = (a[1].split('_').map(&:capitalize).join(' ') if a[1])
         render :json => @filter if request.xhr?
     end
     
@@ -33,14 +36,18 @@ class FiltersController < ApplicationController
         @filter = Filter.find(params[:id])
         a = params[:attr]
         @filter.update_attributes({
-            :table_name => a[0],
-            :field_name => a[1],
+            :table_name => (a[0].downcase if a[0]),
+            :field_name => (a[1].downcase if a[1]),
             :value => a[2],
             :min_value => a[3],
             :max_value => a[4],
             :min_date => a[5],
             :max_date => a[6]
         })
+        
+        @filter.table_name = a[0].humanize if a[0]
+        @filter.field_name = (a[1].split('_').map(&:capitalize).join(' ') if a[1])
+        
         render :json => @filter if request.xhr?
         
     end

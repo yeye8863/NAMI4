@@ -144,7 +144,8 @@ reports = [
              :created_at => '2015-01-24',
              :last_modified_by => 'ste',
              :last_modified_at => '2016-02-18'
-            },{
+            },
+            {
              :title => '2014 donation by amount',
              :description => 'amount between 0 to 500, the whole 2014',
              :last_run => '2016-04-01',
@@ -180,7 +181,7 @@ reports = [
              :last_modified_by => 'jojo',
              :last_modified_at => '2015-02-18'
             }
-          ]
+]
           
           
 filters =[

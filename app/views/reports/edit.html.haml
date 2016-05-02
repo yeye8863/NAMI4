@@ -42,9 +42,9 @@
             - @filters.each do |filter|
               %tr{:data => {:id => filter.id}}
                 %td 
-                  = filter.table_name
+                  = filter.table_name.humanize if filter.table_name
                 %td 
-                  = filter.field_name
+                  = filter.field_name.humanize if filter.field_name
                 %td 
                   = filter.value
                 %td 
