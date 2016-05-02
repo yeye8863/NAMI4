@@ -3,25 +3,23 @@
 $(document).ready(function() {
     if ( $.fn.dataTable.isDataTable( '#filter_tab' ) ) {
     	table_c = $('#filter_tab').DataTable();
-		}
-		else {
+	}
+	else {
     	table_c = $('#filter_tab').DataTable( {
-        "ordering": false,
-        "drawCallback": function( settings ) {
-        //topRow();
-    		},
-    		"dom": 'lrtip'
-    	});
-		}
+	        "ordering": false,
+	    	"dom": 'lrtip'
+	    });
+	}
 	
-		$("#add").click(Filworker.insRow);
 		
 		
-			
+	$("#add").click(Filworker.insRow);
+		
 	//	$("#edit").on('click',Filworker.editRow);
-	//	$("#delete").click(Filworker.delData);
-		$("#save").click(Filworker.saveData);
-	//	$("#filter_tab tbody").on("click", "tr", Filworker.selRow);
+	$("#delete").click(Filworker.delData);
+	$("#save").click(Filworker.saveData);
+	$("#canc").click(Filworker.cncRow);
+  	$("#filter_tab tbody").on("click", "tr", Filworker.selRow);
 } );
 
 
@@ -36,13 +34,17 @@ var Filworker = {
 	insRow : function(){
 		if(!$("#add").hasClass("adding")){
 			var row = table_c.row.add(["","","","","","",""]).draw().node();
-			$(row).addClass("info").siblings().removeClass("info");
+			$(row).addClass("selected").siblings().removeClass("selected");
 			
 			//reset buttons
-		  //$("#save",$("button")).show();
+		  	$("#save").show();
+			$("#canc").show();
 			$("#edit").hide();
+			$("#delete").hide();
 			
+			//
 			Filworker.addRow($(row));
+			Filworker.topRow();
 	  }
 	},
 	
@@ -51,53 +53,54 @@ var Filworker = {
 		if(J_row) selected_c = J_row;
 		else      
 			$("#add")
-		     .notify("Failed to add a new line!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});//selected_c = $("#filter_tab tbody .info").first();
+		     .notify("Failed to add a new line!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});//selected_c = $("#filter_tab tbody .selected").first();
 		
 		if(selected_c.length){
-				$("#add").addClass("adding");
-				var cells_sel_tab = $("td", selected_c).slice(0, 1);
-				var cells_sel_fld = $("td", selected_c).slice(1, 2);
-				var cells_inp = $("td", selected_c).slice(2, 5);
-				var cells_date = $("td", selected_c).slice(5, 7);
+			$("#add").addClass("adding");
+			var cells_sel_tab = $("td", selected_c).slice(0, 1);
+			var cells_sel_fld = $("td", selected_c).slice(1, 2);
+			var cells_inp = $("td", selected_c).slice(2, 5);
+			var cells_date = $("td", selected_c).slice(5, 7);
 				
-				cells_sel_tab.each(function(){
-					if($("select", $(this)).length == 0)
-						$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
-													"<option data-hidden='true' value=''>Choose the table name...</option>" +
-	  											"<option value='donor'>Donor</option>"+
-													"<option value='contact'>Contact</option>"+
-													"<option value='finance'>Finance</option>"+
-													"</select>"
-				 								);
-				  });
+			cells_sel_tab.each(function(){
+			if($("select", $(this)).length == 0)
+				$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
+							"<option data-hidden='true' value=''>Choose the table name...</option>" +
+	  						"<option value='donor'>Donor</option>"+
+							"<option value='contact'>Contact</option>"+
+							"<option value='finance'>Finance</option>"+
+							"</select>"
+				);
+			});
 				
-				cells_sel_fld.each(function(){
-					if($("select", $(this)).length == 0)
-						$(this).html("<select id='selectpicker-fld' class='selectpicker'>"
-												+"<option class='bs-title-option' value='placeholder'>Choose a Table name first!</option>"
-                        + "</select>"	
-						);
-				});
+			cells_sel_fld.each(function(){
+				if($("select", $(this)).length == 0)
+					$(this).html("<select id='selectpicker-fld' class='selectpicker'>"
+							+"<option class='bs-title-option' value='placeholder'>Choose a Table name first!</option>"
+                    	    + "</select>"	
+				);
+			});
 				
-				cells_inp.each(function(){
-					if($("input", $(this)).length == 0)
-						$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>");
-				});
+			cells_inp.each(function(){
+				if($("input", $(this)).length == 0)
+					$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>");
+			});
 				
-				cells_date.each(function(){
-					if($("input", $(this)).length == 0)
-						$(this).html("<input style='width:100%;' type='text' data-date-format='yyyy-mm-dd' class='datepicker'>");
-				});
-				$('.selectpicker').selectpicker();
-				$('.datepicker').datepicker();
+			cells_date.each(function(){
+				if($("input", $(this)).length == 0)
+					$(this).html("<input style='width:100%;' type='text' class='datepicker'>");
+			});
+				
+			$('.selectpicker').selectpicker();
+			$('.datepicker').datepicker({
+				format: 'yyyy-mm-dd',
+				autoclose: true});
 				//config the datepicking
 				//Filworker.choDate(cells_date[0], cells_date[1]);
-				
 			}
 		
-			Filworker.topRow();
 			//dynamic field select
-		$('.selectpicker#selectpicker-tab').change(function(){
+			$('.selectpicker#selectpicker-tab').change(function(){
 							
 		    var selected = $(this).find("option:selected").val();
 		    $('.selectpicker#selectpicker-fld').find('[value=placeholder]').remove();
@@ -121,7 +124,7 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-										+'<option value="none-title">Title</option>'
+								  +'<option value="none-title">Title</option>'
 							      +'<option value="none-first_name">First Name</option>'
 							      +'<option value="none-last_name">Last Name</option>'
 							      +'<option value="none-middle_name">Middle Name</option>'
@@ -165,6 +168,34 @@ var Filworker = {
 			});
 	},
 	
+	cncRow: function(){
+        // new row
+        if ($("#add").hasClass("adding")){
+	        table_c.row(selected_c).remove().draw(false);
+            Filworker.reBtn();
+        }
+        // edit row
+        else if($("#edit").hasClass("editing")){
+          var butns = $("#actions").html();
+	        var row = table_c.row(selected_c)
+	        original_row[0] = butns;
+	        row.data(original_row).draw();
+          Filworker.reBtn();
+        }
+      
+	}
+	,
+	
+	reBtn: function(){
+		$("#add").removeClass("adding");
+		$("#edit").removeClass("editing");
+		$("#add").show();
+		$("#edit").show();
+		$("#delete").show();
+		$("#canc").hide();
+		$("#save").hide();
+	},
+	
 	editRow: function(){
 		
 	},
@@ -194,11 +225,11 @@ var Filworker = {
 		});
 		
 		if(attr[0] == ""){ 
-			$("#add").notify("Please select the Table.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			$("#add").notify("Please select the Table.", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
 			return false;
 		}
 		if(attr[1] == ""){ 
-			$("#add").notify("Please select the Field.", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+			$("#add").notify("Please select the Field.", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
 			return false;
 		}
 		if(selected_c.data("id"))
@@ -209,7 +240,7 @@ var Filworker = {
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ Filworker.saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#add").notify("Failed to save data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+					$("#add").notify("Failed to save data!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
 			    }
 			})
 		else
@@ -220,7 +251,7 @@ var Filworker = {
 				timeout: 5000,
 			    success: function(data, requestStatus, xhrObject){ Filworker.saveRow(data); },
 			    error: function(xhrObj, textStatus, exception) {
-					$("#add").notify("Failed to add data!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});
+					$("#add").notify("Failed to add data!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
 			    }
 			})
 	}
@@ -237,9 +268,12 @@ var Filworker = {
 		data.min_date,
 		data.max_date
 	]).draw();
-	$("#add").removeClass("adding");
-	$("#add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
-	$("#edit").show();
+
+	$("#add").notify("Successfully saved!", {gap: 20, arrowShow: false, className: "success", position:"left middle"});
+	
+	//reset button
+	Filworker.reBtn();
+	
 },
 
 	
@@ -247,30 +281,52 @@ var Filworker = {
 		if($("#add").hasClass("adding")){
 			selected_c.detach();
 			$("#filter_tab tbody").prepend(selected_c);
-		//selected_c.addClass("info").siblings().removeClass("info");
+		//selected_c.addClass("selected").siblings().removeClass("selected");
 		}
 	},
 	
-	selRow: function(){
-		
+	selRow: function(event){
+		if (!$("#add").hasClass("adding") && !$("#edit").hasClass("editing")){
+			if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table_c.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+		}
 	},
 	
 	delRow: function(){
-		if($("#edit").hasClass("editing")){
-		$("#edit").removeClass("editing");
-		$("#edit").text("Edit");
-	}
-	table_c.row('.info').remove().draw(false);
-	$("#add").notify("Successfully deleted!", {gap: 205, arrowShow: false, className: "success", position:"left middle"});
+
+	  table_c.row('.selected').remove().draw(false);
+	  $("#add").notify("Successfully deleted!", {gap: 20, arrowShow: false, className: "success", position:"left middle"});
 	},
 	
 	delData :function(){
-		
+		selected_c = $("#filter_tab tbody .selected")
+		if(selected_c.length){
+			var sure = confirm("Are you Sure?");
+			if (sure){
+				selected_c.each(function(){
+					if ($(this).data("id"))
+							$.ajax({
+								type: "DELETE",
+								url : "/filters/"+$(this).data("id"),
+								timeout: 5000,
+								success: function(data, requestStatus, xhrObject){Filworker.delRow();},
+								error: function(xhrObj, textStatus, exception){
+									$("#add").notify("Failed to delete data!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
+								}
+							})
+				});
+			}
+		}
 	},
 	
 	choDate : function(a,b){
-			var now = new Date();
-			/*
+			//var now = new Date();
+			
 			var d1 = a.datepicker({
 					format: 'yyyy-mm-dd',
 					autoclose: true
@@ -280,7 +336,7 @@ var Filworker = {
 					format: 'yyyy-mm-dd',
 					autoclose: true
 			})
-			*/
+			
 			/*		
 			a
 			.datepicker()
@@ -324,7 +380,3 @@ function fixHeader(){
 	} else $(".fixedHeader").remove();
 }
 */
-
-
-
-

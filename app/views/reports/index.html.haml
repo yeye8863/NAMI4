@@ -1,21 +1,7 @@
 =render :partial=>'layouts/banner'
 #page-title.container-fluid.titleLine
   %h2 Report
-#search-box.container-fluid
-  = form_tag reports_path, :method => :get, class: 'form-inline' do
-    .form-group
-      = label :report_record, :title, 'Title'
-      = text_field :report_record, 'title', class: 'form-control'
-    .form-group
-      = label :report_record, :description, 'Description'
-      = text_field :report_record, 'description', class: 'form-control'
-    .form-group
-      = label :report_record, :last_modified_by, 'Modified By'
-      = text_field :report_record, 'last_modified_by', class: 'form-control'  
-    .form-group.pull-right
-      = submit_tag 'Search', class: 'btn btn-primary'
-      = link_to "Reset", '#', type: :resetm, class: 'btn btn-default' 
-.container-fluid
+#mainbody.container-fluid
   %h2 Search result
-  #search_result
-    = render :partial => 'search_result'
+  =render :partial=>'search_result'
+  
