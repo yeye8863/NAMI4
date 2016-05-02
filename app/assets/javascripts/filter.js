@@ -283,13 +283,13 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-								+'<option value="datetime-contact_date">Contact Date</option>'
-								+'<option value="datetime-followup_date">Followup Date</option>'
-								+'<option value="none-narrative">Narrative</option>'
-								+'<option value="string-created_by">Create by (Person)</option>'
-								+'<option value="string-last_modified_by">Last Modified by (Person)</option>'
-								+'<option value="datetime-created_at">Created at (Date)</option>'
-								+'<option value="datetime-last_modified_at">Last Modified at (Date)</option>')
+								+'<option value="contact_date">Contact Date</option>'
+								+'<option value="followup_date">Followup Date</option>'
+								+'<option value="narrative">Narrative</option>'
+								+'<option value="created_by">Create by (Person)</option>'
+								+'<option value="last_modified_by">Last Modified by (Person)</option>'
+								+'<option value="created_at">Created at (Date)</option>'
+								+'<option value="last_modified_at">Last Modified at (Date)</option>')
 							.selectpicker('refresh');
 		        break;
 		        
@@ -297,25 +297,25 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-										+'<option value="none-title">Title</option>'
-							      +'<option value="none-first_name">First Name</option>'
-							      +'<option value="none-last_name">Last Name</option>'
-							      +'<option value="none-middle_name">Middle Name</option>'
-							      +'<option value="none-salution">Salution</option>'
-							      +'<option value="none-email">Email</option>'
-							      +'<option value="string-organization">Organization</option>'
-							      +'<option value="string-company">Company</option>'
-							      +'<option value="none-street_address">Street Address</option>'
-							      +'<option value="string-city">City</option>'
-							      +'<option value="string-state">State</option>'
-							      +'<option value="string-country">Country</option>'
-							      +'<option value="none-zipcode">Zip Code</option>'
-							      +'<option value="none-home_phone">Home Phone</option>'
-							      +'<option value="none-business_phone">Business Phone</option>'
-							      +'<option value="string-created_by">Create by (Person)</option>'
-							      +'<option value="string-last_modified_by">Last Modified by (Person)</option>'
-							      +'<option value="datetime-created_at">Created at (Date)</option>'
-							      +'<option value="datetime-last_modified_at">Last Modified at (Date)</option>')
+										+'<option value="title">Title</option>'
+							      +'<option value="first_name">First Name</option>'
+							      +'<option value="last_name">Last Name</option>'
+							      +'<option value="middle_name">Middle Name</option>'
+							      +'<option value="salution">Salution</option>'
+							      +'<option value="email">Email</option>'
+							      +'<option value="organization">Organization</option>'
+							      +'<option value="company">Company</option>'
+							      +'<option value="street_address">Street Address</option>'
+							      +'<option value="city">City</option>'
+							      +'<option value="state">State</option>'
+							      +'<option value="country">Country</option>'
+							      +'<option value="zipcode">Zip Code</option>'
+							      +'<option value="home_phone">Home Phone</option>'
+							      +'<option value="business_phone">Business Phone</option>'
+							      +'<option value="created_by">Create by (Person)</option>'
+							      +'<option value="last_modified_by">Last Modified by (Person)</option>'
+							      +'<option value="created_at">Created at (Date)</option>'
+							      +'<option value="last_modified_at">Last Modified at (Date)</option>')
 							.selectpicker('refresh');
 		        break;
 		        
@@ -323,15 +323,15 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-										+'<option value="string-type">Type</option>'
-						        +'<option value="datetime-date">Date</option>'
-						        +'<option value="decimal-amount">Amount</option>'
-						        +'<option value="none-description">Description</option>'
-						        +'<option value="string-designation">Designation</option>'
-						        +'<option value="string-created_by">Create by (Person)</option>'
-						        +'<option value="string-last_modified_by">Last Modified by (Person)</option>'
-						        +'<option value="datetime-created_at">Created at (Date)</option>'
-						        +'<option value="datetime-last_modified_at">Last Modified at (Date)</option>')
+										+'<option value="type">Type</option>'
+						        +'<option value="date">Date</option>'
+						        +'<option value="amount">Amount</option>'
+						        +'<option value="description">Description</option>'
+						        +'<option value="designation">Designation</option>'
+						        +'<option value="created_by">Create by (Person)</option>'
+						        +'<option value="last_modified_by">Last Modified by (Person)</option>'
+						        +'<option value="created_at">Created at (Date)</option>'
+						        +'<option value="last_modified_at">Last Modified at (Date)</option>')
 							.selectpicker('refresh');
 		        break;
 		      
