@@ -18,9 +18,6 @@
 //= require dataTables/jquery.dataTables
 //= require bootstrap-datepicker/core
 //= require bootstrap-select
-//= require bootstrap-datepicker
 //= require notify.min
 //= require_tree .
-
-
 

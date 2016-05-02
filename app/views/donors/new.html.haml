@@ -105,6 +105,9 @@
               %textarea#contact_field2.form-control{rows:"5"}
           .row{style:"margin-top: 10px"}
             .col-md-6
+              %label Finance
+              %select#contact_field3{required:"true"}
+                %option{"disabled" => true, "selected" => true, value:""} Select related finance record
             .col-md-3
               .input-group.input-group-sm
                 %span.input-group-addon Created By
@@ -118,7 +121,14 @@
         %tr{:style => "width:100%"}
           - @donor_contact.each do |key|
             %th #{key.humanize}
+          %th Finances
       %tbody
+        %tr#contact_template
+          %td
+          %td
+          %td
+          %td{:data => {:search => -1}}
+            .btn.btn-xs.btn-default.foreign_key{:style => "display:none"} Show nothing
   #finance.tab-pane{:role=>'tabpanel'}
     .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
       .container-fluid
@@ -156,6 +166,9 @@
                 %input#finance_field4.form-control{type:"text"}
           .row{style:"margin-top: 10px"}
             .col-md-6
+              %label Contact
+              %select#finance_field5{required:"true"}
+                %option{"disabled" => true, "selected" => true, value:""} Select related contact record
             .col-md-3
               .input-group.input-group-sm
                 %span.input-group-addon Created By
@@ -170,4 +183,13 @@
           %tr{:style => "width:100%"}
             - @donor_finance.each do |key|
               %th #{key.humanize}
+            %th Contact
         %tbody
+          %tr#finance_template
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td{:data => {:search => -1}}
+              .btn.btn-xs.btn-default.foreign_key{:style => "display:none"} Show nothing

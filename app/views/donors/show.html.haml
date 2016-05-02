@@ -17,7 +17,7 @@
       .row.col-sm-offset-3.col-sm-6
         =render :partial => 'donor_summary'
         .pull-right  
-          =link_to "Back", :back , class: 'btn btn-primary'
+          =link_to "Back", donors_path, class: 'btn btn-primary'
           =link_to "Delete", donor_path(@donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger'
   #basic.tab-pane{:role=>'tabpanel'}
     %label#donorId.hidden=@donor.id
@@ -83,7 +83,7 @@
               =f.text_field :country, class:'form-control', id:'country'
         .button-line.pull-right    
           =f.submit id:'basic-submit', class:'btn btn-default'
-          =link_to "Back", :back, class: 'btn btn-primary'
+          =link_to "Back", donors_path, class: 'btn btn-primary'
   #contact.tab-pane{:role=>'tabpanel'}
     .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
       .container-fluid
@@ -98,7 +98,7 @@
               .btn.btn-info#edit_contact Edit
               .btn.btn-danger#delete_contact Delete
               .btn.btn-warning#cancel_contact{style:"display:none;"} Cancel
-              =link_to "Back", :back, class: 'btn btn-primary'
+              =link_to "Back", donors_path, class: 'btn btn-primary'
     #info_contact.collapse{role:"tabpanel"}
       .well{style:"background-color:#ffffff;"}
         .container
@@ -160,7 +160,7 @@
               .btn.btn-info#edit_finance Edit
               .btn.btn-danger#delete_finance Delete
               .btn.btn-warning#cancel_finance{style:"display:none;"} Cancel
-              =link_to "Back", :back, class: 'btn btn-primary'
+              =link_to "Back", donors_path, class: 'btn btn-primary'
     #info_finance.collapse{role:"tabpanel"}
       .well{style:"background-color:#ffffff;"}
         .container
