@@ -1,5 +1,5 @@
 class FiltersController < ApplicationController
-    before_filter :authorize
+    before_action :check_authorization
     
     def index
         
@@ -30,6 +30,8 @@ class FiltersController < ApplicationController
         @filter.table_name = a[0].humanize if a[0]
         @filter.field_name = (a[1].split('_').map(&:capitalize).join(' ') if a[1])
         render :json => @filter if request.xhr?
+        @filter.last_modified_by = User.find(session[:user_id])
+        
     end
     
     def update
@@ -49,6 +51,7 @@ class FiltersController < ApplicationController
         @filter.field_name = (a[1].split('_').map(&:capitalize).join(' ') if a[1])
         
         render :json => @filter if request.xhr?
+        @filter.last_modified_by = User.find(session[:user_id])
         
     end
     
@@ -56,5 +59,12 @@ class FiltersController < ApplicationController
         @filter = Filter.find(params[:id])
         @filter.destroy
         render :nothing => true
+    end
+    
+    def check_authorization
+      unless current_user.function.include? 'report management'
+          flash[:notice]="Sorry, authorization check failed!"
+          redirect_to homepage_path
+      end
     end
 end

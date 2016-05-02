@@ -1,29 +1,31 @@
-#mainbody.container-fluid
-  .row
-    .col-sm-12
-      %h4 Report Template
-      #report-panel.panel.panel-default
-        %table#report-table.table
-          %thead
-            %tr
-              %th Title
-              %th Description
-              %th Last Modified By
-              %th Last Modified Date
-              %th Create Date
-              %th{:colspan => 2} Action
-          %tbody
-          -if @report_records
-            -@report_records.each do |report_record|
-              %tr
-                %td=report_record.title
-                %td=report_record.description
-                %td=report_record.last_modified_by
-                %td=report_record.last_modified_at
-                %td=report_record.created_at
-                %td=link_to "Edit", edit_report_path(report_record), class: 'btn btn-success btn-xs'
-                %td=link_to "Delete", report_path(report_record.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger btn-xs'
+#report-result.container-fluid
+  %table#report-table.table.display{:cellspacing => "0", :width => "100%"}
+    %thead
+      %tr
+        %th Title
+        %th Description
+        %th Last Modified By
+        %th Last Modified Date
+        %th Create Date
+        %th Action
+    %tbody
+      -if @reports
+        -@reports.each do |report|
+          %tr
+            %td
+              =report.title
+            %td
+              =report.description
+            %td
+              =report.last_modified_by
+            %td
+              =report.updated_at
+            %td
+              =report.created_at
+            %td
+              =link_to "Preview", report_path(report.id), class: 'btn btn-success btn-xs'
+              =link_to "Edit", edit_report_path(report), class: 'btn btn-success btn-xs'
+              =link_to "Delete", report_path(report.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger btn-xs'
+  .button-line.right{:style => "padding:10"}
+    =link_to 'Add New Template', new_report_path, {:class => 'btn btn-default'} 
 
-    
-    =link_to 'Add New Template', new_report_path, {:class => 'btn btn-default pull-right'} 
-= js_will_paginate @report_records

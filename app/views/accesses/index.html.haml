@@ -7,10 +7,12 @@
       %thead{:data => {:attrname => @access_attr}}
         %tr
           %th.filter Email Address
+          %th
       %tbody
         - @accesses.each do |access|
-          %tr
+          %tr{:data => {:id => access.id}}
             %td=access.email
+            %td#deletebtn=link_to "delete",access_path(access.id), method: 'delete', class:'btn btn-xs btn-danger',data: {confirm: "Are you sure?"}
     .button-line.right{:style => "padding:10"}
       =link_to "Quick Add","#access_table" , class: 'btn btn-info', id: "quick_add"
       =link_to "Quick Edit", "#access_table", class: 'btn btn-info', id: "quick_edit"

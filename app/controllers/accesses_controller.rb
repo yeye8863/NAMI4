@@ -1,4 +1,6 @@
 class AccessesController < ApplicationController
+    before_action :check_authorization
+    
     def index
         @accesses = Access.all()
         @access_attr = ['email']
@@ -24,5 +26,16 @@ class AccessesController < ApplicationController
     end
     
     def destroy
+        @access = Access.find(params[:id])
+        @access.destroy
+        flash[:notice] = "#{@access.email} is deleted."
+        redirect_to accesses_path
+    end
+    
+    def check_authorization
+        unless current_user.function.include? 'user management'
+            flash[:notice]="Sorry, authorization check failed!"
+            redirect_to homepage_path
+        end
     end
 end

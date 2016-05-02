@@ -10,25 +10,25 @@
     .panel.panel-default
       .panel-heading{:style => "font-size:20px;"} Info
       .panel-body
-        =form_for @report, :method=>'put', :html => {:id => 'info_edit', :role => 'form'} do |r|
+        =form_for @report, :method=>'put', :id=>'info_edit', :role=>'form', :remote=>true do |r|
+          =r.hidden_field :id, :value=>@report.id, :readonly=>true
+          =r.hidden_field :last_modified_by, :value=>@user.first_name.humanize+' '+@user.last_name.humanize, :id => 'created_by'
           .form-group
             .row
               .col-md-3
                 =r.label :title,'Title:'
                 =r.text_field :title, :class => 'form-control', :id => 'title'
-            .row
-              .col-md-3
-                =r.label :created_by, 'Creator:' 
-                =r.text_field :created_by, :class => 'form-control', :id => 'created_by'
+          .form-group
             .row
               .col-md-5
                 =r.label :description, 'Description:' 
                 =r.text_area :description, :class => 'form-control', :id => 'description'
+          .form-group
             .row{:style => "margin-top:10px"}
               .button-line{:style => "padding:10px"}
                 =r.submit class: 'btn btn-primary'
                 =link_to "Reset", '#', type: :resetm, class: 'btn btn-default'
-                =link_to "Back", reports_path, class: 'btn btn-default'
+                =link_to "Back", reports_path, id:'backbtn',class: 'btn btn-default'
     #filter-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:10px;"}
       .panel-heading{:style => "font-size:20px;"} Fields
       .panel-body
@@ -62,4 +62,3 @@
       %button.btn.btn-danger#delete Delete
       %button.btn.btn-primary#canc{:style => "display: none;"} Cancel
       =link_to "Back", reports_path, class: "btn btn-default", id: "back"
-     
