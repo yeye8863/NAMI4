@@ -1,5 +1,7 @@
 class DonorsController < ApplicationController
-    #before_filter :authorize
+
+    before_action :check_authorization
+    
 
     def index
         @donor_attr = Donor.attribute_names
@@ -36,11 +38,7 @@ class DonorsController < ApplicationController
     
     def create
         params[:donor][:active] = 1
-        to_create={}
-        params[:donor].each do |attr|
-          to_create[attr[0]] = attr[1].to_s.downcase
-        end
-        @donor = Donor.create!(to_create)
+        @donor = Donor.create!(params[:donor])
         flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
         if params[:where] == "inplace"
             render :json => @donor
@@ -54,18 +52,18 @@ class DonorsController < ApplicationController
         @active = params[:active]
         @donor = Donor.find(id)
         @donor_basic = {
-            'Title' => (@donor.title.capitalize if @donor.title),
-            'First Name' => (@donor.first_name.capitalize if @donor.first_name),
-            'Last Name' => (@donor.last_name.capitalize if @donor.last_name),
-            'Middle Name' => (@donor.middle_name.capitalize if @donor.middle_name),
-            'Salution' => (@donor.salution.capitalize if @donor.salution),
+            'Title' => @donor.title,
+            'First Name' => @donor.first_name,
+            'Last Name' => @donor.last_name,
+            'Middle Name' => @donor.middle_name,
+            'Salution' => @donor.salution,
             'Email' => @donor.email,
   	        'Organization' => @donor.organization,
-  	        'Company' => (@donor.company.split.map(&:capitalize).join(' ') if @donor.company),
-  	        'Street Address' => (@donor.street_address.split.map(&:capitalize).join(' ') if @donor.street_address),
-  	        'City' => (@donor.city.capitalize if @donor.city),
-  	        'State' => (@donor.state.capitalize if @donor.state),
-  	        'Countrt' => (@donor.country.capitalize if @donor.country),
+  	        'Company' => @donor.company,
+  	        'Street Address' => @donor.street_address,
+  	        'City' => @donor.city,
+  	        'State' => @donor.state,
+  	        'Countrt' => @donor.country,
   	        'Zip Code' => @donor.zipcode,
             'Home Phone' => @donor.home_phone,
             'Business Phone' => @donor.business_phone
@@ -88,11 +86,7 @@ class DonorsController < ApplicationController
     
     def update
       @donor = Donor.find(params[:id])
-      to_update={}
-      params[:donor].each do |attr|
-        to_update[attr[0]] = attr[1].downcase
-      end
-      @donor.update_attributes(to_update)
+      @donor.update_attributes(params[:donor])
       
       if @donor.flag == "I"
         type = "Individual"
@@ -103,19 +97,18 @@ class DonorsController < ApplicationController
       render :json => @donor if request.xhr? && params[:where] == "inplace"
       
       @donor_basic = {
-            'Type' => type,
-            'Title' => (@donor.title.capitalize if @donor.title),
-            'First Name' => (@donor.first_name.capitalize if @donor.first_name),
-            'Last Name' => (@donor.last_name.capitalize if @donor.last_name),
-            'Middle Name' => (@donor.middle_name.capitalize if @donor.middle_name),
-            'Salution' => (@donor.salution.capitalize if @donor.salution),
+            'Title' => @donor.title,
+            'First Name' => @donor.first_name,
+            'Last Name' => @donor.last_name,
+            'Middle Name' => @donor.middle_name,
+            'Salution' => @donor.salution,
             'Email' => @donor.email,
   	        'Organization' => @donor.organization,
-  	        'Company' => (@donor.company.capitalize if @donor.company),
+  	        'Company' => @donor.company,
   	        'Street Address' => @donor.street_address,
-  	        'City' => (@donor.city.capitalize if @donor.city),
-  	        'State' => (@donor.state.capitalize if @donor.state),
-  	        'Countrt' => (@donor.country.capitalize if @donor.country),
+  	        'City' => @donor.city,
+  	        'State' => @donor.state,
+  	        'Countrt' => @donor.country,
   	        'Zip Code' => @donor.zipcode,
             'Home Phone' => @donor.home_phone,
             'Business Phone' => @donor.business_phone
@@ -142,22 +135,29 @@ class DonorsController < ApplicationController
       
       @donor_basic = {
           'Type' => type,
-          'Title' => (@donor.title.capitalize if @donor.title),
-          'First Name' => (@donor.first_name.capitalize if @donor.first_name),
-          'Last Name' => (@donor.last_name.capitalize if @donor.last_name),
-          'Middle Name' => (@donor.middle_name.capitalize if @donor.middle_name),
-          'Salution' => (@donor.salution.capitalize if @donor.salution),
+          'Title' => @donor.title,
+          'First Name' => @donor.first_name,
+          'Last Name' => @donor.last_name,
+          'Middle Name' => @donor.middle_name,
+          'Salution' => @donor.salution,
           'Email' => @donor.email,
   	      'Organization' => @donor.organization,
-  	      'Company' => (@donor.company.split.map(&:capitalize).join(' ') if @donor.company),
-  	      'Street Address' => (@donor.street_address.split.map(&:capitalize).join(' ') if @donor.street_address),
-  	      'City' => (@donor.city.capitalize if @donor.city),
-  	      'State' => (@donor.state.capitalize if @donor.state),
-  	      'Countrt' => (@donor.country.capitalize if @donor.country),
+  	      'Company' => @donor.company,
+  	      'Street Address' => @donor.street_address,
+  	      'City' => @donor.city,
+  	      'State' => @donor.state,
+  	      'Countrt' => @donor.country,
   	      'Zip Code' => @donor.zipcode,
           'Home Phone' => @donor.home_phone,
           'Business Phone' => @donor.business_phone
 	     }
 	     render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr?
+    end
+    
+    def check_authorization
+        unless current_user.function.include? 'donor management'
+            flash[:notice]="Sorry, authorization check failed!"
+            redirect_to homepage_path
+        end
     end
 end

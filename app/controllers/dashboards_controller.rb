@@ -1,7 +1,6 @@
-require 'date'
-
 class DashboardsController < ApplicationController
-    before_filter :authorize
+    before_action :check_authorization
+  
     def index
       @agenda_records = AgendaView.all
       @donors = Donor.all.where('active = 1').order(updated_at: :desc)
@@ -39,6 +38,13 @@ class DashboardsController < ApplicationController
             'Business Phone' => @donor.business_phone
 	        }
       render(:partial => 'added_donor_info',:object=>@donor_basic) if request.xhr?
+    end
+    
+    def check_authorization
+        unless current_user.function.include? 'dashboard'
+            flash[:notice]="Sorry, authorization check failed!"
+            redirect_to homepage_path
+        end
     end
 end
 

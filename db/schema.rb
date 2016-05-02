@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20160425194910) do
     t.datetime "last_modified_at"
     t.datetime "updated_at",       :null=>false
     t.string   "flag"
-    t.integer  "active"
+    t.integer  "active",           :default=>1
   end
 
   create_view "agenda_views", <<-'END_VIEW_AGENDA_VIEWS', :force => true

@@ -3,27 +3,27 @@
 $(document).ready(function() {
     if ( $.fn.dataTable.isDataTable( '#filter_tab' ) ) {
     	table_c = $('#filter_tab').DataTable();
-		}
-		else {
+	}
+	else {
     	table_c = $('#filter_tab').DataTable( {
-        "ordering": false,
-        "drawCallback": function( settings ) {
-        //topRow();
-    		},
-    		"dom": 'lrtip'
-    	});
-		}
+	        "ordering": false,
+	    	"dom": 'lrtip'
+	    });
+	}
 	
+		
+		
 		$("#add").click(Filworker.insRow);
-	//	$("#edit").on('click',Filworker.editRow);
-	//	$("#delete").click(Filworker.delData);
-	//	$("#save").click(Filworker.saveData);
-	//	$("#filter_tab tbody").on("click", "tr", Filworker.selRow);
+		$("#edit").click(Filworker.editRow);
+		$("#delete").click(Filworker.delData);
+		$("#save").click(Filworker.saveData);
+		$("#canc").click(Filworker.cncRow);
+  	$("#filter_tab tbody").on("click", "tr", Filworker.selRow);
 } );
 
 
 var selected_c;
-//var header_c;
+var original_c;
 var table_c;
 
 
@@ -32,14 +32,19 @@ var Filworker = {
 	//insert new row at first row and config it
 	insRow : function(){
 		if(!$("#add").hasClass("adding")){
+			$("#add").addClass("adding");
 			var row = table_c.row.add(["","","","","","",""]).draw().node();
-			$(row).addClass("info").siblings().removeClass("info");
+			$(row).addClass("selected").siblings().removeClass("selected");
 			
 			//reset buttons
-			$("#save",$("button")).show();
-			$("#edit",$("button")).hide();
+		  $("#save").show();
+			$("#canc").show();
+			$("#edit").hide();
+			$("#delete").hide();
 			
+			//
 			Filworker.addRow($(row));
+			Filworker.topRow();
 	  }
 	},
 	
@@ -48,47 +53,55 @@ var Filworker = {
 		if(J_row) selected_c = J_row;
 		else      
 			$("#add")
-		     .notify("Failed to add a new line!", {gap: 205, arrowShow: false, className: "error", position:"left middle"});//selected_c = $("#filter_tab tbody .info").first();
+		     .notify("Failed to add a new line!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});//selected_c = $("#filter_tab tbody .selected").first();
+		
+		Filworker.cofRow();
+	},
+	
+	cofRow: function(){
 		
 		if(selected_c.length){
-				$("#add").addClass("adding");
 				var cells_sel_tab = $("td", selected_c).slice(0, 1);
 				var cells_sel_fld = $("td", selected_c).slice(1, 2);
-				var cells_inp = $("td", selected_c).slice(2, 7);
+				var cells_inp = $("td", selected_c).slice(2, 5);
+				var cells_date = $("td", selected_c).slice(5, 7);
 				
-				cells_sel_tab.each(function(){
-					if($("select", $(this)).length == 0)
-						$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
-													"<option data-hidden='true' value=''>Choose the table name...</option>" +
-	  											"<option value='donor'>Donor</option>"+
-													"<option value='contact'>Contact</option>"+
-													"<option value='finance'>Finance</option>"+
-													"</select>"
-				 								);
-				  });
+			cells_sel_tab.each(function(){
+			if($("select", $(this)).length == 0)
+				$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
+							"<option data-hidden='true' value=''>Choose the table name...</option>" +
+	  						"<option value='donor'>Donor</option>"+
+							"<option value='contact'>Contact</option>"+
+							"<option value='finance'>Finance</option>"+
+							"</select>"
+				);
+			});
 				
-				cells_sel_fld.each(function(){
-					if($("select", $(this)).length == 0)
-						$(this).html("<select id='selectpicker-fld' class='selectpicker'>"
-												+"<option class='bs-title-option' value='placeholder'>Choose a Table name first!</option>"
-                        + "</select>"	
-						);
-				});
+			cells_sel_fld.each(function(){
+				if($("select", $(this)).length == 0)
+					$(this).html("<select id='selectpicker-fld' class='selectpicker'>"
+							+"<option class='bs-title-option' value='placeholder'>Choose a Table name first!</option>"
+                    	    + "</select>"	
+				);
+			});
 				
-				cells_inp.each(function(){
+			cells_inp.each(function(){
+				if($("input", $(this)).length == 0)
+					$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>");
+			});
+				
+				cells_date.each(function(){
 					if($("input", $(this)).length == 0)
-						$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>").selectpicker();
+						$(this).html("<input style='width:100%;' type='text' class='datepicker'>");
 				});
-				
-				//config the datepicking
-				Filworker.choDate($("input", cells_inp[3]), $("input", cells_inp[4]));
-				
 				$('.selectpicker').selectpicker();
-				
+				$('.datepicker').datepicker({
+					format: 'yyyy-mm-dd',
+					autoclose: true});
+				//config the datepicking
+				//Filworker.choDate(cells_date[0], cells_date[1]);
 			}
 		
-			Filworker.topRow();
-	
 			//dynamic field select
 			$('.selectpicker#selectpicker-tab').change(function(){
 							
@@ -99,7 +112,6 @@ var Filworker = {
 		      case 'contact':
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
-		        	
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
 								+'<option value="datetime-contact_date">Contact Date</option>'
 								+'<option value="datetime-followup_date">Followup Date</option>'
@@ -115,7 +127,7 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-										+'<option value="none-title">Title</option>'
+								  +'<option value="none-title">Title</option>'
 							      +'<option value="none-first_name">First Name</option>'
 							      +'<option value="none-last_name">Last Name</option>'
 							      +'<option value="none-middle_name">Middle Name</option>'
@@ -159,62 +171,221 @@ var Filworker = {
 			});
 	},
 	
+	cncRow: function(){
+        // new row
+        if ($("#add").hasClass("adding") && !$("#edit").hasClass("editing")){
+	        table_c.row(selected_c).remove().draw(false);
+            Filworker.reBtn();
+        }
+        // edit row
+        else if($("#edit").hasClass("editing") && !$("#add").hasClass("adding")){
+	        var row = table_c.row(selected_c)
+	        row.data(original_c).draw();
+          Filworker.reBtn();
+        }
+      
+	}
+	,
+	
+	reBtn: function(){
+		$("#add").removeClass("adding");
+		$("#edit").removeClass("editing");
+		$("#add").show();
+		$("#edit").show();
+		$("#delete").show();
+		$("#canc").hide();
+		$("#save").hide();
+	},
+	
 	editRow: function(){
+		if($("#filter_tab tr").hasClass("selected")){
+			original_c = Filworker.save_raw_row();
+			$("#edit").addClass("editing");
+			selected_c = $("#filter_tab tr.selected")
+			Filworker.cofRow();
+		}
+		
+		//reset btn
+		$("#add").hide();
+		$("#edit").hide();
+		$("#save").show();
+		$("#canc").show();
+		$("#delete").hide();
 		
 	},
 	
-	saveData: function(){
-		
+	save_raw_row :function(){
+		var selected_c = $("#filter_tab tr.selected")
+		if(selected_c.length){
+			var row_con = [];
+			$("td",selected_c).each(function(){
+				var cell_con =$(this).text();
+				row_con.push(cell_con);
+			});
+		}
+		return row_con;
 	},
+	
+	saveData: function(){
+		if($("#add").hasClass("adding") || $("#edit").hasClass("editing")){
+			if(selected_c.length){
+			var attr = [];
+			var cells_sel_tab = $("td", selected_c).slice(0, 1);
+			cells_sel_tab.each(function(){
+				attr.push($("select", $(this)).val());
+			});
+		
+			var cells_sel_fld = $("td", selected_c).slice(1, 2);
+			cells_sel_fld.each(function(){
+				var fld=$("select", $(this)).val().split('-');
+				attr.push(fld[1]);
+			});
+		
+			var cells_inp = $("td", selected_c).slice(2, 5);
+			cells_inp.each(function(){
+				attr.push($("input", $(this)).val());
+			});
+		
+			var cells_date = $("td", selected_c).slice(5, 7);
+			cells_date.each(function(){
+				attr.push($("input", $(this)).val());
+			});
+		
+			if(attr[0] == ""){ 
+				$("#add").notify("Please select the Table.", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
+				return false;
+			}
+			if(attr[1] == ""){ 
+				$("#add").notify("Please select the Field.", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
+				return false;
+			}
+			if(selected_c.data("id"))
+				$.ajax({
+					type: "PUT",
+					url: "/filters/" + selected_c.data("id"),
+					data: {"attr": attr},
+			  	success: function(data, requestStatus, xhrObject){ Filworker.saveRow(data); },
+			    error: function(xhrObj, textStatus, exception) {
+					$("#add").notify("Failed to save data!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
+			  }
+			})
+			else
+				$.ajax({
+					type: "POST",
+					url: "/filters/",
+					data: {"attr": attr, "id": $("#ReportId").text()},
+			    success: function(data, requestStatus, xhrObject){ Filworker.saveRow(data); },
+			    error: function(xhrObj, textStatus, exception) {
+					$("#add").notify("Failed to add data!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
+			  }
+			})
+		}
+		}
+	},
+	
+  saveRow: function(data){
+	if(data.id) selected_c.data("id", data.id);
+	
+	table_c.row(selected_c).data([
+		data.table_name,
+		data.field_name,
+		data.value,
+		data.min_value,
+		data.max_value,
+		data.min_date,
+		data.max_date
+	]).draw();
+
+	$("#add").notify("Successfully saved!", {gap: 20, arrowShow: false, className: "success", position:"left middle"});
+	
+	//reset button
+	Filworker.reBtn();
+	
+},
+
 	
 	topRow : function(){
 		if($("#add").hasClass("adding")){
 			selected_c.detach();
 			$("#filter_tab tbody").prepend(selected_c);
-		//selected_c.addClass("info").siblings().removeClass("info");
+		//selected_c.addClass("selected").siblings().removeClass("selected");
 		}
 	},
 	
-	selRow: function(){
-		
+	selRow: function(event){
+		if (!$("#add").hasClass("adding") && !$("#edit").hasClass("editing")){
+			if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table_c.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+		}
 	},
 	
 	delRow: function(){
-		
+
+	  table_c.row('.selected').remove().draw(false);
+	  $("#add").notify("Successfully deleted!", {gap: 20, arrowShow: false, className: "success", position:"left middle"});
 	},
 	
 	delData :function(){
-		
+		selected_c = $("#filter_tab tbody .selected")
+		if(selected_c.length){
+			var sure = confirm("Are you Sure?");
+			if (sure){
+				selected_c.each(function(){
+					if ($(this).data("id"))
+							$.ajax({
+								type: "DELETE",
+								url : "/filters/"+$(this).data("id"),
+								timeout: 5000,
+								success: function(data, requestStatus, xhrObject){Filworker.delRow();},
+								error: function(xhrObj, textStatus, exception){
+									$("#add").notify("Failed to delete data!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
+								}
+							})
+				});
+			}
+		}
 	},
 	
 	choDate : function(a,b){
-		var d1 = a.datepicker({
-		format: 'yyyy-mm-dd',
-	}).on('changeDate', function(evnt) {
-			if (evnt.date.valueOf() > d2.date.valueOf()) {
-		        var newDate = new Date(evnt.date)
+			//var now = new Date();
+			
+			var d1 = a.datepicker({
+					format: 'yyyy-mm-dd',
+					autoclose: true
+			});
+		
+			var d2 = b.datepicker({
+					format: 'yyyy-mm-dd',
+					autoclose: true
+			})
+			
+			/*		
+			a
+			.datepicker()
+			.on('changeDate', function(e) {
+			if (e.date.valueOf() > b.date.valueOf()) {
+		        var newDate = new Date(a.date)
 		        newDate.setDate(newDate.getDate() + 1);
-		        d2.setValue(newDate);
+		        b.setValue(newDate);
 	      	}
-      d1.hide();
+      a.hide();
       b[0].focus();
-    }).data('datepicker');	
+    })	
 	
-	var d2 = b.datepicker({
-		format: 'yyyy-mm-dd',
-		/*
-		onRender: function(date){
-			return date.valueOf() < d1.date.valueOf() ? "disabled" : "";
-		}*/
-	}).on('changeDate', function(evnt) {
-				if (evnt.date.valueOf() < d1.date.valueOf()){
-					alert("Date Max should greater than Date Min")
-					var d1Date = new Date(d1.date.valueOf())
-		       d1Date.setDate(d1Date.getDate() + 1);
-		        d2.setValue(d1Date);
-				}
-      	d2.hide();
-    }).data('datepicker')
+			b.on('changeDate', function(evnt) {
+					if (evnt.date.valueOf() < d1.date.valueOf()){
+						alert("Date Max should greater than Date Min")
+						var d1Date = new Date(d1.date.valueOf())
+			       d1Date.setDate(d1Date.getDate() + 1);
+			        d2.setValue(d1Date);
+					}
+	      	d2.hide();
+	    })*/
 	},
 	
 	
@@ -236,7 +407,3 @@ function fixHeader(){
 	} else $(".fixedHeader").remove();
 }
 */
-
-
-
-

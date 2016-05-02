@@ -1,13 +1,14 @@
-%table#reportTable.table.display{:cellspacing => "0", :width => "100%"}
-  %thead
-    %tr
-      %th Title
-      %th Description
-      %th Last Modified By
-  %tbody
-    - if @report_records
-      - @report_records.each do |report_record|
-        %tr
-          %td=report_record.title
-          %td=report_record.description
-          %td=report_record.last_modified_by
+#reportView-result.container-fluid  
+  %table#reportTable.table.display{:cellspacing => "0", :width => "100%"}
+    %thead
+      %tr
+        %th Title
+        %th Description
+        %th Last Modified By
+    %tbody
+      - if @report_records
+        - @report_records.each do |report_record|
+          %tr
+            %td=report_record.title
+            %td=report_record.description
+            %td=report_record.last_modified_by
