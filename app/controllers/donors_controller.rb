@@ -14,16 +14,14 @@ class DonorsController < ApplicationController
         @donor_contact = [
 	        "contact_date",
 	        "followup_date",
-	        "narrative",
-	        "finances"
+	        "narrative"
 	    ]
 	    @donor_finance = [
             '_type',
             'date',
             'amount',
             'description', 
-            'designation',
-            'contact' 
+            'designation'
         ]
         #render(:partial => 'donor_info', :object => @donor) if request.xhr?
     end

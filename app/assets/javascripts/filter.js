@@ -1,5 +1,4 @@
 //--filter.js
-//= require bootstrap-datepicker
 $(document).ready(function() {
     if ( $.fn.dataTable.isDataTable( '#filter_tab' ) ) {
     	table_c = $('#filter_tab').DataTable();

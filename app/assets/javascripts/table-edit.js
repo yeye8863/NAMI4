@@ -4,8 +4,8 @@ var inkey = ["i", "I", "d", "D", "b", "B"];
 var original;
 var selected_c;
 var foreign_key;
-var foreign_obj;
-var foreign_row;
+var foreign_tab;
+var foreign_col;
 var table_c = $("#table_"+table_name).DataTable( {
 	"columnDefs": [
 		{"targets": config.norder, "orderable": false}
@@ -15,7 +15,7 @@ var table_c = $("#table_"+table_name).DataTable( {
 	destroy: true
 } );
 
-table_c.row("#table_"+table_name+" tbody #"+table_name+"_template").remove().draw(false);
+table_c.row("#table_"+table_name+" tbody #"+table_name+"_template").remove().draw();
 
 $("#view_"+table_name).click(viewRow);
 $("#add_"+table_name).click(insRow);
@@ -63,17 +63,17 @@ function showForeign(data) {
 		regexp += "(^"+ val +"$)"
 		if(idx < data.length-1) regexp += "|";
 	});
-	foreign_obj.tab.column("#table_"+foreign_key+" th:last").search(regexp,true,false).draw();
+	foreign_tab.column("#table_"+foreign_key+" th:last").search(regexp,true,false).draw();
 	$("#" + foreign_key + "-tab").tab("show");
 }
 
 function editForeign(data){
 	var field = $("#" + table_name + "_field" + (config.edit.length-1));
 	var val = [];
-	foreign_obj.tab.rows().every(function(){
+	foreign_tab.rows().every(function(){
 		var r = this.data();
 		var s = "";
-		foreign_row.forEach(function(val){ s += r[val].substring(0, 50) + " | " });
+		foreign_col.forEach(function(val){ s += r[val].substring(0, 50) + " | " });
 		val.push([$(this.node()).data("id"), s]);
 	});
 	val.forEach(function(val){
@@ -201,7 +201,7 @@ function saveRow(data){
 			"@data-search": String(data.id) || 0
 		}) ).draw();
 		if(data.no_foreign) $(".foreign_key", selected_c).hide();
-		else $(".foreign_key", selected_c).click(function(e){
+		$(".foreign_key", selected_c).click(function(e){
 			getForeign($(e.target).closest("tr").data("id"), showForeign);
 		});
 		if(data.info){
@@ -213,9 +213,10 @@ function saveRow(data){
 			"display": "<btn class='btn-default btn-xs btn foreign_key'>Show finance</btn>",
 			"@data-search": String(data.id) || 0
 		})).draw().node();
+		$(row).find("td:last").attr("data-search", String(data.id));
 		if(data.id) $(row).data("id", data.id);
 		if(data.no_foreign) $(".foreign_key", row).hide();
-		else $(".foreign_key", row).click(function(e){
+		$(".foreign_key", row).click(function(e){
 			getForeign($(e.target).closest("tr").data("id"), showForeign);
 		});
 		if(data.info){
@@ -323,11 +324,11 @@ this.tab = table_c;
 this.foreign_key = function(key){
 	foreign_key = key;
 }
-this.foreign_obj = function(tab){
-	foreign_obj = tab;
+this.foreign_tab = function(tab){
+	foreign_tab = tab;
 }
-this.foreign_row = function(row){
-	foreign_row = row;
+this.foreign_col = function(row){
+	foreign_col = row;
 }
 
 };
@@ -336,9 +337,9 @@ $(document).ready(function(){
 	var tabc = new nypTable("contact", {norder: [3], sort: [[ 0, "desc" ], [ 1, "desc" ]], edit: ["D","d","I","b"] });
 	var tabf = new nypTable("finance", {norder: [5], sort: [[1, "desc"], [2, "desc"]], edit: ["I","D","I","i","i","b"] });
 	tabc.foreign_key("finance");
-	tabc.foreign_obj(tabf);
-	tabc.foreign_row([1,2,0]);
+	tabc.foreign_tab(tabf.tab);
+	tabc.foreign_col([1,2,0]);
 	tabf.foreign_key("contact");
-	tabf.foreign_obj(tabc);
-	tabf.foreign_row([0,2]);
+	tabf.foreign_tab(tabc.tab);
+	tabf.foreign_col([0,2]);
 });
