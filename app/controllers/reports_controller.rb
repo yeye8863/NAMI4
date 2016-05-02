@@ -11,43 +11,22 @@ class ReportsController < ApplicationController
       @filters = @report.filters
       
       configs={}
+      @attr_names = []
       @filters.each do |filter|
-        if !configs.has_key? filter.table
+        if !configs.has_key? filter.table_name
           configs[filter.table_name] = {}
         end
+        @attr_names << filter.field_name
         configs[filter.table_name][filter.field_name]={}
-        configs[filter.table_name][filter.field_name][:value]=filter.value
-        configs[filter.table_name][filter.field_name][:min_value]=filter.min_value
-        configs[filter.table_name][filter.field_name][:max_value]=filter.max_value
-        configs[filter.table_name][filter.field_name][:min_date]=filter.min_date
-        configs[filter.table_name][filter.field_name][:max_date]=filter.max_date
+        configs[filter.table_name][filter.field_name]['value']=filter.value if (filter.value and !filter.value.to_s.empty?)
+        configs[filter.table_name][filter.field_name]['min_value']=filter.min_value if (filter.min_value and !filter.min_value.to_s.empty?)
+        configs[filter.table_name][filter.field_name]['max_value']=filter.max_value if (filter.max_value and !filter.max_value.to_s.empty?)
+        configs[filter.table_name][filter.field_name]['min_date']=filter.min_date if (filter.min_date and !filter.min_date.to_s.empty?)
+        configs[filter.table_name][filter.field_name]['max_date']=filter.max_date if (filter.max_date and !filter.max_date.to_s.empty?)
       end
       
-      @result = Report.generate(configs)
-      if configs.keys.count == 1
-        model = configs.keys[1].singularize.classify.constantize
-        records = model.all
-        configs.each do |table,field|
-          field.each do |attrname,value|
-            case attrname
-            when 'value'
-              records.where(field+'='+value)
-            when 'min_value'
-              records.where(field+'>='+value)
-            when 'max_value'
-              records.where(field+'<='+value)
-            when 'min_date'
-              records.where(field+'>='+value)
-            when 'max_date'
-              records.where(field+'>='+value)
-            end
-          end
-        end
-      elsif configs.keys.count == 2
+      @records = Report.generate(configs)
       
-      elsif configs.keys.count == 3
-      
-      end
     end
     
     def new 

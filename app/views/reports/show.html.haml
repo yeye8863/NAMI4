@@ -1,0 +1,15 @@
+=render :partial=>'layouts/banner'
+#page-title.container-fluid.titleLine
+  %h2 Report Preview
+#mainbody.container-fluid
+  %table#report-detail.table
+    %thead
+      %tr
+        - @attr_names.each do |attr|
+          %th=attr
+    %tbody
+      - if @records
+        - @records.each do |record|
+          %tr
+            - @attr_names.each do |attr| 
+              %th=record.send(attr)
