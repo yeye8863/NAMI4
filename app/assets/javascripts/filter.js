@@ -3,13 +3,16 @@
 $(document).ready(function() {
     if ( $.fn.dataTable.isDataTable( '#filter_tab' ) ) {
     	table_c = $('#filter_tab').DataTable();
-	}
-	else {
+		}
+		else {
     	table_c = $('#filter_tab').DataTable( {
-	        "ordering": false,
-	    	"dom": 'lrtip'
-	    });
-	}
+        "ordering": false,
+        "drawCallback": function( settings ) {
+        //topRow();
+    		},
+    		"dom": 'lrtip'
+    	});
+		}
 	
 		
 		
@@ -25,6 +28,7 @@ $(document).ready(function() {
 var selected_c;
 var original_c;
 var table_c;
+
 
 
 var Filworker = {
@@ -55,10 +59,10 @@ var Filworker = {
 			$("#add")
 		     .notify("Failed to add a new line!", {gap: 20, arrowShow: false, className: "error", position:"left middle"});//selected_c = $("#filter_tab tbody .selected").first();
 		
-		Filworker.cofRow();
+		Filworker.cofNewRow();
 	},
 	
-	cofRow: function(){
+	cofNewRow: function(){
 		
 		if(selected_c.length){
 				var cells_sel_tab = $("td", selected_c).slice(0, 1);
@@ -66,29 +70,29 @@ var Filworker = {
 				var cells_inp = $("td", selected_c).slice(2, 5);
 				var cells_date = $("td", selected_c).slice(5, 7);
 				
-			cells_sel_tab.each(function(){
-			if($("select", $(this)).length == 0)
-				$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
-							"<option data-hidden='true' value=''>Choose the table name...</option>" +
-	  						"<option value='donor'>Donor</option>"+
-							"<option value='contact'>Contact</option>"+
-							"<option value='finance'>Finance</option>"+
-							"</select>"
-				);
-			});
+				cells_sel_tab.each(function(){
+					if($("select", $(this)).length == 0)
+						$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
+													"<option data-hidden='true' value=''>Choose the table name...</option>" +
+	  											"<option value='donor'>Donor</option>"+
+													"<option value='contact'>Contact</option>"+
+													"<option value='finance'>Finance</option>"+
+													"</select>"
+				 								);
+				  });
 				
-			cells_sel_fld.each(function(){
-				if($("select", $(this)).length == 0)
-					$(this).html("<select id='selectpicker-fld' class='selectpicker'>"
-							+"<option class='bs-title-option' value='placeholder'>Choose a Table name first!</option>"
-                    	    + "</select>"	
-				);
-			});
+				cells_sel_fld.each(function(){
+					if($("select", $(this)).length == 0)
+						$(this).html("<select id='selectpicker-fld' class='selectpicker'>"
+												+"<option class='bs-title-option' value='placeholder'>Choose a Table name first!</option>"
+                        + "</select>"	
+						);
+				});
 				
-			cells_inp.each(function(){
-				if($("input", $(this)).length == 0)
-					$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>");
-			});
+				cells_inp.each(function(){
+					if($("input", $(this)).length == 0)
+						$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>");
+				});
 				
 				cells_date.each(function(){
 					if($("input", $(this)).length == 0)
@@ -100,10 +104,11 @@ var Filworker = {
 					autoclose: true});
 				//config the datepicking
 				//Filworker.choDate(cells_date[0], cells_date[1]);
+				
 			}
 		
 			//dynamic field select
-			$('.selectpicker#selectpicker-tab').change(function(){
+		$('.selectpicker#selectpicker-tab').change(function(){
 							
 		    var selected = $(this).find("option:selected").val();
 		    $('.selectpicker#selectpicker-fld').find('[value=placeholder]').remove();
@@ -113,13 +118,13 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-								+'<option value="datetime-contact_date">Contact Date</option>'
-								+'<option value="datetime-followup_date">Followup Date</option>'
-								+'<option value="none-narrative">Narrative</option>'
-								+'<option value="string-created_by">Create by (Person)</option>'
-								+'<option value="string-last_modified_by">Last Modified by (Person)</option>'
-								+'<option value="datetime-created_at">Created at (Date)</option>'
-								+'<option value="datetime-last_modified_at">Last Modified at (Date)</option>')
+								+'<option value="contact_date">Contact Date</option>'
+								+'<option value="followup_date">Followup Date</option>'
+								+'<option value="narrative">Narrative</option>'
+								+'<option value="created_by">Create by (Person)</option>'
+								+'<option value="last_modified_by">Last Modified by (Person)</option>'
+								+'<option value="created_at">Created at (Date)</option>'
+								+'<option value="last_modified_at">Last Modified at (Date)</option>')
 							.selectpicker('refresh');
 		        break;
 		        
@@ -127,25 +132,25 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-								  +'<option value="none-title">Title</option>'
-							      +'<option value="none-first_name">First Name</option>'
-							      +'<option value="none-last_name">Last Name</option>'
-							      +'<option value="none-middle_name">Middle Name</option>'
-							      +'<option value="none-salution">Salution</option>'
-							      +'<option value="none-email">Email</option>'
-							      +'<option value="string-organization">Organization</option>'
-							      +'<option value="string-company">Company</option>'
-							      +'<option value="none-street_address">Street Address</option>'
-							      +'<option value="string-city">City</option>'
-							      +'<option value="string-state">State</option>'
-							      +'<option value="string-country">Country</option>'
-							      +'<option value="none-zipcode">Zip Code</option>'
-							      +'<option value="none-home_phone">Home Phone</option>'
-							      +'<option value="none-business_phone">Business Phone</option>'
-							      +'<option value="string-created_by">Create by (Person)</option>'
-							      +'<option value="string-last_modified_by">Last Modified by (Person)</option>'
-							      +'<option value="datetime-created_at">Created at (Date)</option>'
-							      +'<option value="datetime-last_modified_at">Last Modified at (Date)</option>')
+										+'<option value="title">Title</option>'
+							      +'<option value="first_name">First Name</option>'
+							      +'<option value="last_name">Last Name</option>'
+							      +'<option value="middle_name">Middle Name</option>'
+							      +'<option value="salution">Salution</option>'
+							      +'<option value="email">Email</option>'
+							      +'<option value="organization">Organization</option>'
+							      +'<option value="company">Company</option>'
+							      +'<option value="street_address">Street Address</option>'
+							      +'<option value="city">City</option>'
+							      +'<option value="state">State</option>'
+							      +'<option value="country">Country</option>'
+							      +'<option value="zipcode">Zip Code</option>'
+							      +'<option value="home_phone">Home Phone</option>'
+							      +'<option value="business_phone">Business Phone</option>'
+							      +'<option value="created_by">Create by (Person)</option>'
+							      +'<option value="last_modified_by">Last Modified by (Person)</option>'
+							      +'<option value="created_at">Created at (Date)</option>'
+							      +'<option value="last_modified_at">Last Modified at (Date)</option>')
 							.selectpicker('refresh');
 		        break;
 		        
@@ -153,15 +158,15 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-										+'<option value="string-type">Type</option>'
-						        +'<option value="datetime-date">Date</option>'
-						        +'<option value="decimal-amount">Amount</option>'
-						        +'<option value="none-description">Description</option>'
-						        +'<option value="string-designation">Designation</option>'
-						        +'<option value="string-created_by">Create by (Person)</option>'
-						        +'<option value="string-last_modified_by">Last Modified by (Person)</option>'
-						        +'<option value="datetime-created_at">Created at (Date)</option>'
-						        +'<option value="datetime-last_modified_at">Last Modified at (Date)</option>')
+										+'<option value="type">Type</option>'
+						        +'<option value="date">Date</option>'
+						        +'<option value="amount">Amount</option>'
+						        +'<option value="description">Description</option>'
+						        +'<option value="designation">Designation</option>'
+						        +'<option value="created_by">Create by (Person)</option>'
+						        +'<option value="last_modified_by">Last Modified by (Person)</option>'
+						        +'<option value="created_at">Created at (Date)</option>'
+						        +'<option value="last_modified_at">Last Modified at (Date)</option>')
 							.selectpicker('refresh');
 		        break;
 		      
@@ -202,7 +207,7 @@ var Filworker = {
 			original_c = Filworker.save_raw_row();
 			$("#edit").addClass("editing");
 			selected_c = $("#filter_tab tr.selected")
-			Filworker.cofRow();
+			Filworker.cofEditRow();
 		}
 		
 		//reset btn
@@ -213,6 +218,212 @@ var Filworker = {
 		$("#delete").hide();
 		
 	},
+	
+	cofEditRow: function(){
+		
+		if(selected_c.length){
+				var cells_sel_tab = $("td", selected_c).slice(0, 1);
+				var cells_sel_fld = $("td", selected_c).slice(1, 2);
+				var cells_inp = $("td", selected_c).slice(2, 5);
+				var cells_date = $("td", selected_c).slice(5, 7);
+				
+				cells_sel_tab.each(function(){
+					if($("select", $(this)).length == 0)
+						$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
+													"<option data-hidden='true' value=''>Choose the table name...</option>" +
+	  											"<option value='donor'>Donor</option>"+
+													"<option value='contact'>Contact</option>"+
+													"<option value='finance'>Finance</option>"+
+													"</select>"
+				 								);
+				  });
+				
+				cells_sel_fld.each(function(){
+					if($("select", $(this)).length == 0)
+						$(this).html("<select id='selectpicker-fld' class='selectpicker'>"
+											  + "<option data-hidden='true' value=''>Choose the field name...</option>"
+                        + "</select>"	
+						);
+				});
+				
+				cells_inp.each(function(){
+					if($("input", $(this)).length == 0)
+						$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>");
+				});
+				
+				cells_date.each(function(){
+					if($("input", $(this)).length == 0)
+						$(this).html("<input style='width:100%;' type='text' class='datepicker'>");
+				});
+				$('.selectpicker').selectpicker();
+				$('.datepicker').datepicker({
+					format: 'yyyy-mm-dd',
+					autoclose: true});
+				//config the datepicking
+				//Filworker.choDate(cells_date[0], cells_date[1]);
+				
+			}
+		
+		table1 = original_c[0].trim().toLowerCase();
+		//console.log(table1.trim())
+		$("select",cells_sel_tab).selectpicker('val', table1);
+		
+		
+		Filworker.editFld(cells_sel_tab,cells_sel_fld,cells_date);
+		
+		//dynamic field select
+		$('.selectpicker#selectpicker-tab').change(function(){
+							
+		    var selected = $(this).find("option:selected").val();
+		    $('.selectpicker#selectpicker-fld').find('[value=placeholder]').remove();
+		    //alert(selected);
+		    switch (selected) {
+		      case 'contact':
+		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
+		        $('.selectpicker#selectpicker-fld')
+							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
+								+'<option value="contact_date">Contact Date</option>'
+								+'<option value="followup_date">Followup Date</option>'
+								+'<option value="narrative">Narrative</option>'
+								+'<option value="created_by">Create by (Person)</option>'
+								+'<option value="last_modified_by">Last Modified by (Person)</option>'
+								+'<option value="created_at">Created at (Date)</option>'
+								+'<option value="last_modified_at">Last Modified at (Date)</option>')
+							.selectpicker('refresh');
+		        break;
+		        
+		      case 'donor':
+		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
+		        $('.selectpicker#selectpicker-fld')
+							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
+										+'<option value="title">Title</option>'
+							      +'<option value="first_name">First Name</option>'
+							      +'<option value="last_name">Last Name</option>'
+							      +'<option value="middle_name">Middle Name</option>'
+							      +'<option value="salution">Salution</option>'
+							      +'<option value="email">Email</option>'
+							      +'<option value="organization">Organization</option>'
+							      +'<option value="company">Company</option>'
+							      +'<option value="street_address">Street Address</option>'
+							      +'<option value="city">City</option>'
+							      +'<option value="state">State</option>'
+							      +'<option value="country">Country</option>'
+							      +'<option value="zipcode">Zip Code</option>'
+							      +'<option value="home_phone">Home Phone</option>'
+							      +'<option value="business_phone">Business Phone</option>'
+							      +'<option value="created_by">Create by (Person)</option>'
+							      +'<option value="last_modified_by">Last Modified by (Person)</option>'
+							      +'<option value="created_at">Created at (Date)</option>'
+							      +'<option value="last_modified_at">Last Modified at (Date)</option>')
+							.selectpicker('refresh');
+		        break;
+		        
+		      case 'finance':
+		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
+		        $('.selectpicker#selectpicker-fld')
+							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
+										+'<option value="type">Type</option>'
+						        +'<option value="date">Date</option>'
+						        +'<option value="amount">Amount</option>'
+						        +'<option value="description">Description</option>'
+						        +'<option value="designation">Designation</option>'
+						        +'<option value="created_by">Create by (Person)</option>'
+						        +'<option value="last_modified_by">Last Modified by (Person)</option>'
+						        +'<option value="created_at">Created at (Date)</option>'
+						        +'<option value="last_modified_at">Last Modified at (Date)</option>')
+							.selectpicker('refresh');
+		        break;
+		      
+		      default:
+		        return false;
+		    }
+			});
+		
+	},
+	
+	editFld :function(a,b,c){
+		var table1 = original_c[0].trim().toLowerCase();
+		console.log(table1.trim())
+		$("select",a).selectpicker('val', table1);
+		
+		var selected = $("select",a).find("option:selected").val();
+		    switch (selected) {
+		      case 'contact':
+		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
+		        $('.selectpicker#selectpicker-fld')
+							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
+								+'<option value="contact_date">Contact Date</option>'
+								+'<option value="followup_date">Followup Date</option>'
+								+'<option value="narrative">Narrative</option>'
+								+'<option value="created_by">Create by (Person)</option>'
+								+'<option value="last_modified_by">Last Modified by (Person)</option>'
+								+'<option value="created_at">Created at (Date)</option>'
+								+'<option value="last_modified_at">Last Modified at (Date)</option>')
+							.selectpicker('refresh');
+		        break;
+		        
+		      case 'donor':
+		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
+		        $('.selectpicker#selectpicker-fld')
+							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
+										+'<option value="title">Title</option>'
+							      +'<option value="first_name">First Name</option>'
+							      +'<option value="last_name">Last Name</option>'
+							      +'<option value="middle_name">Middle Name</option>'
+							      +'<option value="salution">Salution</option>'
+							      +'<option value="email">Email</option>'
+							      +'<option value="organization">Organization</option>'
+							      +'<option value="company">Company</option>'
+							      +'<option value="street_address">Street Address</option>'
+							      +'<option value="city">City</option>'
+							      +'<option value="state">State</option>'
+							      +'<option value="country">Country</option>'
+							      +'<option value="zipcode">Zip Code</option>'
+							      +'<option value="home_phone">Home Phone</option>'
+							      +'<option value="business_phone">Business Phone</option>'
+							      +'<option value="created_by">Create by (Person)</option>'
+							      +'<option value="last_modified_by">Last Modified by (Person)</option>'
+							      +'<option value="created_at">Created at (Date)</option>'
+							      +'<option value="last_modified_at">Last Modified at (Date)</option>')
+							.selectpicker('refresh');
+		        break;
+		        
+		      case 'finance':
+		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
+		        $('.selectpicker#selectpicker-fld')
+							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
+										+'<option value="type">Type</option>'
+						        +'<option value="date">Date</option>'
+						        +'<option value="amount">Amount</option>'
+						        +'<option value="description">Description</option>'
+						        +'<option value="designation">Designation</option>'
+						        +'<option value="created_by">Create by (Person)</option>'
+						        +'<option value="last_modified_by">Last Modified by (Person)</option>'
+						        +'<option value="created_at">Created at (Date)</option>'
+						        +'<option value="last_modified_at">Last Modified at (Date)</option>')
+							.selectpicker('refresh');
+		        break;
+		      
+		      default:
+		        return false;
+		    
+		    }
+		    
+	   var field1 = original_c[1].trim().toLowerCase().split(' ').join('_');
+	  //console.log(field1);
+		$("select",b).selectpicker('val', field1); 
+		
+		var min_date1 = original_c[5].trim();
+	  //console.log(min_date1);
+	  //console.log(c[0]);
+		$("input",c[0]).datepicker('update', min_date1);
+		
+		var max_date1 = original_c[6].trim();
+	  //console.log(min_date1);
+	 // console.log(c[1]);
+		$("input",c[1]).datepicker('update', max_date1); 
+	},
+	
 	
 	save_raw_row :function(){
 		var selected_c = $("#filter_tab tr.selected")
@@ -237,8 +448,8 @@ var Filworker = {
 		
 			var cells_sel_fld = $("td", selected_c).slice(1, 2);
 			cells_sel_fld.each(function(){
-				var fld=$("select", $(this)).val().split('-');
-				attr.push(fld[1]);
+				var fld=$("select", $(this)).val();
+				attr.push(fld);
 			});
 		
 			var cells_inp = $("td", selected_c).slice(2, 5);
@@ -407,3 +618,7 @@ function fixHeader(){
 	} else $(".fixedHeader").remove();
 }
 */
+
+
+
+

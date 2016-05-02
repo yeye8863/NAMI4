@@ -1,8 +1,10 @@
 class ReportsController < ApplicationController
+
     before_action :check_authorization
     
     def index
       @reports = Report.all
+
     end
 
     def show
@@ -35,6 +37,10 @@ class ReportsController < ApplicationController
     
     def create
       @report = Report.create!(params[:report])
+      @user =  User.find(session[:user_id])
+      
+      @report.last_modified_by = "#{@user.first_name} #{@user.last_name}"
+      @report.save()
       flash[:notice] = "#{@report.title} was successfully created."
       redirect_to edit_report_path(@report.id)
     end
@@ -64,6 +70,7 @@ class ReportsController < ApplicationController
           format.html{ redirect_to reports_path, :notice => "successfully updated" }
         end
       end
+
     end
     
     def destroy
@@ -80,4 +87,14 @@ class ReportsController < ApplicationController
           redirect_to homepage_path
       end
     end
+    
+    private
+    def sort_column
+        Donor.column_names.include?(params[:sort]) ? params[:sort] : "created_at"
+    end
+    def sort_direction
+        %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+    
+    
 end

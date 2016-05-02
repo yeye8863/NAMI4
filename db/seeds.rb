@@ -143,7 +143,8 @@ reports = [
              :created_at => '2015-01-24',
              :last_modified_by => 'ste',
              :last_modified_at => '2016-02-18'
-            },{
+            },
+            {
              :title => '2014 donation by amount',
              :description => 'amount between 0 to 500, the whole 2014',
              :last_run => '2016-04-01',
@@ -179,12 +180,12 @@ reports = [
              :last_modified_by => 'jojo',
              :last_modified_at => '2015-02-18'
             }
-          ]
+]
           
           
 filters =[
 			{
-				:table_name => 'finances',
+				:table_name => 'finance',
 				:field_name => 'date',
 				:value =>'',
 				:min_value =>'',
@@ -199,7 +200,7 @@ filters =[
 			},
 					
 			{
-				:table_name => 'finances',
+				:table_name => 'finance',
 				:field_name => 'amount',
 				:value =>'',
 				:min_value =>'0',
@@ -214,7 +215,7 @@ filters =[
 			},
 					
 			{
-				:table_name => 'donors',
+				:table_name => 'donor',
 				:field_name => 'first_name',
 				:value =>'ds',
 				:min_value =>'',
@@ -229,7 +230,7 @@ filters =[
 			},
 	
 			{
-				:table_name => 'donors',
+				:table_name => 'donor',
 				:field_name => 'last_name',
 				:value =>'bsa',
 				:min_value =>'',
