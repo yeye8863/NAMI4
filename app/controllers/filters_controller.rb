@@ -32,7 +32,7 @@ class FiltersController < ApplicationController
     def update
         @filter = Filter.find(params[:id])
         a = params[:attr]
-        @contact.update_attributes!({
+        @filter.update_attributes({
             :table_name => a[0],
             :field_name => a[1],
             :value => a[2],
@@ -41,7 +41,8 @@ class FiltersController < ApplicationController
             :min_date => a[5],
             :max_date => a[6]
         })
-        render :json => @contact if request.xhr?
+        render :json => @filter if request.xhr?
+        
     end
     
     def destroy
