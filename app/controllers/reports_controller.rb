@@ -58,6 +58,10 @@ class ReportsController < ApplicationController
     
     def create
       @report = Report.create!(params[:report])
+      @user =  User.find(session[:user_id])
+      
+      @report.last_modified_by = "#{@user.first_name} #{@user.last_name}"
+      @report.save()
       flash[:notice] = "#{@report.title} was successfully created."
       redirect_to edit_report_path(@report.id)
     end
@@ -87,7 +91,7 @@ class ReportsController < ApplicationController
           format.html{ redirect_to reports_path, :notice => "successfully updated" }
         end
       end
-      @report.last_modified_by = User.find(session[:user_id])
+
     end
     
     def destroy
