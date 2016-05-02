@@ -85,6 +85,7 @@ class ReportsController < ApplicationController
           format.html{ redirect_to reports_path, :notice => "successfully updated" }
         end
       end
+      @report.last_modified_by = User.find(session[:user_id])
     end
     
     def destroy

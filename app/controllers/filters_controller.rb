@@ -25,6 +25,8 @@ class FiltersController < ApplicationController
         })
         @filter.save!
         render :json => @filter if request.xhr?
+        @filter.last_modified_by = User.find(session[:user_id])
+        
     end
     
     def update
@@ -40,6 +42,7 @@ class FiltersController < ApplicationController
             :max_date => a[6]
         })
         render :json => @filter if request.xhr?
+        @filter.last_modified_by = User.find(session[:user_id])
         
     end
     
@@ -47,5 +50,6 @@ class FiltersController < ApplicationController
         @filter = Filter.find(params[:id])
         @filter.destroy
         render :nothing => true
+        @filter.last_modified_by = User.find(session[:user_id])
     end
 end
