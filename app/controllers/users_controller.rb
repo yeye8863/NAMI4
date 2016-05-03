@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 	before_action :check_authorization, except: [:homepage,:new,:create]
+	skip_before_action :require_login, only: [:new, :create]
 	
 	def index
 		@users = User.all
@@ -107,7 +108,7 @@ class UsersController < ApplicationController
 	end
 	
 	def check_authorization
-        unless current_user.function.include? 'user management'
+        unless current_user.function and current_user.function.include? 'user management'
             flash[:notice]="Sorry, authorization check failed!"
             redirect_to homepage_path
         end

@@ -41,7 +41,7 @@ class DashboardsController < ApplicationController
     end
     
     def check_authorization
-        unless current_user.function.include? 'dashboard'
+        unless current_user.function and current_user.function.include? 'dashboard'
             flash[:notice]="Sorry, authorization check failed!"
             redirect_to homepage_path
         end

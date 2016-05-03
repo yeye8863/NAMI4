@@ -33,7 +33,7 @@ class AccessesController < ApplicationController
     end
     
     def check_authorization
-        unless current_user.function.include? 'user management'
+        unless current_user.function and current_user.function.include? 'user management'
             flash[:notice]="Sorry, authorization check failed!"
             redirect_to homepage_path
         end

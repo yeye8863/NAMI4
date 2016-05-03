@@ -153,7 +153,7 @@ class DonorsController < ApplicationController
     end
     
     def check_authorization
-        unless current_user.function.include? 'donor management'
+        unless current_user.function and current_user.function.include? 'donor management'
             flash[:notice]="Sorry, authorization check failed!"
             redirect_to homepage_path
         end
