@@ -35,8 +35,14 @@ class ContactsController < ApplicationController
 
     def destroy
         @contact = Contact.find(params[:id])
+        original = @contact.finances
+        if(original.nil?)
+            original = ""
+        else
+            original = original.id
+        end
         @contact.destroy
-        render :nothing => true
+        render :json => [original] if request.xhr?
     end
     
     def update

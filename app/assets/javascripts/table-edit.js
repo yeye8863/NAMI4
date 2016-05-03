@@ -197,7 +197,7 @@ function saveRow(data){
 	if(selected_c != -1){
 		if(data.id) selected_c.data("id", data.id);
 		table_c.row(selected_c).data( data.val.concat({
-			"display": "<btn class='btn-default btn-xs btn foreign_key'>Show finance</btn>",
+			"display": "<div class='btn btn-xs btn-default foreign_key'>Show "+foreign_key+"</div>",
 			"@data-search": String(data.id) || 0
 		}) ).draw();
 		if(data.no_foreign) $(".foreign_key", selected_c).hide();
@@ -210,9 +210,14 @@ function saveRow(data){
 		}
 	} else {
 		var row = table_c.row.add(data.val.concat({
-			"display": "<btn class='btn-default btn-xs btn foreign_key'>Show finance</btn>",
+			"display": "<div class='btn btn-xs btn-default foreign_key'>Show "+foreign_key+"</div>",
 			"@data-search": String(data.id) || 0
-		})).draw().node();
+		}));
+		row.data(data.val.concat({
+			"display": "<div class='btn btn-xs btn-default foreign_key'>Show "+foreign_key+"</div>",
+			"@data-search": String(data.id) || 0
+		})).draw();
+		row = row.node();
 		$(row).find("td:last").attr("data-search", String(data.id));
 		if(data.id) $(row).data("id", data.id);
 		if(data.no_foreign) $(".foreign_key", row).hide();
@@ -232,9 +237,11 @@ rstBtn();
 	$("#info_"+table_name+" .err").removeClass("err");
 }
 
-function delRow(){
+function delRow(data){
 	rstBtn();
 	table_c.row('.info').remove().draw(false);
+	if(data && data[0] != "")
+		$("#table_"+foreign_key+" tbody td[data-search='"+data+"'] .foreign_key").hide();
 	$("#title_"+table_name).notify("Successfully deleted!", {arrowShow: false, className: "success", position:"right middle"});
 }
 
@@ -243,7 +250,8 @@ function rstBtn(){
 	$("#edit_"+table_name).removeClass("editing");
 	$("#cancel_"+table_name).hide();
 	$("#delete_"+table_name).show();
-	$("#info_"+table_name).collapse("hide");
+	if($("#info_"+table_name).hasClass("in"))
+		$("#info_"+table_name).collapse("hide");
 }
 
 function delData(event){
@@ -259,7 +267,7 @@ function delData(event){
 						type: "DELETE",
 				      	url: "/"+table_name+"s/" + $(this).data("id"),
 				       	timeout: 5000,
-				       	success: function(data, requestStatus, xhrObject){ delRow(); },
+				       	success: function(data, requestStatus, xhrObject){ delRow(data); },
 				       	error: function(xhrObj, textStatus, exception) {
 				       		$("#title_"+table_name).notify("Failed to delete data!", {arrowShow: false, className: "error", position:"right middle"});
 				       	}

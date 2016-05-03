@@ -39,8 +39,14 @@ class FinancesController < ApplicationController
 
     def destroy
         @finance = Finance.find(params[:id])
+        original =  @finance.contact
+        if(original.nil?)
+            original = ""
+        else 
+            original = original.id
+        end
         @finance.destroy
-        render :nothing => true
+        render :json => [original] if request.xhr?
     end
     
     def update
