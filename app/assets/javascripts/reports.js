@@ -11,6 +11,7 @@ $(reportTable.setup);
 var reportResult={
   setup: function(){
     $('#report-detail').DataTable({
+      colReorder: true,
       dom: 'Bfrtip',
       buttons:[
         'copy','csv','excel','pdf','print'  
