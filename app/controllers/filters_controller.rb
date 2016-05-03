@@ -50,6 +50,6 @@ class FiltersController < ApplicationController
         @filter = Filter.find(params[:id])
         @filter.destroy
         render :nothing => true
-        @filter.last_modified_by = User.find(session[:user_id])
+
     end
 end
