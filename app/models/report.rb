@@ -1,31 +1,95 @@
 class Report < ActiveRecord::Base
-    has_many :filters
+    has_many :filters, dependent: :destroy
+    
     attr_accessible :title, :description, :last_run, :created_by, :created_at, :last_modified_by, :last_modified_at
     
-    def generate(configs)
-      if configs.keys.count == 1
-        model = configs.keys[1].singularize.classify.constantize
-        records = model.all
+    def self.generate(configs)
+      tables = configs.keys
+      select_statement = ""
+      where_statement = ""
+      if tables.count == 1
+        model = tables[0].singularize.classify.constantize
+        
         configs.each do |table,field|
-          field.each do |attrname,value|
-            case attrname
-            when 'value'
-              records.where(field+'='+value)
-            when 'min_value'
-              records.where(field+'>='+value)
-            when 'max_value'
-              records.where(field+'<='+value)
-            when 'min_date'
-              records.where(field+'>='+value)
-            when 'max_date'
-              records.where(field+'>='+value)
+          field.each do |fieldname,attribute|
+            select_statement += table.pluralize+"."+fieldname+","
+            attribute.each do |attrname,value|
+              case attrname
+              when 'value'
+                  where_statement+=fieldname+"='"+value.to_s+"' AND "
+              when 'min_value'
+                  where_statement+=fieldname+">='"+value.to_s+"' AND "
+              when 'max_value'
+                  where_statement+=fieldname+"<='"+value.to_s+"' AND "
+              when 'min_date'
+                  where_statement+=fieldname+">='"+value.to_s+"' AND "
+              when 'max_date'
+                  where_statement+=fieldname+"<='"+value.to_s+"' AND "
+              end
             end
           end
         end
-      elsif configs.keys.count == 2
-      
-      elsif configs.keys.count == 3
-      
+        
+        if !select_statement.empty?
+          select_statement = select_statement[0...select_statement.rindex(',')]
+          records = model.all.select(select_statement)
+        else
+          records = nil
+        end
+        
+        if !where_statement.empty?
+          where_statement = where_statement[0...where_statement.rindex(' ',-2)]
+          records = records.where(where_statement)
+        end
+        
+      elsif tables.count == 2
+        if tables.include? 'finance' and tables.include? 'contact'
+          records = nil
+        else
+          configs.each do |table,field|
+            field.each do |fieldname,attribute|
+              select_statement += table.pluralize+"."+fieldname+","
+              attribute.each do |attrname,value|
+                case attrname
+                when 'value'
+                    where_statement+=fieldname+"='"+value.to_s+"' AND "
+                when 'min_value'
+                    where_statement+=fieldname+">='"+value.to_s+"' AND "
+                when 'max_value'
+                    where_statement+=fieldname+"<='"+value.to_s+"' AND "
+                when 'min_date'
+                    where_statement+=fieldname+">='"+value.to_s+"' AND "
+                when 'max_date'
+                    where_statement+=fieldname+"<='"+value.to_s+"' AND "
+                end
+              end
+            end
+          end
+          
+          if tables.include? 'contact'
+            if !select_statement.empty?
+              select_statement = select_statement[0...select_statement.rindex(',')]
+              records = Donor.joins(:contacts).select(select_statement)
+            else
+              records = nil
+            end
+          elsif tables.include? 'finance'
+            if !select_statement.empty?
+              select_statement = select_statement[0...select_statement.rindex(',')]
+              records = Donor.joins(:finances).select(select_statement)
+            else
+              records = nil
+            end
+          end
+          
+          if !where_statement.empty?
+            where_statement = where_statement[0...where_statement.rindex(' ',-2)]
+            records = records.where(where_statement)
+          end
+        end
+      elsif tables.count == 3
+        records = nil
       end
+      return records
     end
 end

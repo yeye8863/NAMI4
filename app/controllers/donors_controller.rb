@@ -1,6 +1,8 @@
 class DonorsController < ApplicationController
+
     before_action :check_authorization
     
+
     def index
         @donor_attr = Donor.attribute_names
         @donor_attr_show = ["flag", "title", "first_name", "last_name", "organization", "company"]
@@ -12,16 +14,14 @@ class DonorsController < ApplicationController
         @donor_contact = [
 	        "contact_date",
 	        "followup_date",
-	        "narrative",
-	        "finances"
+	        "narrative"
 	    ]
 	    @donor_finance = [
             '_type',
             'date',
             'amount',
             'description', 
-            'designation',
-            'contact' 
+            'designation'
         ]
         #render(:partial => 'donor_info', :object => @donor) if request.xhr?
     end

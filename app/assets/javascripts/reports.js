@@ -7,3 +7,16 @@ var reportTable={
 };
 
 $(reportTable.setup);
+
+var reportResult={
+  setup: function(){
+    $('#report-detail').DataTable({
+      dom: 'Bfrtip',
+      buttons:[
+        'copy','csv','excel','pdf','print'  
+      ]
+    });
+  }
+}
+
+$(reportResult.setup)

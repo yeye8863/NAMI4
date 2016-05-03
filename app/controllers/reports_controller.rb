@@ -1,8 +1,10 @@
 class ReportsController < ApplicationController
+
     before_action :check_authorization
     
     def index
       @reports = Report.all
+
     end
 
     def show
@@ -10,44 +12,28 @@ class ReportsController < ApplicationController
       @report = Report.find(id) 
       @filters = @report.filters
       
+      if @filters.empty?
+        flash[:notice] = 'No report fields specified'
+        redirect_to reports_path
+      end
+      
       configs={}
+      @attr_names = []
       @filters.each do |filter|
-        if !configs.has_key? filter.table
+        if !configs.has_key? filter.table_name
           configs[filter.table_name] = {}
         end
+        @attr_names << filter.field_name
         configs[filter.table_name][filter.field_name]={}
-        configs[filter.table_name][filter.field_name][:value]=filter.value
-        configs[filter.table_name][filter.field_name][:min_value]=filter.min_value
-        configs[filter.table_name][filter.field_name][:max_value]=filter.max_value
-        configs[filter.table_name][filter.field_name][:min_date]=filter.min_date
-        configs[filter.table_name][filter.field_name][:max_date]=filter.max_date
+        configs[filter.table_name][filter.field_name]['value']=filter.value if (filter.value and !filter.value.to_s.empty?)
+        configs[filter.table_name][filter.field_name]['min_value']=filter.min_value if (filter.min_value and !filter.min_value.to_s.empty?)
+        configs[filter.table_name][filter.field_name]['max_value']=filter.max_value if (filter.max_value and !filter.max_value.to_s.empty?)
+        configs[filter.table_name][filter.field_name]['min_date']=filter.min_date if (filter.min_date and !filter.min_date.to_s.empty?)
+        configs[filter.table_name][filter.field_name]['max_date']=filter.max_date if (filter.max_date and !filter.max_date.to_s.empty?)
       end
       
-      @result = Report.generate(configs)
-      if configs.keys.count == 1
-        model = configs.keys[1].singularize.classify.constantize
-        records = model.all
-        configs.each do |table,field|
-          field.each do |attrname,value|
-            case attrname
-            when 'value'
-              records.where(field+'='+value)
-            when 'min_value'
-              records.where(field+'>='+value)
-            when 'max_value'
-              records.where(field+'<='+value)
-            when 'min_date'
-              records.where(field+'>='+value)
-            when 'max_date'
-              records.where(field+'>='+value)
-            end
-          end
-        end
-      elsif configs.keys.count == 2
+      @records = Report.generate(configs)
       
-      elsif configs.keys.count == 3
-      
-      end
     end
     
     def new 
@@ -56,6 +42,10 @@ class ReportsController < ApplicationController
     
     def create
       @report = Report.create!(params[:report])
+      @user =  User.find(session[:user_id])
+      
+      @report.last_modified_by = "#{@user.first_name} #{@user.last_name}"
+      @report.save()
       flash[:notice] = "#{@report.title} was successfully created."
       redirect_to edit_report_path(@report.id)
     end
@@ -85,7 +75,7 @@ class ReportsController < ApplicationController
           format.html{ redirect_to reports_path, :notice => "successfully updated" }
         end
       end
-      @report.last_modified_by = User.find(session[:user_id])
+
     end
     
     def destroy
@@ -102,4 +92,14 @@ class ReportsController < ApplicationController
           redirect_to homepage_path
       end
     end
+    
+    private
+    def sort_column
+        Donor.column_names.include?(params[:sort]) ? params[:sort] : "created_at"
+    end
+    def sort_direction
+        %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+    
+    
 end

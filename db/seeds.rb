@@ -62,129 +62,13 @@ reports = [
              :created_at => '2015-01-24',
              :last_modified_by => 'ste',
              :last_modified_at => '2016-02-18'
-            },
-            {
-             :title => 'haha',
-             :description => 'amount between 0 to 500, the whole 2014',
-             :last_run => '2016-04-01',
-             :created_by => 'jojo',
-             :created_at => '2015-01-24',
-             :last_modified_by => 'ste',
-             :last_modified_at => '2016-02-18'
-            },
-            {
-             :title => 'donation by amount',
-             :description => 'amount between 0 to 500, the whole 2014',
-             :last_run => '2016-04-01',
-             :created_by => 'jojo',
-             :created_at => '2015-11-24',
-             :last_modified_by => 'ste',
-             :last_modified_at => '2016-02-18'
-            },
-            {
-             :title => '2014 by amount',
-             :description => 'amount between 0 to 500, the whole 2014',
-             :last_run => '2016-04-01',
-             :created_by => 'jojo',
-             :created_at => '2015-01-24',
-             :last_modified_by => 'ste',
-             :last_modified_at => '2016-02-18'
-            },
-            {
-             :title => '2014 donation amount',
-             :description => 'amount between 0 to 500, the whole 2014',
-             :last_run => '2016-04-01',
-             :created_by => 'jojo',
-             :created_at => '2015-01-24',
-             :last_modified_by => 'ste',
-             :last_modified_at => '2016-02-18'
-            },
-            {
-             :title => '201 donation by amount',
-             :description => 'amount between 0 to 500, the whole 2014',
-             :last_run => '2016-04-01',
-             :created_by => 'jojo',
-             :created_at => '2015-01-24',
-             :last_modified_by => 'por',
-             :last_modified_at => '2016-02-18'
-            },
-            {
-             :title => '2014 tion by amount',
-             :description => 'amount between 0 to 500, the whole 2014',
-             :last_run => '2016-04-01',
-             :created_by => 'jojo',
-             :created_at => '2015-01-24',
-             :last_modified_by => 'ste',
-             :last_modified_at => '2016-02-18'
-            },
-            {
-             :title => '2014 donation by amount',
-             :description => 'amount between 0 to 500, the whole 2014',
-             :last_run => '2016-04-01',
-             :created_by => 'jojo',
-             :created_at => '2015-01-24',
-             :last_modified_by => 'ste',
-             :last_modified_at => '2016-02-18'
-            },
-            {
-             :title => '2014 donation by amount',
-             :description => 'amount between 0 to 500, the whole 2014',
-             :last_run => '2016-04-01',
-             :created_by => 'jojo',
-             :created_at => '2015-01-24',
-             :last_modified_by => 'ste',
-             :last_modified_at => '2016-02-18'
-            },
-            {
-             :title => '2014 donation by amount',
-             :description => 'amount between 0 to 500, the whole 2014',
-             :last_run => '2016-04-01',
-             :created_by => 'jojo',
-             :created_at => '2015-01-24',
-             :last_modified_by => 'ste',
-             :last_modified_at => '2016-02-18'
-            },{
-             :title => '2014 donation by amount',
-             :description => 'amount between 0 to 500, the whole 2014',
-             :last_run => '2016-04-01',
-             :created_by => 'jojo',
-             :created_at => '2015-01-24',
-             :last_modified_by => 'ste',
-             :last_modified_at => '2016-02-18'
-            },
-            {
-             :title => '2004 donation by amount',
-             :description => 'amount between 0 to 700, the whole 2004',
-             :last_run => '2015-04-01',
-             :created_by => 'papa',
-             :created_at => '2015-01-24',
-             :last_modified_by => 'ste',
-             :last_modified_at => '2015-02-18'
-            },
-            {
-             :title => '2014 donation by city',
-             :description => 'city: Houston, the whole 2014',
-             :last_run => '2016-03-01',
-             :created_by => 'ste',
-             :created_at => '2015-01-19',
-             :last_modified_by => 'jojo',
-             :last_modified_at => '2015-02-18'
-            },
-            {
-             :title => '2013 donation by city',
-             :description => 'city: College Station, the whole 2013',
-             :last_run => '2015-03-01',
-             :created_by => 'ste',
-             :created_at => '2014-01-19',
-             :last_modified_by => 'jojo',
-             :last_modified_at => '2015-02-18'
             }
-          ]
+        ]
           
           
 filters =[
 			{
-				:table_name => 'finances',
+				:table_name => 'finance',
 				:field_name => 'date',
 				:value =>'',
 				:min_value =>'',
@@ -199,7 +83,7 @@ filters =[
 			},
 					
 			{
-				:table_name => 'finances',
+				:table_name => 'finance',
 				:field_name => 'amount',
 				:value =>'',
 				:min_value =>'0',
@@ -214,7 +98,7 @@ filters =[
 			},
 					
 			{
-				:table_name => 'donors',
+				:table_name => 'donor',
 				:field_name => 'first_name',
 				:value =>'ds',
 				:min_value =>'',
@@ -229,7 +113,7 @@ filters =[
 			},
 	
 			{
-				:table_name => 'donors',
+				:table_name => 'donor',
 				:field_name => 'last_name',
 				:value =>'bsa',
 				:min_value =>'',
