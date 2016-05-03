@@ -40,11 +40,11 @@ var Filworker = {
 			$(row).addClass("selected").siblings().removeClass("selected");
 			
 			//reset buttons
-		  $("#save").show();
+		    $("#save").show();
 			$("#canc").show();
 			$("#edit").hide();
 			$("#delete").hide();
-			
+			$("#add").hide();
 			//
 			Filworker.addRow($(row));
 			Filworker.topRow();
@@ -207,14 +207,14 @@ var Filworker = {
 			$("#edit").addClass("editing");
 			selected_c = $("#filter_tab tr.selected")
 			Filworker.cofEditRow();
-		}
-		
-		//reset btn
+			
+			//reset btn
 		$("#add").hide();
 		$("#edit").hide();
 		$("#save").show();
 		$("#canc").show();
 		$("#delete").hide();
+		}
 		
 	},
 	
