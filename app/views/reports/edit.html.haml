@@ -60,4 +60,6 @@
       %button.btn.btn-warning#save{:style => "display: none;"} Save
       %button.btn.btn-danger#delete Delete
       %button.btn.btn-primary#canc{:style => "display: none;"} Cancel
+      =link_to "Preview", report_path(@report.id), class: 'btn btn-success'
       =link_to "Back", reports_path, class: "btn btn-default", id: "back"
+ 
