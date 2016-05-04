@@ -1,6 +1,8 @@
 var userTable={
   setup: function(){
-    var table = $('#user_table').DataTable();
+    var table = $('#user_table').DataTable({
+      aaSorting: [1,'asc']
+    });
     
     // append column search box
     $('#user_table tfoot th.filter').each(function(){
