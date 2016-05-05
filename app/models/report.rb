@@ -3,6 +3,8 @@ class Report < ActiveRecord::Base
     
     attr_accessible :title, :description, :last_run, :created_by, :created_at, :last_modified_by, :last_modified_at
     
+    validates :title, :presence => true
+    
     def self.generate(configs)
       tables = configs.keys
       select_statement = ""

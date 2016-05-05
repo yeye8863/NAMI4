@@ -1,4 +1,5 @@
 //--filter.js
+//= require dataTables/jquery.dataTables
 $(document).ready(function() {
     if ( $.fn.dataTable.isDataTable( '#filter_tab' ) ) {
     	table_c = $('#filter_tab').DataTable();
@@ -40,7 +41,7 @@ var Filworker = {
 			$(row).addClass("selected").siblings().removeClass("selected");
 			
 			//reset buttons
-		    $("#save").show();
+		  $("#save").show();
 			$("#canc").show();
 			$("#edit").hide();
 			$("#delete").hide();
@@ -263,11 +264,6 @@ var Filworker = {
 				
 			}
 		
-		table1 = original_c[0].trim().toLowerCase();
-		//console.log(table1.trim())
-		$("select",cells_sel_tab).selectpicker('val', table1);
-		
-		
 		Filworker.editFld(cells_sel_tab,cells_sel_fld,cells_date);
 		
 		//dynamic field select
@@ -462,11 +458,11 @@ var Filworker = {
 			});
 		
 			if(attr[0] == ""){ 
-				$("#add").notify("Please select the Table.", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
+				$("#back").notify("Please select the Table.", {gap: 290, arrowShow: false, className: "error", position:"left middle"});
 				return false;
 			}
 			if(attr[1] == ""){ 
-				$("#add").notify("Please select the Field.", {gap: 20, arrowShow: false, className: "error", position:"left middle"});
+				$("#back").notify("Please select the Field.", {gap: 290, arrowShow: false, className: "error", position:"left middle"});
 				return false;
 			}
 			if(selected_c.data("id"))
@@ -505,11 +501,13 @@ var Filworker = {
 		data.min_date,
 		data.max_date
 	]).draw();
-
-	$("#add").notify("Successfully saved!", {gap: 20, arrowShow: false, className: "success", position:"left middle"});
 	
-	//reset button
+	selected_c.removeClass("selected");
+
+  //reset button
 	Filworker.reBtn();
+	
+	$("#back").notify("Successfully saved!", {gap: 290, arrowShow: false, className: "success", position:"left middle"});
 	
 },
 
