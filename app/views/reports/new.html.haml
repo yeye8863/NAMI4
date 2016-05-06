@@ -19,7 +19,6 @@
               =r.label :description, 'Description:' 
               =r.text_area :description, :class => 'form-control', :id => 'description', :placeholder => 'discription'
           .row
-            .col-md-1
+            .button-line{:style => "padding:10px"}
               =r.submit 'Save Info', class: 'btn btn-primary'
-            .col-md-1
               =link_to "Back", reports_path, class: 'btn btn-default'
