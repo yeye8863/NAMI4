@@ -5,29 +5,26 @@
   %table#user_table.table.display{:cellspacing => "0", :width => "100%"}
     %thead
       %tr
-        %th.hidden
         %th{:style => 'width:15%'} Action
-        %th{:style => 'width:15%'} First Name
-        %th{:style => 'width:15%'} Last Name
-        %th{:style => 'width:15%'} Email Address
-        %th{:style => 'width:40%'} Function
-    %tbody
-      - @users.each do |user|
-        %tr
-          %td.hidden=user.id
-          %td
-            = link_to 'View', user_path(user.id), id:'viewbtn', class:'btn btn-success btn-xs'
-            = link_to 'Edit', edit_user_path(user.id), id:'editbtn', class:'btn btn-success btn-xs'
-            = link_to 'Delete', user_path(user.id), id:'deletebtn', method:'delete',  data: {confirm: "Are you sure?"},class:'btn btn-danger btn-xs'
-          %td=user.first_name.humanize
-          %td=user.last_name.humanize
-          %td=user.email
-          %td=user.function.split.map(&:capitalize).join(' ') if user.function
+        - @user_attr_show.each do |attr|
+          %th #{attr.humanize}
     %tfoot
       %tr
         %th
         - @user_attr_show.each do |attr|
-          %th.filter=attr
+          %th.filter #{attr.humanize}
+    %tbody
+      - if @users
+        - @users.each do |user|
+          %tr
+            %td
+              = link_to 'View', user_path(user.id), id:'viewbtn', class:'btn btn-success btn-xs'
+              = link_to 'Edit', edit_user_path(user.id), id:'editbtn', class:'btn btn-success btn-xs'
+              = link_to 'Delete', user_path(user.id), id:'deletebtn', method:'delete',  data: {confirm: "Are you sure?"},class:'btn btn-danger btn-xs'
+            - attrs = user.attributes
+            - @user_attr_show.each do |attr|
+              - if attrs.include? attr
+                %td=user[attr]
   .button-line.pull-right       
     = link_to 'Access Control', accesses_path, class:'btn btn-primary' 
     = link_to 'Back', dashboard_path, class:'btn btn-primary'
