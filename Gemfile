@@ -19,10 +19,8 @@ gem 'haml'
 # Use jquery as the JavaScript library
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'bootstrap_form' 
-gem 'will_paginate', '~> 3.0.6'
 gem "bootstrap-table-rails"
 gem 'bootstrap-select-wrapper-rails'
-
 gem 'autoprefixer-rails'
 # Use bootstrap framework
 gem 'jquery-rails'
@@ -38,14 +36,6 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'protected_attributes', '~> 1.0.2'
 gem 'jquery-datatables-rails', '~> 3.3.0'
 gem 'bootstrap-datepicker-rails', '~> 1.6', '>= 1.6.0.1'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0', group: :development
@@ -53,15 +43,11 @@ gem 'bootstrap-datepicker-rails', '~> 1.6', '>= 1.6.0.1'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
-
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
   gem 'autotest'
-  
   gem 'cucumber-rails', :require => false
   gem 'cucumber-rails-training-wheels'
   gem 'database_cleaner'

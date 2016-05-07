@@ -283,12 +283,6 @@ Given /the donors table/ do |donors_table|
   end
 end
 
-Given /the contact people table/ do |contact_person_table|
-  contact_person_table.hashes.each do |contact_person|
-    ContactPerson.create contact_person
-  end
-end
-
 Given /the organizations table/ do |organization_table|
   organization_table.hashes.each do |organization|
     Organization.create organization

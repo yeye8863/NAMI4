@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Rottenpotatoes
+module NAMIBV
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -22,7 +22,5 @@ module Rottenpotatoes
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-    #config.time_zone = 'Eastern Time (US & Canada)'
- 	  #config.active_record.default_timezone = :local
   end
 end
