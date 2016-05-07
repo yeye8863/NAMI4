@@ -6,22 +6,22 @@ Rails.application.routes.draw do
   root :to=>'sessions#new', :as=> 'session_root'
   
   # these routes are for showing users a login form, logging them in, and logging them out.
-  # post 'login' => 'sessions#create', :as => 'login'
-  # get 'logout' => 'sessions#destroy', :as => 'logout'
-  # get 'homepage' => 'users#homepage', :as => 'homepage'
-  # get 'donorSummary/:id' => 'donors#showSummary', :as => 'donorSummary'
-  # get 'donorContact' => 'donors#showByContact', :as => 'donorContact'
-  # get 'dashboard' => 'dashboards#index', :as => 'dashboard'
-  # get 'dashboard/donor/:id' => 'dashboards#viewDonor', :as=>'dashboardDonor'
+  post 'login' => 'sessions#create', :as => 'login'
+  get 'logout' => 'sessions#destroy', :as => 'logout'
+  get 'homepage' => 'users#homepage', :as => 'homepage'
+  get 'donorSummary/:id' => 'donors#showSummary', :as => 'donorSummary'
+  get 'donorContact' => 'donors#showByContact', :as => 'donorContact'
+  get 'dashboard' => 'dashboards#index', :as => 'dashboard'
+  get 'dashboard/donor/:id' => 'dashboards#viewDonor', :as=>'dashboardDonor'
   
-  # resources :users
-  # resources :accesses
-  # resources :donors
-  # resources :reports
-  # resources :contacts
-  # resources :finances
-  # resources :agendas
-  # resources :reports
-  # resources :filters
+  resources :users
+  resources :accesses
+  resources :donors
+  resources :reports
+  resources :contacts
+  resources :finances
+  resources :agendas
+  resources :reports
+  resources :filters
   
 end
