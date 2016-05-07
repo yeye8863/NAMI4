@@ -1,0 +1,25 @@
+=render :partial=>'layouts/banner'
+
+#page-title.container-fluid.titleLine
+  %h2 Report
+		
+#mainbody.container-fluid
+  %h3 Report Creator
+  .panel-group
+    .panel.panel-info
+      .panel-heading{:style => "font-size:20px;"} Info
+      =form_for @report, :html => {:id => 'info', :role => 'form'} do |r|
+        .form-group
+          .row
+            .col-md-3
+              =r.label :title,'Title:'
+              =r.text_field :title, :class => 'form-control', :id => 'title', :placeholder => 'title', :required => true
+          .row
+            .col-md-5
+              =r.label :description, 'Description:' 
+              =r.text_area :description, :class => 'form-control', :id => 'description', :placeholder => 'discription'
+          .row
+            .col-md-1
+              =r.submit 'Save Info', class: 'btn btn-primary'
+            .col-md-1
+              =link_to "Back", reports_path, class: 'btn btn-default'

@@ -1,0 +1,5 @@
+.container-fluid.center.paddingBanner
+  - if flash[:notice]
+    =flash[:notice]
+  - elsif flash[:warning]
+    =flash[:warning]

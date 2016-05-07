@@ -1,0 +1,22 @@
+#addedDonorView-result.container-fluid  
+  %table#addedDonorTable.table.display{:cellspacing => "0", :width => "100%"}
+    %thead
+      %tr
+        %th.hidden
+        %th Type
+        %th First Name
+        %th Last Name
+        %th Company
+        %th Organization
+        //%th
+    %tbody
+      -if @donors
+        -@donors.each do |donor|
+          %tr
+            %td.hidden=donor.id
+            %td=donor.flag
+            %td=donor.first_name
+            %td=donor.last_name
+            %td=donor.company
+            %td=donor.organization
+            //%td=link_to 'More', dashboardDonor_path("#{donor.id}"), remote: true, data: {toggle: 'modal', target: '#addedDonorInfo'}

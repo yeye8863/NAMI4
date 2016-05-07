@@ -1,0 +1,30 @@
+#donor-result.container-fluid
+  %table#table_donor.table.display{:cellspacing => "0", :width => "100%"}
+    %thead{:data => {:attrname => @donor_attr_show}}
+      %tr
+        %th Action
+        - @donor_attr_show.each do |attr|
+          %th #{attr.humanize}
+    %tfoot
+      %tr
+        %th
+        - @donor_attr_show.each do |attr|
+          %th.filter #{attr.humanize}
+    %tbody
+      - if @donors
+        - @donors.each do |donor|
+          %tr{:data => {:id => donor.id}}
+            %td#actions{:style => 'width:15%'}
+              = link_to "View", donorSummary_path(donor.id), id: 'view', remote: true, class: 'btn btn-success btn-xs'
+              = link_to "Edit", donor_path(donor.id), class: 'btn btn-success btn-xs'
+              = link_to "Delete", donor_path(donor.id),  id: 'delete', method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-danger btn-xs'
+            - attrs = donor.attributes
+            - @donor_attr_show.each do |attr|
+              - if attrs.include? attr
+                %td=donor[attr]
+  .button-line.right{:style => "padding:10"}
+    =link_to "Add New", new_donor_path, class: 'btn btn-success', id: "add"
+    =link_to "Quick Add","#table_donor" , class: 'btn btn-info', id: "quick_add"
+    =link_to "Quick Edit", "#table_donor", class: 'btn btn-info', id: "quick_edit"
+    =link_to "Cancel", "#table_donor", class: 'btn btn-danger', id:"cancel"
+    =link_to 'Back', homepage_path, class:'btn btn-primary'

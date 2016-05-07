@@ -1,17 +1,40 @@
-%h1 Create New User
+#page-title.container-fluid.center.titleLine
+  %h1 Sign Up
 
-= form_tag '/users' do
+- unless @new_user.errors.empty?
+  #warning
+    Errors prevented new user from being created:
+    %ul
+      - @new_user.errors.full_messages.each do |error|
+        %li= error
 
-  = label :user, :username, 'Username'
-  = text_field :user, 'username'
-
-  = label :user, :email, 'Email'
-  = text_field :user, 'email'
-
-  = label :user, :password, 'Password'
-  = password_field :user, 'password'
-  
-  = label :user, :password_confirmation, 'Confirm Password'
-  = password_field :user, 'password_confirmation'
-  
-  = submit_tag 'Create'
+#mainbody.container-fluid
+  = form_tag users_path, :method => 'post', :class => 'form left' do
+    .form-group
+      .row
+        .col-sm-2.col-sm-offset-4    
+          = label :user, :username, 'Username'
+          = text_field :user, 'username', :value => @new_user.username, :required => true, :class=>'form-control'
+        .col-sm-2
+          = label :user, :email, 'Email'
+          = text_field :user, 'email', :value => @new_user.email, :required => true,:class=>'form-control'
+    .form-group
+      .row
+        .col-sm-2.col-sm-offset-4    
+          = label :user, :first_name, 'First Name'
+          = text_field :user, 'first_name', :value => @new_user.first_name, :required => true,:class=>'form-control'
+        .col-sm-2
+          = label :user, :last_name, 'Last Name'
+          = text_field :user, 'last_name', :value => @new_user.last_name, :required => true,:class=>'form-control'
+    .form-group
+      .row
+        .col-sm-2.col-sm-offset-4    
+          = label :user, :password, 'Password'
+          = password_field :user, 'password', :required => true,:class=>'form-control'
+        .col-sm-2
+          = label :user, :password_confirmation, 'Confirm Password'
+          = password_field :user, 'password_confirmation', :required => true,:class=>'form-control'
+    #button-line.row.center
+      .col-sm-8.right
+        = submit_tag 'Create', :class => 'btn btn-primary'
+        = link_to 'Back', root_path, :class => 'btn btn-default'

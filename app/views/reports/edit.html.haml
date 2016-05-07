@@ -1,0 +1,65 @@
+=render :partial=>'layouts/banner'
+
+#page-title.container-fluid.titleLine
+  %h2 Report
+		
+#mainbody.container-fluid
+  %h3 Report Creator
+  %label#ReportId{:style=>'display:none'}=@report.id
+  .panel-group
+    .panel.panel-default
+      .panel-heading{:style => "font-size:20px;"} Info
+      .panel-body
+        =form_for @report, :method=>'put', :id=>'info_edit', :role=>'form', :remote=>true do |r|
+          =r.hidden_field :id, :value=>@report.id, :readonly=>true
+          =r.hidden_field :last_modified_by, :value=>@user.first_name.humanize+' '+@user.last_name.humanize, :id => 'created_by'
+          .form-group
+            .row
+              .col-md-3
+                =r.label :title,'Title:'
+                =r.text_field :title, :class => 'form-control', :id => 'title'
+          .form-group
+            .row
+              .col-md-5
+                =r.label :description, 'Description:' 
+                =r.text_area :description, :class => 'form-control', :id => 'description'
+          .form-group
+            .row{:style => "margin-top:10px"}
+              .button-line{:style => "padding:10px"}
+                =r.submit class: 'btn btn-primary'
+                =link_to "Back", reports_path, id:'backbtn',class: 'btn btn-default'
+    #filter-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:10px;"}
+      .panel-heading{:style => "font-size:20px;"} Fields
+      .panel-body
+        %table#filter_tab.table.clickable-row{:style => "width:100%;margin-top:10px;", :data => {:id => @report.id}}
+          %thead{:style => "width:100%"}
+            %tr{:style => "width:100%"}
+              - @report_filter.each_pair do |key, val|
+                %th{:width => val} 
+                  = key
+          %tbody
+            - @filters.each do |filter|
+              %tr{:data => {:id => filter.id}}
+                %td 
+                  = filter.table_name.humanize if filter.table_name
+                %td 
+                  = filter.field_name.humanize if filter.field_name
+                %td 
+                  = filter.value
+                %td 
+                  = filter.min_value
+                %td 
+                  = filter.max_value
+                %td 
+                  = filter.min_date
+                %td 
+                  = filter.max_date
+    .button-line.right{:style => "padding:0px"}
+      %button.btn.btn-success#add Add
+      %button.btn.btn-info#edit Edit
+      %button.btn.btn-info#save{:style => "display: none;"} Save
+      %button.btn.btn-danger#delete Delete
+      %button.btn.btn-danger#canc{:style => "display: none;"} Cancel
+      =link_to "Preview", report_path(@report.id), class: 'btn btn-warning'
+      =link_to "Back", reports_path, class: "btn btn-default", id: "back"
+ 

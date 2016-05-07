@@ -3,19 +3,25 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
- # root 'index'
-  root :to => 'sessions#new'
-  #get  '/users' => 'users#index'
-  #get  '/users/new' => 'users#new'
-  #post '/users' => 'users#create'
-  #resource :users
+  root :to=>'sessions#new'
+  
   # these routes are for showing users a login form, logging them in, and logging them out.
-  get 'login' => 'sessions#new'
-  post 'login' => 'sessions#create'
-  get 'logout' => 'sessions#destroy'
-
-  get 'signup' => 'users#new'
-  post 'users' => 'users#create'
-
+  post 'login' => 'sessions#create', :as => 'login'
+  get 'logout' => 'sessions#destroy', :as => 'logout'
+  get 'homepage' => 'users#homepage', :as => 'homepage'
+  get 'donorSummary/:id' => 'donors#showSummary', :as => 'donorSummary'
+  get 'donorContact' => 'donors#showByContact', :as => 'donorContact'
+  get 'dashboard' => 'dashboards#index', :as => 'dashboard'
+  get 'dashboard/donor/:id' => 'dashboards#viewDonor', :as=>'dashboardDonor'
+  
+  resources :users
+  resources :accesses
+  resources :donors
+  resources :reports
+  resources :contacts
+  resources :finances
+  resources :agendas
+  resources :reports
+  resources :filters
 
 end

@@ -7,7 +7,6 @@ class CreateFinances < ActiveRecord::Migration
       t.text :description
       t.string :designation
       t.references :donor, index: true, foreign_key: true
-      t.references :organization, index: true, foreign_key: true
       t.references :contact, index: true, foreign_key: true
       t.string :created_by
       t.datetime :created_at

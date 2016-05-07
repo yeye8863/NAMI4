@@ -6,6 +6,8 @@ class CreateFilters < ActiveRecord::Migration
       t.string :value
       t.decimal :min_value
       t.decimal :max_value
+      t.date :min_date
+      t.date :max_date
       t.string :created_by
       t.datetime :created_at
       t.string :last_modified_by

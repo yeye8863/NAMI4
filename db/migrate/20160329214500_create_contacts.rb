@@ -5,7 +5,6 @@ class CreateContacts < ActiveRecord::Migration
       t.date :followup_date
       t.text :narrative
       t.references :donor, index: true, foreign_key: true
-      t.references :contact_person, index: true, foreign_key: true
       t.string :created_by
       t.datetime :created_at
       t.string :last_modified_by

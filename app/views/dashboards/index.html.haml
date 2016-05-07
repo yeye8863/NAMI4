@@ -1,0 +1,39 @@
+=render :partial=>'layouts/banner'
+#page-title.container-fluid.titleLine
+  %h2  Dashboard
+#mainbody.container-fluid
+  .row
+    .col-sm-6
+      %h3 Agenda
+      = render :partial => 'agendas_view'
+    .col-sm-6
+      %h3 Report Quickview
+      = render :partial => 'reports_view'
+  .row                  
+    .col-sm-6
+      %h3 New Added Contacts
+      = render :partial => 'added_donor_view'
+    .col-sm-6
+      %h3 Admin Tool Box
+      = link_to 'User Management', users_path, class:'btn btn-default'
+      = link_to 'Custom Field', '#', class: 'btn btn-default'
+  #agendaInfo.modal.fade{:role => 'dialog'}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{:type=>'button',:data => {:dismiss => 'modal'},:aria => { :label => 'Close'}}="&times;".html_safe
+          %h4.modal-title Detail
+        .modal-body
+        .modal-footer
+          %button.btn.btn-default{:type=>'button',:data => {:dismiss => 'modal'}} Close
+  #addedDonorInfo.modal.fade{:role => 'dialog'}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{:type=>'button',:data => {:dismiss => 'modal'},:aria => { :label => 'Close'}}="&times;".html_safe
+          %h4.modal-title Detail
+        .modal-body
+        .modal-footer
+          %button.btn.btn-default{:type=>'button',:data => {:dismiss => 'modal'}} Close
+
+          

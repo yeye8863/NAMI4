@@ -39,11 +39,20 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.4.0)
     arel (6.0.3)
+    autoprefixer-rails (6.3.6)
+      execjs
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
     bcrypt (3.1.11)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-datepicker-rails (1.6.0.1)
+      railties (>= 3.0)
+    bootstrap-sass (3.2.0.2)
+      sass (~> 3.2)
+    bootstrap-select-wrapper-rails (1.9.4)
+    bootstrap-table-rails (1.10.1)
+    bootstrap_form (2.3.0)
     builder (3.2.2)
     byebug (8.2.2)
     capybara (2.6.2)
@@ -86,20 +95,35 @@ GEM
     docile (1.1.5)
     erubis (2.7.0)
     execjs (2.6.0)
+    factory_girl (4.7.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.7.0)
+      factory_girl (~> 4.7.0)
+      railties (>= 3.0.0)
     gherkin (3.2.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     haml (4.0.7)
       tilt
     i18n (0.7.0)
+    its-it (1.2.1)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
+    jquery-datatables-rails (3.3.0)
+      actionpack (>= 3.1)
+      jquery-rails
+      railties (>= 3.1)
+      sass-rails
     jquery-rails (4.1.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
+    jquery-turbolinks (2.1.0)
+      railties (>= 3.1.0)
+      turbolinks
     json (1.8.3)
+    key_struct (0.4.2)
     launchy (2.4.3)
       addressable (~> 2.3)
     loofah (2.0.3)
@@ -111,6 +135,9 @@ GEM
     mime-types-data (3.2016.0221)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
+    modware (0.1.2)
+      its-it
+      key_struct (~> 0.4)
     multi_json (1.11.2)
     multi_test (0.1.2)
     nokogiri (1.6.7.2)
@@ -177,9 +204,21 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    schema_monkey (2.1.4)
+      activerecord (>= 4.2)
+      its-it
+      modware (~> 0.1)
+    schema_plus_core (1.0.0)
+      activerecord (~> 4.2)
+      schema_monkey (~> 2.1)
+    schema_plus_views (0.3.1)
+      activerecord (~> 4.2)
+      schema_plus_core (~> 1.0)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    shoulda-matchers (3.1.1)
+      activesupport (>= 4.0.0)
     simplecov (0.11.2)
       docile (~> 1.1.0)
       json (~> 1.8)
@@ -215,17 +254,26 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autoprefixer-rails
   autotest
   bcrypt (~> 3.1.7)
+  bootstrap-datepicker-rails (~> 1.6, >= 1.6.0.1)
+  bootstrap-sass (~> 3.2.0)
+  bootstrap-select-wrapper-rails
+  bootstrap-table-rails
+  bootstrap_form
   byebug
   capybara
   coffee-rails (~> 4.1.0)
   cucumber-rails
   cucumber-rails-training-wheels
   database_cleaner
+  factory_girl_rails
   haml
   jbuilder (~> 2.0)
+  jquery-datatables-rails (~> 3.3.0)
   jquery-rails
+  jquery-turbolinks
   launchy
   pg
   protected_attributes (~> 1.0.2)
@@ -233,7 +281,9 @@ DEPENDENCIES
   rails_12factor
   rspec-rails
   sass-rails (~> 5.0)
+  schema_plus_views
   sdoc (~> 0.4.0)
+  shoulda-matchers (~> 3.1)
   simplecov
   spring
   sqlite3
@@ -241,5 +291,8 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
 
+RUBY VERSION
+   ruby 2.2.2p95
+
 BUNDLED WITH
-   1.11.2
+   1.12.3

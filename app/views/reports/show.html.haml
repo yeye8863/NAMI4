@@ -1,0 +1,19 @@
+=render :partial=>'layouts/banner'
+#page-title.container-fluid.titleLine
+  %h2 Report Preview
+#mainbody.container-fluid
+  %label#title.hidden=@report.title
+  %table#report-detail.table
+    %thead
+      %tr
+        - @attr_names.each do |attr|
+          %th=attr.humanize
+    %tbody
+      - if @records
+        - @records.each do |record|
+          %tr
+            - @attr_names.each do |attr| 
+              %th=record.send(attr)
+  .button-line.right
+    =link_to 'Back',:back,class:'btn btn-primary'
+  %span{:style=>'color:red'} Columns are draggable, drag the columns to generate the desired format

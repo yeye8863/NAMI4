@@ -1,0 +1,7 @@
+%table#user-table.table
+  %tbody
+    -@user_info.each_pair do |key, val|
+      - if val and not val.to_s.empty?
+        %tr
+          %td.bold=key.humanize
+          %td=val
