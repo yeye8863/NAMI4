@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root :to=>'sessions#new', :as=> 'session_root'
+  root :to=>'sessions#new'
   
   # these routes are for showing users a login form, logging them in, and logging them out.
   post 'login' => 'sessions#create', :as => 'login'
