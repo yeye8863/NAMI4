@@ -32,8 +32,17 @@ class ReportsController < ApplicationController
         configs[filter.table_name][filter.field_name]['max_date']=filter.max_date if (filter.max_date and !filter.max_date.to_s.empty?)
       end
       
-      @records = Report.generate(configs)
+      @results = Report.generate(configs)
       
+      @records = []
+      @results.each do |record|
+        @attr_names.each do |attr|
+          if not record.send(attr).empty?
+            @records<<record
+            break
+          end
+        end
+      end
     end
     
     def new 

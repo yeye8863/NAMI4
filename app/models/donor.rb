@@ -5,6 +5,8 @@ class Donor < ActiveRecord::Base
     
     has_many :finances
     has_many :contacts
+    
+    validates_presence_of :first_name, :last_name
 
     def self.search_by inputs
         if inputs != nil 

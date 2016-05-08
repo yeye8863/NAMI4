@@ -74,7 +74,7 @@ var Filworker = {
 					if($("select", $(this)).length == 0)
 						$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
 													"<option data-hidden='true' value=''>Choose the table name...</option>" +
-	  											"<option value='donor'>Donor</option>"+
+	  												"<option value='donor'>Donor</option>"+
 													"<option value='contact'>Contact</option>"+
 													"<option value='finance'>Finance</option>"+
 													"</select>"
@@ -132,7 +132,7 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-										+'<option value="title">Title</option>'
+								  +'<option value="title">Title</option>'
 							      +'<option value="first_name">First Name</option>'
 							      +'<option value="last_name">Last Name</option>'
 							      +'<option value="middle_name">Middle Name</option>'
@@ -158,7 +158,7 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-										+'<option value="type">Type</option>'
+								+'<option value="type">Type</option>'
 						        +'<option value="date">Date</option>'
 						        +'<option value="amount">Amount</option>'
 						        +'<option value="description">Description</option>'
@@ -230,20 +230,20 @@ var Filworker = {
 				cells_sel_tab.each(function(){
 					if($("select", $(this)).length == 0)
 						$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
-													"<option data-hidden='true' value=''>Choose the table name...</option>" +
-	  											"<option value='donor'>Donor</option>"+
-													"<option value='contact'>Contact</option>"+
-													"<option value='finance'>Finance</option>"+
-													"</select>"
-				 								);
+									"<option data-hidden='true' value=''>Choose the table name...</option>" +
+	  								"<option value='donor'>Donor</option>"+
+									"<option value='contact'>Contact</option>"+
+									"<option value='finance'>Finance</option>"+
+									"</select>"
+				 		);
 				  });
 				
 				cells_sel_fld.each(function(){
 					if($("select", $(this)).length == 0)
 						$(this).html("<select id='selectpicker-fld' class='selectpicker'>"
-											  + "<option data-hidden='true' value=''>Choose the field name...</option>"
+						+ "<option data-hidden='true' value=''>Choose the field name...</option>"
                         + "</select>"	
-						);
+					);
 				});
 				
 				cells_inp.each(function(){
@@ -291,7 +291,7 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-										+'<option value="title">Title</option>'
+								  +'<option value="title">Title</option>'
 							      +'<option value="first_name">First Name</option>'
 							      +'<option value="last_name">Last Name</option>'
 							      +'<option value="middle_name">Middle Name</option>'
@@ -317,7 +317,7 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-										+'<option value="type">Type</option>'
+								+'<option value="type">Type</option>'
 						        +'<option value="date">Date</option>'
 						        +'<option value="amount">Amount</option>'
 						        +'<option value="description">Description</option>'
