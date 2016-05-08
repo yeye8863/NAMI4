@@ -203,7 +203,7 @@ var Filworker = {
 	},
 	
 	editRow: function(){
-		if($("#filter_tab tr").hasClass("selected")){
+		if($("#filter_tab tr").hasClass("selected") && !$("#filter_tab td").hasClass("dataTables_empty")){
 			original_c = Filworker.save_raw_row();
 			$("#edit").addClass("editing");
 			selected_c = $("#filter_tab tr.selected")
