@@ -265,3 +265,29 @@ Given /the email/ do |access_table|
         Access.create access
     end
 end
+
+Given /the contacts table/ do |contacts_table|
+  contacts_table.hashes.each do |contact|
+    Contact.create contact
+  end
+end
+
+Given /the donors table/ do |donors_table|
+  donors_table.hashes.each do |donor|
+    Donor.create donor
+  end
+end
+
+Given /^the report table/ do |report_table|
+    report_table.hashes.each do |report|
+    Report.create report
+  end 
+end
+
+Given /^I have logged in as "([^"]*)" with "([^"]*)"$/ do |username, passwd|
+  steps %{
+  Given I am on the index page
+  When I login with "#{username}" and "#{passwd}"
+	And I press "Login"
+  }
+end

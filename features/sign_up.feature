@@ -1,18 +1,18 @@
 Feature: Signup
 Background: user in database and given access code
-Given the following users exist:
-| username  | password_digest | 
-| Tony  	| testpassword23  |
-| Jojo  	| notthistime     |
-| Ste   	| welcomeback     |
+    Given the following users exist:
+    | username   | password 	   | email		   | first_name	| last_name	|
+    | Tony       | testpassword23  | 111@gmail.com | aaa		| aaa		|
+    | Jojo       | notthistime     | 222@gmail.com | bbb		| bbb		|
+    | Ste        | welcomeback     | 333@gmail.com | ccc		| ccc		|
 
-And Given the email:
-|  email  	        |
-|  frank@gmail.com  |
+	And Given the email:
+	|  email  	        |
+	|  frank@gmail.com  |
 
-Given I am on the index page 
-When I follow "Sign Up"
-Then I am on the signup page
+	Given I am on the index page 
+	When I follow "Sign Up"
+	Then I am on the signup page
 
 Scenario: signup with new identity(happy path)
 
@@ -20,6 +20,8 @@ Scenario: signup with new identity(happy path)
 	And I fill in "Password" with "abcdefgh"
 	And I fill in "Confirm Password" with "abcdefgh"
 	And I fill in "Email" with "frank@gmail.com"
+	And I fill in "First Name" with "Frank"
+	And I fill in "Last Name" with "Zhang"
 	And I press "Create"
 	Then I should be on the index page
 	And I should see "You have signed up successfully"
@@ -31,7 +33,9 @@ Scenario: try to signup with invalid information(sad path)
 	And I fill in "Password" with "abcdefgh"
 	And I fill in "Confirm Password" with "abcdefgh"
 	And I fill in "Email" with "frank1@gmail.com"
+	And I fill in "First Name" with "Frank"
+	And I fill in "Last Name" with "Zhang"
 	And I press "Create"
 	Then I should be on signup page
-	Then I should see "Incorrect access code"
+	Then I should see "Unauthorized email address"
 
