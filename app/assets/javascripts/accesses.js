@@ -39,14 +39,14 @@ var accessDataTable = {
             var selected_c = $('#access_table tr.selected');
     	      if(selected_c.length){
     	        var attr = [];
-    	    	  var cells = $("td", selected_c).slice(1);
+    	    	var cells = $("td", selected_c).slice(1);
     	    	  
-    	    	  $('#access_table tr.selected td:first-child').each( function () {
-                var title = $(this).text();
-    	    		  attr.push(title);
+    	    	$('#access_table tr.selected td:not(:last-child)').each(function(){
+                  var title = $(this).text();
+    	          attr.push(title);
               });
             }
-    	    	return attr;
+    	    return attr;
         };
         
         
@@ -73,6 +73,7 @@ var accessDataTable = {
         // 4. cancel 
         $('#access-result #cancel').on( 'click', function (e) {
           var selected_c = $('#access_table tr.selected');
+          var btn = selected_c.children('td').last().html();
           if ($('#access_table').hasClass('locked')){
             // new row
             if (selected_c.hasClass("newrow")){
@@ -82,7 +83,7 @@ var accessDataTable = {
             // edit row
             else{
     	      var row = table.row(selected_c)
-    	      row.data(original_row).draw();
+    	      row.data([original_row,btn]).draw();
               reset_btn();
             }
           }
