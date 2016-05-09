@@ -35,7 +35,7 @@ var $input = $('#search_'+table_name);
 $input.on('keyup', function () {
 	clearTimeout(typingTimer);
 	typingTimer = setTimeout(function(){
-		table_c.column("#table_"+table_name+" th:last").search($input.val()).draw();
+		table_c.column("#table_"+table_name+" th:last").search("").draw();
 		table_c.search($input.val()).draw();
 	}, 500);
 });
