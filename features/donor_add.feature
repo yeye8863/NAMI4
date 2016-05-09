@@ -30,7 +30,7 @@ Scenario: Fill out donor basic information
   	| street_address	| St. Peter Street	|
   	| city	| Houston	|
   And I select "O" from "donor_flag"
-  And I click "Create Donor" to submit the form
+  And I submit with "Create Donor"
   #Then I should see "Successfully saved"
   Then I should be on the new donor page
   And I follow "Back"

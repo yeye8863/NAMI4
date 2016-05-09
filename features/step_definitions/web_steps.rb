@@ -304,6 +304,6 @@ Then /^I should see the CSV:$/ do |table|
   assert_tables_match(csv, table.raw)
 end
 
-When /^I click "([^\"]*)" to submit the form$/ do |btn|
+When /^I submit with "([^\"]*)"$/ do |btn|
   click_on(btn)
 end
