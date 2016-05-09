@@ -3,73 +3,52 @@ Feature: Dashboard
 Background: users has logged in and go to the dashboard page
    
     Given the following users exist:
-    | username   | password 	     | email			    | first_name	| last_name	|
-    | Tony       | testpassword23    | 111@gmail.com	    | A				| D			|
-     
-    Given the contacts table:
-	  | donor_id  | contact_person_id | contact_date  | followup_date |
-	  | 1         |                   | 2016-3-20     | 2016-4-11     |
-	  |           | 1                 | 2016-3-21     | 2016-4-10     |  
-
-	Given the donors table:
-	  | title   | first_name   | last_name   |
-	  | Mr.     | John         | Smith       |
-	  | Mr.     | Bill         | Gates       |
-	 
-	Given the contact people table:
-	  | title   | first_name   | last_name   |  organization_id |
-	  | Mrs.    | Jenny        | White       |  1               |
-	 
-	Given the organizations table:
-	  | name  |
-	  | AAA   |
-	  | BBB   |
-	
-	Given the report table:
-     |         Title           |  Create Time | Last Modified Time | Last Run Time |
-	 | 2014first season report |  2014-3-21   | 2014-4-10          | 2014-4-15     |
-     | 2013second season report|  2013-3-21   | 2013-4-10          | 2013-4-15     |
-	 | 2012third season report |  2012-3-21   | 2012-4-10          | 2012-4-15     |
+     | username   | password 	      | email			    | first_name	| last_name	| function	|
+     | Tony       | testpassword23    | 111@gmail.com	    | A				| D			| dashboard	|
+	  
+	Given the reports table:
+     | title	|  description	| create_at	  | last_modified_at   | last_modified_by	   |
+	 | 2014 	|  aaa			| 2014-3-21   | 2014-4-11          | AAA     | 
+     | 2013		|  bbb			| 2013-3-22   | 2013-4-10          | BBB     |
+	 | 2012		|  ccc			| 2012-3-23   | 2012-4-19           | CCC     |
 	
     Given the donors table:
-	  | title   | first_name   | last_name   | Last Run Time | Contact Date   | Create Time | Last Modified Time |
-	  | Mr.     | John         | Smith       | 2014-5-15     | 2014-3-12      | 2014-3-22   | 2014-4-12          |
-	  | Mr.     | Bill         | Gates       | 2013-2-15     | 2014-1-10      | 2014-1-21   | 2014-2-10          | 
-
-   	Given the contact people table:
-	  | title   | first_name   | last_name   |  organization_id | Contact Date   | Create Time | Last Modified Time | Last Run Time |
-	  | Mrs.    | Jenny        | White       |        1         |   2014-3-10    | 2014-3-21   | 2014-4-10          | 2014-4-15     | 
-	  | Mr.     | James        | Jones       |        1         |   2013-3-10    | 2013-3-21   | 2013-4-10          | 2013-4-15     | 
-	  | Miss.   | Stephen      | Rose        |        2         |   2012-3-10    | 2012-3-21   | 2012-4-10          | 2012-4-15     | 
+      | first_name	| last_name	| organization	| company	| title	| flag	|
+      | Albert		| Einstein	| AAA			| Apple		| Prof.	| I		|
+      | John		| Smiths	| BBB			| Facebook	| Mr.	| O		|
+      | Daniel		| Freud		| CCC			| Linkedin	| Mr.	| I		|
+	
+	Given the contacts table:
+	  | contact_date	| followup_date	| narrative	| donor_id	|
+	  | 2016-04-01		| 2016-05-20	| a			| 1			|
+	  | 2016-04-02		| 2016-05-13	| b			| 2			|
 	  
-    Given the organizations table:
-	  | name  | Last Run Time | Contact Date   | Create Time | Last Modified Time |
-	  | AAA   | 2014-4-15     |  2014-3-10     | 2014-3-21   | 2014-4-10          |
-	  | BBB   | 2013-5-15     | 2013-3-12      | 2013-3-22   | 2013-4-12          |
-
     Given I have logged in as "Tony" with "testpassword23"
     Then I should be on the homepage
 	And I follow "Dashboard"
+	Then I should be on dashboard page
 	
 	Scenario: check out agenda
-	 
-	  Then I should find 2 agenda records
-	  And I should find agenda table:
-	  | Name              | Organization  | Contact Date  |  Follow-up Date   |
-	  | Mrs. Jenny White  | AAA           | 2016-03-21     | 2016-04-10         |
-	  | Mr. John Smith    |               | 2016-03-20     | 2016-04-11         |
+	  Given I am on dashboard page
+	  Then I should see the following "agendaTable" table without first and last column:
+	  | Name              | Organization  | Contact Date   |  Followup Date 	|
+	  | Mr. John Smiths    	  | BBB           | 2016-04-02     | 2016-05-13         |
+	  | Prof. Albert Einstein  | AAA           | 2016-04-01     | 2016-05-20         |
 
 
 	Scenario: check out recently report
-	  Then I should find 2 recently report records
-	  And I should find the recently report table:
-	  |         Title           | Create Time  | Last Modified Time |
-	  | 2014first season report |  2014-03-21   | 2014-04-10          |
-	  | 2013second season report|  2013-03-21   | 2013-04-10          |
+	  Given I am on dashboard page
+	  Then I should see the following "reportTable" table without first column:
+	  | Title	| Description  	| Last Modified By 	|
+	  | 2012 	| ccc			| CCC				|
+	  | 2013	| bbb			| BBB				|
+	  | 2014	| aaa			| AAA				|
+	  
 	
 	Scenario: check out recently edited contact
-	  Then I should find 2 recently edited contact records
-	  And I should find the recently edited contact table:
-	  |        Name       | Organization  | Contact Date |  Create Time  |Last Modified Time| Last Run Time |
-	  | Mr.  John Smith   |               | 2014-3-12    |  2014-3-22    | 2014-4-12        | 2014-5-15     |
-	  | Mrs. Jenny White  |     AAA       | 2014-3-10    |  2014-3-21    | 2014-4-10        | 2014-4-15     |
+	  Given I am on dashboard page
+	  Then I should see the following "addedDonorTable" table without first column:
+	  | Type| First Name	| Last Name	| Company  	| Organization	|
+      | I	| Daniel		| Freud		| Linkedin	| CCC 		|
+      | O	| John			| Smiths	| Facebook	| BBB		|	
+      | I	| Albert		| Einstein	| Apple		| AAA		| 

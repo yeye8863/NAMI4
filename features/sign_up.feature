@@ -15,7 +15,7 @@ Background: user in database and given access code
 	Then I am on the signup page
 
 Scenario: signup with new identity(happy path)
-
+	Given I am on the signup page
 	When I fill in "Username" with "frank"
 	And I fill in "Password" with "abcdefgh"
 	And I fill in "Confirm Password" with "abcdefgh"
@@ -28,7 +28,7 @@ Scenario: signup with new identity(happy path)
 
 
 Scenario: try to signup with invalid information(sad path)
-
+	Given I am on the signup page
 	When I fill in "Username" with "frank"
 	And I fill in "Password" with "abcdefgh"
 	And I fill in "Confirm Password" with "abcdefgh"

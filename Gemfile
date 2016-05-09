@@ -50,6 +50,7 @@ group :development, :test do
   gem 'cucumber-rails-training-wheels'
   gem 'database_cleaner'
   gem 'capybara'
+  gem "selenium-webdriver"
   gem 'launchy'
   gem 'rspec-rails'
   gem 'simplecov'
