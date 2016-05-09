@@ -3,8 +3,15 @@
 # newer version of cucumber-rails. Consider adding your own code to a new file
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
-
+require 'simplecov'
+SimpleCov.start 'rails'
+require 'nokogiri'
 require 'cucumber/rails'
+require 'rbconfig'
+require 'cucumber/formatter/unicode'
+require 'capybara'
+require 'capybara/dsl'
+require "capybara/cucumber"
 
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
@@ -56,3 +63,13 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
+Capybara.register_driver :selenium do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :firefox)
+end
+
+Capybara.run_server = true
+Capybara.server_port = 8200
+Capybara.default_selector = :css #:xpath #default selector , you can change to :css
+Capybara.default_wait_time = 5 #When we testing AJAX, we can set a default wait time
+Capybara.ignore_hidden_elements = false #Ignore hidden elements when testing, make helpful when you hide or show elements using javascript
+Capybara.javascript_driver = :selenium #default driver when you using @javascript tag

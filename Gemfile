@@ -18,9 +18,9 @@ gem 'haml'
 #gem 'local_time'
 # Use jquery as the JavaScript library
 gem 'bootstrap-sass', '~> 3.2.0'
-gem 'bootstrap_form' 
-gem "bootstrap-table-rails"
 gem 'bootstrap-select-wrapper-rails'
+gem 'jquery-datatables-rails', '~> 3.3.0'
+gem 'bootstrap-datepicker-rails', '~> 1.6', '>= 1.6.0.1'
 gem 'autoprefixer-rails'
 # Use bootstrap framework
 gem 'jquery-rails'
@@ -34,8 +34,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem "schema_plus_views" 
 gem 'bcrypt', '~> 3.1.7'
 gem 'protected_attributes', '~> 1.0.2'
-gem 'jquery-datatables-rails', '~> 3.3.0'
-gem 'bootstrap-datepicker-rails', '~> 1.6', '>= 1.6.0.1'
+
 
 # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0', group: :development
@@ -52,6 +51,7 @@ group :development, :test do
   gem 'cucumber-rails-training-wheels'
   gem 'database_cleaner'
   gem 'capybara'
+  gem "selenium-webdriver"
   gem 'launchy'
   gem 'rspec-rails'
   gem 'simplecov'

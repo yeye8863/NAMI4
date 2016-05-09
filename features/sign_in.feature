@@ -1,10 +1,10 @@
 Feature: Signin to the system
 Background: users in database
     Given the following users exist:
-    | username   | password 	   | email			| first_name	| last_name	|
-    | Tony       | testpassword23  | 111@gmail.com	| A				| D			|
-    | Jojo       | notthistime     | 222@gmail.com	| B				| E			|
-    | Ste        | welcomeback     | 333@gmail.com	| C				| F			|
+    | username   | password 	   | email		   | first_name	| last_name	|
+    | Tony       | testpassword23  | 111@gmail.com | aaa		| aaa		|
+    | Jojo       | notthistime     | 222@gmail.com | bbb		| bbb		|
+    | Ste        | welcomeback     | 333@gmail.com | ccc		| ccc		|
 
 Scenario: try to login with true identity (happy path)
 	Given I am on the index page

@@ -4,12 +4,12 @@
       %tr
         %th Action
         - @donor_attr_show.each do |attr|
-          %th #{attr.humanize}
+          %th=attr.humanize.split.map(&:capitalize).join(' ')
     %tfoot
       %tr
         %th
         - @donor_attr_show.each do |attr|
-          %th.filter #{attr.humanize}
+          %th.filter=attr.humanize.split.map(&:capitalize).join(' ')
     %tbody
       - if @donors
         - @donors.each do |donor|

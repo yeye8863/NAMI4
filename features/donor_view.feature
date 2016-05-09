@@ -1,5 +1,5 @@
 Feature: Donor Search
-Background: users logged in and navigate to donor search page
+Background: users logged in and nevigate to donor search page
   Given the following users exist:
     | username   | password 	   	     | email		    	| first_name	  | last_name	| function			|
     | Jojo       | testpassword123     | 222@gmail.com	| B				| E			| donor management	|
@@ -14,12 +14,8 @@ Background: users logged in and navigate to donor search page
   
   Given I have logged in as "Jojo" with "testpassword123"
   And I follow "Donor Management"
-  
-Scenario: Donor Overview
-  Then I should see the following "table_donor" table without first column:
-    | Flag  | Title   | First Name	| Last Name	| Organization	| Company	    | 
-    | I     | Prof.   | Albert      | Einstein  | AAA           | Apple       |
-    | O     | Mr.     | John        | Smiths    | BBB           | Facebook    |
-    | I     | Mr.     | Daniel      | Freud     | CCC           | Linkedin    |
-  
+ 
+Scenario: Donor View
+  When I follow "View" of row 1
+	Then I should be on donnor edit page 1
   

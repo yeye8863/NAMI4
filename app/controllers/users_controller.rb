@@ -42,7 +42,7 @@ class UsersController < ApplicationController
 		  	end
 		else # invalid access email
 			#debugger
-			flash[:notice] = "Unauthrized email address."
+			flash[:notice] = "Unauthorized email address"
 			redirect_to new_user_path
 		end
 	end
