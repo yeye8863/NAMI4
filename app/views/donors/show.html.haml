@@ -92,7 +92,10 @@
         .navbar-default
           %form.navbar-form.navbar-right
             .form-group
-              %input.form-control#search_contact{:placeholder => "Search", :type => "text"}
+              .input-group
+                %input.form-control#search_contact{:placeholder => "Search", :type => "text"}
+                %span.input-group-btn
+                  %button.btn.btn-default#reset_contact{type:"button"} Reset
               .btn.btn-default#view_contact Detail
               .btn.btn-success#add_contact Add
               .btn.btn-info#edit_contact Edit
@@ -118,6 +121,7 @@
               %label Finance
               %select#contact_field3{required:"true"}
                 %option{"disabled" => true, "selected" => true, value:""} Select related finance record
+                %option{value:"-1"} None
             .col-md-3
               .input-group.input-group-sm
                 %span.input-group-addon Created By
@@ -154,7 +158,10 @@
         .navbar-default
           %form.navbar-form.navbar-right
             .form-group
-              %input.form-control#search_finance{:placeholder => "Search", :type => "text"}
+              .input-group
+                %input.form-control#search_finance{:placeholder => "Search", :type => "text"}
+                %span.input-group-btn
+                  %button.btn.btn-default#reset_finance{type:"button"} Reset
               .btn.btn-default#view_finance Detail
               .btn.btn-success#add_finance Add
               .btn.btn-info#edit_finance Edit
@@ -186,6 +193,7 @@
               %label Contact
               %select#finance_field5{required:"true"}
                 %option{"disabled" => true, "selected" => true, value:""} Select related contact record
+                %option{value:"-1"} None
             .col-md-3
               .input-group.input-group-sm
                 %span.input-group-addon Created By

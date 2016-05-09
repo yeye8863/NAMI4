@@ -13,11 +13,15 @@ class FinancesController < ApplicationController
         })
         @finance.save!
         if a[5] != "" && !a[5].nil?
-            con = Contact.find(a[5])
-            if(!con.finances.nil?)
-                original = con.finances.id
-            end
-            con.update_attributes!({:finances => @finance})
+            if a[5] != "-1"
+               con = Contact.find(a[5])
+               if(!con.finances.nil?)
+                   original = con.finances.id
+               else
+                   original = nil
+               end
+               con.update_attributes!({:finances => @finance})
+           end
         end
         jdata={
             :id => @finance.id,
@@ -62,11 +66,21 @@ class FinancesController < ApplicationController
             :last_modified_by => User.find(session[:user_id]).username
         })
         if a[5] != "" && !a[5].nil?
-            con = Contact.find(a[5])
-            if(!con.finances.nil?)
-                original = con.finances.id
-            end
-            con.update_attributes!({:finances => @finance})
+            if a[5] == "-1"
+                con = @finance.contact
+                if !con.nil?
+                    con.update_attributes!({:finances => nil})
+                end
+                @finance.update_attributes!({:contact => nil})
+            else
+               con = Contact.find(a[5])
+               if(!con.finances.nil?)
+                   original = con.finances.id
+               else
+                   original = nil
+               end
+               con.update_attributes!({:finances => @finance})
+           end
         end
         jdata={
             :id => @finance.id,

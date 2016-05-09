@@ -22,6 +22,7 @@ $("#add_"+table_name).click(insRow);
 $("#edit_"+table_name).click(editRow);
 $("#delete_"+table_name).click(delData);
 $("#cancel_"+table_name).click(cnclRow);
+$("#reset_"+table_name).click(rstSrch);
 $("#table_"+table_name+" tbody").on("click", "tr", selRow);
 $("#table_"+table_name+" tbody .foreign_key").click(function(e){
 	getForeign($(e.target).closest("tr").data("id"), showForeign);
@@ -43,6 +44,11 @@ $input.on('keydown', function () {
   clearTimeout(typingTimer);
 });
 })();
+
+function rstSrch(){
+		table_c.column("#table_"+table_name+" th:last").search("").draw();
+		table_c.search("").draw();
+}
 
 function getForeign(id, fn){
 	if(id == -1) fn(null)

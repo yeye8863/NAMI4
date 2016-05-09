@@ -10,7 +10,7 @@ class ContactsController < ApplicationController
             :last_modified_by => User.find(session[:user_id]).username
         })
         @contact.save!
-        if a[3] != "" && !a[3].nil?
+        if a[3] != "" && !a[3].nil? && a[3] != "-1"
             fin = Finance.find(a[3])
             if(!fin.contact.nil?)
                 original = fin.contact.id
@@ -55,11 +55,21 @@ class ContactsController < ApplicationController
             :last_modified_by => User.find(session[:user_id]).username
         })
         if a[3] != "" && !a[3].nil?
-            fin = Finance.find(a[3])
-            if(!fin.contact.nil?)
-                original = fin.contact.id
+            if a[3] == "-1"
+                fin = @contact.finances
+                if !fin.nil?
+                    fin.update_attributes!({:contact => nil})
+                end
+                @contact.update_attributes!({:finances => nil})
+            else
+                fin = Finance.find(a[3])
+                if(!fin.contact.nil?)
+                    original = fin.contact.id
+                else
+                    original = nil
+                end
+                @contact.update_attributes!({:finances => fin})
             end
-            @contact.update_attributes!({:finances => fin})
         end
         @contact.save!
         jdata={
