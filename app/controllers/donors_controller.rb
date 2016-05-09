@@ -38,7 +38,7 @@ class DonorsController < ApplicationController
         params[:donor][:active] = 1
         @donor = Donor.create!(params[:donor])
 
-        flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
+        #flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
         if params[:where] == "inplace"
             render :json => @donor
         else

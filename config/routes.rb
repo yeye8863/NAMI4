@@ -23,9 +23,5 @@ Rails.application.routes.draw do
   resources :agendas
   resources :reports
   resources :filters
-<<<<<<< HEAD
   
-=======
-
->>>>>>> to_test
 end
