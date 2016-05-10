@@ -37,8 +37,8 @@ class ReportsController < ApplicationController
       @records = []
       @results.each do |record|
         @attr_names.each do |attr|
-          if not record.send(attr).empty?
-            @records<<record
+          if record.send(attr) and not record.send(attr).to_s.empty?
+            @records << record
             break
           end
         end
