@@ -16,6 +16,6 @@ Background: users logged in and nevigate to donor search page
   And I follow "Donor Management"
  
 Scenario: Donor View
-  When I follow "View" of row 1
+  When I click "View" of row 1
 	Then I should be on donnor edit page 1
   
