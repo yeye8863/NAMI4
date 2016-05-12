@@ -17,7 +17,7 @@
             %td#actions{:style => 'width:15%'}
               = link_to "View", donorSummary_path(donor.id), id: 'view', remote: true, class: 'btn btn-success btn-xs'
               = link_to "Edit", donor_path(donor.id), class: 'btn btn-success btn-xs'
-              = link_to "Delete", donor_path(donor.id),  id: 'delete', method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-danger btn-xs'
+              = link_to "Delete", donor_path(donor.id),  id: 'deletebtn', method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-danger btn-xs'
             - attrs = donor.attributes
             - @donor_attr_show.each do |attr|
               - if attrs.include? attr

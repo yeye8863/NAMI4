@@ -217,7 +217,7 @@ var donorDataTable = {
 	      $("tr.newrow td:first-child").attr({'id':"actions","class":"","style":'width:15%'})
 	      butns = "<a id='view'; class='btn btn-success btn-xs' href='/donorSummary/"+data.id+"', data-remote='true'>View</a>\
                  <a class='btn btn-success btn-xs' href='/donors/"+data.id+"'>Edit</a>\
-                 <a id='delete' class='btn btn-danger btn-xs' href='/donors/"+data.id+"' data-method='delete' rel='nofollow' data-confirm='Are you sure?'>Delete</a>";
+                 <a id='deletebtn' class='btn btn-danger btn-xs' href='/donors/"+data.id+"' data-method='delete' rel='nofollow' data-confirm='Are you sure?'>Delete</a>";
 	    }else{
 	      butns = $("tr.selected #actions").html();
 	    }
