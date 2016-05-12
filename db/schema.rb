@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425194910) do
+ActiveRecord::Schema.define(version: 20160511223526) do
 
   create_table "accesses", force: :cascade do |t|
     t.string   "email"
@@ -55,6 +55,9 @@ ActiveRecord::Schema.define(version: 20160425194910) do
     t.datetime "updated_at",       :null=>false
     t.string   "flag"
     t.integer  "active",           :default=>1
+    t.string   "role"
+    t.string   "note"
+    t.string   "spouse"
   end
 
   create_view "agenda_views", <<-'END_VIEW_AGENDA_VIEWS', :force => true

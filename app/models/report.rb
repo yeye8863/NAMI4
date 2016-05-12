@@ -18,7 +18,11 @@ class Report < ActiveRecord::Base
             attribute.each do |attrname,value|
               case attrname
               when 'value'
+                if value.start_with? '%'
+                  where_statement+=fieldname+" LIKE '"+value.to_s+"%' AND"
+                else
                   where_statement+=fieldname+"='"+value.to_s+"' AND "
+                end
               when 'min_value'
                   where_statement+=fieldname+">='"+value.to_s+"' AND "
               when 'max_value'
@@ -54,7 +58,11 @@ class Report < ActiveRecord::Base
               attribute.each do |attrname,value|
                 case attrname
                 when 'value'
+                  if value.start_with? '%'
+                    where_statement+=fieldname+" LIKE '"+value.to_s+"%' AND"
+                  else
                     where_statement+=fieldname+"='"+value.to_s+"' AND "
+                  end
                 when 'min_value'
                     where_statement+=fieldname+">='"+value.to_s+"' AND "
                 when 'max_value'
@@ -90,7 +98,34 @@ class Report < ActiveRecord::Base
           end
         end
       elsif tables.count == 3
-        records = nil
+        configs.each do |table,field|
+          field.each do |fieldname,attribute|
+            select_statement += table.pluralize+"."+fieldname+","
+            attribute.each do |attrname,value|
+              case attrname
+              when 'value'
+                if value.start_with? '%'
+                  where_statement+=fieldname+" LIKE '"+value.to_s+"%' AND"
+                else
+                  where_statement+=fieldname+"='"+value.to_s+"' AND "
+                end
+              when 'min_value'
+                  where_statement+=fieldname+">='"+value.to_s+"' AND "
+              when 'max_value'
+                  where_statement+=fieldname+"<='"+value.to_s+"' AND "
+              when 'min_date'
+                  where_statement+=fieldname+">='"+value.to_s+"' AND "
+              when 'max_date'
+                  where_statement+=fieldname+"<='"+value.to_s+"' AND "
+              end
+            end
+          end
+        end
+        
+        if !select_statement.empty?
+          select_statement = select_statement[0...select_statement.rindex(',')]
+          records = Donor.joins(:contacts, :finances).select(select_statement)
+        end
       end
       return records
     end

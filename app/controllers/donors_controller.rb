@@ -52,6 +52,7 @@ class DonorsController < ApplicationController
         @donor = Donor.find(id)
         @donor_basic = {
             'Title' => @donor.title,
+            'Role' => @donor.role,
             'First Name' => @donor.first_name,
             'Last Name' => @donor.last_name,
             'Middle Name' => @donor.middle_name,
@@ -59,13 +60,15 @@ class DonorsController < ApplicationController
             'Email' => @donor.email,
   	        'Organization' => @donor.organization,
   	        'Company' => @donor.company,
+  	        'Spouse' => @donor.spouse,
   	        'Street Address' => @donor.street_address,
   	        'City' => @donor.city,
   	        'State' => @donor.state,
   	        'Countrt' => @donor.country,
   	        'Zip Code' => @donor.zipcode,
             'Home Phone' => @donor.home_phone,
-            'Business Phone' => @donor.business_phone
+            'Business Phone' => @donor.business_phone,
+            'Note' => @donor.note
 	        }
 	    @donor_contact = [
 	        "contact_date",
@@ -94,9 +97,9 @@ class DonorsController < ApplicationController
       end
       
       render :json => @donor if request.xhr? && params[:where] == "inplace"
-      
       @donor_basic = {
             'Title' => @donor.title,
+            'Role' => @donor.role,
             'First Name' => @donor.first_name,
             'Last Name' => @donor.last_name,
             'Middle Name' => @donor.middle_name,
@@ -104,13 +107,15 @@ class DonorsController < ApplicationController
             'Email' => @donor.email,
   	        'Organization' => @donor.organization,
   	        'Company' => @donor.company,
+  	        'Spouse' => @donor.spouse,
   	        'Street Address' => @donor.street_address,
   	        'City' => @donor.city,
   	        'State' => @donor.state,
-  	        'Countrt' => @donor.country,
+  	        'Country' => @donor.country,
   	        'Zip Code' => @donor.zipcode,
             'Home Phone' => @donor.home_phone,
-            'Business Phone' => @donor.business_phone
+            'Business Phone' => @donor.business_phone,
+            'Note' => @donor.note
 	        }
       render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr? && !params[:where]
     end
@@ -135,6 +140,7 @@ class DonorsController < ApplicationController
       @donor_basic = {
           'Type' => type,
           'Title' => @donor.title,
+          'Role' => @donor.role,
           'First Name' => @donor.first_name,
           'Last Name' => @donor.last_name,
           'Middle Name' => @donor.middle_name,
@@ -142,13 +148,15 @@ class DonorsController < ApplicationController
           'Email' => @donor.email,
   	      'Organization' => @donor.organization,
   	      'Company' => @donor.company,
+  	      'Spouse' => @donor.spouse,
   	      'Street Address' => @donor.street_address,
   	      'City' => @donor.city,
   	      'State' => @donor.state,
-  	      'Countrt' => @donor.country,
+  	      'Country' => @donor.country,
   	      'Zip Code' => @donor.zipcode,
           'Home Phone' => @donor.home_phone,
-          'Business Phone' => @donor.business_phone
+          'Business Phone' => @donor.business_phone,
+          'Note' => @donor.note
 	     }
 	     render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr?
     end

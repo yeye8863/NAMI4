@@ -1,7 +1,8 @@
 class Donor < ActiveRecord::Base
     attr_accessible :flag, :first_name, :last_name, :title, :middle_name, :salution, 
     :email, :organization, :company, :street_address, :city, :state, :country,
-    :zipcode, :home_phone, :business_phone, :created_by, :last_modified_by, :active
+    :zipcode, :home_phone, :business_phone, :created_by, :last_modified_by, :active,
+    :role, :spouse, :note
     
     has_many :finances
     has_many :contacts
