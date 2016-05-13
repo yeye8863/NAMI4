@@ -39,7 +39,7 @@ var Filworker = {
 			$(row).addClass("selected").siblings().removeClass("selected");
 			
 			//reset buttons
-		  $("#save").show();
+		  	$("#save").show();
 			$("#canc").show();
 			$("#edit").hide();
 			$("#delete").hide();
@@ -63,47 +63,46 @@ var Filworker = {
 	cofNewRow: function(){
 		
 		if(selected_c.length){
-				var cells_sel_tab = $("td", selected_c).slice(0, 1);
-				var cells_sel_fld = $("td", selected_c).slice(1, 2);
-				var cells_inp = $("td", selected_c).slice(2, 5);
-				var cells_date = $("td", selected_c).slice(5, 7);
+			var cells_sel_tab = $("td", selected_c).slice(0, 1);
+			var cells_sel_fld = $("td", selected_c).slice(1, 2);
+			var cells_inp = $("td", selected_c).slice(2, 5);
+			var cells_date = $("td", selected_c).slice(5, 7);
 				
-				cells_sel_tab.each(function(){
-					if($("select", $(this)).length == 0)
-						$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
-													"<option data-hidden='true' value=''>Choose the table name...</option>" +
-	  												"<option value='donor'>Donor</option>"+
-													"<option value='contact'>Contact</option>"+
-													"<option value='finance'>Finance</option>"+
-													"</select>"
-				 								);
-				  });
+			cells_sel_tab.each(function(){
+			if($("select", $(this)).length == 0)
+				$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
+							"<option data-hidden='true' value=''>Choose the table name...</option>" +
+	  						"<option value='donor'>Donor</option>"+
+							"<option value='contact'>Contact</option>"+
+							"<option value='finance'>Finance</option>"+
+							"</select>"
+				);
+			});
 				
-				cells_sel_fld.each(function(){
-					if($("select", $(this)).length == 0)
-						$(this).html("<select id='selectpicker-fld' class='selectpicker'>"
-												+"<option class='bs-title-option' value='placeholder'>Choose a Table name first!</option>"
-                        + "</select>"	
-						);
+			cells_sel_fld.each(function(){
+				if($("select", $(this)).length == 0)
+					$(this).html("<select id='selectpicker-fld' class='selectpicker'>"
+								+"<option class='bs-title-option' value='placeholder'>Choose a Table name first!</option>"
+            					+ "</select>"	
+					);
 				});
 				
-				cells_inp.each(function(){
-					if($("input", $(this)).length == 0)
-						$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>");
-				});
+			cells_inp.each(function(){
+				if($("input", $(this)).length == 0)
+					$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>");
+			});
 				
-				cells_date.each(function(){
-					if($("input", $(this)).length == 0)
-						$(this).html("<input style='width:100%;' type='text' class='datepicker'>");
-				});
-				$('.selectpicker').selectpicker();
-				$('.datepicker').datepicker({
-					format: 'yyyy-mm-dd',
-					autoclose: true});
-				//config the datepicking
-				//Filworker.choDate(cells_date[0], cells_date[1]);
-				
-			}
+			cells_date.each(function(){
+				if($("input", $(this)).length == 0)
+					$(this).html("<input style='width:100%;' type='text' class='datepicker'>");
+			});
+			$('.selectpicker').selectpicker();
+			$('.datepicker').datepicker({
+				format: 'yyyy-mm-dd',
+				autoclose: true});
+			//config the datepicking
+			//Filworker.choDate(cells_date[0], cells_date[1]);
+		}
 		
 			//dynamic field select
 		$('.selectpicker#selectpicker-tab').change(function(){
@@ -148,7 +147,8 @@ var Filworker = {
 							      +'<option value="created_by">Create by (Person)</option>'
 							      +'<option value="last_modified_by">Last Modified by (Person)</option>'
 							      +'<option value="created_at">Created at (Date)</option>'
-							      +'<option value="last_modified_at">Last Modified at (Date)</option>')
+							      +'<option value="last_modified_at">Last Modified at (Date)</option>'
+							      +'<option value="active">Active</option>')
 							.selectpicker('refresh');
 		        break;
 		        
@@ -220,47 +220,46 @@ var Filworker = {
 	cofEditRow: function(){
 		
 		if(selected_c.length){
-				var cells_sel_tab = $("td", selected_c).slice(0, 1);
-				var cells_sel_fld = $("td", selected_c).slice(1, 2);
-				var cells_inp = $("td", selected_c).slice(2, 5);
-				var cells_date = $("td", selected_c).slice(5, 7);
+			var cells_sel_tab = $("td", selected_c).slice(0, 1);
+			var cells_sel_fld = $("td", selected_c).slice(1, 2);
+			var cells_inp = $("td", selected_c).slice(2, 5);
+			var cells_date = $("td", selected_c).slice(5, 7);
 				
-				cells_sel_tab.each(function(){
-					if($("select", $(this)).length == 0)
-						$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
-									"<option data-hidden='true' value=''>Choose the table name...</option>" +
-	  								"<option value='donor'>Donor</option>"+
-									"<option value='contact'>Contact</option>"+
-									"<option value='finance'>Finance</option>"+
-									"</select>"
-				 		);
-				  });
+			cells_sel_tab.each(function(){
+				if($("select", $(this)).length == 0)
+					$(this).html("<select id='selectpicker-tab' class='selectpicker'>"+
+								"<option data-hidden='true' value=''>Choose the table name...</option>" +
+	  							"<option value='donor'>Donor</option>"+
+								"<option value='contact'>Contact</option>"+
+								"<option value='finance'>Finance</option>"+
+								"</select>"
+				);
+			});
 				
-				cells_sel_fld.each(function(){
-					if($("select", $(this)).length == 0)
-						$(this).html("<select id='selectpicker-fld' class='selectpicker'>"
-						+ "<option data-hidden='true' value=''>Choose the field name...</option>"
-                        + "</select>"	
-					);
-				});
+			cells_sel_fld.each(function(){
+				if($("select", $(this)).length == 0)
+					$(this).html("<select id='selectpicker-fld' class='selectpicker'>"
+					+ "<option data-hidden='true' value=''>Choose the field name...</option>"
+                    + "</select>"	
+				);
+			});
 				
-				cells_inp.each(function(){
-					if($("input", $(this)).length == 0)
-						$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>");
-				});
+			cells_inp.each(function(){
+				if($("input", $(this)).length == 0)
+					$(this).html("<input style='width:100%;' value='"+$(this).html().trim()+"'>");
+			});
 				
-				cells_date.each(function(){
-					if($("input", $(this)).length == 0)
-						$(this).html("<input style='width:100%;' type='text' class='datepicker'>");
-				});
-				$('.selectpicker').selectpicker();
-				$('.datepicker').datepicker({
-					format: 'yyyy-mm-dd',
-					autoclose: true});
-				//config the datepicking
-				//Filworker.choDate(cells_date[0], cells_date[1]);
-				
-			}
+			cells_date.each(function(){
+				if($("input", $(this)).length == 0)
+					$(this).html("<input style='width:100%;' type='text' class='datepicker'>");
+			});
+			$('.selectpicker').selectpicker();
+			$('.datepicker').datepicker({
+				format: 'yyyy-mm-dd',
+				autoclose: true});
+			//config the datepicking
+			//Filworker.choDate(cells_date[0], cells_date[1]);
+		}
 		
 		Filworker.editFld(cells_sel_tab,cells_sel_fld,cells_date);
 		
@@ -359,7 +358,7 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-										+'<option value="title">Title</option>'
+								  +'<option value="title">Title</option>'
 							      +'<option value="first_name">First Name</option>'
 							      +'<option value="last_name">Last Name</option>'
 							      +'<option value="middle_name">Middle Name</option>'
@@ -385,7 +384,7 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-										+'<option value="type">Type</option>'
+								+'<option value="type">Type</option>'
 						        +'<option value="date">Date</option>'
 						        +'<option value="amount">Amount</option>'
 						        +'<option value="description">Description</option>'
@@ -403,17 +402,12 @@ var Filworker = {
 		    }
 		    
 	   var field1 = original_c[1].trim().toLowerCase().split(' ').join('_');
-	  //console.log(field1);
 		$("select",b).selectpicker('val', field1); 
 		
 		var min_date1 = original_c[5].trim();
-	  //console.log(min_date1);
-	  //console.log(c[0]);
 		$("input",c[0]).datepicker('update', min_date1);
 		
 		var max_date1 = original_c[6].trim();
-	  //console.log(min_date1);
-	 // console.log(c[1]);
 		$("input",c[1]).datepicker('update', max_date1); 
 	},
 	
@@ -558,61 +552,17 @@ var Filworker = {
 	},
 	
 	choDate : function(a,b){
-			//var now = new Date();
-			
-			var d1 = a.datepicker({
-					format: 'yyyy-mm-dd',
-					autoclose: true
-			});
+		var d1 = a.datepicker({
+			format: 'yyyy-mm-dd',
+			autoclose: true
+		});
 		
-			var d2 = b.datepicker({
-					format: 'yyyy-mm-dd',
-					autoclose: true
-			})
-			
-			/*		
-			a
-			.datepicker()
-			.on('changeDate', function(e) {
-			if (e.date.valueOf() > b.date.valueOf()) {
-		        var newDate = new Date(a.date)
-		        newDate.setDate(newDate.getDate() + 1);
-		        b.setValue(newDate);
-	      	}
-      a.hide();
-      b[0].focus();
-    })	
-	
-			b.on('changeDate', function(evnt) {
-					if (evnt.date.valueOf() < d1.date.valueOf()){
-						alert("Date Max should greater than Date Min")
-						var d1Date = new Date(d1.date.valueOf())
-			       d1Date.setDate(d1Date.getDate() + 1);
-			        d2.setValue(d1Date);
-					}
-	      	d2.hide();
-	    })*/
+		var d2 = b.datepicker({
+			format: 'yyyy-mm-dd',
+			autoclose: true
+		})
 	},
-	
-	
-	
-	
-	
-	
 };
- 
- /*
-function fixHeader(){
-	if($("#contact-tab", $(this)).length){
-		setTimeout(function() {
-			if($(".fixedHeader").length == 0 && $("#contact").hasClass("active")){
-				header_c = new fixHeader(table_c);
-				$(window).resize(function(){ header_c._fnUpdateClones(true) })
-			}
-		}, 1000);
-	} else $(".fixedHeader").remove();
-}
-*/
 
 
 
