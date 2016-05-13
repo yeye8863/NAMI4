@@ -126,6 +126,11 @@ class Report < ActiveRecord::Base
           select_statement = select_statement[0...select_statement.rindex(',')]
           records = Donor.joins(:contacts, :finances).select(select_statement)
         end
+        
+        if !where_statement.empty?
+          where_statement = where_statement[0...where_statement.rindex(' ',-2)]
+          records = records.where(where_statement)
+        end
       end
       return records
     end
