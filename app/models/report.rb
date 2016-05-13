@@ -19,7 +19,7 @@ class Report < ActiveRecord::Base
               case attrname
               when 'value'
                 if value.start_with? '%'
-                  where_statement+=fieldname+" LIKE '"+value.to_s+"%' AND"
+                  where_statement+=fieldname+" LIKE '"+value.to_s+"%' AND "
                 else
                   where_statement+=fieldname+"='"+value.to_s+"' AND "
                 end
@@ -59,7 +59,7 @@ class Report < ActiveRecord::Base
                 case attrname
                 when 'value'
                   if value.start_with? '%'
-                    where_statement+=fieldname+" LIKE '"+value.to_s+"%' AND"
+                    where_statement+=fieldname+" LIKE '"+value.to_s+"%' AND "
                   else
                     where_statement+=fieldname+"='"+value.to_s+"' AND "
                   end
@@ -105,7 +105,7 @@ class Report < ActiveRecord::Base
               case attrname
               when 'value'
                 if value.start_with? '%'
-                  where_statement+=fieldname+" LIKE '"+value.to_s+"%' AND"
+                  where_statement+=fieldname+" LIKE '"+value.to_s+"%' AND "
                 else
                   where_statement+=fieldname+"='"+value.to_s+"' AND "
                 end
