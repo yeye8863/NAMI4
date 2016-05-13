@@ -13,8 +13,6 @@ $(document).ready(function() {
     		"dom": 'lrtip'
     	});
 		}
-	
-		
 		
 		$("#add").click(Filworker.insRow);
 		$("#edit").click(Filworker.editRow);
@@ -158,7 +156,7 @@ var Filworker = {
 		        $('.selectpicker#selectpicker-fld').selectpicker('toggle');
 		        $('.selectpicker#selectpicker-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
-								+'<option value="type">Type</option>'
+								+'<option value="_type">Type</option>'
 						        +'<option value="date">Date</option>'
 						        +'<option value="amount">Amount</option>'
 						        +'<option value="description">Description</option>'
