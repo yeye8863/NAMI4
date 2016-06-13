@@ -80,7 +80,7 @@ class ReportsController < ApplicationController
       report.delete('id')
       respond_to do |format|
         if @report.update_attributes(report)
-          format.js {render js: "$('#backbtn').notify('Successfully saved', {className: 'success', position:'right middle'});"}
+          format.js {render js: "$('#save_info').notify('Successfully saved', {arrowShow: false, className: 'success', position:'left middle'});"}
           format.html{ redirect_to reports_path, :notice => "successfully updated" }
         end
       end

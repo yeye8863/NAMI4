@@ -1,0 +1,43 @@
+=render :partial=>'layouts/banner'
+#page-title.container-fluid.titleLine
+  %h2 Import Tool
+#mainbody.container-fluid.row
+  #file-panel.panel.panel-default.col-sm-12.button-line
+    .panel-heading{:style => "font-size:20px;"} Upload File
+    =form_tag(upload_path, multipart: true, remote: true, id:'upload-form') do
+      .form-group
+        .row.wrapper
+          .col-sm-2
+            %span{:style=>'color:red'} Please upload .csv/.xls/.xlsx file
+          .col-sm-5.center
+            =file_field(:post, :file, accept:'.csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+          .col-sm-1.center
+            =submit_tag 'Upload', id:'uploadBtn', class:'btn btn-sm btn-info'
+          .col-sm-4
+            #progressbox
+              #progressbar
+              #statustxt
+  #selector-panel.panel.panel-default.col-sm-12.button-line
+    .panel-heading{:style => "font-size:20px;"} Choose Fields
+    .panel-body
+      %table#selector-table.table
+        %thead
+          %tr
+            %th Table
+            %th Field
+        %tbody
+      .row
+        %span{style:'color:red'} Please add table name and field from left to right
+        .right
+          %button.btn.btn-default#add Add
+          %button.btn.btn-default#edit Edit
+          %button.btn.btn-default#delete Delete
+          %button.btn.btn-success#save{:style => "display:none"} Save
+          %button.btn.btn-danger#cancel{:style => "display:none"} Cancel
+  .button-line.col-sm-12
+    .pull-right
+      =link_to import_path, id: 'import-btn', :remote=>true do
+        %button.btn.btn-default Import
+      =link_to 'Back',:back, class:'btn btn-primary'        
+  
+      

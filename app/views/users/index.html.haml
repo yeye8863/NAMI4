@@ -18,15 +18,15 @@
         - @users.each do |user|
           %tr
             %td
-              = link_to 'View', user_path(user.id), id:'viewbtn', class:'btn btn-success btn-xs'
-              = link_to 'Edit', edit_user_path(user.id), id:'editbtn', class:'btn btn-success btn-xs'
+              = link_to 'View', user_path(user.id), id:'viewbtn', class:'btn btn-default btn-xs'
+              = link_to 'Edit', edit_user_path(user.id), id:'editbtn', class:'btn btn-default btn-xs'
               = link_to 'Delete', user_path(user.id), id:'deletebtn', method:'delete',  data: {confirm: "Are you sure?"},class:'btn btn-danger btn-xs'
             - attrs = user.attributes
             - @user_attr_show.each do |attr|
               - if attrs.include? attr
                 %td=user[attr]
   .button-line.pull-right       
-    = link_to 'Access Control', accesses_path, class:'btn btn-primary' 
+    = link_to 'Access Control', accesses_path, class:'btn btn-default' 
     = link_to 'Back', dashboard_path, class:'btn btn-primary'
   
 #userInfo.modal.fade{:role => 'dialog'}

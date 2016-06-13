@@ -3,10 +3,10 @@
   %h2 Access Overview
 #mainbody.container-fluid
   #access-result.container-fluid
-    %table#access_table.table.display{:cellspacing => "0", :width => "100%"}
+    %table#access_table.table.center.display{:cellspacing => "0", :width => "100%"}
       %thead{:data => {:attrname => @access_attr}}
         %tr
-          %th.filter Email Address
+          %th.center.filter Email Address
           %th
       %tbody
         - @accesses.each do |access|
@@ -14,7 +14,7 @@
             %td=access.email
             %td#deletebtn=link_to "delete",access_path(access.id), method: 'delete', class:'btn btn-xs btn-danger',data: {confirm: "Are you sure?"}
     .button-line.right{:style => "padding:10"}
-      =link_to "Quick Add","#access_table" , class: 'btn btn-info', id: "quick_add"
-      =link_to "Quick Edit", "#access_table", class: 'btn btn-info', id: "quick_edit"
+      =link_to "Quick Add","#access_table" , class: 'btn btn-default', id: "quick_add"
+      =link_to "Quick Edit", "#access_table", class: 'btn btn-default', id: "quick_edit"
       =link_to "Cancel", "#access_table", class: 'btn btn-danger', id:"cancel"
       =link_to 'Back', users_path, class:'btn btn-primary'

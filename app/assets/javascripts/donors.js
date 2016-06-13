@@ -80,22 +80,22 @@ var donorDataTable = {
     
     //  quick edit row
      $('#donor-result #quick_edit').on( 'click', function (e) {
-        if ($('#table_donor').hasClass('locked')){
-            saveData();
-        }
-        else if ($('#table_donor tr').hasClass('selected')){
+        if (!$('#table_donor').hasClass('locked')){
+          if ($('#table_donor tr').hasClass('selected')){
             original_row = save_raw_data();
             $('#table_donor').addClass('locked');
             $('#table_donor tr.selected td').slice(1).each( function () {
                 var title = $(this).text();
                 $(this).html( "<input style='width:100%' value='" + $(this).html().trim() + "'>");
             } );
-	        $("#donor-result #quick_edit").text("Save");
+	        $("#donor-result #quick_edit").hide();
+	        $('#donor-result #save').show();
 	        $("#donor-result #cancel").show();
+	        $('#donor-result #import').hide();
 	        $("#donor-result #add").hide();
 	        $("#donor-result #quick_add").hide();
         }
- 
+      }
     } );
     
     function save_raw_data(){
@@ -115,10 +115,7 @@ var donorDataTable = {
     
     //  quick add row
     $('#donor-result #quick_add').on( 'click', function (e) {
-        if ($('#table_donor').hasClass('locked')){
-            saveData();
-        }
-        else{
+        if (!$('#table_donor').hasClass('locked')){
             var row = table.row.add(["","","","","","",""]).draw(false).node();
             $('#table_donor').addClass('locked');
             $(row).addClass("selected").addClass("newrow").siblings().removeClass("selected");
@@ -126,12 +123,13 @@ var donorDataTable = {
                 var title = $(this).text();
                 $(this).html( "<input style='width:100%' value='" + $(this).html().trim() + "'>");
             } );
-  	        $("#donor-result #quick_add").text("Save");
+  	        $("#donor-result #quick_add").hide();
+  	        $('#donor-result #save').show();
   	        $("#donor-result #cancel").show();
+  	        $('#donor-result #import').hide();
   	        $("#donor-result #add").hide();
   	        $("#donor-result #quick_edit").hide();
         }
- 
     } );
     
     //  cancel 
@@ -165,11 +163,15 @@ var donorDataTable = {
     // reset all button
     function reset_btn(){
 	    $("#donor-result #add").show();
-      $("#donor-result #quick_add").text("Quick Add").show();
-	    $("#donor-result #quick_edit").text("Quick Edit").show();
+      $("#donor-result #quick_add").show();
+	    $("#donor-result #quick_edit").show();
+	    $("#donor-result #import").show();
+	    $("#donor-result #save").hide();
 	    $("#donor-result #cancel").hide();
 	    $("#donor-result #table_donor").removeClass("locked");
     }
+    
+    $('#donor-result #save').click(saveData);
     
     // submit data
     function saveData(){
@@ -233,7 +235,7 @@ var donorDataTable = {
   	      ]).draw(false);
 	    reset_btn();
 	    $('tr.newrow').removeClass('newrow');
-       $("#donor-result #add").notify("Successfully saved!", {gap: 205, arrowShow: false, className: "success", position:"left middle"}); 
+       $("#donor-result #add").notify("Successfully saved!", {arrowShow: false, className: "success", position:"left middle"}); 
      }
   }
 };

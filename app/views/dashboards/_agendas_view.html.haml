@@ -17,4 +17,4 @@
             %td=agenda_record.organization
             %td=agenda_record.contact_date
             %td=agenda_record.followup_date
-            %td=link_to 'Detail', agenda_path("#{agenda_record.contact_id}"), remote: true, class:'btn btn-xs btn-success', data: {toggle: 'modal', target: '#agendaInfo'}
+            %td=link_to 'Detail', agenda_path("#{agenda_record.contact_id}"), remote: true, class:'btn btn-xs btn-default', data: {toggle: 'modal', target: '#agendaInfo'}

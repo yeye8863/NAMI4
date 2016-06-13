@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   get 'donorContact' => 'donors#showByContact', :as => 'donorContact'
   get 'dashboard' => 'dashboards#index', :as => 'dashboard'
   get 'dashboard/donor/:id' => 'dashboards#viewDonor', :as=>'dashboardDonor'
+  get 'donor/importIndex' => 'donors#importIndex', :as=>'importIndex'
+  post 'donor/import' => 'donors#import', :as=>'import'
+  post 'donor/upload' => 'donors#upload', :as=>'upload'
   
   resources :users
   resources :accesses

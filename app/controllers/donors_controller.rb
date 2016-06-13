@@ -1,3 +1,5 @@
+require 'csv'
+
 class DonorsController < ApplicationController
 
     before_action :check_authorization
@@ -159,6 +161,23 @@ class DonorsController < ApplicationController
           'Note' => @donor.note
 	     }
 	     render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr?
+    end
+    
+    def importIndex
+
+    end
+    
+    def upload
+      @uploaded_file = params[:post][:file]
+      session[:upload_path] = @uploaded_file.path
+      render :json => 'Successfully Uploaded' if request.xhr?
+    end
+    
+    def import
+      @donor = Donor.first
+      data_arr = CSV.read(session[:upload_path],"r:ISO-8859-1")
+      debugger
+      render :json => "Successfully Imported" if request.xhr?
     end
     
     def check_authorization

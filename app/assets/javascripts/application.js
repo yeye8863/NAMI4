@@ -19,5 +19,6 @@
 //= require bootstrap-datepicker/core
 //= require bootstrap-select
 //= require notify.min
+//= require jquery.form
 //= require_tree .
 

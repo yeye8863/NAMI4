@@ -2,7 +2,6 @@
 
 #page-title.container-fluid.titleLine
   %h2 Report
-		
 #mainbody.container-fluid
   %h3 Report Creator
   .panel-group
@@ -20,5 +19,5 @@
               =r.text_area :description, :class => 'form-control', :id => 'description', :placeholder => 'discription'
           .row
             .button-line{:style => "padding:10px"}
-              =r.submit 'Save Info', class: 'btn btn-primary'
-              =link_to "Back", reports_path, class: 'btn btn-default'
+              =r.submit 'Save', class: 'btn btn-success'
+              =link_to "Back", reports_path, class: 'btn btn-primary'
