@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160511223526) do
+ActiveRecord::Schema.define(version: 20160625222611) do
 
   create_table "accesses", force: :cascade do |t|
     t.string   "email"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20160511223526) do
     t.string   "city"
     t.string   "state",            :default=>"Texas"
     t.string   "country",          :default=>"United States"
-    t.integer  "zipcode"
+    t.string   "zipcode"
     t.string   "home_phone"
     t.string   "business_phone"
     t.string   "created_by"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20160511223526) do
     t.string   "role"
     t.string   "note"
     t.string   "spouse"
+    t.string   "street_address_2"
   end
 
   create_view "agenda_views", <<-'END_VIEW_AGENDA_VIEWS', :force => true

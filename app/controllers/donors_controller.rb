@@ -63,6 +63,7 @@ class DonorsController < ApplicationController
   	        'Company' => @donor.company,
   	        'Spouse' => @donor.spouse,
   	        'Street Address' => @donor.street_address,
+  	        'Street Address 2' => @donor.street_address_2,
   	        'City' => @donor.city,
   	        'State' => @donor.state,
   	        'Countrt' => @donor.country,
@@ -110,6 +111,7 @@ class DonorsController < ApplicationController
   	        'Company' => @donor.company,
   	        'Spouse' => @donor.spouse,
   	        'Street Address' => @donor.street_address,
+  	        'Street Address 2' => @donor.street_address_2,
   	        'City' => @donor.city,
   	        'State' => @donor.state,
   	        'Country' => @donor.country,
@@ -151,6 +153,7 @@ class DonorsController < ApplicationController
   	      'Company' => @donor.company,
   	      'Spouse' => @donor.spouse,
   	      'Street Address' => @donor.street_address,
+  	      'Street Address 2' => @donor.street_address_2,
   	      'City' => @donor.city,
   	      'State' => @donor.state,
   	      'Country' => @donor.country,
@@ -169,16 +172,22 @@ class DonorsController < ApplicationController
     def upload
       @uploaded_file = params[:post][:file]
       session[:upload_path] = @uploaded_file.path
+      session[:file_type] = File.extname(@uploaded_file.original_filename)
       render :json => 'Successfully Uploaded' if request.xhr?
     end
     
     def import
       response_array={}
       if(session[:upload_path])
-        data_arr = CSV.read(session[:upload_path],"r:ISO-8859-1")
+        case session[:file_type]
+        when ".csv" then @file = Roo::CSV.new(session[:upload_path])
+        when ".xls" then @file = Roo::Excel.new(session[:upload_path])
+        when ".xlsx" then @file = Roo::Excelx.new(session[:upload_path])
+        end
+        @file.default_sheet = @file.sheets.first
       end
 
-      if(!data_arr)
+      if(!@file)
         response_array['status']=1;
         render :json=>response_array if request.xhr?
         return
@@ -217,24 +226,26 @@ class DonorsController < ApplicationController
       donor_param = {}
       contact_param = {}
       finance_param = {}
-      data_arr.each do |row|
+      
+      row_stop = @file.last_row
+      (2...row_stop).each do |line_num|
         @donor_index.each do |d_i|
-          donor_param[@fields[d_i]] = row[d_i]
+          donor_param[@fields[d_i]] = @file.row(line_num)[d_i]
         end
         @contact_index.each do |c_i|
           if(@fields[c_i]==:contact_date || @fields[c_i]==:followup_date)
-            contact_param[@fields[c_i]] = Date.strptime(row[c_i],"%m/%d/%Y")
+            contact_param[@fields[c_i]] = Date.strptime(@file.row(line_num)[c_i],"%m/%d/%Y")
           else
-            contact_param[@fields[c_i]] = row[c_i]
+            contact_param[@fields[c_i]] = @file.row(line_num)[c_i]
           end
         end
         @finance_index.each do |f_i|
           if(@fields[f_i]==:date )
-            finance_param[@fields[f_i]] = Date.strptime(row[f_i],"%m/%d/%Y")
+            finance_param[@fields[f_i]] = Date.strptime(@file.row(line_num)[f_i],"%m/%d/%Y")
           elsif(@fields[f_i]==:amount)
-            finance_param[@fields[f_i]] = row[f_i].to_f
+            finance_param[@fields[f_i]] = @file.row(line_num)[f_i].to_f
           else
-            finance_param[@fields[f_i]] = row[f_i]
+            finance_param[@fields[f_i]] = @file.row(line_num)[f_i]
           end
         end
 
@@ -244,8 +255,10 @@ class DonorsController < ApplicationController
         donor_param[:last_modified_at] = DateTime.now
         @donor = Donor.new donor_param
         if !@donor.save 
-          debugger
-          break
+          #debugger
+          response_array['status'] = 3
+          render :json=>response_array if request.xhr?
+          return
         end
         
         if !contact_param.empty?
@@ -254,8 +267,10 @@ class DonorsController < ApplicationController
           contact_param[:last_modified_at] = DateTime.now
           @contact = @donor.contacts.new contact_param
           if !@contact.save 
-            debugger
-            break
+            #debugger
+            response_array['status'] = 3
+            render :json=>response_array if request.xhr?
+            return
           end
         end
         
@@ -265,8 +280,10 @@ class DonorsController < ApplicationController
           finance_param[:last_modified_at] = DateTime.now
           @finance = @donor.finances.new finance_param
           if !@finance.save 
-            debugger
-            break
+            #debugger
+            response_array['status'] = 3
+            render :json=>response_array if request.xhr?
+            return
           end
         end
       end

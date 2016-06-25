@@ -90,6 +90,9 @@ var Importer = {
 	  					case 2:
 	  						$('#import-btn').notify('No field specified!',{gap: 20, arrowShow: false, className: "error", position:"left middle"});
 	  						break;
+	  					case 3:
+	  						$('#import-btn').notify('Import failed! Please check the file again',{gap: 20, arrowShow: false, className: "error", position:"left middle"});
+	  						break;	
 	  				}
 	  				
 	  			},
@@ -201,11 +204,7 @@ var Selector = {
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
 								+'<option value="contact_date">Contact Date</option>'
 								+'<option value="followup_date">Followup Date</option>'
-								+'<option value="narrative">Narrative</option>'
-								+'<option value="created_by">Create by (Person)</option>'
-								+'<option value="last_modified_by">Last Modified by (Person)</option>'
-								+'<option value="created_at">Created at (Date)</option>'
-								+'<option value="last_modified_at">Last Modified at (Date)</option>')
+								+'<option value="narrative">Narrative</option>')
 							.selectpicker('refresh');
 		        break;
 		        
@@ -213,26 +212,25 @@ var Selector = {
 		        $('.selectpicker#selector-fld .selected').selectpicker('toggle');
 		        $('.selectpicker#selector-fld')
 							.html("<option data-hidden='true' value=''>Choose the field name...</option>" 
+								  +'<option value="role">Role</option>'
 								  +'<option value="title">Title</option>'
 							      +'<option value="first_name">First Name</option>'
 							      +'<option value="last_name">Last Name</option>'
 							      +'<option value="middle_name">Middle Name</option>'
+							      +'<option value="spouse">Spouse</option>'
 							      +'<option value="salution">Salution</option>'
 							      +'<option value="email">Email</option>'
 							      +'<option value="organization">Organization</option>'
 							      +'<option value="company">Company</option>'
 							      +'<option value="street_address">Street Address</option>'
+							      +'<option value="street_address_2">Street Address 2</option>'
 							      +'<option value="city">City</option>'
 							      +'<option value="state">State</option>'
 							      +'<option value="country">Country</option>'
-							      +'<option value="zipcode">Zip Code</option>'
+							      +'<option value="zipcode">Zipcode</option>'
 							      +'<option value="home_phone">Home Phone</option>'
 							      +'<option value="business_phone">Business Phone</option>'
-							      +'<option value="created_by">Create by (Person)</option>'
-							      +'<option value="last_modified_by">Last Modified by (Person)</option>'
-							      +'<option value="created_at">Created at (Date)</option>'
-							      +'<option value="last_modified_at">Last Modified at (Date)</option>'
-							      +'<option value="active">Active</option>')
+							      +'<option value="note">Note</option>')
 							.selectpicker('refresh');
 		        break;
 		        
@@ -244,11 +242,7 @@ var Selector = {
 						        +'<option value="date">Date</option>'
 						        +'<option value="amount">Amount</option>'
 						        +'<option value="description">Description</option>'
-						        +'<option value="designation">Designation</option>'
-						        +'<option value="created_by">Create by (Person)</option>'
-						        +'<option value="last_modified_by">Last Modified by (Person)</option>'
-						        +'<option value="created_at">Created at (Date)</option>'
-						        +'<option value="last_modified_at">Last Modified at (Date)</option>')
+						        +'<option value="designation">Designation</option>')
 							.selectpicker('refresh');
 		        break;
 		      

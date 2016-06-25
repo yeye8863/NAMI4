@@ -34,7 +34,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem "schema_plus_views" 
 gem 'bcrypt', '~> 3.1.7'
 gem 'protected_attributes', '~> 1.0.2'
-
+gem 'roo', '~> 2.4.0'
+# Parsing spreadsheets
 
 # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0', group: :development
