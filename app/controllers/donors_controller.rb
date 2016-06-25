@@ -39,7 +39,6 @@ class DonorsController < ApplicationController
     def create
         params[:donor][:active] = 1
         @donor = Donor.create!(params[:donor])
-
         #flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
         if params[:where] == "inplace"
             render :json => @donor
@@ -164,7 +163,7 @@ class DonorsController < ApplicationController
     end
     
     def importIndex
-
+      session[:upload_path]=nil
     end
     
     def upload
@@ -174,10 +173,105 @@ class DonorsController < ApplicationController
     end
     
     def import
-      @donor = Donor.first
-      data_arr = CSV.read(session[:upload_path],"r:ISO-8859-1")
-      debugger
-      render :json => "Successfully Imported" if request.xhr?
+      response_array={}
+      if(session[:upload_path])
+        data_arr = CSV.read(session[:upload_path],"r:ISO-8859-1")
+      end
+
+      if(!data_arr)
+        response_array['status']=1;
+        render :json=>response_array if request.xhr?
+        return
+      end
+      
+      @models = []
+      @fields = []
+      @donor_index = []
+      @contact_index = []
+      @finance_index = []
+      
+      isEmpty = (params[:selector]["0"].join=="")?true:false
+      
+      if(isEmpty)
+        response_array['status']=2;
+        render :json=>response_array if request.xhr?
+        return
+      end
+      
+      counter = 0
+      if(!isEmpty)
+        params[:selector].each_value do |row|
+          @models << row[0].classify.constantize
+          @fields << row[1].parameterize.underscore.to_sym
+          if (row[0]=="Donor")
+            @donor_index << counter
+          elsif (row[0]=="Contact")
+            @contact_index << counter
+          elsif (row[0]=="Finance")
+            @finance_index << counter
+          end
+          counter+=1
+        end
+      end
+      
+      donor_param = {}
+      contact_param = {}
+      finance_param = {}
+      data_arr.each do |row|
+        @donor_index.each do |d_i|
+          donor_param[@fields[d_i]] = row[d_i]
+        end
+        @contact_index.each do |c_i|
+          if(@fields[c_i]==:contact_date || @fields[c_i]==:followup_date)
+            contact_param[@fields[c_i]] = Date.strptime(row[c_i],"%m/%d/%Y")
+          else
+            contact_param[@fields[c_i]] = row[c_i]
+          end
+        end
+        @finance_index.each do |f_i|
+          if(@fields[f_i]==:date )
+            finance_param[@fields[f_i]] = Date.strptime(row[f_i],"%m/%d/%Y")
+          elsif(@fields[f_i]==:amount)
+            finance_param[@fields[f_i]] = row[f_i].to_f
+          else
+            finance_param[@fields[f_i]] = row[f_i]
+          end
+        end
+
+        donor_param[:active] = 1
+        donor_param[:created_by] = session[:user]
+        donor_param[:last_modified_by] = session[:user]
+        donor_param[:last_modified_at] = DateTime.now
+        @donor = Donor.new donor_param
+        if !@donor.save 
+          debugger
+          break
+        end
+        
+        if !contact_param.empty?
+          contact_param[:created_by] = session[:user]
+          contact_param[:last_modified_by] = session[:user]
+          contact_param[:last_modified_at] = DateTime.now
+          @contact = @donor.contacts.new contact_param
+          if !@contact.save 
+            debugger
+            break
+          end
+        end
+        
+        if !finance_param.empty?
+          finance_param[:created_by] = session[:user]
+          finance_param[:last_modified_by] = session[:user]
+          finance_param[:last_modified_at] = DateTime.now
+          @finance = @donor.finances.new finance_param
+          if !@finance.save 
+            debugger
+            break
+          end
+        end
+      end
+      response_array['status']=0
+      render :json => response_array if request.xhr?
     end
     
     def check_authorization

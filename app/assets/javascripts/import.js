@@ -1,7 +1,12 @@
 $(document).ready(function(){
 	Selector.table = $('#selector-table').DataTable({
 		ordering: false,
-		dom:'t'
+		dom:'t',
+		"language":{
+			"zeroRecords":"",
+			"emptyTable":"",
+			"infoEmpty":""
+		}
 	});
 	$('#selector-panel #add').click(Selector.insRow);
   	$('#selector-panel #edit').click(Selector.editRow);
@@ -42,7 +47,7 @@ var Uploader = {
 	            }
 	        },
 	        complete: function(response) { // on complete
-	        	//uploadButton.notify(response.responseText,{gap: 20, arrowShow: false, className: "success", position:"left middle"}); //update element with received data
+	        	uploadButton.notify(response.responseText,{gap: 20, arrowShow: false, className: "success", position:"left middle"}); //update element with received data
 	            uploadForm.resetForm();  // reset form
 	            uploadButton.removeAttr('disabled'); //enable submit button
 	            progressbox.hide(); // hide progressbar
@@ -71,11 +76,22 @@ var Importer = {
 	  		$.ajax({
 	  			url: $(this).attr('href'),
 	  			type: 'POST',
-	  			dataType: 'text',
+	  			dataType: 'json',
 	  			data: selector_data,
 	  			success: function(data,status,xhr){
 	  				console.log(xhr.status)
-	  				$('#import-btn').notify('Successfully imported!',{gap: 20, arrowShow: false, className: "success", position:"left middle"});
+	  				switch (data["status"]){
+	  					case 0:
+	  						$('#import-btn').notify('Successfully imported!',{gap: 20, arrowShow: false, className: "success", position:"left middle"});
+	  						break;
+	  					case 1:
+	  						$('#import-btn').notify('No file uploaded!',{gap: 20, arrowShow: false, className: "error", position:"left middle"});
+	  						break;
+	  					case 2:
+	  						$('#import-btn').notify('No field specified!',{gap: 20, arrowShow: false, className: "error", position:"left middle"});
+	  						break;
+	  				}
+	  				
 	  			},
 	  			error: function(xhr,status){
 	  				console.log(xhr.status)
