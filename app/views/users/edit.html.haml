@@ -20,10 +20,18 @@
           =f.text_field :last_name, class:'form-control', id:'last_name'
         .col-sm-3
           =f.label :function
-          =f.select :function, options_for_select([["Donor Management","donor management"],
+          - if f.object.function!=nil
+            =f.select :function, options_for_select([["Donor Management","donor management"],
                                 ["Dashboard","dashboard"],
                                 ["Report Management","report management"],
                                 ["User Management","user management"]],f.object.function.split(', ')),
+                                {},
+                                {:multiple => true, :class => 'form-control'}
+          -else
+            =f.select :function, options_for_select([["Donor Management","donor management"],
+                                ["Dashboard","dashboard"],
+                                ["Report Management","report management"],
+                                ["User Management","user management"]],nil),
                                 {},
                                 {:multiple => true, :class => 'form-control'}
     .form-group
