@@ -3,15 +3,15 @@ require 'csv'
 class DonorsController < ApplicationController
 
     before_action :check_authorization
-    
+
 
     def index
         @donor_attr = Donor.attribute_names
         @donor_attr_show = ["flag", "title", "first_name", "last_name", "organization", "company"]
         @donors = Donor.search_by(params[:donor]).where('active = 1')
     end
-    
-    def new 
+
+    def new
         @donor = Donor.new
         @donor_contact = [
 	        "contact_date",
@@ -22,12 +22,12 @@ class DonorsController < ApplicationController
             '_type',
             'date',
             'amount',
-            'description', 
+            'description',
             'designation'
         ]
         #render(:partial => 'donor_info', :object => @donor) if request.xhr?
     end
-    
+
     def destroy
         id = params[:id]
         @donor = Donor.find(id)
@@ -35,7 +35,7 @@ class DonorsController < ApplicationController
         @donor.update_attributes(:active => 0)
         redirect_to donors_path
     end
-    
+
     def create
         params[:donor][:active] = 1
         @donor = Donor.create!(params[:donor])
@@ -68,6 +68,7 @@ class DonorsController < ApplicationController
   	        'State' => @donor.state,
   	        'Countrt' => @donor.country,
   	        'Zip Code' => @donor.zipcode,
+            'Cell Phone' => @donor.cell_phone,
             'Home Phone' => @donor.home_phone,
             'Business Phone' => @donor.business_phone,
             'Note' => @donor.note
@@ -83,21 +84,21 @@ class DonorsController < ApplicationController
             '_type',
             'date',
             'amount',
-            'description', 
+            'description',
             'designation'
         ]
     end
-    
+
     def update
       @donor = Donor.find(params[:id])
       @donor.update_attributes(params[:donor])
-      
+
       if @donor.flag == "I"
         type = "Individual"
       elsif @donor.flag == "O"
         type = "Organization"
       end
-      
+
       render :json => @donor if request.xhr? && params[:where] == "inplace"
       @donor_basic = {
             'Title' => @donor.title,
@@ -116,30 +117,31 @@ class DonorsController < ApplicationController
   	        'State' => @donor.state,
   	        'Country' => @donor.country,
   	        'Zip Code' => @donor.zipcode,
+            'Cell Phone' => @donor.cell_phone,
             'Home Phone' => @donor.home_phone,
             'Business Phone' => @donor.business_phone,
             'Note' => @donor.note
 	        }
       render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr? && !params[:where]
     end
-    
+
     def showByContact
       contact_id = params[:contactId]
       @contact = Contact.find(contact_id)
       @donor = @contact.donor
       redirect_to controller:'donors', action:'show', id:@donor.id, active:2
     end
-    
+
     def showSummary
       id = params[:id]
       @donor = Donor.find(id)
-      
+
       if @donor.flag == "I"
         type = "Individual"
       elsif @donor.flag == "O"
         type = "Organization"
       end
-      
+
       @donor_basic = {
           'Type' => type,
           'Title' => @donor.title,
@@ -158,24 +160,25 @@ class DonorsController < ApplicationController
   	      'State' => @donor.state,
   	      'Country' => @donor.country,
   	      'Zip Code' => @donor.zipcode,
+          'Cell Phone' => @donor.cell_phone,
           'Home Phone' => @donor.home_phone,
           'Business Phone' => @donor.business_phone,
           'Note' => @donor.note
 	     }
 	     render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr?
     end
-    
+
     def importIndex
       session[:upload_path]=nil
     end
-    
+
     def upload
       @uploaded_file = params[:post][:file]
       session[:upload_path] = @uploaded_file.path
       session[:file_type] = File.extname(@uploaded_file.original_filename)
       render :json => 'Successfully Uploaded' if request.xhr?
     end
-    
+
     def import
       response_array={}
       if(session[:upload_path])
@@ -192,21 +195,21 @@ class DonorsController < ApplicationController
         render :json=>response_array if request.xhr?
         return
       end
-      
+
       @models = []
       @fields = []
       @donor_index = []
       @contact_index = []
       @finance_index = []
-      
+
       isEmpty = (params[:selector]["0"].join=="")?true:false
-      
+
       if(isEmpty)
         response_array['status']=2;
         render :json=>response_array if request.xhr?
         return
       end
-      
+
       counter = 0
       if(!isEmpty)
         params[:selector].each_value do |row|
@@ -222,11 +225,11 @@ class DonorsController < ApplicationController
           counter+=1
         end
       end
-      
+
       donor_param = {}
       contact_param = {}
       finance_param = {}
-      
+
       row_stop = @file.last_row
       (2...row_stop).each do |line_num|
         @donor_index.each do |d_i|
@@ -254,32 +257,32 @@ class DonorsController < ApplicationController
         donor_param[:last_modified_by] = session[:user]
         donor_param[:last_modified_at] = DateTime.now
         @donor = Donor.new donor_param
-        if !@donor.save 
+        if !@donor.save
           #debugger
           response_array['status'] = 3
           render :json=>response_array if request.xhr?
           return
         end
-        
+
         if !contact_param.empty?
           contact_param[:created_by] = session[:user]
           contact_param[:last_modified_by] = session[:user]
           contact_param[:last_modified_at] = DateTime.now
           @contact = @donor.contacts.new contact_param
-          if !@contact.save 
+          if !@contact.save
             #debugger
             response_array['status'] = 3
             render :json=>response_array if request.xhr?
             return
           end
         end
-        
+
         if !finance_param.empty?
           finance_param[:created_by] = session[:user]
           finance_param[:last_modified_by] = session[:user]
           finance_param[:last_modified_at] = DateTime.now
           @finance = @donor.finances.new finance_param
-          if !@finance.save 
+          if !@finance.save
             #debugger
             response_array['status'] = 3
             render :json=>response_array if request.xhr?
@@ -290,7 +293,7 @@ class DonorsController < ApplicationController
       response_array['status']=0
       render :json => response_array if request.xhr?
     end
-    
+
     def check_authorization
         unless current_user.function and current_user.function.include? 'donor management'
             flash[:notice]="Sorry, authorization check failed!"

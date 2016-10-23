@@ -1,11 +1,11 @@
 #page-title.container-fluid.titleLine
   %h2 Donor Information
 %ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
-  %li 
+  %li
     %a{:id=>'basic-tab',:href=>'#basic', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'basic'}} Basic
   %li
     %a{:id=>'contact-tab',:href=>'#contact', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'contact'}} Contact
-  %li 
+  %li
     %a{:id=>'finance-tab',:href=>'#finance', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'finance'}} Finance
 .tab-content.container-fluid
   #summary.tab-pane.active{:role=>'tabpanel'}
@@ -18,7 +18,7 @@
                 %tr
                   %td.bold=key
                   %td=val
-        .pull-right  
+        .pull-right
           =link_to "Back", :back, class: 'btn btn-primary'
           =link_to "Delete", donor_path(@donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger'
   #basic.tab-pane{:role=>'tabpanel'}
@@ -46,41 +46,45 @@
               =f.text_field :middle_name, class:'form-control', id:'middle_name'
         .form-group
           .row
-            .col-sm-3  
+            .col-sm-3
               =f.label :email
               =f.text_field :email, class:'form-control', id:'email'
-            .col-sm-3  
+            .col-sm-3
+              =f.label :cell_phone
+              =f.text_field :cell_phone, class:'form-control', id:'cell_phone'
+            .col-sm-3
               =f.label :home_phone
               =f.text_field :home_phone, class:'form-control', id:'home_phone'
-            .col-sm-3  
+            .col-sm-3
               =f.label :business_phone
               =f.text_field :business_phone, class:'form-control', id:'business_phone'
-            .col-sm-3  
-              =f.label :zipcode
-              =f.text_field :zipcode, class:'form-control', id:'zipcode'
         .form-group
           .row
-            .col-sm-3  
+            .col-sm-3
               =f.label :company
               =f.text_field :company, class:'form-control', id:'company'
-            .col-sm-3  
+            .col-sm-3
               =f.label :organization
               =f.text_field :organization, class:'form-control', id:'organization'
         .form-group
-          .row  
-            .col-sm-3  
+          .row
+            .col-sm-3
               =f.label :street_address
               =f.text_field :street_address, class:'form-control', id:'street_address'
             .col-sm-3
               =f.label :city
               =f.text_field :city, class:'form-control', id:'city'
-            .col-sm-3  
+            .col-sm-3
               =f.label :state
               =f.text_field :state, class:'form-control', id:'state'
-            .col-sm-3  
+            .col-sm-3
+              =f.label :zipcode
+              =f.text_field :zipcode, class:'form-control', id:'zipcode'
+          .row
+            .col-sm-3
               =f.label :country
               =f.text_field :country, class:'form-control', id:'country'
-        .button-line.pull-right    
+        .button-line.pull-right
           =f.submit id:'basic-submit', class:'btn btn-default'
           =link_to "Back", :back , class: 'btn btn-primary'
   #contact.tab-pane{:role=>'tabpanel'}
@@ -98,7 +102,7 @@
                 = contact.contact_date
               %td{:width => "15%"}
                 = contact.followup_date
-              %td{:width => "40%"} 
+              %td{:width => "40%"}
                 = contact.narrative
               %td{:width => "15%"}
                 = contact.created_by
@@ -109,5 +113,5 @@
       =link_to "Edit", "#contact_tab", class: 'btn btn-info', id: "edit"
       %button.btn.btn-danger#delete{type:'button'} Delete
       =link_to "Back", :back , class: 'btn btn-primary'
-    =javascript_include_tag "contacts.js" 
+    =javascript_include_tag "contacts.js"
   #finance.tab-pane{:role=>'tabpanel'}
