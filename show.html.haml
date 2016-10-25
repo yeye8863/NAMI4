@@ -1,0 +1,250 @@
+=render :partial=>'layouts/banner'
+#page-title.container-fluid.titleLine
+  %h2 Donor Information
+  %label#activeLabel.hidden=@active
+%ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
+  %li.active 
+    %a{:id=>'summary-tab',:href=>'#summary', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'summary'}} Summary
+  %li 
+    %a{:id=>'basic-tab',:href=>'#basic', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'basic'}} Basic
+  %li
+    %a{:id=>'contact-tab',:href=>'#contact', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'contact'}} Contact
+  %li 
+    %a{:id=>'finance-tab',:href=>'#finance', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'finance'}} Finance
+.tab-content.container-fluid
+  #summary.tab-pane.active{:role=>'tabpanel'}
+    .container{:style=>'padding-top: 50px'}
+      .row.col-sm-offset-3.col-sm-6
+        =render :partial => 'donor_summary'
+        .pull-right  
+          =link_to "Back", :back, class: 'btn btn-primary'
+          =link_to "Delete", donor_path(@donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger'
+  #basic.tab-pane{:role=>'tabpanel'}
+    %label#donorId.hidden=@donor.id
+    =form_for @donor, :remote=>true, :method=>'put', :html=>{:id=>'donorInfo', :class=>'form donor-form col-sm-12'} do |f|
+      .form-group
+        .form-group
+          .row
+            .col-sm-3
+              =f.label :type
+              =f.select(:flag, [['Individual','I'],['Organization','O']],{},{:class=>'form-control'})
+            .col-sm-3
+              =f.label :role
+              =f.text_field :role, class:'form-control', id:'role'
+            .col-sm-3
+              =f.label :title
+              =f.text_field :title, class:'form-control', id:'title'
+            .col-sm-3
+              =f.label :salution
+              =f.text_field :salution, class:'form-control', id:'salution'
+        .form-group
+          .row
+            .col-sm-3
+              =f.label :first_name
+              =f.text_field :first_name, class:'form-control', id:'first_name', :required=>true
+            .col-sm-3
+              =f.label :last_name
+              =f.text_field :last_name, class:'form-control', id:'last_name', :required=>true
+            .col-sm-3
+              =f.label :middle_name
+              =f.text_field :middle_name, class:'form-control', id:'middle_name'
+        .form-group
+          .row
+            .col-sm-3  
+              =f.label :email
+              =f.text_field :email, class:'form-control', id:'email'
+            .col-sm-3
+              =f.label :cell_phone
+              =f.text_field :cell_phone, class:'form-control', id:'cell_phone'
+            .col-sm-3  
+              =f.label :home_phone
+              =f.text_field :home_phone, class:'form-control', id:'home_phone'
+            .col-sm-3  
+              =f.label :business_phone
+              =f.text_field :business_phone, class:'form-control', id:'business_phone'
+        .form-group
+          .row
+            .col-sm-3  
+              =f.label :company
+              =f.text_field :company, class:'form-control', id:'company'
+            .col-sm-3  
+              =f.label :organization
+              =f.text_field :organization, class:'form-control', id:'organization'
+            .col-sm-3
+              =f.label :spouse
+              =f.text_field :spouse, class:'form-control', id:'spouse'
+        .form-group
+          .row  
+            .col-sm-3  
+              =f.label :street_address
+              =f.text_field :street_address, class:'form-control', id:'street_address'
+            .col-sm-3  
+              =f.label :street_address_2
+              =f.text_field :street_address_2, class:'form-control', id:'street_address' 
+        .form-group
+          .row
+            .col-sm-3
+              =f.label :city
+              =f.text_field :city, class:'form-control', id:'city'
+            .col-sm-3  
+              =f.label :state
+              =f.text_field :state, class:'form-control', id:'state'
+            .col-sm-3  
+              =f.label :zipcode
+              =f.text_field :zipcode, class:'form-control', id:'zipcode'
+            .col-sm-3  
+              =f.label :country
+              =f.text_field :country, class:'form-control', id:'country'
+        .form-group
+          .row
+            .col-sm-6
+              =f.label :note
+              =f.text_area :note, class:'form-control', row:'5', id:'note'
+          
+            .col-sm-1
+              =f.label :subscribe_
+              =f.select(:subscribeflag, [['Yes','Y'],['No','N']],{},{:class=>'form-control'})
+        .button-line.pull-right    
+          =f.submit id:'basic-submit', class:'btn btn-default'
+          =link_to "Back", :back, class: 'btn btn-primary'
+  #contact.tab-pane{:role=>'tabpanel'}
+    .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
+      .container-fluid
+        .navbar-header
+          %a.navbar-brand#title_contact Donor Contact Records
+        .navbar-default
+          %form.navbar-form.navbar-right
+            .form-group
+              .input-group
+                %input.form-control#search_contact{:placeholder => "Search", :type => "text"}
+                %span.input-group-btn
+                  %button.btn.btn-default#reset_contact{type:"button"} Reset
+              .btn.btn-default#view_contact Detail
+              .btn.btn-success#add_contact Add
+              .btn.btn-info#edit_contact Edit
+              .btn.btn-danger#delete_contact Delete
+              .btn.btn-warning#cancel_contact{style:"display:none;"} Cancel
+              =link_to "Back", :back, class: 'btn btn-primary'
+    #info_contact.collapse{role:"tabpanel"}
+      .well{style:"background-color:#ffffff;"}
+        .container
+          .row
+            .col-md-3
+              .form-group
+                %label.control-label Contact Date
+                %input#contact_field0.form-control{type:"text"}
+              .form-group
+                %label.control-label Followup Date
+                %input#contact_field1.form-control{type:"text"}
+            .col-md-9
+              %label Narrative
+              %textarea#contact_field2.form-control{rows:"5"}
+          .row{style:"margin-top: 10px"}
+            .col-md-6
+              %label Finance
+              %select#contact_field3{required:"true"}
+                %option{"disabled" => true, "selected" => true, value:""} Select related finance record
+                %option{value:"-1"} None
+            .col-md-3
+              .input-group.input-group-sm
+                %span.input-group-addon Created By
+                %input.form-control#contact_cb{readonly:"true", style:"width:150px"}
+            .col-md-3
+              .input-group.input-group-sm
+                %span.input-group-addon Last Modified By
+                %input.form-control#contact_lmb{readonly:"true", style:"width:150px"}
+    %table#table_contact.table.table-hover.table-bordered{:style => "width:100%;margin-top:15px;", :data => {:id => @donor.id}}
+      %thead{:style => "width:100%"}
+        %tr{:style => "width:100%"}
+          - @donor_contact.each do |key|
+            %th #{key.humanize}
+          %th Finances
+      %tbody
+        %tr#contact_template
+          %td
+          %td
+          %td
+          %td{:data => {:search => -1}}
+            .btn.btn-xs.btn-default.foreign_key{:style => "display:none"} Show nothing
+        - @contacts.each do |contact|
+          %tr{:data => {:id => contact.id, :lmb => contact.last_modified_by, :cb => contact.created_by}}
+            - @donor_contact.each do |key|
+              %td
+                = contact[key]
+            %td{:data => {:search => contact.id}}
+              .btn.btn-xs.btn-default.foreign_key{:style => (contact.finances.nil?)?"display:none":""} Show finance
+  #finance.tab-pane{:role=>'tabpanel'}
+    .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
+      .container-fluid
+        .navbar-header
+          %a.navbar-brand#title_finance Donor Finance Records
+        .navbar-default
+          %form.navbar-form.navbar-right
+            .form-group
+              .input-group
+                %input.form-control#search_finance{:placeholder => "Search", :type => "text"}
+                %span.input-group-btn
+                  %button.btn.btn-default#reset_finance{type:"button"} Reset
+              .btn.btn-default#view_finance Detail
+              .btn.btn-success#add_finance Add
+              .btn.btn-info#edit_finance Edit
+              .btn.btn-danger#delete_finance Delete
+              .btn.btn-warning#cancel_finance{style:"display:none;"} Cancel
+              =link_to "Back", :back, class: 'btn btn-primary'
+    #info_finance.collapse{role:"tabpanel"}
+      .well{style:"background-color:#ffffff;"}
+        .container
+          .row
+            .col-md-3
+              .form-group
+                %label.control-label Type
+                %input#finance_field0.form-control{type:"text"}
+              .form-group
+                %label.control-label Date
+                %input#finance_field1.form-control{type:"text"}
+              .form-group
+                %label.control-label Amount
+                %input#finance_field2.form-control{type:"text"}
+            .col-md-9
+              %label Description
+              %textarea#finance_field3.form-control{rows:"5"}
+              .form-group
+                %label.control-label Designation
+                %input#finance_field4.form-control{type:"text"}
+          .row{style:"margin-top: 10px"}
+            .col-md-6
+              %label Contact
+              %select#finance_field5{required:"true"}
+                %option{"disabled" => true, "selected" => true, value:""} Select related contact record
+                %option{value:"-1"} None
+            .col-md-3
+              .input-group.input-group-sm
+                %span.input-group-addon Created By
+                %input.form-control#finance_cb{readonly:"true", style:"width:150px"}
+            .col-md-3
+              .input-group.input-group-sm
+                %span.input-group-addon Last Modified By
+                %input.form-control#finance_lmb{readonly:"true", style:"width:150px"}
+    #finance-panel.panel.panel-default{:style => "margin-bottom:50px;margin-top:15px;"}
+      %table#table_finance.table.table-hover.table-bordered{:style => "width:100%;margin:0;", :data => {:id => @donor.id}}
+        %thead{:style => "width:100%"}
+          %tr{:style => "width:100%"}
+            - @donor_finance.each do |key|
+              %th #{key.humanize}
+            %th Contact
+        %tbody
+          %tr#finance_template
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td{:data => {:search => -1}}
+              .btn.btn-xs.btn-default.foreign_key{:style => "display:none"} Show nothing
+          - @finances.each do |finance|
+            %tr{:data => {:id => finance.id, :lmb => finance.last_modified_by, :cb => finance.created_by}}
+              - @donor_finance.each do |key|
+                %td
+                  = finance[key]
+              %td{:data => {:search => finance.id}}
+                .btn.btn-xs.btn-default.foreign_key{:style => (finance.contact.nil?)?"display:none":""} Show contact
