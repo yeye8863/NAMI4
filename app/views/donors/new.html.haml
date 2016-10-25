@@ -1,9 +1,56 @@
+:javascript
+  function hideshow() {
+  if(event.target.matches('.dropbtn#d01')){
+  if(document.getElementById("d01").classList.contains("show")){
+  document.getElementById('f01').classList.remove("show");
+  }
+  else{
+  document.getElementById('f01').classList.toggle("show");
+  }
+  }
+  if(event.target.matches('.dropbtn#d02')){
+  if(document.getElementById("d02").classList.contains("show")){
+  document.getElementById('f02').classList.remove("show");
+  }
+  else{
+  document.getElementById('f02').classList.toggle("show");
+  }
+  }
+  if(event.target.matches('.dropbtn#d03')){
+  if(document.getElementById("d03").classList.contains("show")){
+  document.getElementById('f03').classList.remove("show");
+  }
+  else{
+  document.getElementById('f03').classList.toggle("show");
+  }
+  }
+  }
+
+  function selchange(val){
+  if(val=='I'){
+  if(!document.getElementById("s01").classList.contains("show")){
+  document.getElementById('s01').classList.toggle("show");
+  }
+  if(document.getElementById("s02").classList.contains("show")){
+  document.getElementById('s02').classList.remove("show");
+  }
+  }
+  else{
+  if(!document.getElementById("s02").classList.contains("show")){
+  document.getElementById('s02').classList.toggle("show");
+  }
+  if(document.getElementById("s01").classList.contains("show")){
+  document.getElementById('s01').classList.remove("show");
+  }
+  }
+  }
+  
 =render :partial=>'layouts/banner'
 #page-title.container-fluid.titleLine
   %h2 Donor Information
 %ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
   %li.active
-    %a{:id=>'basic-tab',:href=>'#basic', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'basic'}} Basic
+    %a{:id=>'basic-tab',:href=>'#basic', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'basic'}} Information
   %li
     %a{:id=>'contact-tab',:href=>'#contact', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'contact'}} Contact
   %li 
@@ -17,42 +64,35 @@
           .row
             .col-sm-3
               =f.label :type
-              =f.select(:flag, [['Individual','I'],['Organization','O']],{},{:class=>'form-control'})
-            .col-sm-3
-              =f.label :role
-              =f.text_field :role, class:'form-control', id:'role', :required=>true
-            .col-sm-3
-              =f.label :title
-              =f.text_field :title, class:'form-control', id:'title'
-            .col-sm-3
-              =f.label :salution
-              =f.text_field :salution, class:'form-control', id:'salution'
-        .form-group
-          .row
-            .col-sm-3
-              =f.label :first_name
-              =f.text_field :first_name, class:'form-control', id:'first_name', :required=>true
-            .col-sm-3
-              =f.label :last_name
-              =f.text_field :last_name, class:'form-control', id:'last_name', :required=>true
-            .col-sm-3
-              =f.label :middle_name
-              =f.text_field :middle_name, class:'form-control', id:'middle_name'
-        .form-group
-          .row
+              =f.select(:flag, [['Individual','I'],['Organization','O']],{},{:class=>'form-control', :onchange=>'selchange(this.value)'})
             .col-sm-3  
               =f.label :email
               =f.text_field :email, class:'form-control', id:'email'
-            .col-sm-3  
-              =f.label :home_phone
-              =f.text_field :home_phone, class:'form-control', id:'home_phone'
-            .col-sm-3  
-              =f.label :business_phone
-              =f.text_field :business_phone, class:'form-control', id:'business_phone'
-            .col-sm-3  
-              =f.label :zipcode
-              =f.text_field :zipcode, class:'form-control', id:'zipcode'
-        .form-group
+        .form-container.show#s01
+          .row
+            .col-sm-3
+              =f.label :first_name
+              =f.text_field :first_name, class:'form-control', id:'first_name'#, :required=>true
+            .col-sm-3
+              =f.label :last_name
+              =f.text_field :last_name, class:'form-control', id:'last_name'#, :required=>true
+            .col-sm-3
+              =f.label :middle_name
+              =f.text_field :middle_name, class:'form-control', id:'middle_name'
+          .brow
+            %button.dropbtn#d01{:onclick => "hideshow()"} Role&Title
+            .form-container#f01
+              .row
+                .col-sm-3
+                  =f.label :role
+                  =f.text_field :role, class:'form-control', id:'role'#, :required=>true
+                .col-sm-3
+                  =f.label :title
+                  =f.text_field :title, class:'form-control', id:'title'
+                .col-sm-3
+                  =f.label :salution
+                  =f.text_field :salution, class:'form-control', id:'salution'
+        .form-container#s02
           .row
             .col-sm-3  
               =f.label :company
@@ -63,7 +103,22 @@
             .col-sm-3
               =f.label :spouse
               =f.text_field :spouse, class:'form-control', id:'spouse'
-        .form-group
+        .brow
+          %button.dropbtn#d02{:onclick => "hideshow()"} Contact Information
+        .form-container#f02
+          .row
+            .col-sm-3  
+              =f.label :home_phone
+              =f.text_field :home_phone, class:'form-control', id:'home_phone'
+            .col-sm-3  
+              =f.label :business_phone
+              =f.text_field :business_phone, class:'form-control', id:'business_phone'
+            .col-sm-3  
+              =f.label :zipcode
+              =f.text_field :zipcode, class:'form-control', id:'zipcode'
+        .brow
+          %button.dropbtn#d03{:onclick => "hideshow()"} Address
+        .form-container#f03
           .row  
             .col-sm-3  
               =f.label :street_address
