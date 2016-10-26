@@ -51,7 +51,15 @@ class DonorsController < ApplicationController
         id = params[:id]
         @active = params[:active]
         @donor = Donor.find(id)
+
+        if @donor.subscribeflag == "Y"
+        subscribe = "Yes"
+      elsif @donor.subscribeflag == "N"
+        subscribe = "No"
+      end
+
         @donor_basic = {
+            'Subscribe' => subscribe,
             'Title' => @donor.title,
             'Role' => @donor.role,
             'First Name' => @donor.first_name,
@@ -97,6 +105,12 @@ class DonorsController < ApplicationController
         type = "Individual"
       elsif @donor.flag == "O"
         type = "Organization"
+      end
+
+      if @donor.subscribeflag == "Y"
+        subscribe = "Yes"
+      elsif @donor.subscribeflag == "N"
+        subscribe = "No"
       end
 
       render :json => @donor if request.xhr? && params[:where] == "inplace"
