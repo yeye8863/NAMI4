@@ -23,6 +23,8 @@
             %td
               =report.created_at
             %td
+              = form_tag report_path(report.id),:id => 'blanck_form', :method => :get do
+                = check_box_tag "blanck", 1
               =link_to "Preview", report_path(report.id), class: 'btn btn-default btn-xs'
               =link_to "Edit", edit_report_path(report), class: 'btn btn-default btn-xs'
               =link_to "Delete", report_path(report.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger btn-xs'

@@ -7,7 +7,17 @@ class ReportsController < ApplicationController
 
     end
 
+    def blankcont(rec,attrs)
+      attrs.each do |attr|
+        if !rec.send(attr) or rec.send(attr).to_s.empty?
+          return false
+        end
+      end
+      return true
+    end
+
     def show
+      blk= params[:blanck]
       id = params[:id] 
       @report = Report.find(id) 
       @filters = @report.filters
@@ -36,11 +46,21 @@ class ReportsController < ApplicationController
       
       @records = []
       @results.each do |record|
-        @attr_names.each do |attr|
-          if record.send(attr) and not record.send(attr).to_s.empty?
+        if blk==1
+          @attr_names.each do |attr|
+            if record.send(attr) and not record.send(attr).to_s.empty?
+              @records << record
+              break
+            end
+          end
+        else
+          #@attr_names.each do |attr|
+          if blankcont(record,@attr_names)
+          #if record.send(attr) and not record.send(attr).to_s.empty?
             @records << record
             break
           end
+        #end
         end
       end
     end

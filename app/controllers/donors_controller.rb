@@ -31,8 +31,9 @@ class DonorsController < ApplicationController
     def destroy
         id = params[:id]
         @donor = Donor.find(id)
+        @donor.destroy
         flash[:notice] = "#{@donor.first_name} #{@donor.last_name} is deleted."
-        @donor.update_attributes(:active => 0)
+        #@donor.update_attributes(:active => 0)
         redirect_to donors_path
     end
 
