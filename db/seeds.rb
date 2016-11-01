@@ -10,12 +10,8 @@
 users = [{:username => 'lemontea', :password => 'lemontea', :password_confirmation => 'lemontea', :current_password=>'lemontea',
        :email => 'loe.zou@gmail.com', :first_name => 'Lihao', :last_name => 'Zou', :function => 'donor management, dashboard, report management, user management',
        :phone_number => '9793243769', :street_address => '4003 Rehel Dr.', :zipcode => "77845", :city => "College Station"
-<<<<<<< HEAD
-       },
-=======
        }
        ,
->>>>>>> feature
        {:username => 'ateam', :password => 'ateam', :password_confirmation => 'ateam', :current_password=>'ateam',
        :email => 'smalltigerson@tamu.edu', :first_name => 'Xianzhi', :last_name => 'Liu', :function => 'donor management, dashboard, report management, user management',
        :phone_number => '9794029226', :street_address => '1501 Holleman Dr.', :zipcode => "77845", :city => "College Station"
