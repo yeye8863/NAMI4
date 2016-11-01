@@ -116,6 +116,10 @@
             .col-sm-3
               =f.label :cell_phone
               =f.text_field :business_phone, class:'form-control', id:'cell_phone'
+        .brow
+          %button.dropbtn#d03{:onclick => "hideshow()"} Address
+        .form-container#f03
+          .row
             .col-sm-3
               =f.label :street_address
               =f.text_field :street_address, class:'form-control', id:'street_address'
@@ -128,7 +132,6 @@
             .col-sm-3
               =f.label :zipcode
               =f.text_field :zipcode, class:'form-control', id:'zipcode'
-          .row
             .col-sm-3
               =f.label :country
               =f.text_field :country, class:'form-control', id:'country'
