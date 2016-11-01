@@ -3,7 +3,7 @@ require 'spec_helper'
 
 RSpec.describe SessionsController, type: :controller do
   describe "user logging in" do
-    it "should route /login to sessios#create" do
+    it "should route /login to sessions#create" do
       expect(:post => login_path).to route_to(
         :controller => "sessions",
         :action => "create"
@@ -50,15 +50,15 @@ RSpec.describe SessionsController, type: :controller do
       end
     end
   end
-    
+
   describe 'user logging out' do
-    it "should route /logout to sessios#destroy" do
+    it "should route /logout to sessions#destroy" do
       expect(:get => logout_path).to route_to(
         :controller => "sessions",
         :action => "destroy"
       )
     end
-        
+
     describe 'after successful route to sessions#destroy' do
       before :each do
         get :destroy
@@ -70,7 +70,7 @@ RSpec.describe SessionsController, type: :controller do
         expect(session[:user_id]).to eq(nil)
       end
       it "should redirect to index page" do
-        expect(response).to redirect_to root_path  
+        expect(response).to redirect_to root_path
       end
     end
   end
