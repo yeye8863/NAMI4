@@ -1,69 +1,22 @@
-:javascript
-  function hideshow() {
-  if(event.target.matches('.dropbtn#d01')){
-  if(document.getElementById("d01").classList.contains("show")){
-  document.getElementById('f01').classList.remove("show");
-  }
-  else{
-  document.getElementById('f01').classList.toggle("show");
-  }
-  }
-  if(event.target.matches('.dropbtn#d02')){
-  if(document.getElementById("d02").classList.contains("show")){
-  document.getElementById('f02').classList.remove("show");
-  }
-  else{
-  document.getElementById('f02').classList.toggle("show");
-  }
-  }
-  if(event.target.matches('.dropbtn#d03')){
-  if(document.getElementById("d03").classList.contains("show")){
-  document.getElementById('f03').classList.remove("show");
-  }
-  else{
-  document.getElementById('f03').classList.toggle("show");
-  }
-  }
-  }
-
-  function selchange(val){
-  if(val=='I'){
-  if(!document.getElementById("s01").classList.contains("show")){
-  document.getElementById('s01').classList.toggle("show");
-  }
-  if(document.getElementById("s02").classList.contains("show")){
-  document.getElementById('s02').classList.remove("show");
-  }
-  }
-  else{
-  if(!document.getElementById("s02").classList.contains("show")){
-  document.getElementById('s02').classList.toggle("show");
-  }
-  if(document.getElementById("s01").classList.contains("show")){
-  document.getElementById('s01').classList.remove("show");
-  }
-  }
-  }
-  
 =render :partial=>'layouts/banner'
 #page-title.container-fluid.titleLine
   %h2 Donor Information
   %label#activeLabel.hidden=@active
 %ul#tabs.nav.nav-tabs.nav-justified.bold{:role=>'tablist'}
-  %li.active 
+  %li.active
     %a{:id=>'summary-tab',:href=>'#summary', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'summary'}} Summary
-  %li 
+  %li
     %a{:id=>'basic-tab',:href=>'#basic', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'basic'}} Basic
   %li
     %a{:id=>'contact-tab',:href=>'#contact', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'contact'}} Contact
-  %li 
+  %li
     %a{:id=>'finance-tab',:href=>'#finance', :data=>{:toggle=>'tab'}, :aria=>{:controls=>'finance'}} Finance
 .tab-content.container-fluid
   #summary.tab-pane.active{:role=>'tabpanel'}
     .container{:style=>'padding-top: 50px'}
       .row.col-sm-offset-3.col-sm-6
         =render :partial => 'donor_summary'
-        .pull-right  
+        .pull-right
           =link_to "Back", :back, class: 'btn btn-primary'
           =link_to "Delete", donor_path(@donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger'
   #basic.tab-pane{:role=>'tabpanel'}
@@ -74,78 +27,72 @@
           .row
             .col-sm-3
               =f.label :type
-              =f.select(:flag, [['Individual','I'],['Organization','O']],{},{:class=>'form-control', :onchange=>'selchange(this.value)'})
-            .col-sm-3  
-              =f.label :email
-              =f.text_field :email, class:'form-control', id:'email'
-        .form-container.show#s01
+              =f.select(:flag, [['Individual','I'],['Organization','O']],{},{:class=>'form-control'})
+            .col-sm-3
+              =f.label :role
+              =f.text_field :role, class:'form-control', id:'role'
+            .col-sm-3
+              =f.label :title
+              =f.text_field :title, class:'form-control', id:'title'
+            .col-sm-3
+              =f.label :salution
+              =f.text_field :salution, class:'form-control', id:'salution'
+        .form-group
           .row
             .col-sm-3
               =f.label :first_name
-              =f.text_field :first_name, class:'form-control', id:'first_name'#, :required=>true
+              =f.text_field :first_name, class:'form-control', id:'first_name', :required=>true
             .col-sm-3
               =f.label :last_name
-              =f.text_field :last_name, class:'form-control', id:'last_name'#, :required=>true
+              =f.text_field :last_name, class:'form-control', id:'last_name', :required=>true
             .col-sm-3
               =f.label :middle_name
               =f.text_field :middle_name, class:'form-control', id:'middle_name'
-          .brow
-            %button.dropbtn#d01{:onclick => "hideshow()"} Role&Title
-            .form-container#f01
-              .row
-                .col-sm-3
-                  =f.label :role
-                  =f.text_field :role, class:'form-control', id:'role'#, :required=>true
-                .col-sm-3
-                  =f.label :title
-                  =f.text_field :title, class:'form-control', id:'title'
-                .col-sm-3
-                  =f.label :salution
-                  =f.text_field :salution, class:'form-control', id:'salution'
-        .form-container#s02
+        .form-group
           .row
-            .col-sm-3  
+            .col-sm-3
+              =f.label :email
+              =f.text_field :email, class:'form-control', id:'email'
+            .col-sm-3
+              =f.label :cell_phone
+              =f.text_field :cell_phone, class:'form-control', id:'cell_phone'
+            .col-sm-3
+              =f.label :home_phone
+              =f.text_field :home_phone, class:'form-control', id:'home_phone'
+            .col-sm-3
+              =f.label :business_phone
+              =f.text_field :business_phone, class:'form-control', id:'business_phone'
+        .form-group
+          .row
+            .col-sm-3
               =f.label :company
               =f.text_field :company, class:'form-control', id:'company'
-            .col-sm-3  
+            .col-sm-3
               =f.label :organization
               =f.text_field :organization, class:'form-control', id:'organization'
             .col-sm-3
               =f.label :spouse
               =f.text_field :spouse, class:'form-control', id:'spouse'
-        .brow
-          %button.dropbtn#d02{:onclick => "hideshow()"} Contact Information
-        .form-container#f02
+        .form-group
           .row
-            .col-sm-3  
-              =f.label :cell_phone
-              =f.text_field :cell_phone, class:'form-control', id:'cell_phone'
-            .col-sm-3  
-              =f.label :home_phone
-              =f.text_field :home_phone, class:'form-control', id:'home_phone'
-            .col-sm-3  
-              =f.label :business_phone
-              =f.text_field :business_phone, class:'form-control', id:'business_phone'
-            .col-sm-3  
-              =f.label :zipcode
-              =f.text_field :zipcode, class:'form-control', id:'zipcode'
-        .brow
-          %button.dropbtn#d03{:onclick => "hideshow()"} Address
-        .form-container#f03
-          .row  
-            .col-sm-3  
+            .col-sm-3
               =f.label :street_address
               =f.text_field :street_address, class:'form-control', id:'street_address'
             .col-sm-3
+              =f.label :street_address_2
+              =f.text_field :street_address_2, class:'form-control', id:'street_address'
+        .form-group
+          .row
+            .col-sm-3
               =f.label :city
               =f.text_field :city, class:'form-control', id:'city'
-            .col-sm-3  
+            .col-sm-3
               =f.label :state
               =f.text_field :state, class:'form-control', id:'state'
-            .col-sm-3  
+            .col-sm-3
               =f.label :zipcode
               =f.text_field :zipcode, class:'form-control', id:'zipcode'
-            .col-sm-3  
+            .col-sm-3
               =f.label :country
               =f.text_field :country, class:'form-control', id:'country'
         .form-group
@@ -156,7 +103,7 @@
             .col-sm-1
               =f.label :subscribe
               =f.select(:subscribeflag, [['Yes','Y'],['No','N']],{},{:class=>'form-control'})
-        .button-line.pull-right    
+        .button-line.pull-right
           =f.submit id:'basic-submit', class:'btn btn-default'
           =link_to "Back", :back, class: 'btn btn-primary'
   #contact.tab-pane{:role=>'tabpanel'}
