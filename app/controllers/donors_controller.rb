@@ -33,19 +33,14 @@ class DonorsController < ApplicationController
         @donor = Donor.find(id)
         @donor.destroy
         flash[:notice] = "#{@donor.first_name} #{@donor.last_name} is deleted."
-        @donor.update_attributes(:active => 0)    #why you use this!!!!
         redirect_to donors_path
     end
 
     def create
         params[:donor][:active] = 1
-        @donor = Donor.create!(params[:donor])
-        #flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
-        if params[:where] == "inplace"
-            render :json => @donor
-        else
-            render :json => {:id => @donor.id}
-        end
+        @donor = Donor.create(params[:donor])
+        redirect_to :action => 'show', :id => @donor.id, notice: "#{@donor.first_name} #{@donor.last_name} was successfully created."
+        return
     end
 
     def show
