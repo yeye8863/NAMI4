@@ -25,22 +25,7 @@ class DonorsController < ApplicationController
             'description',
             'designation'
         ]
-        #render(:partial => 'donor_info', :object => @donor) if request.xhr?
-    end
 
-    def destroy
-        id = params[:id]
-        @donor = Donor.find(id)
-        @donor.destroy
-        flash[:notice] = "#{@donor.first_name} #{@donor.last_name} is deleted."
-        redirect_to donors_path
-    end
-
-    def create
-        params[:donor][:active] = 1
-        @donor = Donor.create(params[:donor])
-        redirect_to :action => 'show', :id => @donor.id, notice: "#{@donor.first_name} #{@donor.last_name} was successfully created."
-        return
     end
 
     def show
@@ -91,6 +76,27 @@ class DonorsController < ApplicationController
             'description',
             'designation'
         ]
+    end
+
+    def destroy
+        id = params[:id]
+        @donor = Donor.find(id)
+        @donor.destroy
+        flash[:notice] = "#{@donor.first_name} #{@donor.last_name} is deleted."
+        redirect_to donors_path
+    end
+
+    def create
+      @donor = Donor.create(params[:donor])
+      if @donor.save
+        flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
+        redirect_to action: "show", id: @donor.id
+        return
+      else
+        render :action => create
+        return
+      end
+
     end
 
     def update

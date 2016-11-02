@@ -90,8 +90,7 @@
               =f.label :subscribe
               =f.select(:subscribeflag, [['Yes','Y'],['No','N']],{},{:class=>'form-control'})
         .button-line.pull-right
-          =f.submit id:'basic-submit', class:'btn btn-default'
-          =link_to "Back", donors_path, class: 'btn btn-primary'
+          =link_to "Back", donors_path, class: 'btn btn-default'
   #contact.tab-pane{:role=>'tabpanel'}
     .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
       .container-fluid
