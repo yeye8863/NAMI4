@@ -31,7 +31,7 @@ class UsersController < ApplicationController
 	def create
 		@new_user = User.new(params[:user])
 		@new_user.current_password = params[:user][:password]
-		if Access.exists?(:email => params[:user][:email])
+		if !Access.exists?(:email => params[:user][:email])
 			#valid access email
 			if @new_user.save # password match
 		  		session[:user_id] = @new_user.id
