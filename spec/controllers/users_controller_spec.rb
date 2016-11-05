@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'spec_helper'
 
 RSpec.describe UsersController, type: :controller do
-    
+
     describe '#new' do
         it 'should route to users#new' do
             expect(:get => new_user_path).to route_to(
@@ -23,12 +23,12 @@ RSpec.describe UsersController, type: :controller do
             end
         end
     end
-    
+
     describe '#create' do
         before :each do
             @fake_user = double(:id => '1',:email => 'aaa@gmail.com')
             @user = {:id => '1', :email => 'aaa@gmail.com'}
-            allow(User).to receive(:new).with(@user){@fake_user}
+            allow(User).to receive(:create).with(@user){@fake_user}
         end
         it 'should route to users#create' do
             expect(:post => users_path).to route_to(
@@ -43,7 +43,7 @@ RSpec.describe UsersController, type: :controller do
                 end
                 describe 'successful creating (happy path 2)' do
                     before :each do
-                        allow(@fake_user).to receive(:save).and_return(true)
+                        allow(@fake_user).to receive(:save).and_return (true)
                         post :create, {:user => @user}
                     end
                     it 'should set up the session' do
@@ -53,10 +53,10 @@ RSpec.describe UsersController, type: :controller do
                         expect(response).to redirect_to(root_path)
                     end
                 end
-                
+
                 describe 'unsuccessful creating (sad path 2)' do
                     before :each do
-                        allow(@fake_user).to receive(:save) {false} 
+                        allow(@fake_user).to receive(:save).and_return (false)
                         post :create, {:user => @user}
                     end
                     it 'should redirect to the sign up page' do
@@ -64,14 +64,14 @@ RSpec.describe UsersController, type: :controller do
                     end
                 end
             end
-            
+
             describe 'unsuccessful finding the user email in access table (sad path 1)' do
                 before :each do
                     allow(Access).to receive(:exists?).with(:email => @fake_user.email) {false}
                     post :create, {:user => @user}
                 end
                 it 'should set up the flash' do
-                    expect(flash[:notice]).to eq("Unauthrized email address.")
+                    expect(flash[:notice]).to eq("Unauthorized email address.")
                 end
                 it 'should redirect to the sign up page' do
                     expect(response).to redirect_to(new_user_path)
@@ -80,4 +80,3 @@ RSpec.describe UsersController, type: :controller do
         end
     end
 end
-

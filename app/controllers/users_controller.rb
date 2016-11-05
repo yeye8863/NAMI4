@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
 	before_action :check_authorization, except: [:homepage,:new,:create]
 	skip_before_action :require_login, only: [:new, :create]
-	
+
 	def index
 		@users = User.all
 		@user_attr_show = ['first_name','last_name','email','function']
 	end
-	
+
 	def show
 		id = params[:id]
 		@user = User.find(id)
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
 		}
 		render(:partial => 'user_info',:object => @user_info) if request.xhr?
 	end
-	
+
   	def new
   		@new_user = User.new()
   	end
@@ -31,22 +31,22 @@ class UsersController < ApplicationController
 	def create
 		@new_user = User.new(params[:user])
 		@new_user.current_password = params[:user][:password]
-		if Access.exists?(:email => params[:user][:email])
+		if !Access.exists?(:email => params[:user][:email])
 			#valid access email
 			if @new_user.save # password match
 		  		session[:user_id] = @new_user.id
 		    	flash[:notice] = "You have signed up successfully.\n Please login with your account information."
-	      		redirect_to root_path
-		  	else
+	      	redirect_to root_path
+		  else
 		    	redirect_to new_user_path
-		  	end
+		  end
 		else # invalid access email
 			#debugger
-			flash[:notice] = "Unauthorized email address"
+			flash[:notice] = "Unauthorized email address."
 			redirect_to new_user_path
 		end
 	end
-	
+
 	def edit
 		id = params[:id]
 		@user = User.find(id)
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
 			'country' => @user.country
 		}
 	end
-	
+
 	def update
 		@user = User.find(params[:id])
 		function =  params[:user][:function]
@@ -95,7 +95,7 @@ class UsersController < ApplicationController
 			render :action => 'edit'
 		end
 	end
-	
+
 	def destroy
 		id = params[:id]
         @user = User.find(id)
@@ -103,15 +103,15 @@ class UsersController < ApplicationController
         User.destroy(@user)
         redirect_to users_path
 	end
-	
+
 	def homepage
 	end
-	
+
 	def check_authorization
         unless current_user.function and current_user.function.include? 'user management'
             flash[:notice]="Sorry, authorization check failed!"
             redirect_to homepage_path
         end
     end
-    
+
 end

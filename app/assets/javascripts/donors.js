@@ -21,7 +21,7 @@ var newDonorInfo = {
     $('#newDonorInfo').on('ajax:error',function(event,xhr,status,error){
       $("#basic-submit").notify("Error occurred, please try later...", {className: "error", position:"left middle"});
     });
-  }  
+  }
 }
 
 $(newDonorInfo.setup);
