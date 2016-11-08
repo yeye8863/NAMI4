@@ -25,7 +25,7 @@ class DonorsController < ApplicationController
             'description',
             'designation'
         ]
-
+      
     end
 
     def show
