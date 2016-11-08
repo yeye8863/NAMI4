@@ -45,6 +45,10 @@
   document.getElementById("contactf").submit();
   }
 
+  function wait(){
+  alert("Are you sure?");
+  }
+
 =render :partial=>'layouts/banner'
 #page-title.container-fluid.titleLine
   %h2 Donor Information
@@ -151,7 +155,7 @@
               =f.label :note
               =f.text_area :note, class:'form-control', row:'5', id:'note'
         .button-line.pull-right
-          =submit_tag "Create Donors", name: "create_and_add", data: { disable_with: "Please wait..." }, class: 'btn btn-primary'
+          =submit_tag "Create Donors", name: "create_and_add", data: { disable_with: "Please wait..." }, class: 'btn btn-primary', onclick:"wait()"
           =link_to "Back", donors_path, class: 'btn btn-default'
         = form_tag donors_path,:id => 'contactf', :method => :get do
           .well{style:"background-color:#ffffff;"}
