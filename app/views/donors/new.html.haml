@@ -47,6 +47,7 @@
 
   function wait(){
   alert("Are you sure?");
+  location.reload();
   }
 
 =render :partial=>'layouts/banner'
@@ -129,11 +130,12 @@
               =f.label :city
               =f.text_field :city, class:'form-control', id:'city'
             .col-sm-3
-              =f.label :state
-              =f.text_field :state, class:'form-control', id:'state'
-            .col-sm-3
               =f.label :zipcode
               =f.text_field :zipcode, class:'form-control', id:'zipcode'
+          .row
+            .col-sm-3
+              =f.label :state
+              =f.text_field :state, class:'form-control', id:'state'
             .col-sm-3
               =f.label :country
               =f.text_field :country, class:'form-control', id:'country'
@@ -154,9 +156,6 @@
             .col-sm-6
               =f.label :note
               =f.text_area :note, class:'form-control', row:'5', id:'note'
-        .button-line.pull-right
-          =submit_tag "Create Donors", name: "create_and_add", data: { disable_with: "Please wait..." }, class: 'btn btn-primary', onclick:"wait()"
-          =link_to "Back", donors_path, class: 'btn btn-default'
         = form_tag donors_path,:id => 'contactf', :method => :get do
           .well{style:"background-color:#ffffff;"}
             .container
@@ -177,6 +176,9 @@
                   %select#contact_field3{required:"true"}
                   %option{"disabled" => true, "selected" => true, value:""} Select related finance record
                   %option{value:"-1"} None
+        .button-line.pull-right
+          =submit_tag "Create Donors", name: "create_and_add", data: { disable_with: "Please wait..." }, class: 'btn btn-primary', onclick:"wait()"
+          =link_to "Back", donors_path, class: 'btn btn-default'
   #contact.tab-pane{:role=>'tabpanel'}
     .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
       .container-fluid
