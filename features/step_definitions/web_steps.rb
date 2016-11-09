@@ -57,6 +57,10 @@ When /^(?:|I )follow "([^"]*)"$/ do |link|
   find_link(link).click
 end
 
+When /^(?:|I )first follow "([^"]*)"$/ do |link|
+  first(:link, link).click
+end
+
 When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
   fill_in field, :with => value
 end

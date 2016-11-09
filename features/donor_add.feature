@@ -12,7 +12,7 @@ Scenario: Navigate to add new donor page
   And I follow "Add New"
   Then I should be on the new donor page
 
-@javascript
+@javascritp
 Scenario: Fill out donor basic information
   Given I am on the new donor page
   When I fill in the following:
@@ -30,10 +30,10 @@ Scenario: Fill out donor basic information
   	| street_address	| St. Peter Street	|
   	| city	| Houston	|
   And I select "O" from "donor_flag"
-  And I submit with "Create Donor"
+  And I press "Create Donor"
   #Then I should see "Successfully saved"
   Then I should be on the new donor page
-  And I follow "Back"
+  And I first follow "Back"
   Then I should see "O"
   And I should see "Albert"
   And I should see "Einstein" 
