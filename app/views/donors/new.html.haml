@@ -170,12 +170,6 @@
                 .col-md-9
                   %label Narrative
                   %textarea#contact_field2.form-control{rows:"5"}
-              .row{style:"margin-top: 10px"}
-                .col-md-6
-                  %label Finance
-                  %select#contact_field3{required:"true"}
-                  %option{"disabled" => true, "selected" => true, value:""} Select related finance record
-                  %option{value:"-1"} None
         .button-line.pull-right
           =submit_tag "Create Donors", name: "create_and_add", data: { disable_with: "Please wait..." }, class: 'btn btn-primary', onclick:"submitContact()"
           =link_to "Back", donors_path, class: 'btn btn-default'
