@@ -92,6 +92,14 @@ Then(/^I"([^"]*)"Back"$/) do |arg1|
   pending # Write code here that turns the phrase above into concrete actions
 end
 
+When /^(?:|I )first follow "([^"]*)"$/ do |link|
+  first(:link, link).click
+ end
+ 
+When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
+    fill_in field, :with => value
+end
+
 
 When /^(?:|I )select "([^"]*)" from "([^"]*)"$/ do |value, field|
   select(value, :from => field)
@@ -305,7 +313,7 @@ Given /^I have logged in as "([^"]*)" with "([^"]*)"$/ do |username, passwd|
   steps %{
   Given I am on the index page
   When I login with "#{username}" and "#{passwd}"
-	And I press "Login"
+  And I press "Login"
   }
 end
 

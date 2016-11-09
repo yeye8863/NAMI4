@@ -90,10 +90,10 @@ class DonorsController < ApplicationController
       @donor = Donor.create!(params[:donor])
       #flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
       if params[:where] == "inplace"
-          render :json => @donor
+          redirect_to new_donor_path
           sleep(0.5)
       else
-          render :json => {:id => @donor.id}
+          redirect_to new_donor_path
           sleep(0.5)
       end
     end
