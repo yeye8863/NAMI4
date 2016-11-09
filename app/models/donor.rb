@@ -7,7 +7,7 @@ class Donor < ActiveRecord::Base
     has_many :finances
     has_many :contacts
 
-    validates_presence_of :first_name, :last_name
+    #validates_presence_of :first_name, :last_name
 
     def self.search_by inputs
         if inputs != nil
@@ -18,5 +18,11 @@ class Donor < ActiveRecord::Base
            search_term = [inputs.keys.map{ |key| "#{key} LIKE ?"}.join(' AND ')] +  inputs.values.map { |val| "%#{val}%" }
        end
        @donors =  Donor.where(search_term)
+    end
+
+    def org_xor_ind
+      unless !organization.blank? || !(first_name.blank? && last_name.blank?)
+        errors.add(:base, "Specify a charge or a payment, not both")
+      end
     end
 end
