@@ -84,6 +84,15 @@ When /^(?:|I )fill in the following:$/ do |fields|
   end
 end
 
+When(/^I selecet "([^"]*)" from "([^"]*)"$/) do |value, field|
+  select(value, :from => field)
+end
+
+Then(/^I"([^"]*)"Back"$/) do |arg1|
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+
 When /^(?:|I )select "([^"]*)" from "([^"]*)"$/ do |value, field|
   select(value, :from => field)
 end
@@ -120,6 +129,11 @@ Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
   else
     assert page.has_xpath?('//*', :text => regexp)
   end
+end
+
+Then /^the "([^\"]*)" should( not)? be disabled$/ do |label, negate|
+  attributes = field_labeled(label).element.attributes.keys
+  attributes.send(negate ? :should_not : :should, include('disabled'))
 end
 
 Then /^(?:|I )should not see "([^"]*)"$/ do |text|
