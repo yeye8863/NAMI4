@@ -25,7 +25,7 @@ class DonorsController < ApplicationController
             'description',
             'designation'
         ]
-      
+
     end
 
     def show
@@ -87,16 +87,15 @@ class DonorsController < ApplicationController
     end
 
     def create
-      @donor = Donor.create(params[:donor])
-      if @donor.save
-        flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
-        redirect_to new_donor_path
-        return
+      @donor = Donor.create!(params[:donor])
+      #flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
+      if params[:where] == "inplace"
+          redirect_to new_donor_path
+          sleep(0.5)
       else
-        render :action => create
-        return
+          redirect_to new_donor_path
+          sleep(0.5)
       end
-
     end
 
     def update

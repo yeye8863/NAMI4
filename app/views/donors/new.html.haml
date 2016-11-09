@@ -111,7 +111,7 @@
               =f.text_field :salution, class:'form-control', id:'salution'
             .col-sm-2.5
               =f.label :spouse
-              =f.text_field :spouse, class:'form-control', id:'spouse'  
+              =f.text_field :spouse, class:'form-control', id:'spouse'
         .brow
           %button.dropbtn#d02{:type => "button"} Primary Information
         .form-container.show
@@ -171,7 +171,7 @@
                   %label Narrative
                   %textarea#contact_field2.form-control{rows:"5"}
         .button-line.pull-right
-          =submit_tag "Create Donors", name: "create_and_add", data: { disable_with: "Please wait..." }, class: 'btn btn-primary', onclick:"submitContact()"
+          =submit_tag "Create Donors", data: { disable_with: "Please wait..." }, class: 'btn btn-primary', onclick:"submitContact()"
           =link_to "Back", donors_path, class: 'btn btn-default'
   #contact.tab-pane{:role=>'tabpanel'}
     .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
