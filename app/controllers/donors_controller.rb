@@ -25,7 +25,7 @@ class DonorsController < ApplicationController
             'description',
             'designation'
         ]
-      
+
     end
 
     def show
@@ -87,15 +87,15 @@ class DonorsController < ApplicationController
     end
 
     def create
-      @donor = Donor.create(params[:donor])
-      if @donor.save
-        flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
-        return
+      @donor = Donor.create!(params[:donor])
+      #flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
+      if params[:where] == "inplace"
+          render :json => @donor
+          sleep(0.5)
       else
-        render :action => create
-        return
+          render :json => {:id => @donor.id}
+          sleep(0.5)
       end
-
     end
 
     def update
