@@ -177,7 +177,7 @@
                   %option{"disabled" => true, "selected" => true, value:""} Select related finance record
                   %option{value:"-1"} None
         .button-line.pull-right
-          =submit_tag "Create Donors", name: "create_and_add", data: { disable_with: "Please wait..." }, class: 'btn btn-primary', onclick:"wait()"
+          =submit_tag "Create Donors", name: "create_and_add", data: { disable_with: "Please wait..." }, class: 'btn btn-primary', onclick:"submitContact()"
           =link_to "Back", donors_path, class: 'btn btn-default'
   #contact.tab-pane{:role=>'tabpanel'}
     .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
