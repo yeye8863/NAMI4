@@ -90,6 +90,7 @@ class DonorsController < ApplicationController
       @donor = Donor.create(params[:donor])
       if @donor.save
         flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
+        redirect_to new_donor_path
         return
       else
         render :action => create
