@@ -69,14 +69,6 @@ class ReportsController < ApplicationController
       @report = Report.new
     end
 
-    def exception
-     @donor = Donor.new
-     @donor_attr = Donor.attribute_names
-     @donor_attr_show = ["first_name", "last_name", "email", "street_address", "cell_phone"]
-     @donors = Donor.search_by(params[:donor]).where('active = 1')
-    end
-
-
     def create
       @report = Report.create!(params[:report])
       @user =  User.find(session[:user_id])
