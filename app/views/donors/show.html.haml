@@ -45,6 +45,11 @@
   document.getElementById("contactf").submit();
   }
 
+  $( function() {
+    $("#contact_field01").datepicker();
+    $("#contact_field02").datepicker();
+  });
+
 =render :partial=>'layouts/banner'
 #page-title.container-fluid.titleLine
   %h2 Donor Information
@@ -68,7 +73,7 @@
           =link_to "Delete", donor_path(@donor.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger'
   #basic.tab-pane{:role=>'tabpanel'}
     %label#donorId.hidden=@donor.id
-    =form_for @donor, :remote=>true, :method=>'post', :html=>{:id=>'newDonorInfo', :class=>'form donor-form col-sm-12'} do |f|
+    =form_for @donor, :remote=>true, :method=>'put', :html=>{:id=>'donorInfo', :class=>'form donor-form col-sm-12'} do |f|
       .form-group
         .form-group
           .row
@@ -155,13 +160,27 @@
               =f.text_field :business_phone, class:'form-control', id:'cell_phone'
         .brow
           %button.dropbtn#d02{:type => "button"} Contact History
+        = form_tag :action => :update,:id => 'contactf' do
+          .well{style:"background-color:#ffffff;"}
+            .container
+              .row
+                .col-md-3
+                  .form-group
+                    =f.label :contact_date
+                    %input#contact_field01.form-control{name:"contact_date", type:"date"}
+                  .form-group
+                    =f.label :followup_date
+                    %input#contact_field02.form-control{name:"followup_date", type:"date"}
+                .col-md-9
+                  =f.label :narrative
+                  %textarea#contact_field2.form-control{name:"narrative", rows:"5"}
         .form-group
           .row
             .col-sm-6
               =f.label :note
               =f.text_area :note, class:'form-control', row:'5', id:'note'
         .button-line.pull-right
-          =f.submit id:'basic-submit', class:'btn btn-default', onclick:'submitContact()'
+          =f.submit id:'basic-submit', class:'btn btn-default', onclick:"submitContact()"
           =link_to "Back", :back, class: 'btn btn-primary'
   #contact.tab-pane{:role=>'tabpanel'}
     .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}

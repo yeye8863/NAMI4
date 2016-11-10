@@ -45,10 +45,10 @@
   document.getElementById("contactf").submit();
   }
 
-  function wait(){
-  alert("Are you sure?");
-  location.reload();
-  }
+  $( function() {
+    $("#contact_field01").datepicker();
+    $("#contact_field02").datepicker();
+  });
 
 =render :partial=>'layouts/banner'
 #page-title.container-fluid.titleLine
@@ -151,25 +151,25 @@
               =f.text_field :business_phone, class:'form-control', id:'cell_phone'
         .brow
           %button.dropbtn#d02{:type => "button"} Contact History
-        .form-group
-          .row
-            .col-sm-6
-              =f.label :note
-              =f.text_area :note, class:'form-control', row:'5', id:'note'
-        = form_tag donors_path,:id => 'contactf', :method => :get do
+        = form_tag :action => :create,:id => 'contactf' do
           .well{style:"background-color:#ffffff;"}
             .container
               .row
                 .col-md-3
                   .form-group
                     =f.label :contact_date
-                    %input#contact_field0.form-control{name:"contact_date", type:"text"}
+                    %input#contact_field0.form-control{name:"contact_date", type:"date"}
                   .form-group
                     =f.label :followup_date
-                    %input#contact_field1.form-control{name:"followup_date", type:"text"}
+                    %input#contact_field1.form-control{name:"followup_date", type:"date"}
                 .col-md-9
-                  %label Narrative
-                  %textarea#contact_field2.form-control{rows:"5"}
+                  =f.label :narrative
+                  %textarea#contact_field2.form-control{name:"narrative", rows:"5"}
+        .form-group
+          .row
+            .col-sm-6
+              =f.label :note
+              =f.text_area :note, class:'form-control', row:'5', id:'note'
         .button-line.pull-right
           =submit_tag "Create Donors", data: { disable_with: "Please wait..." }, class: 'btn btn-primary', onclick:"submitContact()"
           =link_to "Back", donors_path, class: 'btn btn-default'
@@ -195,10 +195,10 @@
             .col-md-3
               .form-group
                 %label.control-label Contact Date
-                %input#contact_field0.form-control{type:"text"}
+                %input#contact_field01.form-control{type:"text"}
               .form-group
                 %label.control-label Followup Date
-                %input#contact_field1.form-control{type:"text"}
+                %input#contact_field02.form-control{type:"text"}
             .col-md-9
               %label Narrative
               %textarea#contact_field2.form-control{rows:"5"}

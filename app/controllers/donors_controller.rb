@@ -25,7 +25,6 @@ class DonorsController < ApplicationController
             'description',
             'designation'
         ]
-
     end
 
     def show
@@ -88,6 +87,17 @@ class DonorsController < ApplicationController
 
     def create
       @donor = Donor.create!(params[:donor])
+      cdate=params[:contact_date]
+      fdate=params[:followup_date]
+      narrative=params[:narrative]
+      contact_param = {}
+      contact_param[:contact_date]=cdate
+      contact_param[:followup_date]=fdate
+      contact_param[:narrative]=narrative
+      contact_param[:created_by]=User.find(session[:user_id]).username
+      contact_param[:last_modified_by]=User.find(session[:user_id]).username
+      @contact = @donor.contacts.new contact_param
+      @contact.save!
       #flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
       if params[:where] == "inplace"
           redirect_to new_donor_path
@@ -112,6 +122,21 @@ class DonorsController < ApplicationController
         subscribe = "Yes"
       elsif @donor.subscribeflag == "N"
         subscribe = "No"
+      end
+
+
+      cdate=params[:contact_date]
+      fdate=params[:followup_date]
+      narrative=params[:narrative]
+      if(cdate!=nil && narrative!=nil)
+        contact_param = {}
+        contact_param[:contact_date]=cdate
+        contact_param[:followup_date]=fdate
+        contact_param[:narrative]=narrative
+        contact_param[:created_by]=User.find(session[:user_id]).username
+        contact_param[:last_modified_by]=User.find(session[:user_id]).username
+        @contact = @donor.contacts.new contact_param
+        @contact.save!
       end
 
       render :json => @donor if request.xhr? && params[:where] == "inplace"
