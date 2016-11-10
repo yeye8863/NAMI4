@@ -91,7 +91,7 @@ class DonorsController < ApplicationController
       fdate=params[:followup_date]
       narrative=params[:narrative]
       contact_param = {}
-      contact_param[:contact_date]=cdate
+      contact_param[:contact_date]=fdate
       contact_param[:followup_date]=fdate
       contact_param[:narrative]=narrative
       contact_param[:created_by]=User.find(session[:user_id]).username
