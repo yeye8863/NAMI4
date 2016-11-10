@@ -101,10 +101,10 @@ class DonorsController < ApplicationController
       #flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
       if params[:where] == "inplace"
           redirect_to new_donor_path
-          sleep(0.5)
+          sleep(0.7)
       else
           redirect_to new_donor_path
-          sleep(0.5)
+          sleep(0.7)
       end
     end
 

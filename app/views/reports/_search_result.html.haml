@@ -29,6 +29,5 @@
               =link_to "Edit", edit_report_path(report), class: 'btn btn-default btn-xs'
               =link_to "Delete", report_path(report.id), :method => :delete, :data => {:confirm => 'Are you sure?'}, class: 'btn btn-danger btn-xs'
   .button-line.right{:style => "padding:10"}
-    =link_to 'Add New Template', new_report_path, {:class => 'btn btn-default'} 
+    =link_to 'Add New Template', new_report_path, {:class => 'btn btn-default'}
     =link_to 'Back', homepage_path, class:'btn btn-primary'
-
