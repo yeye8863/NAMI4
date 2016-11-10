@@ -320,6 +320,6 @@
             %tr{:data => {:id => finance.id, :lmb => finance.last_modified_by, :cb => finance.created_by}}
               - @donor_finance.each do |key|
                 %td
-                  = finance[key]
+                  = key=='amount'? number_to_currency(finance[key]): finance[key]
               %td{:data => {:search => finance.id}}
                 .btn.btn-xs.btn-default.foreign_key{:style => (finance.contact.nil?)?"display:none":""} Show contact

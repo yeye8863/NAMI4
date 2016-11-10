@@ -5,7 +5,7 @@ class FinancesController < ApplicationController
         @finance = @donor.finances.build({
             :_type => a[0],
             :date => a[1],
-            :amount => a[2],
+            :amount => number_to_currency(a[2]),
             :description => a[3],
             :designation => a[4],
             :created_by => User.find(session[:user_id]).username,
