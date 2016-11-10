@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'donor/importIndex' => 'donors#importIndex', :as=>'importIndex'
   post 'donor/import' => 'donors#import', :as=>'import'
   post 'donor/upload' => 'donors#upload', :as=>'upload'
+  get 'report/exception' => 'reports#exception', :as=>'exception'
   
   resources :users
   resources :accesses

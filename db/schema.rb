@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110031558) do
+ActiveRecord::Schema.define(version: 20161110040707) do
 
   create_table "accesses", force: :cascade do |t|
     t.string   "email"
@@ -77,6 +77,21 @@ SELECT * FROM
         ORDER BY followup_date ASC
   END_VIEW_AGENDA_VIEWS
 
+  create_view "exception_views", <<-'END_VIEW_EXCEPTION_VIEWS', :force => true
+SELECT * FROM 
+    (
+      SELECT 
+        a.first_name,
+        a.last_name,
+        a.cell_phone,
+        a.street_address,
+        a.email,
+        a.created_at 
+      FROM donors a LEFT OUTER JOIN donors b 
+      ON a.last_name = b.last_name OR a.cell_phone = b.cell_phone OR a.street_address = b.street_address OR a.email = b.email
+     ) as RESULT
+  END_VIEW_EXCEPTION_VIEWS
+
   create_table "filters", force: :cascade do |t|
     t.string   "table_name"
     t.string   "field_name"
@@ -97,7 +112,7 @@ SELECT * FROM
   create_table "finances", force: :cascade do |t|
     t.string   "_type"
     t.date     "date"
-    t.decimal  "amount",           :precision=>15, :scale=>2
+    t.decimal  "amount"
     t.text     "description"
     t.string   "designation"
     t.integer  "donor_id"
