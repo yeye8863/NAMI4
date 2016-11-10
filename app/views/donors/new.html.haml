@@ -46,8 +46,8 @@
   }
 
   $( function() {
+    $("#contact_field00").datepicker();
     $("#contact_field01").datepicker();
-    $("#contact_field02").datepicker();
   });
 
 =render :partial=>'layouts/banner'
@@ -158,10 +158,10 @@
                 .col-md-3
                   .form-group
                     =f.label :contact_date
-                    %input#contact_field0.form-control{name:"contact_date", type:"date"}
+                    %input#contact_field00.form-control{name:"contact_date", type:"date"}
                   .form-group
                     =f.label :followup_date
-                    %input#contact_field1.form-control{name:"followup_date", type:"date"}
+                    %input#contact_field01.form-control{name:"followup_date", type:"date"}
                 .col-md-9
                   =f.label :narrative
                   %textarea#contact_field2.form-control{name:"narrative", rows:"5"}
@@ -195,10 +195,10 @@
             .col-md-3
               .form-group
                 %label.control-label Contact Date
-                %input#contact_field01.form-control{type:"text"}
+                %input#contact_field0.form-control{type:"text"}
               .form-group
                 %label.control-label Followup Date
-                %input#contact_field02.form-control{type:"text"}
+                %input#contact_field1.form-control{type:"text"}
             .col-md-9
               %label Narrative
               %textarea#contact_field2.form-control{rows:"5"}
