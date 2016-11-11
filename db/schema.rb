@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110040707) do
+ActiveRecord::Schema.define(version: 20161111041505) do
 
   create_table "accesses", force: :cascade do |t|
     t.string   "email"
@@ -43,24 +43,34 @@ ActiveRecord::Schema.define(version: 20161110040707) do
     t.string   "company"
     t.string   "street_address"
     t.string   "city"
-    t.string   "state",            :default=>"Texas"
-    t.string   "country",          :default=>"United States"
+    t.string   "state",                      :default=>"Texas"
+    t.string   "country",                    :default=>"United States"
     t.string   "zipcode"
     t.string   "home_phone"
     t.string   "business_phone"
     t.string   "created_by"
     t.string   "last_modified_by"
-    t.datetime "created_at",       :null=>false
+    t.datetime "created_at",                 :null=>false
     t.datetime "last_modified_at"
-    t.datetime "updated_at",       :null=>false
+    t.datetime "updated_at",                 :null=>false
     t.string   "flag"
-    t.integer  "active",           :default=>1
+    t.integer  "active",                     :default=>1
     t.string   "role"
     t.string   "note"
     t.string   "spouse"
     t.string   "street_address_2"
     t.string   "cell_phone"
     t.string   "subscribeflag"
+    t.string   "secondary_email"
+    t.string   "secondary_street_address"
+    t.string   "secondary_street_address_2"
+    t.string   "secondary_city"
+    t.string   "secondary_state"
+    t.string   "secondary_country"
+    t.string   "secondary_zipcode"
+    t.string   "secondary_home_phone"
+    t.string   "secondary_business_phone"
+    t.string   "secondary_cell_phone"
   end
 
   create_view "agenda_views", <<-'END_VIEW_AGENDA_VIEWS', :force => true
@@ -112,7 +122,7 @@ SELECT * FROM
   create_table "finances", force: :cascade do |t|
     t.string   "_type"
     t.date     "date"
-    t.decimal  "amount",           :precision=>15, :scale=>2
+    t.decimal  "amount"
     t.text     "description"
     t.string   "designation"
     t.integer  "donor_id"
