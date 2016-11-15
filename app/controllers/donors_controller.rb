@@ -66,15 +66,15 @@ class DonorsController < ApplicationController
             'Cell Phone' => @donor.cell_phone,
             'Home Phone' => @donor.home_phone,
             'Note' => @donor.note,
-            'Email 2'=>@donor.secondary_email,
-            'Business Phone 2'=>@donor.secondary_business_phone,
-            'Cell Phone 2'=>@donor.secondary_cell_phone,
-            'Home Phone 2'=>@donor.secondary_home_phone,
-            'Street Address 2'=>@donor.secondary_street_address,   
-            'City 2'=>@donor.secondary_city,
-            'State 2'=>@donor.secondary_state,
-            'Country 2'=>@donor.secondary_country,
-            'Zipcode 2'=>@donor.secondary_zipcode
+            'Secondary Email'=>@donor.secondary_email,
+            'Secondary Business Phone'=>@donor.secondary_business_phone,
+            'Secondary Cell Phone'=>@donor.secondary_cell_phone,
+            'Secondary Home Phone'=>@donor.secondary_home_phone,
+            'Secondary Street Address'=>@donor.secondary_street_address,
+            'Secondary City'=>@donor.secondary_city,
+            'Secondary State'=>@donor.secondary_state,
+            'Secondary Country'=>@donor.secondary_country,
+            'Secondary Zipcode'=>@donor.secondary_zipcode
 	        }
 	    @donor_contact = [
 	        "contact_date",
@@ -176,15 +176,15 @@ class DonorsController < ApplicationController
             'Cell Phone' => @donor.cell_phone,
             'Home Phone' => @donor.home_phone,
             'Note' => @donor.note,
-            'Email 2'=>@donor.secondary_email,
-            'Business Phone 2'=>@donor.secondary_business_phone,
-            'Cell Phone 2'=>@donor.secondary_cell_phone,
-            'Home Phone 2'=>@donor.secondary_home_phone,
-            'Street Address 2'=>@donor.secondary_street_address,   
-            'City 2'=>@donor.secondary_city,
-            'State 2'=>@donor.secondary_state,
-            'Country 2'=>@donor.secondary_country,
-            'Zipcode 2'=>@donor.secondary_zipcode
+            'Secondary Email'=>@donor.secondary_email,
+            'Secondary Business Phone'=>@donor.secondary_business_phone,
+            'Secondary Cell Phone'=>@donor.secondary_cell_phone,
+            'Secondary Home Phone'=>@donor.secondary_home_phone,
+            'Secondary Street Address'=>@donor.secondary_street_address,
+            'Secondary City'=>@donor.secondary_city,
+            'Secondary State'=>@donor.secondary_state,
+            'Secondary Country'=>@donor.secondary_country,
+            'Secondary Zipcode'=>@donor.secondary_zipcode
 	        }
       render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr? && !params[:where]
     end
@@ -234,15 +234,15 @@ class DonorsController < ApplicationController
           'Cell Phone' => @donor.cell_phone,
           'Home Phone' => @donor.home_phone,
           'Note' => @donor.note,
-          'Email 2'=>@donor.secondary_email,
-          'Business Phone 2'=>@donor.secondary_business_phone,
-          'Cell Phone 2'=>@donor.secondary_cell_phone,
-          'Home Phone 2'=>@donor.secondary_home_phone,
-          'Street Address 2'=>@donor.secondary_street_address,   
-          'City 2'=>@donor.secondary_city,
-          'State 2'=>@donor.secondary_state,
-          'Country 2'=>@donor.secondary_country,
-          'Zipcode 2'=>@donor.secondary_zipcode
+          'Secondary Email'=>@donor.secondary_email,
+          'Secondary Business Phone'=>@donor.secondary_business_phone,
+          'Secondary Cell Phone'=>@donor.secondary_cell_phone,
+          'Secondary Home Phone'=>@donor.secondary_home_phone,
+          'Secondary Street Address'=>@donor.secondary_street_address,
+          'Secondary City'=>@donor.secondary_city,
+          'Secondary State'=>@donor.secondary_state,
+          'Secondary Country'=>@donor.secondary_country,
+          'Secondary Zipcode'=>@donor.secondary_zipcode
 	     }
 	     render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr?
     end

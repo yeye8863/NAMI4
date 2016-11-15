@@ -200,8 +200,8 @@
               =f.label :note
               =f.text_area :note, class:'form-control', row:'5', id:'note'
         .button-line.pull-right
-          =submit_tag "Create Donors", data: { disable_with: "Successfully Saved!" }, class: 'btn btn-primary', onclick:"submitContact()"
-          =link_to "Back", donors_path, class: 'btn btn-default'
+          =f.submit id:'basic-submit', data: { disable_with: "Please Wait..." }, class:'btn btn-default', onclick:"submitContact()"
+          =link_to "Back", donors_path, class: 'btn btn-primary'
   #contact.tab-pane{:role=>'tabpanel'}
     .navbar.navbar-default{style:"margin-bottom: 0px; margin-top: 15px"}
       .container-fluid
