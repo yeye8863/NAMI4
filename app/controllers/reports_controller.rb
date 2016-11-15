@@ -68,6 +68,11 @@ class ReportsController < ApplicationController
     def new 
       @report = Report.new
     end
+
+    def exception
+	@report = Report.all
+    end
+
     
     def create
       @report = Report.create!(params[:report])
