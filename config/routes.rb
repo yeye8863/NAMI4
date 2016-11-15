@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root :to=>'sessions#new'
-  
+
   # these routes are for showing users a login form, logging them in, and logging them out.
   post 'login' => 'sessions#create', :as => 'login'
   get 'logout' => 'sessions#destroy', :as => 'logout'
@@ -16,8 +16,12 @@ Rails.application.routes.draw do
   get 'donor/importIndex' => 'donors#importIndex', :as=>'importIndex'
   post 'donor/import' => 'donors#import', :as=>'import'
   post 'donor/upload' => 'donors#upload', :as=>'upload'
-  get 'report/exception' => 'reports#exception', :as=>'exception'
+#<<<<<<< HEAD
+  #get 'report/exception' => 'reports#exception', :as=>'exception'
   
+#=======
+
+#>>>>>>> 8e771d383865f4230c1fbf7e88b179d1f6558681
   resources :users
   resources :accesses
   resources :donors
@@ -27,5 +31,5 @@ Rails.application.routes.draw do
   resources :agendas
   resources :reports
   resources :filters
-  
+
 end

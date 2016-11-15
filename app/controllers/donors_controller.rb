@@ -25,13 +25,18 @@ class DonorsController < ApplicationController
             'description',
             'designation'
         ]
-      
     end
 
     def show
         id = params[:id]
         @active = params[:active]
         @donor = Donor.find(id)
+
+          if @donor.flag == "I"
+        type = "Individual"
+      elsif @donor.flag == "O"
+        type = "Organization"
+      end
 
         if @donor.subscribeflag == "Y"
         subscribe = "Yes"
@@ -57,10 +62,19 @@ class DonorsController < ApplicationController
   	        'State' => @donor.state,
   	        'Countrt' => @donor.country,
   	        'Zip Code' => @donor.zipcode,
+            'Business Phone' => @donor.business_phone,
             'Cell Phone' => @donor.cell_phone,
             'Home Phone' => @donor.home_phone,
-            'Business Phone' => @donor.business_phone,
-            'Note' => @donor.note
+            'Note' => @donor.note,
+            'Email 2'=>@donor.secondary_email,
+            'Business Phone 2'=>@donor.secondary_business_phone,
+            'Cell Phone 2'=>@donor.secondary_cell_phone,
+            'Home Phone 2'=>@donor.secondary_home_phone,
+            'Street Address 2'=>@donor.secondary_street_address,   
+            'City 2'=>@donor.secondary_city,
+            'State 2'=>@donor.secondary_state,
+            'Country 2'=>@donor.secondary_country,
+            'Zipcode 2'=>@donor.secondary_zipcode
 	        }
 	    @donor_contact = [
 	        "contact_date",
@@ -87,16 +101,26 @@ class DonorsController < ApplicationController
     end
 
     def create
-      @donor = Donor.create(params[:donor])
-      if @donor.save
-        flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
-        redirect_to action: "show", id: @donor.id
-        return
+      @donor = Donor.create!(params[:donor])
+      cdate=params[:contact_date]
+      fdate=params[:followup_date]
+      narrative=params[:narrative]
+      contact_param = {}
+      contact_param[:contact_date]=fdate
+      contact_param[:followup_date]=fdate
+      contact_param[:narrative]=narrative
+      contact_param[:created_by]=User.find(session[:user_id]).username
+      contact_param[:last_modified_by]=User.find(session[:user_id]).username
+      @contact = @donor.contacts.new contact_param
+      @contact.save!
+      #flash[:notice] = "#{@donor.first_name} #{@donor.last_name} was successfully created."
+      if params[:where] == "inplace"
+          redirect_to new_donor_path
+          sleep(0.7)
       else
-        render :action => create
-        return
+          redirect_to new_donor_path
+          sleep(0.7)
       end
-
     end
 
     def update
@@ -113,6 +137,21 @@ class DonorsController < ApplicationController
         subscribe = "Yes"
       elsif @donor.subscribeflag == "N"
         subscribe = "No"
+      end
+
+
+      cdate=params[:contact_date]
+      fdate=params[:followup_date]
+      narrative=params[:narrative]
+      if(cdate!=nil && narrative!=nil)
+        contact_param = {}
+        contact_param[:contact_date]=cdate
+        contact_param[:followup_date]=fdate
+        contact_param[:narrative]=narrative
+        contact_param[:created_by]=User.find(session[:user_id]).username
+        contact_param[:last_modified_by]=User.find(session[:user_id]).username
+        @contact = @donor.contacts.new contact_param
+        @contact.save!
       end
 
       render :json => @donor if request.xhr? && params[:where] == "inplace"
@@ -133,10 +172,19 @@ class DonorsController < ApplicationController
   	        'State' => @donor.state,
   	        'Country' => @donor.country,
   	        'Zip Code' => @donor.zipcode,
+            'Business Phone' => @donor.business_phone,
             'Cell Phone' => @donor.cell_phone,
             'Home Phone' => @donor.home_phone,
-            'Business Phone' => @donor.business_phone,
-            'Note' => @donor.note
+            'Note' => @donor.note,
+            'Email 2'=>@donor.secondary_email,
+            'Business Phone 2'=>@donor.secondary_business_phone,
+            'Cell Phone 2'=>@donor.secondary_cell_phone,
+            'Home Phone 2'=>@donor.secondary_home_phone,
+            'Street Address 2'=>@donor.secondary_street_address,   
+            'City 2'=>@donor.secondary_city,
+            'State 2'=>@donor.secondary_state,
+            'Country 2'=>@donor.secondary_country,
+            'Zipcode 2'=>@donor.secondary_zipcode
 	        }
       render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr? && !params[:where]
     end
@@ -158,6 +206,12 @@ class DonorsController < ApplicationController
         type = "Organization"
       end
 
+      if @donor.subscribeflag == "Y"
+        subscribe = "Yes"
+      elsif @donor.subscribeflag == "N"
+        subscribe = "No"
+      end
+
       @donor_basic = {
           'Type' => type,
           'Title' => @donor.title,
@@ -176,10 +230,19 @@ class DonorsController < ApplicationController
   	      'State' => @donor.state,
   	      'Country' => @donor.country,
   	      'Zip Code' => @donor.zipcode,
+          'Business Phone' => @donor.business_phone,
           'Cell Phone' => @donor.cell_phone,
           'Home Phone' => @donor.home_phone,
-          'Business Phone' => @donor.business_phone,
-          'Note' => @donor.note
+          'Note' => @donor.note,
+          'Email 2'=>@donor.secondary_email,
+          'Business Phone 2'=>@donor.secondary_business_phone,
+          'Cell Phone 2'=>@donor.secondary_cell_phone,
+          'Home Phone 2'=>@donor.secondary_home_phone,
+          'Street Address 2'=>@donor.secondary_street_address,   
+          'City 2'=>@donor.secondary_city,
+          'State 2'=>@donor.secondary_state,
+          'Country 2'=>@donor.secondary_country,
+          'Zipcode 2'=>@donor.secondary_zipcode
 	     }
 	     render(:partial => 'donor_summary', :object => @donor_basic) if request.xhr?
     end
