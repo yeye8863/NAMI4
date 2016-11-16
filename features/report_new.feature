@@ -8,6 +8,11 @@ Background: users logged in to homepage
    
   Given I have logged in as "Ste" with "testpassword123"
   And I follow "Report"
+
+Scenario: Navigate to donor page
+  Given I am on the home page
+  When I follow "return to doner management" 
+  Then I should be on the donor page
 	
 Scenario: navigate from home page to reports page
   Given I am on the home page

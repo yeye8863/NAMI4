@@ -21,5 +21,9 @@ Scenario: Donor Overview
     | I     | Prof.   | Albert      | Einstein  | AAA           | Apple       |
     | O     | Mr.     | John        | Smiths    | BBB           | Facebook    |
     | I     | Mr.     | Daniel      | Freud     | CCC           | Linkedin    |
-  
+
+Scenario: Navigate to donor page
+  Given I am on the donor page
+  When I follow "return to doner management" 
+  Then I should be on the donor page
   

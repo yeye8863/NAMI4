@@ -41,3 +41,8 @@ Scenario: Update donor basic
   	| city	| Houston	|
   And I follow "Update Donor"
   Then I should see "Save successful"
+
+Scenario: Navigate to donor page
+   Given I am on the donor edit page
+   When I follow "return to doner management" 
+   Then I should be on the donor page 

@@ -83,3 +83,7 @@ Scenario: Report Manager
   And I follow "Sign Out"
   Then I should be on the index page
   
+Scenario: Navigate to donor page
+  Given I am on the home page
+  When I follow "return to doner management" 
+  Then I should be on the donor page

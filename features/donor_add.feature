@@ -7,10 +7,8 @@ Background: users logged in and navigate to donor search page
     | Bob        | testpassword123     | 444@gmail.com  | D       | G     | dashboard     |
   
   Given I have logged in as "Jojo" with "testpassword123"
-Scenario: Navigate to add new donor page
-  When I am on donor page
-  And I follow "Add New"
-  Then I should be on the new donor page
+
+
 
 @javascript
 Scenario: Fill out donor basic information
@@ -23,17 +21,24 @@ Scenario: Fill out donor basic information
   And I fill in the following:
     | company | Apple |
     | role | manager |
-    | title| boss|
+    | title| boss
+And I fill in the following:
     | business_phone  | 987654321 |
     | email | abc@tamu.edu  |
     | street_address  | St. Peter Street  |
     | city  | Houston |
     | state | Texas |
     |country| United States|
- And I press "Secondary Information"
- And I fill in the following:
-    | home_phone | 12345678|
-    | cell_phone | 456789 |
+ And I press "Secondary Information"     
+    And I fill in the following:           
+    | secondary_cell_phone | 9799799797|
+    | secondary_home_phone | 9799899898|
+    | secondary_email | abc@tamu.edu  |
+    | secondary_street_address  | St. Peter Street |
+    | secondary_city  | Houston |
+    | secondary_state | Texas |
+    |secondary_country| United States|
+    | secondary_zipcode | 77840|
  And I fill in the following:
     | note | nothing |
     | contact_date | 2016 |
@@ -46,3 +51,8 @@ Scenario: Fill out donor basic information
   And I should see "Einstein" 
   And I should see "boss"
   And I should see "Apple"
+
+Scenario: Navigate to donor page
+  Given I am on new donor page
+  When I follow "return to doner management" 
+  Then I should be on the donor page 

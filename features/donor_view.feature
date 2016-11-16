@@ -18,4 +18,9 @@ Background: users logged in and nevigate to donor search page
 Scenario: Donor View
   When I click "View" of row 1
 	Then I should be on donnor edit page 1
+
+Scenario: Navigate to donor page
+  Given I am on the donor edit page
+  When I follow "return to doner management" 
+  Then I should be on the donor pag
   

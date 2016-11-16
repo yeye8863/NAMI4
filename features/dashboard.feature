@@ -52,3 +52,8 @@ Background: users has logged in and go to the dashboard page
       | I	| Daniel		| Freud		| Linkedin	| CCC 		|
       | O	| John			| Smiths	| Facebook	| BBB		|	
       | I	| Albert		| Einstein	| Apple		| AAA		| 
+
+   Scenario: Navigate to donor page
+    Given I am on dashboard page
+    When I follow "return to doner management" 
+    Then I should be on the donor page 
